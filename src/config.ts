@@ -1,4 +1,4 @@
-const getBackendEndpoint = () => {
+const endpoint = () => {
   const dev = import.meta.env.DEV
   const prod = ""
   const local = "https://localhost:8080"
@@ -7,7 +7,5 @@ const getBackendEndpoint = () => {
 
   return prod
 }
-
-const endpoint = getBackendEndpoint()
 
 export default endpoint
