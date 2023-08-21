@@ -1,27 +1,47 @@
-# React + TypeScript + Vite
+# Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Static Badge](https://img.shields.io/badge/Linguagem%3A--gray)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?&logo=typescript&logoColor=blue&color=black)
 
-Currently, two official plugins are available:
+![Static Badge](https://img.shields.io/badge/Tecnologias%3A--gray)
+![HTML5](https://img.shields.io/badge/HTML5-%23E34F26.svg?&logo=html5&logoColor=orange&color=black)
+![HTML5](https://img.shields.io/badge/CSS3-%23E34F26.svg?&logo=css3&logoColor=lightblue&color=black)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Static Badge](https://img.shields.io/badge/Biblioteca_Javascript-React-blue)
+![Static Badge](https://img.shields.io/badge/Enviroment-Node.js-green)
 
-## Expanding the ESLint configuration
+Esse é o repositório web do projeto PlanLine. Ele é responsável por prover a interface web.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## React.js
 
-- Configure the top-level `parserOptions` property like this:
+O React é uma biblioteca front-end JavaScript de código aberto com foco em criar interfaces de usuário em páginas web que precisam ser atualizadas em tempo real. Ele é ideal para esse tipo de aplicação porque ele permite que você atualize a interface de usuário de forma rápida e eficiente.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+## Desenvolvimento
+
+1. Instale o [Node.js](https://nodejs.org/en) versão `>= 18`.
+
+2. Instale o [Yarn](https://yarnpkg.com/) com o comando:
+
+```sh
+npm install -g yarn
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+3. Instale as dependências do projeto com o comando:
+
+```sh
+yarn install
+```
+
+Para isso, é necessário estar com um terminal aberto na pasta raiz do projeto.
+
+4. Para iniciar o servidor de desenvolvimento, execute o comando:
+
+```sh
+yarn dev
+```
+
+Depois, acesse o endereço `http://localhost:8080` no seu navegador.
+
+5. Para mais comandos, veja o arquivo `package.json` em 'scripts'.
+
+6. As configurações de endpoint da API se encontram no arquivo config.ts. Ao rodar localmente o projeto apontará para o backend local, em produção apontará para o backend em produção.
