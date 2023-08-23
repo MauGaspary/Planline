@@ -10,7 +10,8 @@
     "preinstall": "npx only-allow yarn",
     "typecheck": "bash -c tsc",
     "lint": "eslint . --max-warnings=0 --ext .ts,.tsx",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -25,9 +26,12 @@
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
       "yarn typecheck",
-      "yarn lint",
-      "yarn format"
-    ]
+      "prettier --write",
+      "eslint"
+    ],
+    "yarn.lock": [
+			"yarn-deduplicate"
+		]
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
@@ -45,6 +49,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint": "^8.45.0",
     "husky": "^8.0.3",
+    "concurrently": "^8.0.1",
     "lint-staged": "^14.0.1",
     "postcss": "^8.4.28",
     "prettier": "3.0.2",
