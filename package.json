@@ -10,6 +10,21 @@
     "test": "jest --watchAll",
     "preinstall": "npx only-allow yarn"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "yarn typecheck",
+      "prettier --write ./src",
+      "yarn lint"
+    ],
+    "yarn.lock": [
+			"yarn-deduplicate"
+		]
+  },
   "jest": {
     "preset": "jest-expo"
   },
