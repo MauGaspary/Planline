@@ -22,7 +22,7 @@
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
       "yarn typecheck",
-      "prettier --write ./src",
+      "prettier --write ./**/*.{ts,tsx}",
       "yarn lint"
     ],
     "yarn.lock": [
@@ -58,8 +58,10 @@
     "@types/react": "^18.2.21",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
     "concurrently": "^8.0.1",
     "eslint": "^8.45.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
     "husky": "^8.0.3",
