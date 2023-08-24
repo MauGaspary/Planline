@@ -20,9 +20,9 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
+    "./**/*.{ts,tsx}": [
       "yarn typecheck",
-      "prettier --write './**/*.{ts,tsx}'",
+      "prettier --write",
       "yarn lint"
     ],
     "yarn.lock": [
