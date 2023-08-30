@@ -17,6 +17,7 @@
 	},
 	"plugins": ["@typescript-eslint", "prettier"],
 	"rules": {
+		"indent": ["error", "tab"],
 		"prettier/prettier": "error",
 		"spaced-comment": "error"
 	}
