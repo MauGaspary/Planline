@@ -32,7 +32,7 @@ npm install -g yarn
 yarn install
 ```
 
-Para isso, é necessário estar com um terminal aberto na pasta raiz do projeto.
+Para isso, é necessário estar com um terminal aberto na pasta raiz do projeto.credential-xdg
 
 4. Para iniciar o servidor de desenvolvimento, execute o comando:
 
@@ -45,3 +45,10 @@ Depois, acesse o endereço `http://localhost:8080` no seu navegador.
 5. Para mais comandos, veja o arquivo `package.json` em 'scripts'.
 
 6. As configurações de endpoint da API se encontram no arquivo config.ts. Ao rodar localmente o projeto apontará para o backend local, em produção apontará para o backend em produção.
+
+## Extensões do VSCode
+
+- Tailwind CSS Intellisense
+- ESLint
+- Prettier
+- Editor Config
