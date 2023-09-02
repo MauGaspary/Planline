@@ -1,16 +1,16 @@
-import { Link } from 'react-router-dom';
+import Button from './Button';
 
-interface SideMenuProps {
-	label: string;
-	linkTo: string;
-}
-
-function SideMenu({ label, linkTo }: SideMenuProps) {
+function SideMenu() {
 	return (
-		<div className="bg-green-600 w-20">
-			<Link to={linkTo}>
-				<h2 className="text-white text-center">{label}</h2>
-			</Link>
+		<div className={'w-20 h-screen bg-triider-primary-orange-dark '}>
+			<div className={'p-5 pt-8 h-96'}>
+				<img src="src/assets/Simbolo Triider branco.png" />
+			</div>
+			<Button />
+
+			<Button />
+
+			<Button />
 		</div>
 	);
 }
