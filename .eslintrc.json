@@ -23,8 +23,8 @@
 		"spaced-comment": "error"
 	},
 	"settings": {
-    "react": {
-      "version": "detect"
-    }
-  }
+		"react": {
+		"version": "detect"
+		}
+	}	 
 }
