@@ -21,5 +21,10 @@
 		"prettier/prettier": "error",
 		"react/react-in-jsx-scope": ["off"],
 		"spaced-comment": "error"
-	}
+	},
+	"settings": {
+		"react": {
+		"version": "detect"
+		}
+	}	 
 }
