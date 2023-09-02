@@ -21,8 +21,8 @@
     "jsx": "react-jsx",
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "app/**/*.ts",
+    "app/**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ],
