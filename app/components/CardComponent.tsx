@@ -9,8 +9,7 @@ interface CardProps {
 	onClick: (label: string) => void;
 }
 
-// eslint-disable-next-line react/prop-types
-const CardComponent: React.FC<CardProps> = ({ label, isSelected, onClick }) => {
+export default function CardComponent({ label, isSelected, onClick }: CardProps) {
 	let style = '';
 	let textStyle = '';
 	let imgStyle;
@@ -47,6 +46,4 @@ const CardComponent: React.FC<CardProps> = ({ label, isSelected, onClick }) => {
 			</TouchableOpacity>
 		);
 	}
-};
-
-export default CardComponent;
+}
