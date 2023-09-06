@@ -8,7 +8,7 @@ Changes # [Task link](https://trello.com/)
 
 ## Change Type
 
-<!-- Delete the unrelevant options. -->
+<!-- Delete the irrelevant options. -->
 
 - [ ] Bug fix (Not breaking change that fixes a bug)
 - [ ] New feature (Not breaking change and adds a new feature)
