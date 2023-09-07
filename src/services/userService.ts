@@ -1,19 +1,40 @@
-import { PrismaClient, User } from '@prisma/client';
+import { User, Prisma } from '@prisma/client';
 import { Request, Response } from 'express';
-
-const prisma = new PrismaClient();
+import userRepository from '../repositories/userRepository.js';
 
 export default {
 	async index(body: Request, res: Response) {
-		const users: Array<User> = await prisma.user.findMany();
-		res.json({ ...users });
+		try {
+			const users: Array<User> = await userRepository.index();
+			if (users.length == 0) {
+				res.status(404).json({
+					message: 'There are no entities registered',
+				});
+			}
+			res.json({ ...users });
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				res.status(500).json({
+					error: e.message,
+					...e.meta,
+				});
+			}
+		}
 	},
 
 	async create(data: Request, res: Response) {
-		const user = await prisma.user.create({
-			data: { ...data.body },
-		});
-		console.log(user);
-		res.json(user);
+		try {
+			const user = await userRepository.creates({ ...data.body });
+			res.json(user);
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				if (e.code === 'P2002') {
+					res.status(500).json({
+						error: 'There is a unique constraint violation',
+						...e.meta,
+					});
+				}
+			}
+		}
 	},
 };

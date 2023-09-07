@@ -1,19 +1,18 @@
 import { PrismaClient, User } from '@prisma/client';
-import { Response } from 'express';
 
 const prisma = new PrismaClient();
 
 export default {
-	async index(res: Response) {
+	async index(): Promise<Array<User>> {
 		const users = await prisma.user.findMany();
-		res.json(users);
+		return users;
 	},
 
-	async creates(data: User, res: Response) {
+	async creates(data: User): Promise<User> {
 		const user = await prisma.user.create({
 			data: { ...data },
 		});
 		console.log(user);
-		res.json(user);
+		return user;
 	},
 };
