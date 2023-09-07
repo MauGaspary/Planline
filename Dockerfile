@@ -1,5 +1,11 @@
 FROM node:18-alpine
 
-COPY . .
+WORKDIR /app
+COPY package.json .
 RUN npm i yarn
-RUN yarn install
+RUN yarn install --immutable --immutable-cache --check-cache
+COPY . .
+EXPOSE 8080
+RUN yarn run build
+
+CMD ["yarn","run","dev"]
