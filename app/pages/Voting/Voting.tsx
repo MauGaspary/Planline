@@ -14,7 +14,7 @@ export default function Voting() {
 	return (
 		<View className="items-center bg-white flex-1">
 			<View className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400">
-				<Text className="mt-10 text-2xl">SPRINT TESTE</Text>
+				<Text className="mt-10 text-2xl font-body">SPRINT TESTE</Text>
 				<Text className="mt-8 text-lg text-triider-primary-orange1">STORY 01</Text>
 				<Text className="mt-4 mb-6 text-lg text-triider-grayscale-gray1">
 					Resolver os bugs do boilerplate
