@@ -18,7 +18,12 @@ const SideMenu: React.FC = () => {
 				<img src="src/assets/Simbolo Triider branco.png" />
 			</div>
 			<div>
-				<Button onClick={toggleVisibilityB1} isVisible={isVisibleB1} titulo={'Dashboard'} />
+				<Button
+					onClick={toggleVisibilityB1}
+					isVisible={isVisibleB1}
+					titulo={'Dashboard'}
+					image="src/assets/talk.svg"
+				/>
 				{isVisibleB1 && (
 					<div className={''}>
 						<SecondaryButton />
@@ -28,7 +33,12 @@ const SideMenu: React.FC = () => {
 				)}
 			</div>
 			<div>
-				<Button onClick={toggleVisibilityB2} isVisible={isVisibleB2} titulo={'Gerenciar'} />
+				<Button
+					onClick={toggleVisibilityB2}
+					isVisible={isVisibleB2}
+					titulo={'Gerenciar..'}
+					image="src/assets/config.svg"
+				/>
 				{isVisibleB2 && (
 					<div className={''}>
 						<SecondaryButton />

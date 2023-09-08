@@ -4,21 +4,26 @@ interface ButtonProps {
 	onClick: () => void;
 	isVisible: boolean;
 	titulo: string;
+	image: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ onClick, isVisible, titulo }) => {
+const Button: React.FC<ButtonProps> = ({ onClick, isVisible, titulo, image }) => {
 	return (
 		<div
 			onClick={onClick}
-			className={' flex justify-start items-center w-full h-14 bg-fuchsia-500 space-x-12'}
+			className={
+				' flex justify-start items-center w-full h-14 bg-triider-primary-orange-dark space-x-8'
+			}
 		>
-			<div className={''}>
-				<h1>foto</h1>
+			<div className={'ml-2'}>
+				<img src={image} />
 			</div>
-			<div className={''}>
+			<div className={'text-triider-grayscale-white'}>
 				<p>{titulo}</p>
 			</div>
-			<div>{isVisible ? <h1>oi</h1> : <h1>bye</h1>}</div>
+			<div>
+				{isVisible ? <img src="src\assets\down3.svg" /> : <img src="src\assets\up3.svg " />}
+			</div>
 		</div>
 	);
 };
