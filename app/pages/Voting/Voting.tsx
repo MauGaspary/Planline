@@ -2,7 +2,6 @@ import { Text, View } from 'react-native';
 import CardComponent from '../../components/Card';
 import ButtonComponent from '../../components/Button';
 import { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
 export default function Voting() {
@@ -13,11 +12,11 @@ export default function Voting() {
 	};
 
 	return (
-		<SafeAreaView className="items-center bg-white">
-			<View className="rounded-b-3xl items-center h-52 w-full bg-white shadow shadow-gray-400 fixed top-0 left-0 right-0">
+		<View className="items-center bg-white flex-1">
+			<View className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400">
 				<Text className="mt-10 text-2xl">SPRINT TESTE</Text>
 				<Text className="mt-8 text-lg text-triider-primary-orange1">STORY 01</Text>
-				<Text className="mt-4 text-lg text-triider-grayscale-gray1">
+				<Text className="mt-4 mb-6 text-lg text-triider-grayscale-gray1">
 					Resolver os bugs do boilerplate
 				</Text>
 			</View>
@@ -35,7 +34,7 @@ export default function Voting() {
 				<ButtonComponent label="Next" />
 				<CardComponent label="" isSelected={selectedCard === ''} onClick={handleCardClick} />
 			</View>
-			<StatusBar style="dark" />
-		</SafeAreaView>
+			<StatusBar style="inverted" />
+		</View>
 	);
 }
