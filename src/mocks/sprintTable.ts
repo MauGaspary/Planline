@@ -1,4 +1,4 @@
-const Table = [
+const SprintTable = [
 	{
 		id: 1,
 		name: 'Sprint 1',
@@ -49,4 +49,4 @@ const Table = [
 	},
 ];
 
-export default Table;
+export default SprintTable;

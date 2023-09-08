@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Card from '../../../components/Card';
-import sprintTable from '../../../mocks/sprintTable';
+import SprintTable from '../../../mocks/sprintTable';
 
 function Sprints() {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [data, setData] = useState(sprintTable);
+	const [data, setData] = useState(SprintTable);
 	const [search, setSearch] = useState('');
 
 	const filteredName =
@@ -67,44 +67,32 @@ function Sprints() {
 								</thead>
 								<tbody>
 									{search.length > 0
-										? filteredName?.map((item) => {
-												return (
-													<tr key={item.id}>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">
-															{item.startDate}
-														</td>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">
-															{item.endDate}
-														</td>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">
-															{item.points}
-														</td>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">
-															{item.status}
-														</td>
-													</tr>
-												);
-										  })
-										: data?.map((item) => {
-												return (
-													<tr key={item.id}>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">
-															{item.startDate}
-														</td>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">
-															{item.endDate}
-														</td>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">
-															{item.points}
-														</td>
-														<td className="whitespace-nowrap px-8 py-4 font-medium">
-															{item.status}
-														</td>
-													</tr>
-												);
-										  })}
+										? filteredName?.map((item) => (
+												<tr key={item.id}>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">
+														{item.startDate}
+													</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">
+														{item.endDate}
+													</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.points}</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.status}</td>
+												</tr>
+										  ))
+										: data?.map((item) => (
+												<tr key={item.id}>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">
+														{item.startDate}
+													</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">
+														{item.endDate}
+													</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.points}</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.status}</td>
+												</tr>
+										  ))}
 								</tbody>
 							</table>
 						</div>
