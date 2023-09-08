@@ -3,7 +3,7 @@ type Props = {
 	options: string[];
 };
 
-export const Select = (props: Props) => {
+export const SelectInput = (props: Props) => {
 	return (
 		<>
 			<select
