@@ -4,6 +4,10 @@ module.exports = {
 	content: ['./app/**/*.{js,jsx,ts,tsx}'],
 	theme: {
 		extend: {
+			fontFamily: {
+				title: 'Roboto_700Bold',
+				body: 'Roboto_400Regular',
+			},
 			colors: {
 				'triider-primary': {
 					'orange-dark': '#DC6A1D',
