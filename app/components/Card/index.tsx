@@ -1,7 +1,7 @@
 import { Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import coffeeWhite from '../assets/images/coffee-white.png';
-import coffee from '../assets/images/coffee.png';
+import coffeeWhite from '../../assets/images/coffee-white.png';
+import coffee from '../../assets/images/coffee.png';
 
 interface CardProps {
 	label: string;
@@ -21,17 +21,17 @@ export default function CardComponent({ label, isSelected, onClick }: CardProps)
 
 	isSelected
 		? ((style =
-				'rounded-2xl h-[124] w-[90] items-center justify-center bg-[#FF6600] shadow shadow-gray-400'),
+				'rounded-2xl h-32 w-24 items-center justify-center bg-triider-primary-orange1 shadow shadow-gray-400'),
 		  (textStyle = 'text-lg text-white font-bold'),
 		  (imgStyle = coffeeWhite),
 		  (styleBtn =
-				'rounded-2xl h-[58] w-[320] items-center justify-center bg-[#FF6600] shadow shadow-gray-400 mt-6'))
+				'rounded-2xl h-14 w-80 items-center justify-center bg-triider-primary-orange1 shadow shadow-gray-400 mt-6'))
 		: ((style =
-				'rounded-2xl h-[124] w-[90] items-center justify-center bg-white shadow shadow-gray-400'),
-		  (textStyle = 'text-lg text-[#FF6600] font-bold'),
+				'rounded-2xl h-32 w-24 items-center justify-center bg-white shadow shadow-gray-400'),
+		  (textStyle = 'text-lg text-triider-primary-orange1 font-bold'),
 		  (imgStyle = coffee),
 		  (styleBtn =
-				'rounded-2xl h-[58] w-[320] items-center justify-center bg-white shadow shadow-gray-400 mt-6'));
+				'rounded-2xl h-14 w-80 items-center justify-center bg-white shadow shadow-gray-400 mt-6'));
 
 	if (label !== '') {
 		return (

@@ -6,7 +6,7 @@ interface ButtonComponent {
 }
 export default function ButtonComponent({ label }: ButtonComponent) {
 	return (
-		<TouchableOpacity className="rounded-2xl h-[58] w-[320] items-center justify-center bg-[#FF6600] shadow shadow-gray-400">
+		<TouchableOpacity className="rounded-2xl h-14 w-80 items-center justify-center bg-triider-primary-orange1 shadow shadow-gray-400">
 			<Text className="text-lg text-white font-bold">{label}</Text>
 		</TouchableOpacity>
 	);

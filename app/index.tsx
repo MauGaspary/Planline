@@ -1,4 +1,5 @@
 // import { Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Voting from './pages/Voting/Voting';
 
 export default function App() {
@@ -6,6 +7,8 @@ export default function App() {
 		// <View className="bg-gray-900 flex-1 items-center justify-center">
 		// 	<Text className="text-white text-4xl">Hello World!!!</Text>
 		// </View>
-		<Voting />
+		<SafeAreaProvider>
+			<Voting />
+		</SafeAreaProvider>
 	);
 }
