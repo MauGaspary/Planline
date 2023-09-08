@@ -1,7 +1,12 @@
 function Button() {
 	return (
-		<div className={'w-full h-20 bg-fuchsia-500'}>
-			<h1>button</h1>
+		<div className={' flex justify-start items-center w-full h-14 bg-fuchsia-500 space-x-12'}>
+			<div className={''}>
+				<h1>foto</h1>
+			</div>
+			<div className={''}>
+				<h1>dsadsdasdsad</h1>
+			</div>
 		</div>
 	);
 }
