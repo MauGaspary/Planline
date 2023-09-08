@@ -6,7 +6,10 @@ type Props = {
 export const Select = (props: Props) => {
 	return (
 		<>
-			<select className="w-[359px] h-[55px] bg-gray-100 p-2 rounded-[8px]" name={props.placeholder}>
+			<select
+				className="w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] appearance-none bg-[top_1.4rem_right_1.4rem] bg-[length:0.65rem] bg-[../assets/icons/arrowIcon.svg] bg-no-repeat text-gray-700 font-medium"
+				name={props.placeholder}
+			>
 				<option value="" disabled selected hidden>
 					{props.placeholder}
 				</option>
