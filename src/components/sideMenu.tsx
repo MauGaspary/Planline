@@ -14,10 +14,10 @@ const SideMenu: React.FC = () => {
 	};
 	return (
 		<div className={'w-64 h-screen bg-triider-primary-orange-dark '}>
-			<div className={'p-5 pt-8 w-20 h-72'}>
-				<img src="src/assets/Simbolo Triider branco.png" />
+			<div className={'w-full  flex justify-center p-6'}>
+				<img className={'w-44'} src="src/assets/Triiderwhiteprhase.png" />
 			</div>
-			<div>
+			<div className={'mt-52'}>
 				<Button
 					onClick={toggleVisibilityB1}
 					isVisible={isVisibleB1}
