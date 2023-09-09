@@ -26,9 +26,9 @@ const SideMenu: React.FC = () => {
 				/>
 				{isVisibleB1 && (
 					<div className={''}>
-						<SecondaryButton />
-						<SecondaryButton />
-						<SecondaryButton />
+						<SecondaryButton titulo={'Usuario'} image={'src/assets/user.svg'} />
+						<SecondaryButton titulo={'Importar'} image={'src/assets/download.svg'} />
+						<SecondaryButton titulo={'Exportar'} image={'src/assets/upload.svg'} />
 					</div>
 				)}
 			</div>
@@ -41,10 +41,10 @@ const SideMenu: React.FC = () => {
 				/>
 				{isVisibleB2 && (
 					<div className={''}>
-						<SecondaryButton />
-						<SecondaryButton />
-						<SecondaryButton />
-						<SecondaryButton />
+						<SecondaryButton titulo={'Usuários'} image={'src/assets/group.svg'} />
+						<SecondaryButton titulo={'Squads'} image={'src/assets/laptop.svg'} />
+						<SecondaryButton titulo={'Projetos'} image={'src/assets/register.svg'} />
+						<SecondaryButton titulo={'Organizações'} image={'src/assets/apartment.svg'} />
 					</div>
 				)}
 			</div>
