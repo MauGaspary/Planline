@@ -1,22 +1,26 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
-import { getDatabase } from 'firebase/database';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
 
-// Your web app's Firebase configuration
+const {
+	VITE_API_KEY,
+	VITE_AUTH_DOMAIN,
+	VITE_PROJECT_ID,
+	VITE_STORAGE_BUCKET,
+	VITE_MESSAGING_SENDER_ID,
+	VITE_APP_ID,
+} = import.meta.env;
+
 const firebaseConfig = {
-	apiKey: '[REMOVED]',
-	authDomain: 'ages-test-ce94c.firebaseapp.com',
-	databaseURL: 'https://ages-test-ce94c-default-rtdb.firebaseio.com',
-	projectId: 'ages-test-ce94c',
-	storageBucket: 'ages-test-ce94c.appspot.com',
-	messagingSenderId: '834015135167',
-	appId: '1:834015135167:web:e9091f621db955b0c68d0a',
+	apiKey: VITE_API_KEY,
+	authDomain: VITE_AUTH_DOMAIN,
+	projectId: VITE_PROJECT_ID,
+	storageBucket: VITE_STORAGE_BUCKET,
+	messagingSenderId: VITE_MESSAGING_SENDER_ID,
+	appId: VITE_APP_ID,
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 const database = getDatabase(app);
 
 export function useRealtimeDatabase() {
