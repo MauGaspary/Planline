@@ -9,6 +9,7 @@ import Squad from './pages/Dashboard/Squad';
 import User from './pages/Dashboard/User';
 import Resume from './pages/Resume';
 import './styles/globals.css';
+import Upload from './pages/Upload';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<BrowserRouter>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 			<Route path="/dashboard/squads" element={<Squad />} />
 			<Route path="/dashboard/users" element={<User />} />
 			<Route path="/resume" element={<Resume />} />
+			<Route path="/upload" element={<Upload />} />
 			<Route path="*" element={<Error />} />
 		</Routes>
 	</BrowserRouter>

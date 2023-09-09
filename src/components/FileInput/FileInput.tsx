@@ -1,10 +1,9 @@
 import { useCallback, useState } from 'react';
 import Button from '../Button';
 import { DropzoneState, useDropzone } from 'react-dropzone';
-import { UploadIcon } from '../../assets/icons/UploadIcon';
-import { FileIcon } from '../../assets/icons/FileIcon';
-import { CloseIcon } from '../../assets/icons/CloseIcon';
-
+import UploadIcon from '../../assets/icons/uploadIcon.svg';
+import FileIcon from '../../assets/icons/fileIcon.svg';
+import CloseIcon from '../../assets/icons/closeIcon.svg';
 interface InputProps {
 	dropzone: DropzoneState;
 }
@@ -39,11 +38,14 @@ const Input = ({ dropzone }: InputProps) => {
 		>
 			<label htmlFor="dropzone-file" className="cursor-pointer w-full h-full">
 				<div className="flex flex-col items-center justify-center pt-5 pb-6 w-full h-full">
-					<UploadIcon
+					<img
+						src={UploadIcon}
+						alt="upload"
 						className={`w-12 h-12 mb-3 ${
 							isDragActive ? 'text-triider-secondary-purple1' : 'text-triider-primary-orange4'
 						}`}
 					/>
+
 					{isDragActive ? (
 						<p className="text-lg text-triider-secondary-purple1 text-center font-bold">
 							Solte aqui para adicionar
@@ -69,10 +71,10 @@ const HasFile = ({ file }: HasFileProps) => {
 	return (
 		<div className="w-[500px] h-[400px] rounded-[8px] flex flex-col p-6 gap-10 text-center border-dashed border-4 border-triider-primary-orange-dark transition-all">
 			<div>
-				<FileIcon className="w-5 h-5 my-4 ml-4" />
+				<img src={FileIcon} alt="file" className="w-5 h-5 my-4 ml-4" />
 				<span className="text-sm text-triider-grayscale-gray1 my-4">{file?.name}</span>
 				<button type="button" className="place-self-start mt-1 p-1">
-					<CloseIcon className="w-5 h-5" />
+					<img src={CloseIcon} alt="close" className="w-5 h-5" />
 				</button>
 			</div>
 		</div>
