@@ -10,5 +10,13 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+  api:
+    build: .
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=default
+      - POSTGRES_PASSWORD=default
+    ports:
+      - '8000:8000'
 volumes:
   postgres:
