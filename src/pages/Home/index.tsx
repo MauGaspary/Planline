@@ -2,9 +2,15 @@ import { useState } from 'react';
 import Card from '../../components/Card';
 import { Select } from '../../components/Select/Select';
 
-const orgOptions = ['organizacao 1', 'organizacao 2', 'organizacao 3'];
-const projOptions = ['projeto 1', 'projeto 2', 'projeto 3'];
-const squadOptions = ['squad 1', 'squad 2', 'squad 3'];
+const orgOptions = [
+	'Organização 1',
+	'Organização 2',
+	'Organização 3',
+	'Organização 4',
+	'Organização 5',
+];
+const projOptions = ['Projeto 1', 'Projeto 2', 'Projeto 3', 'Projeto 4', 'Projeto 5'];
+const squadOptions = ['Squad 1', 'Squad 2', 'Squad 3', 'Squad 4', 'Squad 5'];
 
 function Home() {
 	const [org, setOrg] = useState('Organização');
