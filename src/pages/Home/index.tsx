@@ -27,8 +27,18 @@ function Home() {
 		<Card title="Identifique-se para visualizar mais informações" small>
 			<div className="flex flex-col px-20 gap-5 self-center">
 				<Select placeholder={org} options={orgOptions} handleSelect={handleSelect}></Select>
-				<Select placeholder={project} options={projOptions} handleSelect={handleSelect}></Select>
-				<Select placeholder={squad} options={squadOptions} handleSelect={handleSelect}></Select>
+				<Select
+					placeholder={project}
+					options={projOptions}
+					handleSelect={handleSelect}
+					isDisabled={org === 'Organização'}
+				></Select>
+				<Select
+					placeholder={squad}
+					options={squadOptions}
+					handleSelect={handleSelect}
+					isDisabled={project === 'Projeto'}
+				></Select>
 
 				<button className="w-[359px] h-[55px] text-white bg-triider-primary-orange-dark p-2 rounded-[8px]">
 					Confirmar

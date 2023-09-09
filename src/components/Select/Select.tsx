@@ -1,20 +1,28 @@
 import { useState } from 'react';
-import ArrowIcon from '../assets/icons/arrowIcon.svg';
+import ArrowIcon from '../../assets/icons/arrowIcon.svg';
 
-type Props = {
+interface SelectProps {
 	placeholder: string;
 	options: string[];
 	handleSelect: (placeholder: string, option: string) => void;
-};
+	isDisabled?: boolean;
+}
 
-export const Select = (props: Props) => {
+export const Select = (props: SelectProps) => {
 	const [isOpen, setIsOpen] = useState(false);
+
+	const buttonClass = props.isDisabled
+		? 'flex cursor-default items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium opacity-30'
+		: 'flex  cursor-pointer items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium hover:bg-slate-200';
 
 	return (
 		<div className="relative">
 			<div
-				onClick={() => setIsOpen(!isOpen)}
-				className="flex cursor-pointer items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium hover:bg-slate-200"
+				onClick={() => {
+					if (props.isDisabled) return;
+					setIsOpen(!isOpen);
+				}}
+				className={buttonClass}
 			>
 				<p>{props.placeholder}</p>
 				<img src={ArrowIcon} alt="arrow" className="absolute right-3 top-4" />
