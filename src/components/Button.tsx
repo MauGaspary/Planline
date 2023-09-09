@@ -11,14 +11,12 @@ const Button: React.FC<ButtonProps> = ({ onClick, isVisible, titulo, image }) =>
 	return (
 		<div
 			onClick={onClick}
-			className={
-				' flex justify-start items-center w-full h-14 bg-triider-primary-orange-dark space-x-8'
-			}
+			className={' flex justify-start items-center w-full h-14 bg-red space-x-8'}
 		>
 			<div className={'ml-2'}>
 				<img src={image} />
 			</div>
-			<div className={'text-triider-grayscale-white'}>
+			<div className={'text-triider-grayscale-white w-24'}>
 				<p>{titulo}</p>
 			</div>
 			<div>

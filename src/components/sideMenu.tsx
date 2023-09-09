@@ -36,7 +36,7 @@ const SideMenu: React.FC = () => {
 				<Button
 					onClick={toggleVisibilityB2}
 					isVisible={isVisibleB2}
-					titulo={'Gerenciar..'}
+					titulo={'Gerenciar'}
 					image="src/assets/config.svg"
 				/>
 				{isVisibleB2 && (
