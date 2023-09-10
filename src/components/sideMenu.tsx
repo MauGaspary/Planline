@@ -6,12 +6,19 @@ const SideMenu: React.FC = () => {
 	const [isVisibleB1, setIsVisibleB1] = useState(false);
 	const [isVisibleB2, setIsVisibleB2] = useState(false);
 
+	const [activeButton, setActiveButton] = useState<string | null>(null);
+
 	const toggleVisibilityB1 = () => {
 		setIsVisibleB1(!isVisibleB1);
 	};
 	const toggleVisibilityB2 = () => {
 		setIsVisibleB2(!isVisibleB2);
 	};
+
+	const handleButtonClick = (buttonName: string) => {
+		setActiveButton(buttonName);
+	};
+
 	return (
 		<div className={'w-64 h-screen bg-triider-primary-orange-dark '}>
 			<div className={'w-full  flex justify-center p-6'}>
@@ -22,13 +29,31 @@ const SideMenu: React.FC = () => {
 					onClick={toggleVisibilityB1}
 					isVisible={isVisibleB1}
 					titulo={'Dashboard'}
-					image="src/assets/talk.svg"
+					image="src/assets/talkWhite.svg"
 				/>
 				{isVisibleB1 && (
 					<div className={''}>
-						<SecondaryButton titulo={'Usuario'} image={'src/assets/user.svg'} />
-						<SecondaryButton titulo={'Importar'} image={'src/assets/download.svg'} />
-						<SecondaryButton titulo={'Exportar'} image={'src/assets/upload.svg'} />
+						<SecondaryButton
+							onClick={() => handleButtonClick('user')}
+							switchState={activeButton === 'user'}
+							titulo={'Usuario'}
+							imageWhite={'src/assets/userWhite.svg'}
+							imageOrange={'src/assets/userOrange.svg'}
+						/>
+						<SecondaryButton
+							onClick={() => handleButtonClick('download')}
+							switchState={activeButton === 'download'}
+							titulo={'Importar'}
+							imageWhite={'src/assets/downloadWhite.svg'}
+							imageOrange={'src/assets/downloadOrange.svg'}
+						/>
+						<SecondaryButton
+							onClick={() => handleButtonClick('upload')}
+							switchState={activeButton === 'upload'}
+							titulo={'Exportar'}
+							imageWhite={'src/assets/uploadWhite.svg'}
+							imageOrange={'src/assets/uploadOrange.svg'}
+						/>
 					</div>
 				)}
 			</div>
@@ -37,14 +62,38 @@ const SideMenu: React.FC = () => {
 					onClick={toggleVisibilityB2}
 					isVisible={isVisibleB2}
 					titulo={'Gerenciar'}
-					image="src/assets/config.svg"
+					image="src/assets/configWhite.svg"
 				/>
 				{isVisibleB2 && (
 					<div className={''}>
-						<SecondaryButton titulo={'Usuários'} image={'src/assets/group.svg'} />
-						<SecondaryButton titulo={'Squads'} image={'src/assets/laptop.svg'} />
-						<SecondaryButton titulo={'Projetos'} image={'src/assets/register.svg'} />
-						<SecondaryButton titulo={'Organizações'} image={'src/assets/apartment.svg'} />
+						<SecondaryButton
+							onClick={() => handleButtonClick('group')}
+							switchState={activeButton === 'group'}
+							titulo={'Usuários'}
+							imageWhite={'src/assets/groupWhite.svg'}
+							imageOrange={'src/assets/groupOrange.svg'}
+						/>
+						<SecondaryButton
+							onClick={() => handleButtonClick('laptop')}
+							switchState={activeButton === 'laptop'}
+							titulo={'Squads'}
+							imageWhite={'src/assets/laptopWhite.svg'}
+							imageOrange={'src/assets/laptopOrange.svg'}
+						/>
+						<SecondaryButton
+							onClick={() => handleButtonClick('register')}
+							switchState={activeButton === 'register'}
+							titulo={'Projetos'}
+							imageWhite={'src/assets/registerWhite.svg'}
+							imageOrange={'src/assets/registerOrange.svg'}
+						/>
+						<SecondaryButton
+							onClick={() => handleButtonClick('apartment')}
+							switchState={activeButton === 'apartment'}
+							titulo={'Organizações'}
+							imageWhite="src/assets/apartmentWhite.svg"
+							imageOrange="src/assets/apartmentOrange.svg"
+						/>
 					</div>
 				)}
 			</div>

@@ -11,7 +11,9 @@ const Button: React.FC<ButtonProps> = ({ onClick, isVisible, titulo, image }) =>
 	return (
 		<div
 			onClick={onClick}
-			className={' flex justify-start items-center w-full h-14 bg-red space-x-8'}
+			className={
+				'select-none cursor-pointer flex justify-start items-center w-full h-14 bg-red space-x-8'
+			}
 		>
 			<div className={'ml-2'}>
 				<img src={image} />
@@ -20,7 +22,11 @@ const Button: React.FC<ButtonProps> = ({ onClick, isVisible, titulo, image }) =>
 				<p>{titulo}</p>
 			</div>
 			<div>
-				{isVisible ? <img src="src\assets\down3.svg" /> : <img src="src\assets\up3.svg " />}
+				{isVisible ? (
+					<img src="src\assets\down3White.svg" />
+				) : (
+					<img src="src\assets\up3White.svg " />
+				)}
 			</div>
 		</div>
 	);
