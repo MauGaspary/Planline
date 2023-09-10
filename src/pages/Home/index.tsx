@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Card from '../../components/Card';
 import { Select } from '../../components/Select/Select';
 
@@ -17,6 +17,8 @@ function Home() {
 	const [project, setProject] = useState('Projeto');
 	const [squad, setSquad] = useState('Squad');
 
+	const [openSelect, setOpenSelect] = useState<string | null>(null);
+
 	const handleSelect = (placeholder: string, option: string) => {
 		if (placeholder === org) {
 			setOrg(option);
@@ -27,24 +29,35 @@ function Home() {
 		if (placeholder === squad) {
 			setSquad(option);
 		}
+		setOpenSelect(null); // Close all Select components
 	};
 
 	return (
 		<Card title="Identifique-se para visualizar mais informações" small>
 			<div className="flex flex-col px-20 gap-5 self-center">
-				<Select placeholder={org} options={orgOptions} handleSelect={handleSelect}></Select>
+				<Select
+					placeholder={org}
+					options={orgOptions}
+					handleSelect={handleSelect}
+					isOpen={openSelect === 'org'}
+					onToggle={() => setOpenSelect(openSelect === 'org' ? null : 'org')}
+				/>
 				<Select
 					placeholder={project}
 					options={projOptions}
 					handleSelect={handleSelect}
 					isDisabled={org === 'Organização'}
-				></Select>
+					isOpen={openSelect === 'project'}
+					onToggle={() => setOpenSelect(openSelect === 'project' ? null : 'project')}
+				/>
 				<Select
 					placeholder={squad}
 					options={squadOptions}
 					handleSelect={handleSelect}
 					isDisabled={project === 'Projeto'}
-				></Select>
+					isOpen={openSelect === 'squad'}
+					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
+				/>
 
 				<button className="w-[359px] h-[55px] text-white bg-triider-primary-orange-dark p-2 rounded-[8px]">
 					Confirmar
