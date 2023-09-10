@@ -10,9 +10,9 @@ export default function CodeInput() {
 	const [otp, setOtp] = useState({ 1: '', 2: '', 3: '', 4: '' });
 	return (
 		<View className="flex flex-row space-x-4">
-			<View className="rounded-md border">
+			<View className="rounded-md">
 				<TextInput
-					className="text-2xl text-center px-5 py-3 bg-orange-500"
+					className="text-2xl text-center px-7 py-5 bg-gray-300 rounded-md w-16 "
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={firstInput}
@@ -22,9 +22,9 @@ export default function CodeInput() {
 					}}
 				/>
 			</View>
-			<View className="rounded-md border">
+			<View className="rounded-md bg-orange-300">
 				<TextInput
-					className="text-2xl text-center px-5 py-3 bg-orange-500"
+					className="text-2xl text-center px-7 py-5 bg-gray-300 rounded-md w-16"
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={secondInput}
@@ -34,9 +34,9 @@ export default function CodeInput() {
 					}}
 				/>
 			</View>
-			<View className="rounded-md border">
+			<View className="rounded-md">
 				<TextInput
-					className="text-2xl text-center px-5 py-3 bg-orange-500"
+					className="text-2xl text-center px-7 py-5 bg-gray-300 rounded-md w-16"
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={thirdInput}
@@ -46,9 +46,9 @@ export default function CodeInput() {
 					}}
 				/>
 			</View>
-			<View className="rounded-md border">
+			<View className="rounded-md">
 				<TextInput
-					className="text-2xl text-center px-5 py-3 bg-orange-500"
+					className="text-2xl text-center px-7 py-5 bg-gray-300 rounded-md w-16"
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={fourthInput}

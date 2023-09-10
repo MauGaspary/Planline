@@ -15,13 +15,13 @@ export default function Home() {
 				<View>
 					<Image source={Logo} style={{ height: 200, resizeMode: 'contain' }} className="mt-40" />
 					<Text className="text-base font-title text-triider-grayscale-gray1 text-center">
-						Fill the code
+						Preencha o código
 					</Text>
 				</View>
 				<View className=" bg-slate-500 space-x-6 my-5">
 					<CodeInput />
 				</View>
-				<View className="mt-10 items-center">
+				<View className="mt-10 items-center absolute bottom-14">
 					<ButtonComponent label="Enter" />
 				</View>
 			</View>
