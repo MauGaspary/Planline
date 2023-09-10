@@ -57,7 +57,7 @@ const Input = ({ dropzone }: InputProps) => {
 									Selecione um arquivo ou arraste e solte aqui
 								</span>
 							</p>
-							<Button title="Selecionar arquivo" />
+							<Button>Selecionar arquivo</Button>
 						</>
 					)}
 				</div>

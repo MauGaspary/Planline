@@ -11,7 +11,7 @@ function Input() {
 				<form onSubmit={onSubmit} className="flex justify-center items-center">
 					<FileInput />
 				</form>
-				<Button title="Importar" />
+				<Button>Importar</Button>
 			</div>
 		</div>
 	);

@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import Card from '../../components/Card';
 import { Select } from '../../components/Select/Select';
+import { Link } from 'react-router-dom';
+import Button from '../../components/Button';
 
-const orgOptions = [
-	'Organização 1',
-	'Organização 2',
-	'Organização 3',
-	'Organização 4',
-	'Organização 5',
-];
+const orgOptions = ['Organização 1', 'Organização 2', 'Organização 3'];
 const projOptions = ['Projeto 1', 'Projeto 2', 'Projeto 3', 'Projeto 4', 'Projeto 5'];
 const squadOptions = ['Squad 1', 'Squad 2', 'Squad 3', 'Squad 4', 'Squad 5'];
 
@@ -29,7 +25,7 @@ function Home() {
 		if (placeholder === squad) {
 			setSquad(option);
 		}
-		setOpenSelect(null); // Close all Select components
+		setOpenSelect(null);
 	};
 
 	return (
@@ -46,7 +42,7 @@ function Home() {
 					placeholder={project}
 					options={projOptions}
 					handleSelect={handleSelect}
-					isDisabled={org === 'Organização'}
+					disabled={org === 'Organização'}
 					isOpen={openSelect === 'project'}
 					onToggle={() => setOpenSelect(openSelect === 'project' ? null : 'project')}
 				/>
@@ -54,14 +50,14 @@ function Home() {
 					placeholder={squad}
 					options={squadOptions}
 					handleSelect={handleSelect}
-					isDisabled={project === 'Projeto'}
+					disabled={project === 'Projeto'}
 					isOpen={openSelect === 'squad'}
 					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 				/>
 
-				<button className="w-[359px] h-[55px] text-white bg-triider-primary-orange-dark p-2 rounded-[8px]">
-					Confirmar
-				</button>
+				<Link to="/upload">
+					<Button disabled={squad === 'Squad'}>Confirmar</Button>
+				</Link>
 			</div>
 		</Card>
 	);

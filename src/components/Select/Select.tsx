@@ -4,13 +4,13 @@ interface SelectProps {
 	placeholder: string;
 	options: string[];
 	handleSelect: (placeholder: string, option: string) => void;
-	isDisabled?: boolean;
+	disabled?: boolean;
 	isOpen: boolean;
 	onToggle: () => void;
 }
 
 export const Select = (props: SelectProps) => {
-	const buttonClass = props.isDisabled
+	const buttonClass = props.disabled
 		? 'flex cursor-default items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium opacity-30'
 		: 'flex cursor-pointer items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium hover:bg-slate-200';
 
@@ -18,8 +18,8 @@ export const Select = (props: SelectProps) => {
 		<div className="relative">
 			<div
 				onClick={() => {
-					if (props.isDisabled) return;
-					props.onToggle(); // Call onToggle prop when the button is clicked
+					if (props.disabled) return;
+					props.onToggle();
 				}}
 				className={buttonClass}
 			>
@@ -32,7 +32,7 @@ export const Select = (props: SelectProps) => {
 					{props.options.map((option) => (
 						<li
 							onClick={() => {
-								props.onToggle(); // Close the Select when an option is selected
+								props.onToggle();
 								props.handleSelect(props.placeholder, option);
 							}}
 							className="p-4 cursor-pointer hover:bg-slate-300"
