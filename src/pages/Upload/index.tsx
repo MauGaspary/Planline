@@ -12,7 +12,7 @@ function Input() {
 					<FileInput />
 				</form>
 				<div className="flex gap-5 self-center">
-					<Button title="Importar" />
+					<Button>Importar</Button>
 				</div>
 			</div>
 		</Card>

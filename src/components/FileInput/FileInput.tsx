@@ -3,6 +3,7 @@ import { DropzoneState, useDropzone } from 'react-dropzone';
 import UploadIcon from '../../assets/icons/uploadIcon.svg';
 import FileIcon from '../../assets/icons/fileIcon.svg';
 import CloseIcon from '../../assets/icons/closeIcon.svg';
+import Button from '../Button';
 interface InputProps {
 	dropzone: DropzoneState;
 }
@@ -59,9 +60,7 @@ const Input = ({ dropzone }: InputProps) => {
 									Selecione um arquivo ou arraste e solte aqui
 								</span>
 							</p>
-							<button className="w-[250px] h-[25px] text-white bg-triider-primary-orange-dark p-1 rounded-[8px] text-center box-content">
-								Selecionar arquivo
-							</button>
+							<Button>Selecionar arquivo</Button>
 						</>
 					)}
 				</div>

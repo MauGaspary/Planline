@@ -1,26 +1,25 @@
-import { useState } from 'react';
 import ArrowIcon from '../../assets/icons/arrowIcon.svg';
 
 interface SelectProps {
 	placeholder: string;
 	options: string[];
 	handleSelect: (placeholder: string, option: string) => void;
-	isDisabled?: boolean;
+	disabled?: boolean;
+	isOpen: boolean;
+	onToggle: () => void;
 }
 
 export const Select = (props: SelectProps) => {
-	const [isOpen, setIsOpen] = useState(false);
-
-	const buttonClass = props.isDisabled
+	const buttonClass = props.disabled
 		? 'flex cursor-default items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium opacity-30'
-		: 'flex  cursor-pointer items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium hover:bg-slate-200';
+		: 'flex cursor-pointer items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium hover:bg-slate-200';
 
 	return (
 		<div className="relative">
 			<div
 				onClick={() => {
-					if (props.isDisabled) return;
-					setIsOpen(!isOpen);
+					if (props.disabled) return;
+					props.onToggle();
 				}}
 				className={buttonClass}
 			>
@@ -28,12 +27,12 @@ export const Select = (props: SelectProps) => {
 				<img src={ArrowIcon} alt="arrow" className="absolute right-3 top-4" />
 			</div>
 
-			{isOpen && (
+			{props.isOpen && (
 				<ul className="absolute max-h-40 overflow-auto text-start z-10 items-center text-lg w-[359px] bg-gray-200 rounded-[8px] text-gray-700 font-medium">
 					{props.options.map((option) => (
 						<li
 							onClick={() => {
-								setIsOpen(false);
+								props.onToggle();
 								props.handleSelect(props.placeholder, option);
 							}}
 							className="p-4 cursor-pointer hover:bg-slate-300"
