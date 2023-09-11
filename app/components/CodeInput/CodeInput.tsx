@@ -63,7 +63,7 @@ export default function CodeInput() {
 		<View className="flex flex-row space-x-4">
 			<View className="rounded-md">
 				<TextInput
-					className="text-2xl text-center px-7 py-5 bg-gray-300 rounded-md w-16 "
+					className="text-2xl text-center bg-gray-300 rounded-md w-16 py-6"
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={firstInput}
@@ -72,9 +72,9 @@ export default function CodeInput() {
 					value={otp[1]}
 				/>
 			</View>
-			<View className="rounded-md bg-orange-300">
+			<View className="rounded-md flex items-center justify-center">
 				<TextInput
-					className="text-2xl text-center px-7 py-5 bg-gray-300 rounded-md w-16"
+					className="text-2xl text-center bg-gray-300  rounded-md w-16 py-6"
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={secondInput}
@@ -85,7 +85,7 @@ export default function CodeInput() {
 			</View>
 			<View className="rounded-md">
 				<TextInput
-					className="text-2xl text-center px-7 py-5 bg-gray-300 rounded-md w-16"
+					className="text-2xl text-center bg-gray-300 rounded-md w-16 py-6"
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={thirdInput}
@@ -96,7 +96,7 @@ export default function CodeInput() {
 			</View>
 			<View className="rounded-md">
 				<TextInput
-					className="text-2xl text-center px-7 py-5 bg-gray-300 rounded-md w-16"
+					className="text-2xl text-center bg-gray-300 rounded-md w-16 py-6"
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={fourthInput}
