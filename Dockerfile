@@ -1,23 +1,22 @@
 # Build Stage
 # ---
-FROM node:18 AS builder
+FROM node:18-alpine AS builder
 WORKDIR /opt/app
 
 COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install --ignore-optional
 COPY . .
+RUN yarn prisma generate
 RUN yarn build
 RUN rm -rf node_modules && yarn install --production --ignore-scripts
 
 # Run Stage
 # ---
-#FROM gcr.io/distroless/nodejs:18
-#
-#USER nobody
-#
-#COPY --chown=nobody --from=builder /opt/app /opt/app
-#WORKDIR /opt/app
+FROM node:18-alpine AS deploy
+
+COPY --chown=deploy --from=builder /opt/app /opt/app
+WORKDIR /opt/app
 
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV

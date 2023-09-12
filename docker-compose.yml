@@ -11,6 +11,8 @@ services:
     ports:
       - '5432:5432'
   api:
+    depends_on:
+      - postgres
     build: .
     restart: unless-stopped
     environment:
