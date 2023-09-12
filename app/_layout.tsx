@@ -1,7 +1,17 @@
 import { Stack } from 'expo-router';
 import '../globals.css';
+import { Roboto_700Bold, Roboto_400Regular } from '@expo-google-fonts/roboto';
+import { useFonts } from 'expo-font';
 
 export default function RootLayout() {
+	const [fontsLoades, fontError] = useFonts({
+		Roboto_700Bold,
+		Roboto_400Regular,
+	});
+
+	if (!fontsLoades && !fontError) {
+		return null;
+	}
 	return (
 		<Stack
 			screenOptions={{
