@@ -1,5 +1,3 @@
-// import { Text, View } from 'react-native';
-// import Voting from './pages/Voting/Voting';
 import { NavigationContainer } from '@react-navigation/native';
 import FinishScreen from './pages/FinishScreen/FinishScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -16,10 +14,6 @@ export type RootStackParamList = {
 
 export default function App() {
 	return (
-		// <View className="bg-gray-900 flex-1 items-center justify-center">
-		// 	<Text className="text-white text-4xl">Hello World!!!</Text>
-		// </View>
-		// <Voting />
 		<NavigationContainer independent={true}>
 			<Stack.Navigator
 				screenOptions={{
