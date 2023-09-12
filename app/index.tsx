@@ -44,7 +44,7 @@ const users = [
 
 export default function App() {
 	return (
-		<View className="items-center flex-1 justify-center">
+		<View className="items-center flex-1">
 			<ImageBackground
 				style={{
 					width: 264,
@@ -57,7 +57,7 @@ export default function App() {
 				}}
 				source={Logo}
 			/>
-			<View className="rounded-b-3xl items-center h-32 w-full bg-white shadow shadow-gray-400">
+			<View className="rounded-b-3xl items-center h-44 w-full bg-white shadow shadow-gray-400 pt-10 mb-4">
 				<Text className="mt-8 text-lg text-triider-primary-orange1">Team Vue.js {'>'} React</Text>
 				<Text className="mt-4 text-lg text-black">Please, select your user</Text>
 			</View>
