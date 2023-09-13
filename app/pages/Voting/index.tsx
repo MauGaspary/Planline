@@ -2,7 +2,6 @@ import { Text, View } from 'react-native';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
@@ -35,10 +34,12 @@ export default function Voting() {
 				<Card label="13" isSelected={selectedCard === '13'} onClick={handleCardClick} />
 			</View>
 			<View className="mt-10 items-center">
-				<Button label="Próximo" onClick={() => navigation.navigate('Wait')} />
+				<Button
+					label="Próximo"
+					onClick={() => navigation.navigate('Error', { label: 'Testando' })}
+				/>
 				<Card label="" isSelected={selectedCard === ''} onClick={handleCardClick} />
 			</View>
-			<StatusBar style="inverted" />
 		</View>
 	);
 }

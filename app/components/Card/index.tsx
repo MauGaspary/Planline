@@ -25,13 +25,13 @@ export default function Card({ label, isSelected, onClick }: CardProps) {
 		  (textStyle = 'text-lg text-white font-bold'),
 		  (imgStyle = coffeeWhite),
 		  (styleBtn =
-				'rounded-2xl h-14 w-80 items-center justify-center bg-triider-primary-orange1 shadow shadow-gray-400 mt-6'))
+				'rounded-2xl h-14 w-72 items-center justify-center bg-triider-primary-orange1 shadow shadow-gray-400 mt-6'))
 		: ((style =
 				'rounded-2xl h-32 w-24 items-center justify-center bg-white shadow shadow-gray-400'),
 		  (textStyle = 'text-lg text-triider-primary-orange1 font-bold'),
 		  (imgStyle = coffee),
 		  (styleBtn =
-				'rounded-2xl h-14 w-80 items-center justify-center bg-white shadow shadow-gray-400 mt-6'));
+				'rounded-2xl h-14 w-72 items-center justify-center bg-white shadow shadow-gray-400 mt-6'));
 
 	if (label !== '') {
 		return (
