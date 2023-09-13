@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import QRCode from 'react-qr-code';
 import ResumeInfo from '../../mocks/resumeInfo';
-import { useCreateSession } from '../../services/useCreateSession';
-import { useRealtimeDatabase } from '../../services/useFirebase';
+import { createFirebaseSession } from '../../services/firebase/firebaseSessions';
+import { getRealtimeDatabase } from '../../services/firebase/firebase';
 import { onValue, ref } from 'firebase/database';
 
 function Resume() {
 	const [sessionId, setSessionId] = useState<string>('');
 	const [showResume, setShowResume] = useState(true);
-	const database = useRealtimeDatabase();
+	const database = getRealtimeDatabase();
 
 	useEffect(() => {
 		onValue(ref(database, 'sessions'), (snapshot) => {
@@ -20,9 +20,7 @@ function Resume() {
 	function createSession() {
 		const session_id = Math.floor(1000 + Math.random() * 9000).toString();
 
-		setSessionId(session_id);
-
-		useCreateSession(session_id).then(() => {
+		createFirebaseSession(session_id).then(() => {
 			setSessionId(session_id);
 			setShowResume(false);
 		});
