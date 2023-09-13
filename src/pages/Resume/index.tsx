@@ -1,10 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import QRCode from 'react-qr-code';
 import ResumeInfo from '../../mocks/resumeInfo';
+import { useCreateSession } from '../../services/useCreateSession';
+import { useRealtimeDatabase } from '../../services/useFirebase';
+import { onValue, ref } from 'firebase/database';
 
 function Resume() {
+	const [sessionId, setSessionId] = useState<string | null>(null);
 	const [showResume, setShowResume] = useState(true);
+	const database = useRealtimeDatabase();
+
+	useEffect(() => {
+		onValue(ref(database, 'sessions'), (snapshot) => {
+			console.log(snapshot.val());
+		});
+	}, []);
+
+	function createSession() {
+		const session_id = Math.floor(1000 + Math.random() * 9000).toString();
+
+		useCreateSession(session_id).then(() => {
+			setSessionId(session_id);
+			setShowResume(false);
+		});
+	}
 
 	return (
 		<Card title="resumo">
@@ -79,7 +99,7 @@ function Resume() {
 						<button
 							type="submit"
 							className="text-triider-grayscale-white bg-triider-primary-orange-dark focus:ring-0 focus:outline-none rounded-lg text-sm px-6 py-2"
-							onClick={() => setShowResume(!showResume)}
+							onClick={createSession}
 						>
 							Iniciar sessão
 						</button>
@@ -88,7 +108,7 @@ function Resume() {
 			) : (
 				<>
 					<div className="flex justify-center">
-						<QRCode size={256} value={''} />
+						<QRCode size={256} value={sessionId ?? ''} />
 					</div>
 					<button
 						type="submit"
