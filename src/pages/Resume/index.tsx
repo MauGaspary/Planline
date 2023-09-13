@@ -7,7 +7,7 @@ import { useRealtimeDatabase } from '../../services/useFirebase';
 import { onValue, ref } from 'firebase/database';
 
 function Resume() {
-	const [sessionId, setSessionId] = useState<string | null>(null);
+	const [sessionId, setSessionId] = useState<string>('');
 	const [showResume, setShowResume] = useState(true);
 	const database = useRealtimeDatabase();
 
@@ -19,6 +19,8 @@ function Resume() {
 
 	function createSession() {
 		const session_id = Math.floor(1000 + Math.random() * 9000).toString();
+
+		setSessionId(session_id);
 
 		useCreateSession(session_id).then(() => {
 			setSessionId(session_id);
@@ -107,12 +109,17 @@ function Resume() {
 				</>
 			) : (
 				<>
-					<div className="flex justify-center">
-						<QRCode size={256} value={sessionId ?? ''} />
+					<div className="flex items-center justify-center text-center">
+						<div>
+							<p className="font-mono text-4xl tracking-[.5em]">{sessionId}</p>
+							<p className="">
+								<QRCode size={256} value={sessionId} />
+							</p>
+						</div>
 					</div>
 					<button
 						type="submit"
-						className="text-triider-grayscale-white bg-triider-primary-orange-dark focus:ring-0 focus:outline-none rounded-lg text-sm px-6 py-2"
+						className="text-triider-grayscale-white w-full bg-triider-primary-orange-dark focus:ring-0 focus:outline-none rounded-lg text-2xl px-6 py-2"
 						onClick={() => setShowResume(!showResume)}
 					>
 						→
