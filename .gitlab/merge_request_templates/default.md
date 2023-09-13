@@ -1,23 +1,29 @@
-## Trello Card Link
+<!-- Title template: [type] Descriptive title -->
+<!-- Example: [Build] Fixing prettier settings -->
+# Changes
 
-  <!--- Link of the Trello card -->
+<!--(Make a list of the changes and a description of what was done.)-->
 
-## Added
+Changes # [Task link](https://trello.com/)
 
-  <!--- What is new on this code? -->
+## Change Type
 
-## Removed
+<!-- Delete the irrelevant options. -->
 
-  <!--- What was removed on this code? -->
+- [ ] Bug fix (Not breaking change that fixes a bug)
+- [ ] New feature (Not breaking change and adds a new feature)
+- [ ] Build (Change on configuration)
+- [ ] Breaking change (Change with potential of breaking a part of the project)
+- [ ] This change requires a change on documentation
 
-## Changed
+## Screenshot
 
-  <!--- What has been changed? -->
+<!-- Use this space to attach an image to verify the changes made by this MR -->
 
-## How to Test
+## Checklist:
 
-  <!--- Add some steps or scenarios of how to test and validate these changes -->
-
-## Screenshots
-
-  <!--- In case of any visual changes, add some screenshots here -->
+- [ ] My code follows the defined guidelines
+- [ ] I reviewed and tested my code
+- [ ] My changes don't cause new warnings
+- [ ] My code has relevant tests
+- [ ] My unit tests are passing
