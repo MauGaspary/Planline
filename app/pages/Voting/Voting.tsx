@@ -35,7 +35,7 @@ export default function Voting() {
 				<CardComponent label="13" isSelected={selectedCard === '13'} onClick={handleCardClick} />
 			</View>
 			<View className="mt-10 items-center">
-				<ButtonComponent label="Next" onClick={() => navigation.navigate('Wait')} />
+				<ButtonComponent label="Próximo" onClick={() => navigation.navigate('Wait')} />
 				<CardComponent label="" isSelected={selectedCard === ''} onClick={handleCardClick} />
 			</View>
 			<StatusBar style="inverted" />

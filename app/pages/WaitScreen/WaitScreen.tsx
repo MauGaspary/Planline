@@ -7,7 +7,7 @@ export default function WaitScreen() {
 		<View className="items-center bg-white flex-1">
 			<Image source={Logo} className="mt-24" style={{ height: 250, resizeMode: 'contain' }}></Image>
 			<Text className="text-2xl font-title mt-14 text-triider-grayscale-gray1">
-				Wait a few minutes {'\n'} for the next round
+				Aguarde alguns minutos {'\n'} até o próximo round!
 			</Text>
 			<StatusBar style="inverted" />
 		</View>
