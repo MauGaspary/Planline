@@ -2,7 +2,7 @@ import { Image, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/Logo-vertical-original.png';
 
-export default function WaitScreen() {
+export default function Wait() {
 	return (
 		<View className="items-center bg-white flex-1">
 			<Image source={Logo} className="mt-24" style={{ height: 250, resizeMode: 'contain' }}></Image>

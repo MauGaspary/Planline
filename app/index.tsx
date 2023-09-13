@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
-import FinishScreen from './pages/Finish';
+import Finish from './pages/Finish';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Voting from './pages/Voting';
-import WaitScreen from './pages/Wait';
+import Wait from './pages/Wait';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,8 +22,8 @@ export default function App() {
 				}}
 			>
 				<Stack.Screen name="Voting" component={Voting} />
-				<Stack.Screen name="Wait" component={WaitScreen} />
-				<Stack.Screen name="Finish" component={FinishScreen} />
+				<Stack.Screen name="Wait" component={Wait} />
+				<Stack.Screen name="Finish" component={Finish} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

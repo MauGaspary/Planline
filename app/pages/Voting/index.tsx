@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
-import CardComponent from '../../components/Card';
-import ButtonComponent from '../../components/Button';
+import Card from '../../components/Card';
+import Button from '../../components/Button';
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
@@ -25,18 +25,18 @@ export default function Voting() {
 				</Text>
 			</View>
 			<View className="flex-row mt-10 justify-between w-80">
-				<CardComponent label="1" isSelected={selectedCard === '1'} onClick={handleCardClick} />
-				<CardComponent label="2" isSelected={selectedCard === '2'} onClick={handleCardClick} />
-				<CardComponent label="3" isSelected={selectedCard === '3'} onClick={handleCardClick} />
+				<Card label="1" isSelected={selectedCard === '1'} onClick={handleCardClick} />
+				<Card label="2" isSelected={selectedCard === '2'} onClick={handleCardClick} />
+				<Card label="3" isSelected={selectedCard === '3'} onClick={handleCardClick} />
 			</View>
 			<View className="flex-row mt-10 justify-between w-80">
-				<CardComponent label="5" isSelected={selectedCard === '5'} onClick={handleCardClick} />
-				<CardComponent label="8" isSelected={selectedCard === '8'} onClick={handleCardClick} />
-				<CardComponent label="13" isSelected={selectedCard === '13'} onClick={handleCardClick} />
+				<Card label="5" isSelected={selectedCard === '5'} onClick={handleCardClick} />
+				<Card label="8" isSelected={selectedCard === '8'} onClick={handleCardClick} />
+				<Card label="13" isSelected={selectedCard === '13'} onClick={handleCardClick} />
 			</View>
 			<View className="mt-10 items-center">
-				<ButtonComponent label="Próximo" onClick={() => navigation.navigate('Wait')} />
-				<CardComponent label="" isSelected={selectedCard === ''} onClick={handleCardClick} />
+				<Button label="Próximo" onClick={() => navigation.navigate('Wait')} />
+				<Card label="" isSelected={selectedCard === ''} onClick={handleCardClick} />
 			</View>
 			<StatusBar style="inverted" />
 		</View>

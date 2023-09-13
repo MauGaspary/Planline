@@ -9,7 +9,7 @@ interface CardProps {
 	onClick: (label: string) => void;
 }
 
-export default function CardComponent({ label, isSelected, onClick }: CardProps) {
+export default function Card({ label, isSelected, onClick }: CardProps) {
 	let style = '';
 	let textStyle = '';
 	let imgStyle;
