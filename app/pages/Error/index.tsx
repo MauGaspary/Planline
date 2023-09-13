@@ -13,7 +13,7 @@ export default function GenericError() {
 				source={SadTriider}
 				className="mt-24"
 				style={{ height: 250, resizeMode: 'contain' }}
-			></Image>
+			/>
 			<Text className="text-2xl font-body mt-8 mb-56">{label}</Text>
 			<ButtonComponent label="Voltar" />
 			<StatusBar style="inverted" />
