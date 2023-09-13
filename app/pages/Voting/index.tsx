@@ -6,12 +6,16 @@ import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
+import { ref, set } from 'firebase/database';
+import { useRealtimeDatabase } from '../../services/useFirebase';
 
 export default function Voting() {
 	const [selectedCard, setSelectedCard] = useState('-1');
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+	const database = useRealtimeDatabase();
 
 	const handleCardClick = (label: string) => {
+		set(ref(database, 'sessions/5227'), { users: { 1: { name: 'Carlos' } } });
 		setSelectedCard(label);
 	};
 
