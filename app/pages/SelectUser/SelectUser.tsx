@@ -1,9 +1,9 @@
 import { ImageBackground, ScrollView, Text, View } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
-import Logo from './assets/images/SimboloTriiderlaranja.png';
+import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
-import ButtonComponent from '../../components/Button';
+import Button from '../../components/Button';
 
 const users = [
 	{
@@ -72,8 +72,8 @@ export default function SelectUser() {
 				</ScrollView>
 			</View>
 			<View className="mt-16 justify-between h-32">
-				<ButtonComponent label="Start" />
-				<ButtonComponent label="Back" variant="ghost" />
+				<Button label="Start" />
+				<Button label="Back" variant="ghost" />
 			</View>
 			<StatusBar style="inverted" />
 		</View>

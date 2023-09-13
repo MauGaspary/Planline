@@ -2,12 +2,11 @@ import { View, Text, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import SadTriider from '../../assets/images/sadOrangeTriider.png';
 import ButtonComponent from '../../components/Button';
+import { useRoute } from '@react-navigation/native';
 
-interface ErrorComponent {
-	label: string;
-}
-
-export default function GenericError({ label }: ErrorComponent) {
+export default function GenericError() {
+	const route = useRoute();
+	const { label } = route.params as { label: string };
 	return (
 		<View className="items-center bg-white flex-1">
 			<Image
@@ -16,7 +15,7 @@ export default function GenericError({ label }: ErrorComponent) {
 				style={{ height: 250, resizeMode: 'contain' }}
 			></Image>
 			<Text className="text-2xl font-body mt-8 mb-56">{label}</Text>
-			<ButtonComponent label="Go back" />
+			<ButtonComponent label="Voltar" />
 			<StatusBar style="inverted" />
 		</View>
 	);

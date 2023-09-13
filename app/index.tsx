@@ -3,6 +3,8 @@ import Finish from './pages/Finish';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Voting from './pages/Voting';
 import Wait from './pages/Wait';
+import GenericError from './pages/Error';
+import SelectUser from './pages/SelectUser/SelectUser';
 
 const Stack = createNativeStackNavigator();
 
@@ -10,6 +12,8 @@ export type RootStackParamList = {
 	Voting: undefined;
 	Wait: undefined;
 	Finish: undefined;
+	Error: { label: string };
+	SelectUser: undefined;
 };
 
 export default function App() {
@@ -21,9 +25,11 @@ export default function App() {
 					gestureEnabled: false,
 				}}
 			>
+				<Stack.Screen name="SelectUser" component={SelectUser} />
 				<Stack.Screen name="Voting" component={Voting} />
 				<Stack.Screen name="Wait" component={Wait} />
 				<Stack.Screen name="Finish" component={Finish} />
+				<Stack.Screen name="Error" component={GenericError} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

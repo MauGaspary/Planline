@@ -35,7 +35,10 @@ export default function Voting() {
 				<Card label="13" isSelected={selectedCard === '13'} onClick={handleCardClick} />
 			</View>
 			<View className="mt-10 items-center">
-				<Button label="Próximo" onClick={() => navigation.navigate('Wait')} />
+				<Button
+					label="Próximo"
+					onClick={() => navigation.navigate('Error', { label: 'Testando' })}
+				/>
 				<Card label="" isSelected={selectedCard === ''} onClick={handleCardClick} />
 			</View>
 			<StatusBar style="inverted" />
