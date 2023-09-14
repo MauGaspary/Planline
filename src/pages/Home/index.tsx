@@ -1,11 +1,7 @@
+import SideMenu from '../../components/sideMenu';
+
 function Home() {
-	return (
-		<>
-			<div className="bg-gray-900">
-				<h1 className="text-center text-triider-primary-orange1">Home!</h1>
-			</div>
-		</>
-	);
+	return <SideMenu />;
 }
 
 export default Home;
