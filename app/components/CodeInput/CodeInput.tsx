@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { NativeSyntheticEvent, TextInput, TextInputKeyPressEventData, View } from 'react-native';
 
 export default function CodeInput() {
@@ -14,16 +14,23 @@ export default function CodeInput() {
 		event: NativeSyntheticEvent<TextInputKeyPressEventData>
 	) => {
 		if (event.nativeEvent.key === 'Backspace') {
-			if (inputNumber > 1) {
+			if (inputNumber >= 1) {
 				switch (inputNumber) {
+					case 1:
+						firstInput.current?.focus();
+						setOtp({ ...otp, [inputNumber]: '' });
+						break;
 					case 2:
 						firstInput.current?.focus();
+						setOtp({ ...otp, [inputNumber]: '' });
 						break;
 					case 3:
 						secondInput.current?.focus();
+						setOtp({ ...otp, [inputNumber]: '' });
 						break;
 					case 4:
 						thirdInput.current?.focus();
+						setOtp({ ...otp, [inputNumber]: '' });
 						break;
 					default:
 						break;
@@ -55,15 +62,11 @@ export default function CodeInput() {
 		}
 	};
 
-	useEffect(() => {
-		firstInput.current?.focus();
-	}, []);
-
 	return (
-		<View className="flex flex-row space-x-4">
-			<View className="rounded-md">
+		<View className=" flex flex-row space-x-4">
+			<View className="shadow shadow-gray-400 rounded-md">
 				<TextInput
-					className="text-2xl text-center bg-gray-300 rounded-md w-16 py-6"
+					className=" text-2xl text-center bg-gray-300 rounded-md w-16 py-6"
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={firstInput}
@@ -72,7 +75,7 @@ export default function CodeInput() {
 					value={otp[1]}
 				/>
 			</View>
-			<View className="rounded-md flex items-center justify-center">
+			<View className="shadow shadow-gray-400 rounded-md">
 				<TextInput
 					className="text-2xl text-center bg-gray-300  rounded-md w-16 py-6"
 					keyboardType="number-pad"
@@ -83,7 +86,7 @@ export default function CodeInput() {
 					value={otp[2]}
 				/>
 			</View>
-			<View className="rounded-md">
+			<View className="shadow shadow-gray-400 rounded-md">
 				<TextInput
 					className="text-2xl text-center bg-gray-300 rounded-md w-16 py-6"
 					keyboardType="number-pad"
@@ -94,7 +97,7 @@ export default function CodeInput() {
 					value={otp[3]}
 				/>
 			</View>
-			<View className="rounded-md">
+			<View className="shadow shadow-gray-400 rounded-md">
 				<TextInput
 					className="text-2xl text-center bg-gray-300 rounded-md w-16 py-6"
 					keyboardType="number-pad"

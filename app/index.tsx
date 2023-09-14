@@ -5,6 +5,7 @@ import Voting from './pages/Voting';
 import Wait from './pages/Wait';
 import GenericError from './pages/Error';
 import SelectUser from './pages/SelectUser/SelectUser';
+import Home from './pages/Home/Home';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export type RootStackParamList = {
 	Finish: undefined;
 	Error: { label: string };
 	SelectUser: undefined;
+	Home: undefined;
 };
 
 export default function App() {
@@ -25,6 +27,7 @@ export default function App() {
 					gestureEnabled: false,
 				}}
 			>
+				<Stack.Screen name="Home" component={Home} />
 				<Stack.Screen name="SelectUser" component={SelectUser} />
 				<Stack.Screen name="Voting" component={Voting} />
 				<Stack.Screen name="Wait" component={Wait} />
