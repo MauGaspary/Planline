@@ -5,11 +5,14 @@ interface ButtonProps {
 	secondary?: boolean;
 	secondaryOutline?: boolean;
 	small?: boolean;
+	xs?: boolean;
 	children: React.ReactNode;
 }
 
 function Button(props: ButtonProps) {
 	let buttonClass = props.small ? 'w-[230px] ' : 'w-[359px] ';
+
+	if (props.xs) buttonClass = 'w-[172px] ';
 
 	if (props.disabled) {
 		buttonClass +=
