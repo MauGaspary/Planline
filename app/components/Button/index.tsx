@@ -6,7 +6,7 @@ interface ButtonProps {
 	variant?: 'primary' | 'ghost';
 	onClick?: () => void;
 }
-export default function ButtonComponent({ label, variant = 'primary', onClick }: ButtonProps) {
+export default function Button({ label, variant = 'primary', onClick }: ButtonProps) {
 	return (
 		<TouchableOpacity
 			className={`rounded-2xl h-14 w-72 items-center ${

@@ -1,14 +1,16 @@
 import { Image, View, Text, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import Logo from '../../assets/images/LogoLaranjaTriider.png';
-import ButtonComponent from '../../components/Button';
+import Button from '../../components/Button';
 
 import CodeInput from '../../components/CodeInput/CodeInput';
 import { RootStackParamList } from '../..';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function Home() {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+	const route = useRoute();
+	const { code } = route.params as { code: string };
 	const handleScreenPress = () => {
 		Keyboard.dismiss();
 	};
@@ -23,15 +25,19 @@ export default function Home() {
 					</Text>
 				</View>
 				<View className="space-x-6 mt-16">
-					<CodeInput />
+					<CodeInput code={code} />
 				</View>
 				<View className="justify-between mt-36 h-32">
-					<ButtonComponent
+					<Button
 						label="Enter"
 						variant="primary"
 						onClick={() => navigation.navigate('SelectUser')}
 					/>
-					<ButtonComponent label="Scan QRCode" variant="ghost" />
+					<Button
+						label="Scan QRCode"
+						variant="ghost"
+						onClick={() => navigation.navigate('Scanner')}
+					/>
 				</View>
 			</View>
 		</TouchableWithoutFeedback>
