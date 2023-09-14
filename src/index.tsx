@@ -9,7 +9,6 @@ import Squad from './pages/Dashboard/Squad';
 import User from './pages/Dashboard/User';
 import Resume from './pages/Resume';
 import './styles/globals.css';
-import Dashboard from './pages/Dashboard';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<BrowserRouter>
