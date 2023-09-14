@@ -54,6 +54,11 @@ export async function createFirebaseSession(sessionId: string) {
 				level: 'junior',
 				firebase_auth_id: null,
 			},
+			'2': {
+				name: 'Joseph',
+				level: 'senior',
+				firebase_auth_id: null,
+			},
 		},
 	};
 
