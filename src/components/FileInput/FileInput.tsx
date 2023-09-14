@@ -1,18 +1,23 @@
 import { useCallback, useState } from 'react';
-import Button from '../Button';
 import { DropzoneState, useDropzone } from 'react-dropzone';
 import UploadIcon from '../../assets/icons/uploadIcon.svg';
 import FileIcon from '../../assets/icons/fileIcon.svg';
 import CloseIcon from '../../assets/icons/closeIcon.svg';
+import Button from '../Button';
 interface InputProps {
 	dropzone: DropzoneState;
 }
 
 interface HasFileProps {
 	file: File | null;
+	removeFile: () => void;
 }
 export const FileInput = () => {
 	const [file, setFile] = useState<File | null>(null);
+
+	const removeFile = useCallback(() => {
+		setFile(null);
+	}, [file]);
 
 	const onDrop = useCallback((files: File[]) => {
 		setFile(files[0]);
@@ -25,7 +30,7 @@ export const FileInput = () => {
 		},
 	});
 
-	if (file) return <HasFile file={file} />;
+	if (file) return <HasFile file={file} removeFile={removeFile} />;
 	return <Input dropzone={dropzone} />;
 };
 
@@ -56,13 +61,13 @@ const Input = ({ dropzone }: InputProps) => {
 	);
 };
 
-const HasFile = ({ file }: HasFileProps) => {
+const HasFile = ({ file, removeFile }: HasFileProps) => {
 	return (
-		<div className="w-[500px] h-[400px] rounded-[8px] flex flex-col p-6 gap-10 text-center border-dashed border-4 border-triider-primary-orange-dark transition-all">
-			<div>
-				<img src={FileIcon} alt="file" className="w-5 h-5 my-4 ml-4" />
-				<span className="text-sm text-triider-grayscale-gray1 my-4">{file?.name}</span>
-				<button type="button" className="place-self-start mt-1 p-1">
+		<div className="rounded-[8px] flex flex-col p-6 text-center border-dashed border-4 border-triider-primary-orange-dark transition-all">
+			<div className="border rounded-[8px] flex items-center justify-center gap-2">
+				<img src={FileIcon} alt="file" className="w-10 h-10 my-4 ml-4" />
+				<span className="text-sm my-4  text-stone-800 ">{file?.name}</span>
+				<button type="button" onClick={removeFile} className="place-self-start mt-1 p-1">
 					<img src={CloseIcon} alt="close" className="w-5 h-5" />
 				</button>
 			</div>
