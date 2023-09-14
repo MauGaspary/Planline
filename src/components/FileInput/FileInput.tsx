@@ -1,9 +1,8 @@
 import { useCallback, useState } from 'react';
 import { DropzoneState, useDropzone } from 'react-dropzone';
-import UploadIcon from '../../assets/icons/uploadIcon.svg';
-import FileIcon from '../../assets/icons/fileIcon.svg';
 import CloseIcon from '../../assets/icons/closeIcon.svg';
-import Button from '../Button';
+import FileIcon from '../../assets/icons/fileIcon.svg';
+import UploadIcon from '../../assets/icons/uploadIcon.svg';
 interface InputProps {
 	dropzone: DropzoneState;
 }
@@ -12,21 +11,28 @@ interface HasFileProps {
 	file: File | null;
 	removeFile: () => void;
 }
-export const FileInput = () => {
+
+interface ButtonProps {
+	buttonState: () => void;
+}
+
+export const FileInput = ({ buttonState }: ButtonProps) => {
 	const [file, setFile] = useState<File | null>(null);
 
 	const removeFile = useCallback(() => {
 		setFile(null);
+		buttonState();
 	}, [file]);
 
 	const onDrop = useCallback((files: File[]) => {
 		setFile(files[0]);
+		buttonState();
 	}, []);
 
 	const dropzone = useDropzone({
 		onDrop,
 		accept: {
-			'application/vnd.ms-excel': ['.csv'],
+			'text/csv': ['.csv'],
 		},
 	});
 
@@ -38,6 +44,7 @@ const Input = ({ dropzone }: InputProps) => {
 	const { getRootProps, getInputProps, isDragActive } = dropzone;
 	return (
 		<div {...getRootProps()} className="w-[159] rounded-[8px] flex flex-col transition-all">
+			<input {...getInputProps()} />
 			<div className="flex flex-col items-center justify-center w-full h-full">
 				<img src={UploadIcon} alt="upload" className="h-24" />
 
@@ -50,20 +57,19 @@ const Input = ({ dropzone }: InputProps) => {
 						<div className="font-bold text-xs text-stone-800 mt-2 mb-6">
 							Selecione um arquivo ou arraste e solte aqui
 						</div>
-						<Button small secondaryOutline>
+						<p className="h-[48px] cursor-pointer text-stone-800 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] border-2 border-triider-primary-orange-dark bg-white p-2 rounded-[8px] hover:animate-pulse hover:shadow-md">
 							Selecionar arquivo
-						</Button>
+						</p>
 					</div>
 				)}
 			</div>
-			<input {...getInputProps()} className="hidden" />
 		</div>
 	);
 };
 
 const HasFile = ({ file, removeFile }: HasFileProps) => {
 	return (
-		<div className="rounded-[8px] flex flex-col p-6 text-center border-dashed border-4 border-triider-primary-orange-dark transition-all">
+		<div className="rounded-[8px] flex flex-col p-6 text-center justify-center transition-all">
 			<div className="border rounded-[8px] flex items-center justify-center gap-2">
 				<img src={FileIcon} alt="file" className="w-10 h-10 my-4 ml-4" />
 				<span className="text-sm my-4  text-stone-800 ">{file?.name}</span>
