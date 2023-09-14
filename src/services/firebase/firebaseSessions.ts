@@ -30,14 +30,31 @@ export type Task = {
 export type User = {
 	name: string;
 	level: string;
-	firebase_auth_id: string;
+	firebase_auth_id: string | null;
 };
 
 export async function createFirebaseSession(sessionId: string) {
 	const session: Session = {
 		finished: false,
-		stories: {},
-		users: {},
+		stories: {
+			'1': {
+				name: 'Story 1',
+				tasks: {
+					'1': {
+						descritpion: 'Task 1',
+						final_vote: 0,
+						votes: {},
+					},
+				},
+			},
+		},
+		users: {
+			'1': {
+				name: 'Cassio Trindade',
+				level: 'junior',
+				firebase_auth_id: null,
+			},
+		},
 	};
 
 	const database = getRealtimeDatabase();
