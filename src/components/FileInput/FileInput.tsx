@@ -32,36 +32,25 @@ export const FileInput = () => {
 const Input = ({ dropzone }: InputProps) => {
 	const { getRootProps, getInputProps, isDragActive } = dropzone;
 	return (
-		<div
-			{...getRootProps()}
-			className="w-[500px] h-[400px] rounded-[8px] flex flex-col p-6 gap-10 text-center border-dashed border-4 border-triider-primary-orange-dark transition-all"
-		>
-			<label htmlFor="dropzone-file" className="cursor-pointer w-full h-full">
-				<div className="flex flex-col items-center justify-center pt-5 pb-6 w-full h-full">
-					<img
-						src={UploadIcon}
-						alt="upload"
-						className={`w-12 h-12 mb-3 ${
-							isDragActive ? 'text-triider-secondary-purple1' : 'text-triider-primary-orange4'
-						}`}
-					/>
+		<div {...getRootProps()} className="w-[159] rounded-[8px] flex flex-col transition-all">
+			<div className="flex flex-col items-center justify-center w-full h-full">
+				<img src={UploadIcon} alt="upload" className="h-24" />
 
-					{isDragActive ? (
-						<p className="text-lg text-triider-secondary-purple1 text-center font-bold">
-							Solte aqui para adicionar
-						</p>
-					) : (
-						<>
-							<p className=" text-lg text-stone-800 text-center p-6">
-								<span className="font-bold text-stone-800 ">
-									Selecione um arquivo ou arraste e solte aqui
-								</span>
-							</p>
-							<Button>Selecionar arquivo</Button>
-						</>
-					)}
-				</div>
-			</label>
+				{isDragActive ? (
+					<p className="text-lg text-triider-secondary-purple1 text-center font-bold">
+						Solte aqui para adicionar
+					</p>
+				) : (
+					<div>
+						<div className="font-bold text-xs text-stone-800 mt-2 mb-6">
+							Selecione um arquivo ou arraste e solte aqui
+						</div>
+						<Button small secondaryOutline>
+							Selecionar arquivo
+						</Button>
+					</div>
+				)}
+			</div>
 			<input {...getInputProps()} className="hidden" />
 		</div>
 	);

@@ -1,19 +1,21 @@
 import Button from '../../components/Button';
+import Card from '../../components/Card';
 import { FileInput } from '../../components/FileInput/FileInput';
 
 function Input() {
 	const onSubmit = () => {};
-
 	return (
-		<div className=" flex h-screen justify-center items-center">
-			<div className="bg-white w-[600px] h-[500px] rounded-[8px]  flex justify-center items-center flex-col p-12 gap-10">
-				<h1 className="text-gray-700 text-3xl font-medium">Importe o arquivo</h1>
-				<form onSubmit={onSubmit} className="flex justify-center items-center">
+		<Card title="Importe o arquivo" small>
+			<form onSubmit={onSubmit} className="flex justify-center">
+				<div className="w-[352px] h-[230px] rounded-[8px]">
 					<FileInput />
-				</form>
+				</div>
+			</form>
+			<div className="flex gap-8 px-[4.5rem] ">
+				<Button secondary>Voltar</Button>
 				<Button>Importar</Button>
 			</div>
-		</div>
+		</Card>
 	);
 }
 
