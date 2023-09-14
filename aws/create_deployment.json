@@ -1,0 +1,24 @@
+{
+    "applicationName": "planline",
+    "targetInstances": { 
+      "autoScalingGroups": [ "string" ],
+      "ec2TagSet": { 
+         "ec2TagSetList": [ 
+            [ 
+               { 
+                  "Key": "string",
+                  "Type": "string",
+                  "Value": "string"
+               }
+            ]
+         ]
+      },
+      "tagFilters": [ 
+         { 
+            "Key": "string",
+            "Type": "string",
+            "Value": "string"
+         }
+      ]
+   }
+}
