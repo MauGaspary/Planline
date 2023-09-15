@@ -14,7 +14,7 @@ import Upload from './pages/Upload';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<BrowserRouter>
 		<Routes>
-			<Route path="/" element={<Home />} />
+			<Route path="" element={<Home />} />
 			<Route path="/dashboard/sprints" element={<Sprint />} />
 			<Route path="/dashboard/projects" element={<Project />} />
 			<Route path="/dashboard/orgs" element={<Organization />} />
