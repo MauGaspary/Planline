@@ -1,4 +1,4 @@
-trigger: push
+#trigger: push
 stages:
     - build
     - package
