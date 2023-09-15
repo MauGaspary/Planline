@@ -15,8 +15,12 @@ export default function Voting() {
 	const database = useRealtimeDatabase();
 
 	const handleCardClick = (label: string) => {
-		set(ref(database, 'sessions/5227'), { users: { 1: { name: 'Carlos' } } });
 		setSelectedCard(label);
+	};
+
+	const handleButtonClick = () => {
+		set(ref(database, 'sessions/'), { users: { 1: { name: 'Carlos' } } });
+		navigation.navigate('Wait');
 	};
 
 	return (
@@ -39,7 +43,7 @@ export default function Voting() {
 				<Card label="13" isSelected={selectedCard === '13'} onClick={handleCardClick} />
 			</View>
 			<View className="mt-10 items-center">
-				<Button label="Próximo" onClick={() => navigation.navigate('Wait')} />
+				<Button label="Próximo" onClick={handleButtonClick} />
 				<Card label="" isSelected={selectedCard === ''} onClick={handleCardClick} />
 			</View>
 			<StatusBar style="inverted" />

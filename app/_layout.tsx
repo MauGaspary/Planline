@@ -2,6 +2,7 @@ import { Stack } from 'expo-router';
 import '../globals.css';
 import { Roboto_700Bold, Roboto_400Regular } from '@expo-google-fonts/roboto';
 import { useFonts } from 'expo-font';
+import { SessionProvider } from './hooks/useSessionContexts';
 
 export default function RootLayout() {
 	const [fontsLoades, fontError] = useFonts({
@@ -13,14 +14,16 @@ export default function RootLayout() {
 		return null;
 	}
 	return (
-		<Stack
-			screenOptions={{
-				headerShown: false,
-				contentStyle: { backgroundColor: 'transparent' },
-				animation: 'fade',
-			}}
-		>
-			<Stack.Screen name="index" />
-		</Stack>
+		<SessionProvider>
+			<Stack
+				screenOptions={{
+					headerShown: false,
+					contentStyle: { backgroundColor: 'transparent' },
+					animation: 'fade',
+				}}
+			>
+				<Stack.Screen name="index" />
+			</Stack>
+		</SessionProvider>
 	);
 }

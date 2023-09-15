@@ -1,49 +1,14 @@
 import { ImageBackground, ScrollView, Text, View } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
-import Logo from './assets/images/SimboloTriiderlaranja.png';
+import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
 import ButtonComponent from '../../components/Button';
-
-const users = [
-	{
-		id: 1,
-		name: 'Cássio Trindade',
-		role: 'Estagiário',
-	},
-	{
-		id: 2,
-		name: 'Augusto Linhares',
-		role: 'Desenvolvedor Senior',
-	},
-	{
-		id: 3,
-		name: 'Leticia Reis',
-		role: 'UI/UX Designer',
-	},
-	{
-		id: 4,
-		name: 'John Doe',
-		role: 'Desenvolvedor Junior',
-	},
-	{
-		id: 5,
-		name: 'John Doe',
-		role: 'Desenvolvedor Senior',
-	},
-	{
-		id: 6,
-		name: 'John Doe',
-		role: 'Desenvolvedor Senior',
-	},
-	{
-		id: 7,
-		name: 'John Doe',
-		role: 'Desenvolvedor Junior',
-	},
-];
+import { useSession } from '../../hooks/useSessionContexts';
 
 export default function SelectUser() {
+	const { state } = useSession();
+	const { users } = state;
 	return (
 		<View className="items-center flex-1">
 			<ImageBackground
@@ -66,7 +31,7 @@ export default function SelectUser() {
 				<ScrollView showsVerticalScrollIndicator={false}>
 					{users.map((user) => (
 						<View key={user.id} className="mb-6">
-							<MemberCard name={user.name} role={user.role} />
+							<MemberCard name={user.name} role={user.level} />
 						</View>
 					))}
 				</ScrollView>
