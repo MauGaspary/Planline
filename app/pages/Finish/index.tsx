@@ -13,7 +13,7 @@ export default function Finish() {
 			<Text className="text-2xl font-title mt-14 text-triider-grayscale-gray1 mb-56">
 				Obrigado por participar!
 			</Text>
-			<Button label="Finalizar" onClick={() => navigation.navigate('Voting')} />
+			<Button label="Finalizar" onClick={() => navigation.navigate('Voting', { userName: '' })} />
 		</View>
 	);
 }

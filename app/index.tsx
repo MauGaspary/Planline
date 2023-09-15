@@ -9,7 +9,7 @@ import SelectUser from './pages/SelectUser/SelectUser';
 const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
-	Voting: undefined;
+	Voting: { userName: string };
 	Wait: undefined;
 	Finish: undefined;
 	Error: { label: string };
