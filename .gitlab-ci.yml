@@ -1,3 +1,4 @@
+trigger: push
 stages:
     - build
     - package
@@ -13,27 +14,27 @@ build:
         paths:
             - test.html
 
-build docker image:
-    image: docker
-    stage: package
-    services:
-        - docker:dind
-    variables:
-        DOCKER_TLS_CERTDIR: ""
-    script:
-        #-  echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-        -  docker build -t .
-        -  docker image ls
-        #-  docker push --all-tags $CI_REGISTRY_IMAGE
+# build docker image:
+#     image: docker
+#     stage: package
+#     services:
+#         - docker:dind
+#     variables:
+#         DOCKER_TLS_CERTDIR: ""
+#     script:
+#         #-  echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+#         -  docker build -t .
+#         -  docker image ls
+#         #-  docker push --all-tags $CI_REGISTRY_IMAGE
 
-deploy:
-  stage: production
-  image: .
-  #script:
-   #-  aws s3 ...
-   #-  aws create-deployment ...
-  environment: production
+# deploy:
+#   stage: production
+#   image: .
+#   #script:
+#    #-  aws s3 ...
+#    #-  aws create-deployment ...
+#   environment: production
 
-include:
-  - template: AWS/Deploy-ECS.gitlab-ci.yml
-  - template: AWS/CF-Provision-and-Deploy-EC2.gitlab-ci.yml
+# include:
+#   - template: AWS/Deploy-ECS.gitlab-ci.yml
+#   - template: AWS/CF-Provision-and-Deploy-EC2.gitlab-ci.yml
