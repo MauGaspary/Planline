@@ -1,9 +1,3 @@
-variables:
-  CI_AWS_CF_CREATE_STACK_FILE: 'aws/cf_create_stack.json'
-  CI_AWS_S3_PUSH_FILE: 'aws/s3_push.json'
-  CI_AWS_EC2_DEPLOYMENT_FILE: 'aws/create_deployment.json'
-  CI_AWS_CF_STACK_NAME: .
-
 stages:
     - build
     - package
