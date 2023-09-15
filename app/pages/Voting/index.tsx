@@ -2,20 +2,35 @@ import { Text, View } from 'react-native';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
+import { push, ref, set } from 'firebase/database';
+import { useRealtimeDatabase } from '../../services/useFirebase';
 
 export default function Voting() {
-	const [selectedCard, setSelectedCard] = useState('-1');
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+	const route = useRoute();
 
+	const { userName } = route.params as { userName: string };
+	const { code } = route.params as { code: string };
+
+	const database = useRealtimeDatabase();
+
+	const [selectedCard, setSelectedCard] = useState('-1');
 	const handleCardClick = (label: string) => {
 		setSelectedCard(label);
 	};
 
+	const handleButtonClick = () => {
+		const usersRef = ref(database, `sessions/${code}/users`);
+		const newUserRef = push(usersRef);
+		set(newUserRef, { name: userName });
+		navigation.navigate('Wait');
+	};
+
 	return (
-		<View className="items-center bg-white flex-1">
+		<View className="items-center flex-1">
 			<View className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400">
 				<Text className="mt-10 text-2xl font-body">SPRINT TESTE</Text>
 				<Text className="mt-8 text-lg text-triider-primary-orange1">STORY 01</Text>
@@ -34,10 +49,7 @@ export default function Voting() {
 				<Card label="13" isSelected={selectedCard === '13'} onClick={handleCardClick} />
 			</View>
 			<View className="mt-10 items-center">
-				<Button
-					label="Próximo"
-					onClick={() => navigation.navigate('Error', { label: 'Testando' })}
-				/>
+				<Button label="Próximo" onClick={handleButtonClick} />
 				<Card label="" isSelected={selectedCard === ''} onClick={handleCardClick} />
 			</View>
 		</View>

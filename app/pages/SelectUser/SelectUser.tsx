@@ -4,49 +4,17 @@ import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
 import ButtonComponent from '../../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import { useSession } from '../../hooks/useSessionContexts';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
 
-const users = [
-	{
-		id: 1,
-		name: 'Cássio Trindade',
-		role: 'Estagiário',
-	},
-	{
-		id: 2,
-		name: 'Augusto Linhares',
-		role: 'Desenvolvedor Senior',
-	},
-	{
-		id: 3,
-		name: 'Leticia Reis',
-		role: 'UI/UX Designer',
-	},
-	{
-		id: 4,
-		name: 'John Doe',
-		role: 'Desenvolvedor Junior',
-	},
-	{
-		id: 5,
-		name: 'John Doe',
-		role: 'Desenvolvedor Senior',
-	},
-	{
-		id: 6,
-		name: 'John Doe',
-		role: 'Desenvolvedor Senior',
-	},
-	{
-		id: 7,
-		name: 'John Doe',
-		role: 'Desenvolvedor Junior',
-	},
-];
-
 export default function SelectUser() {
+	const { state } = useSession();
+	const { users } = state;
+
+	const route = useRoute();
+	const { code } = route.params as { code: string };
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
 	const [selectedUser, setSelectedUser] = useState<string>('');
@@ -79,7 +47,7 @@ export default function SelectUser() {
 						<View key={user.id} className="mb-6">
 							<MemberCard
 								name={user.name}
-								role={user.role}
+								role={user.level}
 								isSelected={user.name === selectedUser}
 								onClick={() => toggleSelection(user.name)}
 							/>
@@ -89,10 +57,10 @@ export default function SelectUser() {
 			</View>
 			<View className="mt-16 justify-between h-32">
 				<ButtonComponent
-					label="Start"
-					onClick={() => navigation.navigate('Voting', { userName: selectedUser })}
+					label="Iniciar"
+					onClick={() => navigation.navigate('Voting', { userName: selectedUser, code: code })}
 				/>
-				<ButtonComponent label="Back" variant="ghost" onClick={() => navigation.goBack()} />
+				<ButtonComponent label="Voltar" variant="ghost" onClick={() => navigation.goBack()} />
 			</View>
 			<StatusBar style="inverted" />
 		</View>

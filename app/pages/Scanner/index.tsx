@@ -42,7 +42,7 @@ export default function App() {
 				style={StyleSheet.absoluteFillObject}
 				barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
 			/>
-			<View className="items-center inset-x-0 bottom-32 absolute">
+			<View className="items-center inset-x-0 bottom-10 absolute">
 				<Button label="Voltar" onClick={() => navigation.goBack()} />
 			</View>
 		</View>
