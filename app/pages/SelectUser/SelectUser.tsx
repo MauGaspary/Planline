@@ -75,7 +75,7 @@ export default function SelectUser() {
 			</View>
 			<View className="mt-16 justify-between h-32">
 				<Button label="Start" onClick={() => navigation.navigate('Voting')} />
-				<Button label="Back" variant="ghost" />
+				<Button label="Back" variant="ghost" onClick={() => navigation.goBack()} />
 			</View>
 		</View>
 	);
