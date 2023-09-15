@@ -4,6 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { RootStackParamList } from '../..';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+import Button from '../../components/Button';
 
 export default function App() {
 	const [hasPermission, setHasPermission] = useState<boolean>(false);
@@ -19,13 +20,15 @@ export default function App() {
 		getBarCodeScannerPermissions();
 	}, []);
 
-	const handleBarCodeScanned = () => {
+	const handleBarCodeScanned = ({ data }: { data: string }) => {
 		setScanned(true);
-		navigation.navigate({
-			name: 'Home',
-			params: { code: '1234' },
-			merge: true,
-		});
+		Number(data) <= 9999 && Number(data) >= Number('0000')
+			? navigation.navigate({
+					name: 'Home',
+					params: { code: data },
+					merge: true,
+			  })
+			: navigation.navigate('Error', { label: 'Código inválido' });
 	};
 
 	if (hasPermission === false) {
@@ -39,6 +42,9 @@ export default function App() {
 				style={StyleSheet.absoluteFillObject}
 				barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
 			/>
+			<View className="items-center inset-x-0 bottom-32 absolute">
+				<Button label="Voltar" onClick={() => navigation.goBack()} />
+			</View>
 		</View>
 	);
 }
