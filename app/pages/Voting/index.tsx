@@ -2,23 +2,28 @@ import { Text, View } from 'react-native';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
 import { ref, set } from 'firebase/database';
 import { useRealtimeDatabase } from '../../services/useFirebase';
 
 export default function Voting() {
-	const [selectedCard, setSelectedCard] = useState('-1');
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+	const route = useRoute();
+
+	const { userName } = route.params as { userName: string };
+	const { code } = route.params as { code: string };
+
 	const database = useRealtimeDatabase();
 
+	const [selectedCard, setSelectedCard] = useState('-1');
 	const handleCardClick = (label: string) => {
 		setSelectedCard(label);
 	};
 
 	const handleButtonClick = () => {
-		set(ref(database, 'sessions/'), { users: { 1: { name: 'Carlos' } } });
+		set(ref(database, `sessions/${code}`), { users: { 1: { name: userName } } });
 		navigation.navigate('Wait');
 	};
 

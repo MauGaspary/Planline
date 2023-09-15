@@ -11,11 +11,11 @@ import Scanner from './pages/Scanner';
 const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
-	Voting: { userName: string };
+	Voting: { userName: string; code: string };
 	Wait: undefined;
 	Finish: undefined;
 	Error: { label: string };
-	SelectUser: undefined;
+	SelectUser: { code: string };
 	Home: undefined | { code: string };
 	Scanner: undefined;
 };

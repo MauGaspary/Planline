@@ -5,7 +5,7 @@ import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
 import ButtonComponent from '../../components/Button';
 import { useSession } from '../../hooks/useSessionContexts';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
 
@@ -13,6 +13,8 @@ export default function SelectUser() {
 	const { state } = useSession();
 	const { users } = state;
 
+	const route = useRoute();
+	const { code } = route.params as { code: string };
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
 	const [selectedUser, setSelectedUser] = useState<string>('');
@@ -56,7 +58,7 @@ export default function SelectUser() {
 			<View className="mt-16 justify-between h-32">
 				<ButtonComponent
 					label="Start"
-					onClick={() => navigation.navigate('Voting', { userName: selectedUser })}
+					onClick={() => navigation.navigate('Voting', { userName: selectedUser, code: code })}
 				/>
 				<ButtonComponent label="Back" variant="ghost" onClick={() => navigation.goBack()} />
 			</View>
