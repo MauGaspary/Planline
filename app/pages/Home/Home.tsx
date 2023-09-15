@@ -29,12 +29,12 @@ export default function Home() {
 				</View>
 				<View className="justify-between mt-36 h-32">
 					<Button
-						label="Enter"
+						label="Entrar"
 						variant="primary"
 						onClick={() => navigation.navigate('SelectUser', { code: code })}
 					/>
 					<Button
-						label="Scan QRCode"
+						label="Scanear QRCode"
 						variant="ghost"
 						onClick={() => navigation.navigate('Scanner')}
 					/>

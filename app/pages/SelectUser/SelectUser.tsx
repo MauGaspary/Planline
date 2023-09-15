@@ -57,10 +57,10 @@ export default function SelectUser() {
 			</View>
 			<View className="mt-16 justify-between h-32">
 				<ButtonComponent
-					label="Start"
+					label="Iniciar"
 					onClick={() => navigation.navigate('Voting', { userName: selectedUser, code: code })}
 				/>
-				<ButtonComponent label="Back" variant="ghost" onClick={() => navigation.goBack()} />
+				<ButtonComponent label="Voltar" variant="ghost" onClick={() => navigation.goBack()} />
 			</View>
 			<StatusBar style="inverted" />
 		</View>
