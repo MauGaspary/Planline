@@ -2,14 +2,116 @@ import { useState } from 'react';
 import Card from '../../components/Card';
 import QRCode from 'react-qr-code';
 import ResumeInfo from '../../mocks/resumeInfo';
+import {
+	Session,
+	User,
+	createFirebaseSession,
+	finishFirebaseSession,
+} from '../../services/firebase/firebaseSessions';
+import { getRealtimeDatabase } from '../../services/firebase/firebase';
+import { off, onValue, ref } from 'firebase/database';
 
-function Resume() {
-	const [showResume, setShowResume] = useState(true);
+function Participant({ name, isOnline }: { name: string; isOnline: boolean }) {
+	const circle = isOnline ? 'bg-triider-primary-orange-dark' : 'bg-triider-grayscale-gray1';
+	const underline = isOnline ? 'underline' : 'no-underline';
 
 	return (
-		<Card title="resumo">
-			{showResume ? (
-				<>
+		<div className="flex items-center gap-2">
+			<div className={`w-2 h-2 rounded-full ${circle}`}></div>
+			<span
+				className={`text-triider-grayscale-gray1 ${underline} underline-offset-4 decoration-triider-primary-orange1`}
+			>
+				{name}
+			</span>
+		</div>
+	);
+}
+
+function Participants({ className, participants }: { className: string; participants: User[] }) {
+	return (
+		<div className={`flex flex-col gap-2 ${className}`}>
+			<span className="text-triider-grayscale-gray1">PARTICIPANTES:</span>
+			{participants.map((participant) => (
+				<Participant
+					key={participant.name}
+					name={participant.name}
+					isOnline={participant.firebase_auth_id != null}
+				/>
+			))}
+		</div>
+	);
+}
+
+function Game({
+	sessionId,
+	session,
+	onEndSession,
+}: {
+	sessionId: string;
+	session: Session;
+	onEndSession: () => void;
+}) {
+	const participants = Object.values(session.users);
+
+	return (
+		<div className="min-h-screen bg-triider-grayscale-gray4">
+			<h1 className="text-5xl w-full text-center pt-5 text-triider-primary-orange-dark">
+				Planing Poker
+			</h1>
+			<div className="flex justify-between text-center ml-6 mr-6">
+				<div className="bg-white p-5 rounded border-2 border-triider-primary-orange3">
+					<Participants className="" participants={participants} />
+				</div>
+				<div className="bg-white p-5 rounded border-2 border-triider-primary-orange3">
+					<p className="">
+						<QRCode size={160} value={sessionId} />
+					</p>
+					<p className="font-mono text-2xl tracking-[.5em] mt-2 mr-{-.5em}">{sessionId}</p>
+				</div>
+			</div>
+			<button
+				type="submit"
+				className="text-triider-grayscale-white bg-triider-alert-red focus:ring-0 focus:outline-none rounded-lg text-xl px-6 py-2 mt-3 mx-auto block absolute bottom-6 right-6"
+				onClick={() => onEndSession()}
+			>
+				Finalizar sessão
+			</button>
+		</div>
+	);
+}
+
+function Resume() {
+	const [sessionId, setSessionId] = useState<string | null>(null);
+	const [session, setSession] = useState<Session | null>(null);
+	const database = getRealtimeDatabase();
+
+	function createSession() {
+		const sessionId = Math.floor(1000 + Math.random() * 9000).toString();
+
+		createFirebaseSession(sessionId).then(() => {
+			setSessionId(sessionId);
+
+			onValue(ref(database, 'sessions/' + sessionId), (snapshot) => {
+				setSession(snapshot.val());
+			});
+		});
+	}
+
+	function finishSession() {
+		if (sessionId == null) return;
+
+		off(ref(database, 'sessions/' + sessionId));
+
+		finishFirebaseSession(sessionId).then(() => {
+			setSessionId(null);
+			setSession(null);
+		});
+	}
+
+	return (
+		<>
+			{session == null || sessionId == null ? (
+				<Card title="resumo">
 					<div className="grid grid-cols-3 gap-4">
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">ORGANIZAÇÃO:</span>
@@ -79,27 +181,16 @@ function Resume() {
 						<button
 							type="submit"
 							className="text-triider-grayscale-white bg-triider-primary-orange-dark focus:ring-0 focus:outline-none rounded-lg text-sm px-6 py-2"
-							onClick={() => setShowResume(!showResume)}
+							onClick={createSession}
 						>
 							Iniciar sessão
 						</button>
 					</div>
-				</>
+				</Card>
 			) : (
-				<>
-					<div className="flex justify-center">
-						<QRCode size={256} value={''} />
-					</div>
-					<button
-						type="submit"
-						className="text-triider-grayscale-white bg-triider-primary-orange-dark focus:ring-0 focus:outline-none rounded-lg text-sm px-6 py-2"
-						onClick={() => setShowResume(!showResume)}
-					>
-						→
-					</button>
-				</>
+				<Game sessionId={sessionId} session={session} onEndSession={finishSession} />
 			)}
-		</Card>
+		</>
 	);
 }
 
