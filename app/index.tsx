@@ -11,7 +11,7 @@ import Scanner from './pages/Scanner';
 const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
-	Voting: undefined;
+	Voting: { userName: string };
 	Wait: undefined;
 	Finish: undefined;
 	Error: { label: string };
