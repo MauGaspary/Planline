@@ -1,5 +1,4 @@
 import { Image, Text, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/Logo-vertical-original.png';
 import Button from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
@@ -14,8 +13,7 @@ export default function Finish() {
 			<Text className="text-2xl font-title mt-14 text-triider-grayscale-gray1 mb-56">
 				Obrigado por participar!
 			</Text>
-			<Button label="Finalizar" onClick={() => navigation.navigate('Voting')} />
-			<StatusBar style="inverted" />
+			<Button label="Finalizar" onClick={() => navigation.navigate('Voting', { userName: '' })} />
 		</View>
 	);
 }

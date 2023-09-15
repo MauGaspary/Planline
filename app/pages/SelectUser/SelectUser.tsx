@@ -1,14 +1,26 @@
 import { ImageBackground, ScrollView, Text, View } from 'react-native';
-
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
 import ButtonComponent from '../../components/Button';
 import { useSession } from '../../hooks/useSessionContexts';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../..';
 
 export default function SelectUser() {
 	const { state } = useSession();
 	const { users } = state;
+
+	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+	const [selectedUser, setSelectedUser] = useState<string>('');
+
+	const toggleSelection = (userName: string) => {
+		setSelectedUser(userName);
+	};
+
 	return (
 		<View className="items-center flex-1">
 			<ImageBackground
@@ -31,14 +43,22 @@ export default function SelectUser() {
 				<ScrollView showsVerticalScrollIndicator={false}>
 					{users.map((user) => (
 						<View key={user.id} className="mb-6">
-							<MemberCard name={user.name} role={user.level} />
+							<MemberCard
+								name={user.name}
+								role={user.level}
+								isSelected={user.name === selectedUser}
+								onClick={() => toggleSelection(user.name)}
+							/>
 						</View>
 					))}
 				</ScrollView>
 			</View>
 			<View className="mt-16 justify-between h-32">
-				<ButtonComponent label="Start" />
-				<ButtonComponent label="Back" variant="ghost" />
+				<ButtonComponent
+					label="Start"
+					onClick={() => navigation.navigate('Voting', { userName: selectedUser })}
+				/>
+				<ButtonComponent label="Back" variant="ghost" onClick={() => navigation.goBack()} />
 			</View>
 			<StatusBar style="inverted" />
 		</View>

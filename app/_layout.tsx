@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import '../globals.css';
 import { Roboto_700Bold, Roboto_400Regular } from '@expo-google-fonts/roboto';
 import { useFonts } from 'expo-font';
-import { SessionProvider } from './hooks/useSessionContexts';
+import { StatusBar } from 'expo-status-bar';
 
 export default function RootLayout() {
 	const [fontsLoades, fontError] = useFonts({
@@ -14,7 +14,7 @@ export default function RootLayout() {
 		return null;
 	}
 	return (
-		<SessionProvider>
+		<>
 			<Stack
 				screenOptions={{
 					headerShown: false,
@@ -24,6 +24,7 @@ export default function RootLayout() {
 			>
 				<Stack.Screen name="index" />
 			</Stack>
-		</SessionProvider>
+			<StatusBar style="inverted" />
+		</>
 	);
 }
