@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Card from '../../components/Card';
 import QRCode from 'react-qr-code';
 import ResumeInfo from '../../mocks/resumeInfo';
@@ -56,7 +56,7 @@ function Game({
 	return (
 		<div className="min-h-screen bg-triider-grayscale-gray4">
 			<h1 className="text-5xl w-full text-center pt-5 text-triider-primary-orange-dark">
-				Plaining Poker
+				Planing Poker
 			</h1>
 			<div className="flex justify-between text-center ml-6 mr-6">
 				<div className="bg-white p-5 rounded border-2 border-triider-primary-orange3">
