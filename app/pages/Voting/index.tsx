@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
-import { ref, set } from 'firebase/database';
+import { push, ref, set } from 'firebase/database';
 import { useRealtimeDatabase } from '../../services/useFirebase';
 
 export default function Voting() {
@@ -23,12 +23,14 @@ export default function Voting() {
 	};
 
 	const handleButtonClick = () => {
-		set(ref(database, `sessions/${code}`), { users: { 1: { name: userName } } });
+		const usersRef = ref(database, `sessions/${code}/users`);
+		const newUserRef = push(usersRef);
+		set(newUserRef, { name: userName });
 		navigation.navigate('Wait');
 	};
 
 	return (
-		<View className="items-center bg-white flex-1">
+		<View className="items-center flex-1">
 			<View className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400">
 				<Text className="mt-10 text-2xl font-body">SPRINT TESTE</Text>
 				<Text className="mt-8 text-lg text-triider-primary-orange1">STORY 01</Text>
