@@ -67,3 +67,11 @@ export async function createFirebaseSession(sessionId: string) {
 
 	await set(sessionRef, session);
 }
+export async function finishFirebaseSession(sessionId: string) {
+	const database = getRealtimeDatabase();
+	const sessionRef = ref(database, 'sessions/' + sessionId);
+
+	// TODO: remove this when backend is ready
+	// Use this insted: await set(sessionRef, { finished: true });
+	await set(sessionRef, null);
+}
