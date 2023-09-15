@@ -14,7 +14,7 @@ build:
     image: node:18-alpine
     stage: build
     script:
-        - # echo "Test" > "test.html"
+        -  echo "Test" > "test.html"
     artifacts:
         paths:
             - test.html
@@ -27,17 +27,17 @@ build docker image:
     variables:
         DOCKER_TLS_CERTDIR: ""
     script:
-        - # echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-        - # docker build -t $CI_REGISTRY_IMAGE .
-        - # docker image ls
-        - # docker push --all-tags $CI_REGISTRY_IMAGE
+        #-  echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+        -  docker build -t .
+        -  docker image ls
+        #-  docker push --all-tags $CI_REGISTRY_IMAGE
 
 deploy:
   stage: production
   image: .
-  script:
-   - # aws s3 ...
-   - # aws create-deployment ...
+  #script:
+   #-  aws s3 ...
+   #-  aws create-deployment ...
   environment: production
 
 include:
