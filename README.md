@@ -33,9 +33,18 @@ Para isso, é necessário estar com um terminal aberto na pasta raiz do projeto.
 
 4. É necessário renomear o arquivo .env.example para .env, dessa maneira as envs locais são importadas corretamente
 
-5. Para iniciar o servidor de desenvolvimento, execute o comando:
+5. Para iniciar o servidor de desenvolvimento, execute os comandos:
 
 ```sh
+#gera o cli do prisma
+yarn prisma generate 
+```
+```sh
+#cria as estruturas descritas nas models dentro do banco
+yarn prisma migrate dev
+```
+```sh
+#roda o projeto
 yarn dev
 ```
 
