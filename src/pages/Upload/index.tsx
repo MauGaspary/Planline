@@ -11,7 +11,7 @@ function Input() {
 		setFile(!file);
 	};
 
-	const onSubmit = () => { };
+	const onSubmit = () => {};
 	return (
 		<Card title="Importe o arquivo" small>
 			<div className="flex justify-center">
