@@ -12,7 +12,7 @@ function Card({ children, title, small }: CardProps) {
 		: 'text-4xl font-bold underline decoration-triider-primary-orange2 mb-6 underline-offset-8';
 
 	const smallClass = small
-		? 'bg-white w-[600px] h-[500px] drop-shadow-md rounded-[8px] flex flex-col p-12 gap-10 text-center'
+		? 'bg-white w-[600px] h-[500px] drop-shadow-md rounded-lg flex flex-col p-12 gap-10 text-center'
 		: 'flex flex-col box-content h-96 w-1/2 border-2 p-20 bg-white rounded-3xl gap-2';
 	return (
 		<div className="flex flex-col justify-center items-center min-h-screen bg-triider-grayscale-gray4">

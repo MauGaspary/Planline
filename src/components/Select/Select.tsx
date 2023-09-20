@@ -11,8 +11,8 @@ interface SelectProps {
 
 export const Select = (props: SelectProps) => {
 	const buttonClass = props.disabled
-		? 'flex cursor-default items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium opacity-30'
-		: 'flex cursor-pointer items-center text-lg w-[359px] h-[55px] bg-gray-100 pl-5 rounded-[8px] text-gray-700 font-medium hover:bg-slate-200';
+		? 'flex cursor-default items-center text-lg w-80 h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium opacity-30'
+		: 'flex cursor-pointer items-center text-lg w-80 h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium hover:bg-slate-200';
 
 	return (
 		<div className="relative">
@@ -28,7 +28,7 @@ export const Select = (props: SelectProps) => {
 			</div>
 
 			{props.isOpen && (
-				<ul className="absolute max-h-40 overflow-auto text-start z-10 items-center text-lg w-[359px] bg-gray-200 rounded-[8px] text-gray-700 font-medium">
+				<ul className="absolute max-h-40 overflow-auto text-start z-10 items-center text-lg w-80 bg-gray-200 rounded-lg text-gray-700 font-medium">
 					{props.options.map((option) => (
 						<li
 							onClick={() => {

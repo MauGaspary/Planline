@@ -19,12 +19,12 @@ function Input() {
 					onSubmit={onSubmit}
 					className="flex border-dashed border-triider-primary-orange-dark rounded-lg border-2 w-96 h-60 justify-center"
 				>
-					<div className="w-[352px] h-[230px] rounded-[8px] flex justify-center">
+					<div className="w-96 h-56 rounded-lg flex justify-center">
 						<FileInput buttonState={handleButton} />
 					</div>
 				</form>
 			</div>
-			<div className="flex justify-center gap-8 px-[4.5rem] ">
+			<div className="flex justify-center gap-8 px-16">
 				<Link to="/">
 					<Button xs secondary>
 						Voltar

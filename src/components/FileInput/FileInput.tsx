@@ -43,7 +43,7 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 const Input = ({ dropzone }: InputProps) => {
 	const { getRootProps, getInputProps, isDragActive } = dropzone;
 	return (
-		<div {...getRootProps()} className="w-[159] rounded-[8px] flex flex-col transition-all">
+		<div {...getRootProps()} className="rounded-lg flex flex-col transition-all">
 			<input {...getInputProps()} />
 			<div className="flex flex-col items-center justify-center w-full h-full">
 				<img src={UploadIcon} alt="upload" className="h-24" />
@@ -57,7 +57,7 @@ const Input = ({ dropzone }: InputProps) => {
 						<div className="font-bold text-xs text-stone-800 mt-2 mb-6">
 							Selecione um arquivo ou arraste e solte aqui
 						</div>
-						<p className="h-[48px] cursor-pointer text-stone-800 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] border-2 border-triider-primary-orange-dark bg-white p-2 rounded-[8px] hover:animate-pulse hover:shadow-md">
+						<p className="h-12 cursor-pointer text-stone-800 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] border-2 border-triider-primary-orange-dark bg-white p-2 rounded-lg hover:animate-pulse hover:shadow-md">
 							Selecionar arquivo
 						</p>
 					</div>
@@ -69,8 +69,8 @@ const Input = ({ dropzone }: InputProps) => {
 
 const HasFile = ({ file, removeFile }: HasFileProps) => {
 	return (
-		<div className="rounded-[8px] flex flex-col p-6 text-center justify-center transition-all">
-			<div className="border rounded-[8px] flex items-center justify-center gap-2">
+		<div className="rounded-lg flex flex-col p-6 text-center justify-center transition-all">
+			<div className="border rounded-lg flex items-center justify-center gap-2">
 				<img src={FileIcon} alt="file" className="w-10 h-10 my-4 ml-4" />
 				<span className="text-sm my-4  text-stone-800 ">{file?.name}</span>
 				<button type="button" onClick={removeFile} className="place-self-start mt-1 p-1">
