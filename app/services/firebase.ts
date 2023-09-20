@@ -23,6 +23,6 @@ const app = initializeApp(firebaseConfig);
 
 const database = getDatabase(app);
 
-export function useRealtimeDatabase() {
+export function realtimeDatabase() {
 	return database;
 }

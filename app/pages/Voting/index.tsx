@@ -6,7 +6,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
 import { push, ref, set } from 'firebase/database';
-import { useRealtimeDatabase } from '../../services/useFirebase';
+import { realtimeDatabase } from '../../services/firebase';
 
 export default function Voting() {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -15,7 +15,7 @@ export default function Voting() {
 	const { userName } = route.params as { userName: string };
 	const { code } = route.params as { code: string };
 
-	const database = useRealtimeDatabase();
+	const database = realtimeDatabase();
 
 	const [selectedCard, setSelectedCard] = useState('-1');
 	const handleCardClick = (label: string) => {
