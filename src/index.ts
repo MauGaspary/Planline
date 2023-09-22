@@ -1,8 +1,8 @@
 import express, { Express } from 'express';
 import dotenv from 'dotenv';
-import routes from './controllers/controller.js';
 import swaggerUi from 'swagger-ui-express';
-import swaggerFile from './utils/swagger-output.json';
+import swaggerFile from './config/swagger-output.json' assert { type: 'json' };
+import routes from './controllers/controller.js';
 
 dotenv.config();
 

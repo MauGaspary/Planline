@@ -13,7 +13,7 @@
 		"lint": "eslint . --max-warnings=0 --ext .ts,.tsx",
 		"format": "prettier --write .",
 		"prepare": "husky install",
-		"start-gendoc": "node dist/utils/swagger.js"
+		"swagger": "node dist/config/swagger.js"
 	},
 	"husky": {
 		"hooks": {
