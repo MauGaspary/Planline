@@ -11,6 +11,8 @@ before_script:
 # ------------- BUILD SCRIPTS -------------
 
 build-node:
+  image:
+    - docker:dind
   tags: 
     - ages-runner
   stage: build
@@ -22,7 +24,10 @@ build-node:
 
 # ------------- DEPLOY SCRIPTS -------------
 deploy-node:
+
   stage: deploy
+  image:
+    - docker:dind
   before_script:
     - docker stop backend || true
     - docker rm backend || true
