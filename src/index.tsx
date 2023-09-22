@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Error from './pages/Error';
+import Game from './pages/Game';
 import Sprint from './pages/Dashboard/Sprint';
 import Project from './pages/Dashboard/Project';
 import Organization from './pages/Dashboard/Organization';
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 			<Route path="/dashboard/users" element={<User />} />
 			<Route path="/resume" element={<Resume />} />
 			<Route path="*" element={<Error />} />
+			<Route path="/game" element={<Game />} />
 		</Routes>
 	</BrowserRouter>
 );
