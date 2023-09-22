@@ -56,7 +56,9 @@ function Home() {
 				/>
 
 				<Link to="/upload">
-					<Button disabled={squad === 'Squad'}>Confirmar</Button>
+					<Button size="medium" disabled={squad === 'Squad'}>
+						Confirmar
+					</Button>
 				</Link>
 			</div>
 		</Card>

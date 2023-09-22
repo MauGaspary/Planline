@@ -26,12 +26,12 @@ function Input() {
 			</div>
 			<div className="flex justify-center gap-8 px-16">
 				<Link to="/">
-					<Button xs secondary>
+					<Button size="small" secondary>
 						Voltar
 					</Button>
 				</Link>
 				<Link to="/resume">
-					<Button disabled={file} xs>
+					<Button disabled={file} size="small">
 						Importar
 					</Button>
 				</Link>
