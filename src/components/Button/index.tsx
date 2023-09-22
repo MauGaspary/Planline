@@ -9,14 +9,7 @@ interface ButtonProps {
 	children: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({
-	disabled,
-	secondary,
-	secondaryOutline,
-	small,
-	xs,
-	children,
-}) => {
+const Button = ({ disabled, secondary, secondaryOutline, small, xs, children }: ButtonProps) => {
 	let buttonClass = small ? 'w-56 ' : 'w-80 ';
 
 	if (xs) buttonClass = 'w-44 ';
