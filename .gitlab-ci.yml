@@ -1,4 +1,35 @@
-build-job:
+stages:
+  - build
+  - deploy
+
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+
+# ------------- BUILD SCRIPTS -------------
+
+build-node:
+  tags: 
+    - ages-runner
   stage: build
   script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - docker build -t $DOCKER_USER/backend -f Dockerfile .
+    - docker push $DOCKER_USER/backend
+#  only:
+#    - main
+
+# ------------- DEPLOY SCRIPTS -------------
+deploy-node:
+  stage: deploy
+  before_script:
+    - docker stop backend || true
+    - docker rm backend || true
+  script:
+    - docker pull $DOCKER_USER/backend
+    - docker run -d --restart always --name=backend -p 3000:3000 $DOCKER_USER/backend
+  tags:
+    - ages-runner
+#  only:
+#    - main
