@@ -10,8 +10,83 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum level {
+  JUNIOR
+  PLENO
+  SENIOR
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id         String   @id @default(uuid())
+  name       String   @db.VarChar(100)
+  email      String   @db.VarChar(50)
+  level      level    @default(JUNIOR)
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+  Squad      Squad[]
+  Vote       Vote[]
+}
+
+model Squad {
+  id         String   @id @default(uuid())
+  name       String   @db.VarChar(100)
+  User       User     @relation(fields: [leaderId], references: [id])
+  leaderId   String
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+}
+
+model Organization {
+  id         String    @id @default(uuid())
+  name       String    @db.VarChar(100)
+  email      String    @db.VarChar(50)
+  updated_at DateTime  @updatedAt
+  created_at DateTime  @default(now())
+  Project    Project[]
+}
+
+model Project {
+  id              String       @id @default(uuid())
+  name            String       @db.VarChar(100)
+  Organization    Organization @relation(fields: [organization_id], references: [id])
+  organization_id String
+  updated_at      DateTime     @updatedAt
+  created_at      DateTime     @default(now())
+}
+
+model Sprint {
+  id         String   @id @default(uuid())
+  name       String   @db.VarChar(100)
+  startDate  DateTime @db.Date
+  endDate    DateTime @db.Date
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+}
+
+model Story {
+  id           String   @id @default(uuid())
+  story_id     String   @db.VarChar(15)
+  name         String   @db.VarChar(100)
+  final_points Int      @db.Integer
+  updated_at   DateTime @updatedAt
+  created_at   DateTime @default(now())
+}
+
+model Task {
+  id         String   @id @default(uuid())
+  task_id    String   @db.VarChar(15)
+  name       String   @db.VarChar(100)
+  points     Int      @db.Integer
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+  Vote       Vote[]
+}
+
+model Vote {
+  id      String @id @default(uuid())
+  Task    Task   @relation(fields: [task_id], references: [id])
+  task_id String
+  User    User   @relation(fields: [user_id], references: [id])
+  user_id String
+  score   Int    @db.Integer
 }
