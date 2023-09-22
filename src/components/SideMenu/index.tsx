@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Button from './Button';
-import SecondaryButton from './SecondaryButton';
+import SideMenuGroup from '../SideMenuGroup';
+import SideMenuItem from '../SideMenuItem';
 
 const SideMenu: React.FC = () => {
 	const [isVisibleB1, setIsVisibleB1] = useState(false);
@@ -20,37 +20,37 @@ const SideMenu: React.FC = () => {
 	};
 
 	return (
-		<div className={'w-64 h-screen bg-triider-primary-orange-dark '}>
-			<div className={'w-full  flex justify-center p-6'}>
-				<img className={'w-44'} src="src/assets/Triiderwhiteprhase.png" />
+		<div className="w-64 h-screen bg-triider-primary-orange-dark ">
+			<div className="w-full  flex justify-center p-6">
+				<img className="w-44" src="src/assets/Triiderwhiteprhase.png" />
 			</div>
-			<div className={'mt-52'}>
-				<Button
+			<div className="mt-52">
+				<SideMenuGroup
 					onClick={toggleVisibilityB1}
 					isVisible={isVisibleB1}
-					titulo={'Dashboard'}
+					title={'Dashboard'}
 					image="src/assets/talkWhite.svg"
 				/>
 				{isVisibleB1 && (
-					<div className={''}>
-						<SecondaryButton
+					<div className="">
+						<SideMenuItem
 							onClick={() => handleButtonClick('user')}
-							switchState={activeButton === 'user'}
-							titulo={'Usuario'}
+							isSelected={activeButton === 'user'}
+							title={'Usuario'}
 							imageWhite={'src/assets/userWhite.svg'}
 							imageOrange={'src/assets/userOrange.svg'}
 						/>
-						<SecondaryButton
+						<SideMenuItem
 							onClick={() => handleButtonClick('download')}
-							switchState={activeButton === 'download'}
-							titulo={'Importar'}
+							isSelected={activeButton === 'download'}
+							title={'Importar'}
 							imageWhite={'src/assets/downloadWhite.svg'}
 							imageOrange={'src/assets/downloadOrange.svg'}
 						/>
-						<SecondaryButton
+						<SideMenuItem
 							onClick={() => handleButtonClick('upload')}
-							switchState={activeButton === 'upload'}
-							titulo={'Exportar'}
+							isSelected={activeButton === 'upload'}
+							title={'Exportar'}
 							imageWhite={'src/assets/uploadWhite.svg'}
 							imageOrange={'src/assets/uploadOrange.svg'}
 						/>
@@ -58,39 +58,39 @@ const SideMenu: React.FC = () => {
 				)}
 			</div>
 			<div>
-				<Button
+				<SideMenuGroup
 					onClick={toggleVisibilityB2}
 					isVisible={isVisibleB2}
-					titulo={'Gerenciar'}
+					title={'Gerenciar'}
 					image="src/assets/configWhite.svg"
 				/>
 				{isVisibleB2 && (
-					<div className={''}>
-						<SecondaryButton
+					<div className="">
+						<SideMenuItem
 							onClick={() => handleButtonClick('group')}
-							switchState={activeButton === 'group'}
-							titulo={'Usuários'}
+							isSelected={activeButton === 'group'}
+							title={'Usuários'}
 							imageWhite={'src/assets/groupWhite.svg'}
 							imageOrange={'src/assets/groupOrange.svg'}
 						/>
-						<SecondaryButton
+						<SideMenuItem
 							onClick={() => handleButtonClick('laptop')}
-							switchState={activeButton === 'laptop'}
-							titulo={'Squads'}
+							isSelected={activeButton === 'laptop'}
+							title={'Squads'}
 							imageWhite={'src/assets/laptopWhite.svg'}
 							imageOrange={'src/assets/laptopOrange.svg'}
 						/>
-						<SecondaryButton
+						<SideMenuItem
 							onClick={() => handleButtonClick('register')}
-							switchState={activeButton === 'register'}
-							titulo={'Projetos'}
+							isSelected={activeButton === 'register'}
+							title={'Projetos'}
 							imageWhite={'src/assets/registerWhite.svg'}
 							imageOrange={'src/assets/registerOrange.svg'}
 						/>
-						<SecondaryButton
+						<SideMenuItem
 							onClick={() => handleButtonClick('apartment')}
-							switchState={activeButton === 'apartment'}
-							titulo={'Organizações'}
+							isSelected={activeButton === 'apartment'}
+							title={'Organizações'}
 							imageWhite="src/assets/apartmentWhite.svg"
 							imageOrange="src/assets/apartmentOrange.svg"
 						/>
