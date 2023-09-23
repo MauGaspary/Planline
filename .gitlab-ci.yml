@@ -27,7 +27,7 @@ deploy-node:
   stage: deploy
   image: docker:dind
   before_script:
-    - ./planline.pem < echo $PLANLINE_PEM
+    - echo "$PLANLINE_PEM" > ./planline.pem
     - chmod 600 planline.pem
     - ssh -i planline.pem ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
     - docker stop backend || true
