@@ -33,5 +33,6 @@ deploy-node:
     - docker compose up -d
   tags:
     - ages-runner
+  when: manual
 #  only:
 #    - main
