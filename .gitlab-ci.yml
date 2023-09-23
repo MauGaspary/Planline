@@ -1,6 +1,7 @@
 stages:
   - build
   - deploy
+  - migrate
 
 services:
   - docker:dind
@@ -8,7 +9,7 @@ services:
 before_script:
   - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
 
-# ------------- BUILD SCRIPTS -------------
+# ------------- BUILD SCRIPT -------------
 
 build-node:
   image: docker:dind
@@ -21,16 +22,35 @@ build-node:
 #  only:
 #    - main
 
-# ------------- DEPLOY SCRIPTS -------------
+# ------------- DEPLOY SCRIPT -------------
 deploy-node:
   stage: deploy
   image: docker:dind
   before_script:
+    - ./planline.pem < echo $PLANLINE_PEM
+    - chmod 600 planline.pem
+    - ssh -i planline.pem ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
     - docker stop backend || true
     - docker rm backend || true
   script:
     - docker pull $DOCKER_USER/backend
     - docker compose up -d
+  tags:
+    - ages-runner
+  when: manual
+#  only:
+#    - main
+
+# ------------- MIGRATE SCRIPT -------------
+migrate-prisma:
+  stage: migrate
+  image: docker:dind
+  before_script:
+    - ./planline.pem < echo $PLANLINE_PEM
+    - chmod 600 planline.pem
+    - ssh -i planline.pem ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
+  script:
+    - docker exec backend yarn prisma migrate deploy 
   tags:
     - ages-runner
   when: manual
