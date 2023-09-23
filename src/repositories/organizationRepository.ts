@@ -3,8 +3,8 @@ import { Organization, PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default {
-	async index(): Promise<Array<Organization>> {
-		const organization = await prisma.organization.findMany();
+	async index() {
+		const organization = await prisma.organization.findMany({ select: { id: true, name: true } });
 		return organization;
 	},
 
