@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import SideMenuGroup from '../SideMenuGroup';
+// import SideMenuGroup from '../SideMenuGroup';
 import SideMenuItem from '../SideMenuItem';
 
 const SideMenu: React.FC = () => {
-	const [isVisibleB1, setIsVisibleB1] = useState(false);
+	/* const [isVisibleB1, setIsVisibleB1] = useState(false);
 	const [isVisibleB2, setIsVisibleB2] = useState(false);
-
+ */
 	const [activeButton, setActiveButton] = useState<string | null>(null);
 
-	const toggleVisibilityB1 = () => {
+	/* const toggleVisibilityB1 = () => {
 		setIsVisibleB1(!isVisibleB1);
 	};
 	const toggleVisibilityB2 = () => {
 		setIsVisibleB2(!isVisibleB2);
-	};
+	}; */
 
 	const handleButtonClick = (buttonName: string) => {
 		setActiveButton(buttonName);
@@ -25,13 +25,73 @@ const SideMenu: React.FC = () => {
 				<img className="w-44" src="src/assets/Triiderwhiteprhase.png" />
 			</div>
 			<div className="mt-52">
+				<SideMenuItem
+					onClick={() => handleButtonClick('planline')}
+					isSelected={activeButton === 'planline'}
+					title={'Plan Line'}
+					imageWhite={'src/assets/talkWhite.svg'}
+					imageOrange={'src/assets/talkOrange.svg'}
+				/>
+				<SideMenuItem
+					onClick={() => handleButtonClick('iniciar')}
+					isSelected={activeButton === 'iniciar'}
+					title={'Iniciar'}
+					imageWhite={'src/assets/groupWhite.svg'}
+					imageOrange={'src/assets/groupOrange.svg'}
+				/>
+				<SideMenuItem
+					onClick={() => handleButtonClick('laptop')}
+					isSelected={activeButton === 'laptop'}
+					title={'Squads'}
+					imageWhite={'src/assets/laptopWhite.svg'}
+					imageOrange={'src/assets/laptopOrange.svg'}
+				/>
+				<SideMenuItem
+					onClick={() => handleButtonClick('register')}
+					isSelected={activeButton === 'register'}
+					title={'Projetos'}
+					imageWhite={'src/assets/registerWhite.svg'}
+					imageOrange={'src/assets/registerOrange.svg'}
+				/>
+				<SideMenuItem
+					onClick={() => handleButtonClick('apartment')}
+					isSelected={activeButton === 'apartment'}
+					title={'Organizações'}
+					imageWhite="src/assets/apartmentWhite.svg"
+					imageOrange="src/assets/apartmentOrange.svg"
+				/>
+
+				{/* <SideMenuGroup
+					onClick={toggleVisibilityB1}
+					isVisible={isVisibleB1}
+					title={'Plan Line'}
+					image="src/assets/talkWhite.svg"
+				/>
 				<SideMenuGroup
 					onClick={toggleVisibilityB1}
 					isVisible={isVisibleB1}
-					title={'Dashboard'}
-					image="src/assets/talkWhite.svg"
+					title={'Iniciar'}
+					image="src/assets/groupWhite.svg"
 				/>
-				{isVisibleB1 && (
+				<SideMenuGroup
+					onClick={toggleVisibilityB1}
+					isVisible={isVisibleB1}
+					title={'Squads'}
+					image="src/assets/laptopWhite.svg"
+				/>
+				<SideMenuGroup
+					onClick={toggleVisibilityB1}
+					isVisible={isVisibleB1}
+					title={'Projetos'}
+					image="src/assets/register.svg"
+				/>
+				<SideMenuGroup
+					onClick={toggleVisibilityB1}
+					isVisible={isVisibleB1}
+					title={'Organizações'}
+					image="src/assets/apartment.svg"
+				/> */}
+				{/* {isVisibleB1 && (
 					<div className="">
 						<SideMenuItem
 							onClick={() => handleButtonClick('user')}
@@ -55,16 +115,16 @@ const SideMenu: React.FC = () => {
 							imageOrange={'src/assets/uploadOrange.svg'}
 						/>
 					</div>
-				)}
+				)} */}
 			</div>
 			<div>
-				<SideMenuGroup
+				{/* <SideMenuGroup
 					onClick={toggleVisibilityB2}
 					isVisible={isVisibleB2}
 					title={'Gerenciar'}
 					image="src/assets/configWhite.svg"
-				/>
-				{isVisibleB2 && (
+				/> */}
+				{/* {isVisibleB2 && (
 					<div className="">
 						<SideMenuItem
 							onClick={() => handleButtonClick('group')}
@@ -95,7 +155,7 @@ const SideMenu: React.FC = () => {
 							imageOrange="src/assets/apartmentOrange.svg"
 						/>
 					</div>
-				)}
+				)} */}
 			</div>
 		</div>
 	);

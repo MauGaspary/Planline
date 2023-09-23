@@ -7,7 +7,7 @@ interface SideMenuGroupProps {
 	image: string;
 }
 
-const SideMenuGroup = ({ onClick, isVisible, title, image }: SideMenuGroupProps) => {
+const SideMenuGroup = ({ onClick, title, image }: SideMenuGroupProps) => {
 	return (
 		<div
 			onClick={onClick}
@@ -19,13 +19,13 @@ const SideMenuGroup = ({ onClick, isVisible, title, image }: SideMenuGroupProps)
 			<div className="text-triider-grayscale-white w-24">
 				<p>{title}</p>
 			</div>
-			<div>
+			{/* <div>
 				{isVisible ? (
 					<img src="src\assets\down3White.svg" />
 				) : (
 					<img src="src\assets\up3White.svg " />
 				)}
-			</div>
+			</div> */}
 		</div>
 	);
 };
