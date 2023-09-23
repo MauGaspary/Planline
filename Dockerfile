@@ -7,9 +7,9 @@ COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install --ignore-optional
 COPY . .
-RUN yarn prisma generate
 RUN yarn build
 RUN rm -rf node_modules && yarn install --production --ignore-scripts
+RUN yarn prisma generate
 
 # Run Stage
 # ---

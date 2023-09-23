@@ -30,7 +30,7 @@ deploy-node:
     - docker rm backend || true
   script:
     - docker pull $DOCKER_USER/backend
-    - docker run -d --restart always --name=backend -p 3000:3000 $DOCKER_USER/backend
+    - docker compose up -d
   tags:
     - ages-runner
 #  only:
