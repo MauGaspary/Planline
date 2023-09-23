@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import CardsWithGames from './pages/CardsWithGames';
 import Home from './pages/Home';
 import Error from './pages/Error';
 import Sprint from './pages/Dashboard/Sprint';
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 			<Route path="/resume" element={<Resume />} />
 			<Route path="/upload" element={<Upload />} />
 			<Route path="*" element={<Error />} />
+			<Route path="/cards" element={<CardsWithGames />} />
 		</Routes>
 	</BrowserRouter>
 );
