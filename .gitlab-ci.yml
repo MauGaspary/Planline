@@ -27,12 +27,17 @@ deploy-node:
   stage: deploy
   image: docker:dind
   before_script:
-    - echo "$PLANLINE_PEM" > ./planline.pem
-    - chmod 600 planline.pem
-    - ssh -i planline.pem ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+    - eval $(ssh-agent -s)
+    - echo "$PLANLINE_PEM" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $VM_IPADDRESS >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
     - docker stop backend || true
     - docker rm backend || true
   script:
+    - ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
     - docker pull $DOCKER_USER/backend
     - docker compose up -d
   tags:
