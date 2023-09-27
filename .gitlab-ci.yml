@@ -32,6 +32,7 @@ deploy-node:
     - echo "$PLANLINE_PEM" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
+    - echo -e "Host remote-server\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     - ssh-keyscan 3.133.108.144 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 #    - docker stop backend || true
