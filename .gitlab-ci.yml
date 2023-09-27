@@ -29,10 +29,10 @@ deploy-node:
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
     - eval $(ssh-agent -s)
-    - echo "$PLANLINE_PEM" | tr -d '\r' | ssh-add -
+#    - echo "$PLANLINE_PEM" | tr -d '\r' | ssh-add -
+    - ssh-add <(echo "SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - echo -e "Host remote-server\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     - ssh-keyscan 3.133.108.144 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 #    - docker stop backend || true
