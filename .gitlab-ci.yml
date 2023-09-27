@@ -34,10 +34,10 @@ deploy-node:
     - chmod 700 ~/.ssh
     - ssh-keyscan 3.133.108.144 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - docker stop backend || true
-    - docker rm backend || true
+#    - docker stop backend || true
+#    - docker rm backend || true
   script:
-    - ssh ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
+    - ssh -T ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
     - docker pull $DOCKER_USER/backend
     - docker compose up -d
   tags:
