@@ -38,6 +38,7 @@ deploy-node:
 #    - docker stop backend || true
 #    - docker rm backend || true
   script:
+    - sleep 1h
     - ssh -T ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
     - docker pull $DOCKER_USER/backend
     - docker compose up -d
