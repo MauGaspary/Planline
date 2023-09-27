@@ -30,10 +30,10 @@ deploy-node:
     - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
     - eval $(ssh-agent -s)
 #    - echo "$PLANLINE_PEM" | tr -d '\r' | ssh-add -
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan 3.133.108.144 >> ~/.ssh/known_hosts
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - ssh-keyscan ec2-3-133-108-144.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 #    - docker stop backend || true
 #    - docker rm backend || true
