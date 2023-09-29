@@ -2,6 +2,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:latest
+    container_name: postgres
     restart: unless-stopped
     environment:
       - POSTGRES_USER=default
@@ -21,7 +22,7 @@ services:
       - POSTGRES_USER=default
       - POSTGRES_PASSWORD=default
       - PORT=8000
-      - DATABASE_URL=postgresql://default:default@localhost:5432/backend?schema=public
+      - DATABASE_URL=postgresql://default:default@postgres:5432/backend?schema=public
     ports:
       - '8000:8000'
 volumes:
