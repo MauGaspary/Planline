@@ -33,8 +33,8 @@ deploy-node:
     - chmod 700 ~/.ssh
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - ssh-keyscan ec2-3-133-108-144.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
-  script:
     - ssh -T ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
+  script:
     - docker stop backend || true
     - docker rm backend || true
     - docker pull $DOCKER_USER/backend
@@ -50,9 +50,13 @@ migrate-prisma:
   stage: migrate
   image: docker:dind
   before_script:
-    - ./planline.pem < echo $PLANLINE_PEM
-    - chmod 600 planline.pem
-    - ssh -i planline.pem ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - ssh-keyscan ec2-3-133-108-144.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+    - ssh -T ec2-user@ec2-3-133-108-144.us-east-2.compute.amazonaws.com
   script:
     - docker exec backend yarn prisma migrate deploy 
   tags:
