@@ -11,6 +11,7 @@ services:
     ports:
       - '5432:5432'
   api:
+    container_name: backend
     image: planlineages/backend:latest
     depends_on:
       - postgres
