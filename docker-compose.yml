@@ -21,7 +21,7 @@ services:
       - POSTGRES_USER=default
       - POSTGRES_PASSWORD=default
       - PORT=8000
-      - DATABASE_URL="postgresql://default:default@localhost:5432/backend?schema=public"
+      - DATABASE_URL=postgresql://default:default@localhost:5432/backend?schema=public
     ports:
       - '8000:8000'
 volumes:
