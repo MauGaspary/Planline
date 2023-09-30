@@ -17,6 +17,11 @@ interface ButtonProps {
 	buttonState: () => void;
 }
 
+interface Info {
+	us: string;
+	stories: string[];
+}
+
 export const FileInput = ({ buttonState }: ButtonProps) => {
 	const [file, setFile] = useState<File | null>(null);
 
@@ -43,10 +48,31 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 
 	const onDrop = useCallback(async (files: File[]) => {
 		try {
-			const fileContents: string | unknown = await readUploadedFileAsText(files[0]);
-			console.log(fileContents);
-			setFile(files[0]);
-			buttonState();
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const fileContents: any = await readUploadedFileAsText(files[0]);
+
+			const lines = fileContents?.split('\n');
+			const info: Info[] = [];
+			lines?.forEach((line: string, index: number) => {
+				if (
+					line?.includes(
+						'Subitems;Name;Owner;Estimated task;Status task;Start;Dependent;Stack;End;Item ID (auto generated);'
+					)
+				) {
+					const previousLine = lines[index - 1];
+					const parsed = previousLine.split(';');
+					const us = parsed[0];
+					const stories = parsed[1].split(', ');
+					info.push({
+						us: us,
+						stories: stories,
+					});
+				}
+			});
+			if (info) {
+				setFile(files[0]);
+				buttonState();
+			}
 		} catch (e) {
 			console.warn('Erro ao ler o arquivo');
 		}
