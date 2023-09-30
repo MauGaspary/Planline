@@ -42,7 +42,7 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 			temporaryFileReader.onload = () => {
 				resolve(temporaryFileReader.result);
 			};
-			temporaryFileReader.readAsText(inputFile);
+			temporaryFileReader.readAsText(inputFile, 'ISO-8859-15');
 		});
 	};
 
@@ -69,7 +69,7 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 					});
 				}
 			});
-
+			console.log(info);
 			if (info) {
 				setFile(files[0]);
 				buttonState();
