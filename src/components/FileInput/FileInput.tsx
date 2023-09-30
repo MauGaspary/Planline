@@ -19,7 +19,7 @@ interface ButtonProps {
 
 interface Info {
 	us: string;
-	stories: string[];
+	tasks: string[];
 }
 
 export const FileInput = ({ buttonState }: ButtonProps) => {
@@ -62,13 +62,14 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 					const previousLine = lines[index - 1];
 					const parsed = previousLine.split(';');
 					const us = parsed[0];
-					const stories = parsed[1].split(', ');
+					const tasks = parsed[1].split(', ');
 					info.push({
 						us: us,
-						stories: stories,
+						tasks: tasks,
 					});
 				}
 			});
+
 			if (info) {
 				setFile(files[0]);
 				buttonState();
