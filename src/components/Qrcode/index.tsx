@@ -1,12 +1,11 @@
 import QRCode from 'react-qr-code';
 
 interface QrcodeProps {
-	children?: React.ReactNode;
 	link: string;
 	code: number;
 }
 
-function Qrcode({ children, link, code }: QrcodeProps) {
+function Qrcode({ link, code }: QrcodeProps) {
 	return (
 		<div className="flex flex-col items-start w-48 h-42">
 			<div className="flex flex-row space-x-12">
@@ -21,7 +20,6 @@ function Qrcode({ children, link, code }: QrcodeProps) {
 			<p className="text-left  text-xs text-triider-helper-green1">
 				No app do Planline, escaneie o QR code, ou digite o código numérico.
 			</p>
-			{children}
 		</div>
 	);
 }
