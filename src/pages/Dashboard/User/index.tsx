@@ -1,7 +1,7 @@
-import Card from '../../../components/Card';
+import Container from '../../../components/Container';
 
 function User() {
-	return <Card title="usuários"></Card>;
+	return <Container title="usuários"></Container>;
 }
 
 export default User;

@@ -1,7 +1,7 @@
-import Card from '../../../components/Card';
+import Container from '../../../components/Container';
 
 function Squad() {
-	return <Card title="squads"></Card>;
+	return <Container title="squads"></Container>;
 }
 
 export default Squad;

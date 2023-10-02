@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Card from '../../components/Card';
+import Container from '../../components/Container';
 import { Select } from '../../components/Select/Select';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
@@ -29,7 +29,7 @@ function Home() {
 	};
 
 	return (
-		<Card title="Identifique-se para visualizar mais informações" small>
+		<Container title="Identifique-se para visualizar mais informações" small>
 			<div className="flex flex-col px-20 gap-5 self-center">
 				<Select
 					placeholder={org}
@@ -61,7 +61,7 @@ function Home() {
 					</Button>
 				</Link>
 			</div>
-		</Card>
+		</Container>
 	);
 }
 

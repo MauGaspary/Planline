@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
-import Card from '../../components/Card';
+import Container from '../../components/Container';
 import { FileInput } from '../../components/FileInput/FileInput';
 
 function Input() {
@@ -13,7 +13,7 @@ function Input() {
 
 	const onSubmit = () => {};
 	return (
-		<Card title="Importe o arquivo" small>
+		<Container title="Importe o arquivo" small>
 			<div className="flex justify-center">
 				<form
 					onSubmit={onSubmit}
@@ -36,7 +36,7 @@ function Input() {
 					</Button>
 				</Link>
 			</div>
-		</Card>
+		</Container>
 	);
 }
 

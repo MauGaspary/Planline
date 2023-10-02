@@ -6,7 +6,7 @@ interface CardProps {
 	small?: boolean;
 }
 
-function Card({ children, title, small }: CardProps) {
+function Container({ children, title, small }: CardProps) {
 	const titleClass = small
 		? 'text-4xl font-medium text-triider-grayscale-gray1 '
 		: 'text-4xl font-bold underline decoration-triider-primary-orange2 mb-6 underline-offset-8';
@@ -24,4 +24,4 @@ function Card({ children, title, small }: CardProps) {
 	);
 }
 
-export default Card;
+export default Container;
