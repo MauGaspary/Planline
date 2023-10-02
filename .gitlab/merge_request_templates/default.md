@@ -1,10 +1,19 @@
-<!-- Title template: [type] Descriptive title -->
-<!-- Example: [Build] Fixing prettier settings -->
+<!-- CHANGE YOUR MR TITLE, PLEASE -->
+
+<!-- Title template: [Type] Descriptive title -->
+<!-- Title Example: [Feature] New button component -->
+
+<!-- Link your task from Trello -->
+
+[Task link](https://trello.com/)
+
+<!--(Make a list of the changes and a description of what was done.)
+ex:
 # Changes
+- Created new button component;
+-->
 
-<!--(Make a list of the changes and a description of what was done.)-->
-
-Changes # [Task link](https://trello.com/)
+# Changes
 
 ## Change Type
 
