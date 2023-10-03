@@ -7,9 +7,9 @@ export function useGet<T>(url: string) {
 
 	async function request() {
 		try {
-			setLoading(true);
 			const response = await fetch(url);
 			const json = await response.json();
+			setLoading(true);
 			setData(json);
 		} catch (e) {
 			setError(e);
