@@ -19,12 +19,11 @@ function Home() {
 	const {
 		data: organizations,
 		isLoading: isLoadingOrganizations,
-		get: getOrganizations,
+		request: getOrganizations,
 	} = useGet<InfoDTO[]>('/organization/info');
 
-	const { data: projects, get: getProjects } = useGet<InfoDTO[]>('/project/info');
-
-	const { data: squads, get: getSquads } = useGet<InfoDTO[]>('/squad/info');
+	const { data: projects, request: getProjects } = useGet<InfoDTO[]>('/project/info');
+	const { data: squads, request: getSquads } = useGet<InfoDTO[]>('/squad/info');
 
 	useEffect(() => {
 		getOrganizations();
