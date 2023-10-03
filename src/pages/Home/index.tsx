@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import { Select } from '../../components/Select/Select';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
+import { useGet } from '../../hooks/useGet';
 
-const orgOptions = ['Organização 1', 'Organização 2', 'Organização 3'];
-const projOptions = ['Projeto 1', 'Projeto 2', 'Projeto 3', 'Projeto 4', 'Projeto 5'];
-const squadOptions = ['Squad 1', 'Squad 2', 'Squad 3', 'Squad 4', 'Squad 5'];
+type InfoDTO = {
+	name: string;
+	id: string;
+};
 
 function Home() {
 	const [org, setOrg] = useState('Organização');
@@ -14,13 +16,27 @@ function Home() {
 	const [squad, setSquad] = useState('Squad');
 
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
+	const {
+		data: organizations,
+		isLoading: isLoadingOrganizations,
+		request: getOrganizations,
+	} = useGet<InfoDTO[]>('/organization/info');
+
+	const { data: projects, request: getProjects } = useGet<InfoDTO[]>('/project/info');
+	const { data: squads, request: getSquads } = useGet<InfoDTO[]>('/squad/info');
+
+	useEffect(() => {
+		getOrganizations();
+	}, []);
 
 	const handleSelect = (placeholder: string, option: string) => {
 		if (placeholder === org) {
 			setOrg(option);
+			getProjects();
 		}
 		if (placeholder === project) {
 			setProject(option);
+			getSquads();
 		}
 		if (placeholder === squad) {
 			setSquad(option);
@@ -28,19 +44,21 @@ function Home() {
 		setOpenSelect(null);
 	};
 
-	return (
+	return isLoadingOrganizations ? (
+		<h1>Carregando...</h1>
+	) : (
 		<Card title="Identifique-se para visualizar mais informações" small>
 			<div className="flex flex-col px-20 gap-5 self-center">
 				<Select
 					placeholder={org}
-					options={orgOptions}
+					options={organizations?.map((org) => org.name) || []}
 					handleSelect={handleSelect}
 					isOpen={openSelect === 'org'}
 					onToggle={() => setOpenSelect(openSelect === 'org' ? null : 'org')}
 				/>
 				<Select
 					placeholder={project}
-					options={projOptions}
+					options={projects?.map((org) => org.name) || []}
 					handleSelect={handleSelect}
 					disabled={org === 'Organização'}
 					isOpen={openSelect === 'project'}
@@ -48,7 +66,7 @@ function Home() {
 				/>
 				<Select
 					placeholder={squad}
-					options={squadOptions}
+					options={squads?.map((org) => org.name) || []}
 					handleSelect={handleSelect}
 					disabled={project === 'Projeto'}
 					isOpen={openSelect === 'squad'}
