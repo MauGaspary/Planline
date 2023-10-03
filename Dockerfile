@@ -6,6 +6,3 @@ RUN npm i yarn
 RUN yarn install --immutable --immutable-cache --check-cache
 COPY . .
 EXPOSE 8080
-RUN yarn run build
-
-CMD ["yarn","run","dev"]
