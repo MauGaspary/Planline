@@ -12,6 +12,7 @@ export default function Table({ width, height }: TableProps) {
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
+			<p className="w-40 h-40 bg-red-500">OI</p>
 			<path
 				fillRule="evenodd"
 				clipRule="evenodd"

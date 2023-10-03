@@ -21,8 +21,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 			<Route path="/dashboard/squads" element={<Squad />} />
 			<Route path="/dashboard/users" element={<User />} />
 			<Route path="/resume" element={<Resume />} />
-			<Route path="*" element={<Error />} />
 			<Route path="/game" element={<Game />} />
+			<Route path="*" element={<Error />} />
 		</Routes>
 	</BrowserRouter>
 );
