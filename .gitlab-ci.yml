@@ -16,8 +16,8 @@ build-node:
     - ages-runner
   stage: build
   script:
-    - docker build -t $DOCKER_USER/backend -f Dockerfile .
-    - docker push $DOCKER_USER/backend
+    - docker build -t $DOCKER_USER/web -f Dockerfile .
+    - docker push $DOCKER_USER/web
 #  only:
 #    - main
 
@@ -26,9 +26,9 @@ deploy-node:
   stage: deploy
   image: docker:dind
   script:
-    - docker stop backend || true
-    - docker rm backend || true
-    - docker pull $DOCKER_USER/backend
+    - docker stop web || true
+    - docker rm web || true
+    - docker pull $DOCKER_USER/web
     - docker compose up -d
   tags:
     - ages-runner
