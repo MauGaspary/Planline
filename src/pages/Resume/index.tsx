@@ -1,17 +1,13 @@
 import { useState } from 'react';
 import Card from '../../components/Card';
 import Upload from '../../components/Upload';
-
-interface Info {
-	us: string;
-	tasks: string[];
-}
+import { usInfo } from '../../types/usInfo';
 
 function Resume() {
 	const [upload, setUpload] = useState<boolean | null>(false);
-	const [file, setFile] = useState<Info[] | null>(null);
+	const [file, setFile] = useState<usInfo[] | null>(null);
 
-	function importFile(file: Info[]) {
+	function importFile(file: usInfo[]) {
 		setFile(file);
 		setUpload(true);
 	}

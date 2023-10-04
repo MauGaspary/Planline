@@ -3,6 +3,7 @@ import { DropzoneState, useDropzone } from 'react-dropzone';
 import CloseIcon from '../../assets/icons/closeIcon.svg';
 import FileIcon from '../../assets/icons/fileIcon.svg';
 import UploadIcon from '../../assets/icons/uploadIcon.svg';
+import { usInfo } from '../../types/usInfo';
 
 interface InputProps {
 	dropzone: DropzoneState;
@@ -14,12 +15,7 @@ interface HasFileProps {
 }
 
 interface ButtonProps {
-	buttonState: (e: Info[] | null) => void;
-}
-
-interface Info {
-	us: string;
-	tasks: string[];
+	buttonState: (e: usInfo[] | null) => void;
 }
 
 export const FileInput = ({ buttonState }: ButtonProps) => {
@@ -52,7 +48,7 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 			const fileContents: any = await readUploadedFileAsText(files[0]);
 
 			const lines = fileContents?.split('\n');
-			const info: Info[] = [];
+			const info: usInfo[] = [];
 			lines?.forEach((line: string, index: number) => {
 				if (
 					line?.includes(

@@ -3,21 +3,17 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import { FileInput } from '../../components/FileInput/FileInput';
-
-interface Info {
-	us: string;
-	tasks: string[];
-}
+import { usInfo } from '../../types/usInfo';
 
 interface InputProps {
-	importer: (e: Info[]) => void;
+	importer: (e: usInfo[]) => void;
 }
 
 function Upload({ importer }: InputProps) {
 	const [buttonState, setButtonState] = useState<boolean>(true);
-	const [file, setFile] = useState<Info[] | null>(null);
+	const [file, setFile] = useState<usInfo[] | null>(null);
 
-	const handleButton = (files: Info[] | null) => {
+	const handleButton = (files: usInfo[] | null) => {
 		setButtonState(!buttonState);
 		setFile(files);
 	};
