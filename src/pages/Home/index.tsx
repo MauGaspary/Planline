@@ -4,41 +4,39 @@ import { Select } from '../../components/Select/Select';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import { useGet } from '../../hooks/useGet';
-
-type InfoDTO = {
-	name: string;
-	id: string;
-};
+import { InfoBody } from '../../types/InfoBody';
 
 function Home() {
-	const [org, setOrg] = useState('Organização');
-	const [project, setProject] = useState('Projeto');
-	const [squad, setSquad] = useState('Squad');
+	const [org, setOrg] = useState<InfoBody>({ name: 'Organização', id: '' });
+	const [project, setProject] = useState<InfoBody>({ name: 'Projeto', id: '' });
+	const [squad, setSquad] = useState<InfoBody>({ name: 'Squad', id: '' });
 
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
 	const {
 		data: organizations,
 		isLoading: isLoadingOrganizations,
 		request: getOrganizations,
-	} = useGet<InfoDTO[]>('/organization/info');
+	} = useGet<InfoBody[]>();
 
-	const { data: projects, request: getProjects } = useGet<InfoDTO[]>('/project/info');
-	const { data: squads, request: getSquads } = useGet<InfoDTO[]>('/squad/info');
+	const { data: projects, request: getProjects } = useGet<InfoBody[]>();
+	const { data: squads, request: getSquads } = useGet<InfoBody[]>();
 
 	useEffect(() => {
-		getOrganizations();
+		getOrganizations('/organization/info');
 	}, []);
 
-	const handleSelect = (placeholder: string, option: string) => {
-		if (placeholder === org) {
+	const handleSelect = (placeholder: string, option: InfoBody) => {
+		if (placeholder === org.name) {
 			setOrg(option);
-			getProjects();
+			if (option.id.length > 0) {
+				getProjects(`/project/info/${option.id}`);
+			}
 		}
-		if (placeholder === project) {
+		if (placeholder === project.name) {
 			setProject(option);
-			getSquads();
+			getSquads(`/squad/info/${project.id}`);
 		}
-		if (placeholder === squad) {
+		if (placeholder === squad.name) {
 			setSquad(option);
 		}
 		setOpenSelect(null);
@@ -50,31 +48,31 @@ function Home() {
 		<Card title="Identifique-se para visualizar mais informações" small>
 			<div className="flex flex-col px-20 gap-5 self-center">
 				<Select
-					placeholder={org}
-					options={organizations?.map((org) => org.name) || []}
+					placeholder={org.name}
+					options={organizations?.map((org) => org) || []}
 					handleSelect={handleSelect}
 					isOpen={openSelect === 'org'}
 					onToggle={() => setOpenSelect(openSelect === 'org' ? null : 'org')}
 				/>
 				<Select
-					placeholder={project}
-					options={projects?.map((org) => org.name) || []}
+					placeholder={project.name}
+					options={projects?.map((proj) => proj) || []}
 					handleSelect={handleSelect}
-					disabled={org === 'Organização'}
+					disabled={org.name === 'Organização'}
 					isOpen={openSelect === 'project'}
 					onToggle={() => setOpenSelect(openSelect === 'project' ? null : 'project')}
 				/>
 				<Select
-					placeholder={squad}
-					options={squads?.map((org) => org.name) || []}
+					placeholder={squad.name}
+					options={squads?.map((org) => org) || []}
 					handleSelect={handleSelect}
-					disabled={project === 'Projeto'}
+					disabled={project.name === 'Projeto'}
 					isOpen={openSelect === 'squad'}
 					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 				/>
 
 				<Link to="/upload">
-					<Button size="medium" disabled={squad === 'Squad'}>
+					<Button size="medium" disabled={squad.name === 'Squad'}>
 						Confirmar
 					</Button>
 				</Link>
