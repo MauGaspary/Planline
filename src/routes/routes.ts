@@ -6,7 +6,7 @@ const express = Express;
 
 const routes = express.Router();
 
-routes.get('/organization', organizationController.index);
 routes.get('/project/info/:organization_id', projectController.index);
+routes.get('/organization/info', organizationController.index);
 
 export default routes;
