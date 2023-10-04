@@ -1,18 +1,19 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import Card from '../../../components/Card';
-import SprintTable from '../../../mocks/sprintTable';
+// import SprintTable from '../../../mocks/sprintTable';
+import Carousel from '../../../components/Carousel';
 
 function Sprints() {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [data, setData] = useState(SprintTable);
-	const [search, setSearch] = useState('');
+	// const [data, setData] = useState(SprintTable);
+	// const [search, setSearch] = useState('');
 
-	const filteredName =
-		search.length > 0 ? data?.filter((item) => item.name.toLowerCase().includes(search)) : [];
+	// const filteredName =
+	// 	search.length > 0 ? data?.filter((item) => item.name.toLowerCase().includes(search)) : [];
 
 	return (
 		<Card title="sprints">
-			<form>
+			{/* <form>
 				<div className="relative">
 					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 						<svg
@@ -98,7 +99,8 @@ function Sprints() {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
+			<Carousel />
 		</Card>
 	);
 }
