@@ -15,12 +15,7 @@ export default function CodeInput({ pullCode, code }: CodeProps) {
 	const [otp, setOtp] = useState(['', '', '', '']);
 
 	useEffect(() => {
-		setOtp([
-			code.substring(0, 1),
-			code.substring(1, 2),
-			code.substring(2, 3),
-			code.substring(3, 4),
-		]);
+		setOtp([code[0], code[1], code[2], code[3]]);
 	}, [code]);
 
 	pullCode(otp);
