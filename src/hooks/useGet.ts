@@ -13,7 +13,7 @@ export function useGet<T>(url: string): UseGet<T> {
 	const [error, setError] = useState<unknown | null>(null);
 	const [isLoading, setLoading] = useState(false);
 
-	async function request() {
+	async function request(): Promise<void> {
 		try {
 			setLoading(true);
 			const response = await axios.get(url);
