@@ -1,14 +1,16 @@
 import { Organization, PrismaClient } from '@prisma/client';
+import { InfoDTO } from '../dto/InfoBody.js';
 
 const prisma = new PrismaClient();
 
 export default {
-	async index(): Promise<Organization[]> {
-		const organization: Organization[] = await prisma.organization.findMany({ 
-			select: { 
+	async index(): Promise<InfoDTO[]> {
+		const organization: InfoDTO[] = await prisma.organization.findMany({
+			select: {
 				id: true,
-				name: true 
-			}}) as Organization[];
+				name: true,
+			},
+		});
 		return organization;
 	},
 
