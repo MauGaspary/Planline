@@ -14,7 +14,7 @@ interface HasFileProps {
 }
 
 interface ButtonProps {
-	buttonState: () => void;
+	buttonState: (e: Info[] | null) => void;
 }
 
 interface Info {
@@ -27,7 +27,7 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 
 	const removeFile = useCallback(() => {
 		setFile(null);
-		buttonState();
+		buttonState(null);
 	}, [file]);
 
 	const readUploadedFileAsText = (inputFile: Blob) => {
@@ -69,10 +69,9 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 					});
 				}
 			});
-			console.log(info);
 			if (info) {
 				setFile(files[0]);
-				buttonState();
+				buttonState(info);
 			}
 		} catch (e) {
 			console.warn('Erro ao ler o arquivo');

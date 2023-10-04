@@ -3,12 +3,20 @@ import React from 'react';
 interface ButtonProps {
 	disabled?: boolean;
 	secondary?: boolean;
+	clickAction?: () => void;
 	secondaryOutline?: boolean;
 	size?: 'small' | 'medium';
 	children: React.ReactNode;
 }
 
-const Button = ({ disabled, secondary, secondaryOutline, size, children }: ButtonProps) => {
+const Button = ({
+	disabled,
+	secondary,
+	secondaryOutline,
+	size,
+	children,
+	clickAction,
+}: ButtonProps) => {
 	let buttonClass = size === 'medium' ? 'w-56' : 'w-80';
 	buttonClass = size === 'small' ? 'w-44' : 'w-80';
 
@@ -27,7 +35,13 @@ const Button = ({ disabled, secondary, secondaryOutline, size, children }: Butto
 	}
 
 	return (
-		<button className={buttonClass} type="submit" value="Submit" disabled={disabled}>
+		<button
+			onClick={clickAction}
+			className={buttonClass}
+			type="submit"
+			value="Submit"
+			disabled={disabled}
+		>
 			{children}
 		</button>
 	);
