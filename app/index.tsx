@@ -15,7 +15,7 @@ export type RootStackParamList = {
 	Wait: undefined;
 	Finish: undefined;
 	Error: { label: string };
-	SelectUser: { code: string };
+	SelectUser: { code: string[] };
 	Home: undefined | { code: string };
 	Scanner: undefined;
 };

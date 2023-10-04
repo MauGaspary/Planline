@@ -2,25 +2,23 @@ import { useEffect, useRef, useState } from 'react';
 import { NativeSyntheticEvent, TextInput, TextInputKeyPressEventData, View } from 'react-native';
 
 interface CodeProps {
+	pullCode: (arg: string[]) => void;
 	code: string;
 }
 
-export default function CodeInput({ code }: CodeProps) {
+export default function CodeInput({ pullCode, code }: CodeProps) {
 	const firstInput = useRef<null | TextInput>(null);
 	const secondInput = useRef<null | TextInput>(null);
 	const thirdInput = useRef<null | TextInput>(null);
 	const fourthInput = useRef<null | TextInput>(null);
 
 	const [otp, setOtp] = useState(['', '', '', '']);
-	const newOtp = { ...otp };
-
-	for (let i = 0; i < code.length; i++) {
-		newOtp[i] = code[i];
-	}
 
 	useEffect(() => {
-		code && setOtp(newOtp);
+		setOtp([code[0], code[1], code[2], code[3]]);
 	}, [code]);
+
+	pullCode(otp);
 
 	const handleKeyPress = (
 		inputNumber: number,
@@ -69,12 +67,6 @@ export default function CodeInput({ code }: CodeProps) {
 		}
 	};
 
-	const handleInputChange = (inputNumber: number, text: string) => {
-		if (/^[0-9]$/.test(text)) {
-			setOtp({ ...otp, [inputNumber]: text });
-		}
-	};
-
 	return (
 		<View className=" flex flex-row space-x-4">
 			<View className="shadow shadow-gray-400 rounded-md">
@@ -83,7 +75,6 @@ export default function CodeInput({ code }: CodeProps) {
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={firstInput}
-					onChangeText={(text) => handleInputChange(0, text)}
 					onKeyPress={(event) => handleKeyPress(0, event)}
 					value={otp[0]}
 				/>
@@ -94,7 +85,6 @@ export default function CodeInput({ code }: CodeProps) {
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={secondInput}
-					onChangeText={(text) => handleInputChange(1, text)}
 					onKeyPress={(event) => handleKeyPress(1, event)}
 					value={otp[1]}
 				/>
@@ -105,7 +95,6 @@ export default function CodeInput({ code }: CodeProps) {
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={thirdInput}
-					onChangeText={(text) => handleInputChange(2, text)}
 					onKeyPress={(event) => handleKeyPress(2, event)}
 					value={otp[2]}
 				/>
@@ -116,7 +105,6 @@ export default function CodeInput({ code }: CodeProps) {
 					keyboardType="number-pad"
 					maxLength={1}
 					ref={fourthInput}
-					onChangeText={(text) => handleInputChange(3, text)}
 					onKeyPress={(event) => handleKeyPress(3, event)}
 					value={otp[3]}
 				/>
