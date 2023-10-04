@@ -1,9 +1,9 @@
-import { Organization } from '@prisma/client';
+import { InfoDTO } from '../dto/InfoBody.js';
 import organizationRepository from '../repositories/organizationRepository.js';
 
 export default {
-	async index() {
-		const organization: Array<Organization> = await organizationRepository.index();
+	async index(): Promise<InfoDTO[]> {
+		const organization = await organizationRepository.index();
 		return organization;
 	},
 };
