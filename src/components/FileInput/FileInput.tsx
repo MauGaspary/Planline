@@ -15,7 +15,7 @@ interface HasFileProps {
 }
 
 interface ButtonProps {
-	buttonState: (e: usInfo[] | null) => void;
+	buttonState: (usArray: usInfo[] | null) => void;
 }
 
 export const FileInput = ({ buttonState }: ButtonProps) => {

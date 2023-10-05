@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import Card from '../../components/Card';
-import { Select } from '../../components/Select/Select';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
+import Card from '../../components/Card';
+import { Select } from '../../components/Select/Select';
 
 const orgOptions = ['Organização 1', 'Organização 2', 'Organização 3'];
 const projOptions = ['Projeto 1', 'Projeto 2', 'Projeto 3', 'Projeto 4', 'Projeto 5'];
@@ -55,7 +55,7 @@ function Home() {
 					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 				/>
 
-				<Link to="/upload">
+				<Link to="/resume">
 					<Button size="medium" disabled={squad === 'Squad'}>
 						Confirmar
 					</Button>

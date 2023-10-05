@@ -19,7 +19,6 @@ function Upload({ importer }: InputProps) {
 	};
 
 	const onSubmit = () => {
-		console.log('click');
 		if (file) {
 			importer(file);
 		}
