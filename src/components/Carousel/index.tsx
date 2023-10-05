@@ -1,4 +1,3 @@
-import React from 'react';
 import NukaCarousel from 'nuka-carousel';
 
 function Carousel() {
