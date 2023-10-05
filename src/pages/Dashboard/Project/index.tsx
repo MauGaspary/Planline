@@ -1,7 +1,7 @@
-import Card from '../../../components/Card';
+import Container from '../../../components/Container';
 
 function Project() {
-	return <Card title="projetos"></Card>;
+	return <Container title="projetos"></Container>;
 }
 
 export default Project;

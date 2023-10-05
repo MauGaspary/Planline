@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Card from '../../components/Card';
+import Container from '../../components/Container';
 import QRCode from 'react-qr-code';
 import ResumeInfo from '../../mocks/resumeInfo';
 import {
@@ -111,7 +111,7 @@ function Resume() {
 	return (
 		<>
 			{session == null || sessionId == null ? (
-				<Card title="resumo">
+				<Container title="resumo">
 					<div className="grid grid-cols-3 gap-4">
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">ORGANIZAÇÃO:</span>
@@ -186,7 +186,7 @@ function Resume() {
 							Iniciar sessão
 						</button>
 					</div>
-				</Card>
+				</Container>
 			) : (
 				<Game sessionId={sessionId} session={session} onEndSession={finishSession} />
 			)}
