@@ -6,12 +6,19 @@ export default function Game() {
 		<div className="w-screen h-screen bg-white">
 			<Header squadName="Looney Tunes" sprintName="ABC" />
 			<div>
-				<div className="py-8 pl-9">
-					<h2 className="text-2xl font-medium">Votação individual</h2>
-					<p>Aguarde enquanto seus colegas votam</p>
-				</div>
-				<div className="flex items-center justify-center">
-					<img src={pokerTable} alt="Poker table" className="h-72 px-4" />
+				<div className="h-36"></div>
+				<div className="flex h-72 items-center justify-center">
+					<img src={pokerTable} alt="Poker table" className=" relative px-4" />
+					<div className="flex flex-col absolute items-center gap-2">
+						<h2 className="text-center text-2xl font-medium text-white">Votação individual</h2>
+						<p className="text-lg text-white pb-2">Aguarde enquanto seus colegas votam</p>
+						<button
+							type="submit"
+							className="text-triider-grayscale-white bg-triider-primary-orange1 focus:ring-0 focus:outline-none rounded-lg text-md px-8 py-1 pb-2"
+						>
+							Revelar votos
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
