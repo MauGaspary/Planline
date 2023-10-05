@@ -14,6 +14,9 @@ Express é uma framework de Node.js que ajuda o desenvolvimento de uma API com v
 
 ## 💻 Desenvolvimento
 
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
+
 1. Instale o [Node.js](https://nodejs.org/en) versão `>= 18`.
 
 2. Instale o [Yarn](https://yarnpkg.com/) com o comando:
