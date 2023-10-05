@@ -1,4 +1,4 @@
-# Backend
+# ⚙️ Backend
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
@@ -8,11 +8,11 @@
 
 Esse é o repositório web do projeto PlanLine. Ele é responsável por prover a interface web.
 
-## Express
+## 🔧 Express
 
 Express é uma framework de Node.js que ajuda o desenvolvimento de uma API com várias funcionalidades.
 
-## Desenvolvimento
+## 💻 Desenvolvimento
 
 1. Instale o [Node.js](https://nodejs.org/en) versão `>= 18`.
 
@@ -53,7 +53,7 @@ Depois, acesse o endereço `http://localhost:8000` no seu navegador.
 
 6. As configurações de endpoint da API se encontram no arquivo config.ts. Ao rodar localmente o projeto apontará para o backend local, em produção apontará para o backend em produção.
 
-## Extensões do VSCode
+## 🛠️ Extensões do VSCode
 
 - ESLint
 - Prettier
