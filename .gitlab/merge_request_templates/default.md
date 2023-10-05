@@ -3,15 +3,19 @@
     - Change the title for the MR; see the template and examples below
     - Under the "Associated docs" section, add a link to the Trello item associated with your task
     - Under the "Change type" subsection, remove the items that don't describe your task
-    - Under the "Screenshots" subsection, add a screenshot showing the changes made
+    - Under the "Screenshots" subsection, add screenshots that show the you've changes made
     
-    After submitting the request, do not forget to check all checkboxes that apply, under the "Change type" and "Code quality" subsections.
+    After submitting the request, do not forget to check all the checkboxes that apply, under the "Change type" and "Code quality" subsections.
 
-    For the title:
+    Title template
     - Use the template "[Type] Brief description"
     - Replace "Type" with the option that best describes your task: "Feature", "Fix", "Build", "Refactor", "Documentation"
     - Replace "Brief description" with a brief, general description of the changes your code makes
     - Make sure both the type and the description start with capital letters
+
+    Title examples:
+    - "[Feature] Adds card with information about the task being voted"
+    - "[Fix] Implements treatment for undefined values"
 
 -->
 
