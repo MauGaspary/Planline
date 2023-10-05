@@ -8,7 +8,7 @@ export default function Game() {
 			<div>
 				<div className="py-8 pl-9">
 					<h2 className="text-2xl font-medium">Votação individual</h2>
-					<p>Aguarda enquanto os participantes votam</p>
+					<p>Aguarde enquanto seus colegas votam</p>
 				</div>
 				<div className="flex items-center justify-center">
 					<img src={pokerTable} alt="Poker table" className="h-72 px-4" />
