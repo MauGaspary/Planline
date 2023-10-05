@@ -1,8 +1,10 @@
+import Header from '../../components/Header';
 import pokerTable from '../../assets/images/poker_table.svg';
 
 export default function Game() {
 	return (
 		<div className="w-screen h-screen bg-white">
+			<Header squadName="Looney Tunes" sprintName="ABC" />
 			<div>
 				<div className="py-8 pl-9">
 					<h2 className="text-2xl font-medium">Votação individual</h2>
