@@ -11,14 +11,18 @@ import {
 	FirebaseUser,
 } from '../dto/FirebaseDtos.js';
 
+function generateFourDigitId(): string {
+	return Math.floor(1000 + Math.random() * 9000).toString();
+}
+
 export default {
 	async createRandomId(): Promise<string> {
-		let randomId = Math.floor(1000 + Math.random() * 9000).toString();
+		let randomId = generateFourDigitId();
 		const sessions = await this.getAllCurrentSessions();
 
 		if (sessions) {
 			while (sessions[randomId]) {
-				randomId = Math.floor(1000 + Math.random() * 9000).toString();
+				randomId = generateFourDigitId();
 			}
 		}
 
