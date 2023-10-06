@@ -21,11 +21,11 @@ const SideMenuItem = ({
 				isSelected ? 'bg-white' : 'bg-triider-primary-orange-dark'
 			} space-x-4`}
 		>
-			<div className="ml-10">
+			<div className="ml-4 ">
 				{isSelected ? <img src={imageOrange} /> : <img src={imageWhite} />}
 			</div>
 			<div className={`${isSelected ? 'text-triider-primary-orange-dark' : 'text-white'}`}>
-				<p>{title}</p>
+				<p className="text-xl font-semibold">{title}</p>
 			</div>
 		</div>
 	);

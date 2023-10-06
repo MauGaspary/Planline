@@ -24,38 +24,38 @@ const SideMenu: React.FC = () => {
 			<div className="w-full  flex justify-center p-6">
 				<img className="w-44" src="src/assets/Triiderwhiteprhase.png" />
 			</div>
-			<div className="mt-52">
+			<div className="align-middle">
 				<SideMenuItem
-					onClick={() => handleButtonClick('planline')}
-					isSelected={activeButton === 'planline'}
-					title={'Plan Line'}
+					onClick={() => handleButtonClick('votacao')}
+					isSelected={activeButton === 'votacao'}
+					title={'Votação'}
 					imageWhite={'src/assets/talkWhite.svg'}
 					imageOrange={'src/assets/talkOrange.svg'}
 				/>
 				<SideMenuItem
-					onClick={() => handleButtonClick('iniciar')}
-					isSelected={activeButton === 'iniciar'}
-					title={'Iniciar'}
+					onClick={() => handleButtonClick('usuarios')}
+					isSelected={activeButton === 'usuarios'}
+					title={'Usuários'}
 					imageWhite={'src/assets/groupWhite.svg'}
 					imageOrange={'src/assets/groupOrange.svg'}
 				/>
 				<SideMenuItem
-					onClick={() => handleButtonClick('laptop')}
-					isSelected={activeButton === 'laptop'}
+					onClick={() => handleButtonClick('squads')}
+					isSelected={activeButton === 'squads'}
 					title={'Squads'}
 					imageWhite={'src/assets/laptopWhite.svg'}
 					imageOrange={'src/assets/laptopOrange.svg'}
 				/>
 				<SideMenuItem
-					onClick={() => handleButtonClick('register')}
-					isSelected={activeButton === 'register'}
+					onClick={() => handleButtonClick('projetos')}
+					isSelected={activeButton === 'projetos'}
 					title={'Projetos'}
 					imageWhite={'src/assets/registerWhite.svg'}
 					imageOrange={'src/assets/registerOrange.svg'}
 				/>
 				<SideMenuItem
-					onClick={() => handleButtonClick('apartment')}
-					isSelected={activeButton === 'apartment'}
+					onClick={() => handleButtonClick('organizacoes')}
+					isSelected={activeButton === 'organizacoes'}
 					title={'Organizações'}
 					imageWhite="src/assets/apartmentWhite.svg"
 					imageOrange="src/assets/apartmentOrange.svg"
