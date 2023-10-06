@@ -31,7 +31,7 @@ model User {
 model Squad {
   id                 String               @id @default(uuid())
   name               String               @db.VarChar(100)
-  User               User                 @relation(fields: [leaderId], references: [id])
+  leader             User                 @relation(fields: [leaderId], references: [id])
   leaderId           String
   updated_at         DateTime             @updatedAt
   created_at         DateTime             @default(now())
@@ -74,6 +74,7 @@ model Story {
   final_points Int      @db.Integer
   updated_at   DateTime @updatedAt
   created_at   DateTime @default(now())
+  tasks        Task[]
 }
 
 model Task {
@@ -84,6 +85,8 @@ model Task {
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
   Vote       Vote[]
+  story      Story   @relation(fields: [story_id], references: [id])
+  story_id   String
 }
 
 model Vote {
