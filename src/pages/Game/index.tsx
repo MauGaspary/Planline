@@ -8,6 +8,7 @@ import { onValue, ref } from 'firebase/database';
 import { getRealtimeDatabase } from '../../services/firebase/firebase';
 import Button from '../../components/Button';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import Carousel from '../../components/Carousel';
 
 export default function Game() {
 	const { fileContext } = useContext(ResumeContext);
@@ -37,7 +38,7 @@ export default function Game() {
 	}, []);
 
 	return (
-		<div className="w-screen h-screen bg-white">
+		<div className="w-screen h-screen  bg-white">
 			<Header squadName="Looney Tunes" sprintName="ABC" />
 			<div className="ml-16 mt-24">
 				<Qrcode link={sessionId || ''} code={sessionId || ''} />
@@ -62,7 +63,6 @@ export default function Game() {
 				</div>
 			) : (
 				<div>
-					<div className="h-36"></div>
 					<div className="flex h-72 items-center justify-center">
 						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
 						<div className="flex flex-col absolute items-center gap-2">
@@ -114,6 +114,9 @@ export default function Game() {
 					</div>
 				</div>
 			)}
+			<div className=" w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
+				<Carousel listaTasks={fileContext || []} />
+			</div>
 		</div>
 	);
 }
