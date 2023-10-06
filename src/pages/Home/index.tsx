@@ -73,7 +73,7 @@ function Home() {
 					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 				/>
 
-				<Link to="/upload">
+				<Link to="/resume">
 					<Button size="medium" disabled={squad === 'Squad'}>
 						Confirmar
 					</Button>
