@@ -3,34 +3,13 @@ import { SessionCreationDto } from '../dto/CreateSessionDto.js';
 import firebaseService from './firebaseService.js';
 import { set, ref, get } from 'firebase/database';
 import squadRepository from '../repositories/squadRepository.js';
-
-type FirebaseCollection<T> = {
-	[key: string]: T;
-};
-
-export type FirebaseSession = {
-	current_task?: string;
-	finished: boolean;
-	stories: FirebaseCollection<FirebaseStory>;
-	users: FirebaseCollection<FirebaseUser>;
-};
-
-export type FirebaseStory = {
-	name: string;
-	tasks: FirebaseCollection<FirebaseTask>;
-};
-
-export type FirebaseTask = {
-	descritpion: string;
-	final_vote: number;
-	votes: FirebaseCollection<number>;
-};
-
-export type FirebaseUser = {
-	name: string;
-	level: string;
-	firebase_auth_id: string | null;
-};
+import {
+	FirebaseCollection,
+	FirebaseSession,
+	FirebaseStory,
+	FirebaseTask,
+	FirebaseUser,
+} from '../dto/FirebaseDtos.js';
 
 export default {
 	async createRandomId(): Promise<string> {
