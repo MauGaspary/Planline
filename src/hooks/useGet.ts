@@ -5,18 +5,24 @@ type UseGet<T> = {
 	data: T | null;
 	error: unknown | null;
 	isLoading: boolean;
-	request: () => Promise<void>;
+	request: (url: string) => Promise<void>;
 };
 
-export function useGet<T>(url: string): UseGet<T> {
+const { VITE_API_URL } = import.meta.env;
+
+const axiosInstance = axios.create({
+	baseURL: VITE_API_URL,
+});
+
+export function useGet<T>(): UseGet<T> {
 	const [data, setData] = useState<T | null>(null);
 	const [error, setError] = useState<unknown | null>(null);
 	const [isLoading, setLoading] = useState(false);
 
-	async function request(): Promise<void> {
+	async function request(url: string): Promise<void> {
 		try {
 			setLoading(true);
-			const response = await axios.get(url);
+			const response = await axiosInstance.get(url);
 			setData(response.data);
 		} catch (e) {
 			setError(e);

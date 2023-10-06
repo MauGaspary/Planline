@@ -68,31 +68,31 @@ function Sprints() {
 								<tbody>
 									{search.length > 0
 										? filteredName?.map((item) => (
-											<tr key={item.id}>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">
-													{item.startDate}
-												</td>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">
-													{item.endDate}
-												</td>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">{item.points}</td>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">{item.status}</td>
-											</tr>
-										))
+												<tr key={item.id}>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">
+														{item.startDate}
+													</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">
+														{item.endDate}
+													</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.points}</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.status}</td>
+												</tr>
+										  ))
 										: data?.map((item) => (
-											<tr key={item.id}>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">
-													{item.startDate}
-												</td>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">
-													{item.endDate}
-												</td>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">{item.points}</td>
-												<td className="whitespace-nowrap px-8 py-4 font-medium">{item.status}</td>
-											</tr>
-										))}
+												<tr key={item.id}>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">
+														{item.startDate}
+													</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">
+														{item.endDate}
+													</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.points}</td>
+													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.status}</td>
+												</tr>
+										  ))}
 								</tbody>
 							</table>
 						</div>
