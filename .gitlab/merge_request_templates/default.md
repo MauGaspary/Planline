@@ -1,38 +1,53 @@
-<!-- CHANGE YOUR MR TITLE, PLEASE -->
+<!-- Follow these steps before submitting your request
 
-<!-- Title template: [Type] Descriptive title -->
-<!-- Title Example: [Feature] New button component -->
+    - Change the title for the MR; see the template and examples below
+    - Under the "Associated docs" section, add a link to the Trello item associated with your task
+    - Under the "Change type" subsection, remove the items that don't describe your task
+    - Under the "Screenshots" subsection, add screenshots that show the you've changes made
+    
+    After submitting the request, do not forget to check all the checkboxes that apply, under the "Change type" and "Code quality" subsections.
 
-<!-- Link your task from Trello -->
+    Title template
+    - Use the template "[Type] Brief description"
+    - Replace "Type" with the option that best describes your task: "Feature", "Fix", "Build", "Refactor", "Documentation"
+    - Replace "Brief description" with a brief, general description of the changes your code makes
+    - Make sure both the type and the description start with capital letters
 
-[Task link](https://trello.com/)
+    Title examples:
+    - "[Feature] Adds card with information about the task being voted"
+    - "[Fix] Implements treatment for undefined values"
 
-<!--(Make a list of the changes and a description of what was done.)
-ex:
-# Changes
-- Created new button component;
 -->
 
+# Associated docs
+
+Link to the associated Trello task: [Link](https://trello.com/) <!-- Replace this link with your that of your task's -->
+
 # Changes
 
-## Change Type
+<!-- List here the changes you've made -->
 
-<!-- Delete the irrelevant options. -->
+## Change type
 
-- [ ] Bug fix (Not breaking change that fixes a bug)
-- [ ] New feature (Not breaking change and adds a new feature)
+<!-- Erase the items that don't apply -->
+<!-- After submitting the request, check the items that do apply -->
+
+- [ ] Bug fix
+- [ ] New feature
 - [ ] Build (Change on configuration)
 - [ ] Breaking change (Change with potential of breaking a part of the project)
 - [ ] This change requires a change on documentation
 
-## Screenshot
+## Screenshots
 
-<!-- Use this space to attach an image to verify the changes made by this MR -->
+<!-- Paste your screenshots here -->
 
-## Checklist:
+## Code quality
+
+<!-- After submitting the request, check the items that apply -->
 
 - [ ] My code follows the defined guidelines
-- [ ] I reviewed and tested my code
+- [ ] I have reviewed and tested my code
 - [ ] My changes don't cause new warnings
 - [ ] My code has relevant tests
 - [ ] My unit tests are passing

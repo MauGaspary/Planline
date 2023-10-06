@@ -1,9 +1,10 @@
 import ArrowIcon from '../../assets/icons/arrowIcon.svg';
+import { InfoBody } from '../../types/InfoBody';
 
 interface SelectProps {
 	placeholder: string;
-	options: string[];
-	handleSelect: (placeholder: string, option: string) => void;
+	options: InfoBody[];
+	handleSelect: (placeholder: string, option: InfoBody) => void;
 	disabled?: boolean;
 	isOpen: boolean;
 	onToggle: () => void;
@@ -29,19 +30,23 @@ export const Select = (props: SelectProps) => {
 
 			{props.isOpen && (
 				<ul className="absolute max-h-40 overflow-auto text-start z-10 items-center text-lg w-80 bg-gray-200 rounded-lg text-gray-700 font-medium">
-					{props.options.map((option) => (
-						<li
-							onClick={() => {
-								props.onToggle();
-								props.handleSelect(props.placeholder, option);
-							}}
-							className="p-4 cursor-pointer hover:bg-slate-300"
-							key={option}
-							value={option}
-						>
-							{option}
-						</li>
-					))}
+					{props.options.length > 0 ? (
+						props.options.map((option) => (
+							<li
+								onClick={() => {
+									props.onToggle();
+									props.handleSelect(props.placeholder, option);
+								}}
+								className="p-4 cursor-pointer hover:bg-slate-300"
+								key={option.id}
+								value={option.name}
+							>
+								{option.name}
+							</li>
+						))
+					) : (
+						<li className="p-4 cursor-pointer hover:bg-slate-300">Sem opções disponíveis</li>
+					)}
 				</ul>
 			)}
 		</div>
