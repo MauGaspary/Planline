@@ -39,6 +39,9 @@ export default {
 				},
 			},
 		},
+		letterSpacing: {
+			'access-number-code': '0.15em',
+		},
 	},
 	variants: {
 		extend: {},
