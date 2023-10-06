@@ -58,7 +58,7 @@ function Home() {
 					placeholder={project.name}
 					options={projects?.map((proj) => proj) || []}
 					handleSelect={handleSelect}
-					disabled={org.name === 'Organização'}
+					disabled={org.id === ''}
 					isOpen={openSelect === 'project'}
 					onToggle={() => setOpenSelect(openSelect === 'project' ? null : 'project')}
 				/>
@@ -66,7 +66,7 @@ function Home() {
 					placeholder={squad.name}
 					options={squads?.map((org) => org) || []}
 					handleSelect={handleSelect}
-					disabled={project.name === 'Projeto'}
+					disabled={project.id === ''}
 					isOpen={openSelect === 'squad'}
 					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 				/>
