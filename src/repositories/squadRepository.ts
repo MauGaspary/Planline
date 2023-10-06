@@ -4,7 +4,7 @@ import { InfoDTO } from '../dto/InfoBody';
 const prisma = new PrismaClient();
 
 export default {
-	async info(project_id: string): Promise<InfoDTO[]> {
+	async infoByProjectId(project_id: string): Promise<InfoDTO[]> {
 		const projectSquadBridge = await prisma.projectSquadBridge.findMany({
 			include: {
 				Squad: true,

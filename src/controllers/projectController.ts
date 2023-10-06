@@ -4,10 +4,10 @@ import { InfoDTO } from '../dto/InfoBody.js';
 import { Prisma } from '@prisma/client';
 
 export default {
-	async info(req: Request, res: Response) {
+	async infoByOrganizationId(req: Request, res: Response) {
 		try {
 			const organization_id: string = req.params.organization_id;
-			const projects: InfoDTO[] = await projectService.info(organization_id);
+			const projects: InfoDTO[] = await projectService.infoByOrganizationId(organization_id);
 			res.json(projects);
 		} catch (e) {
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {

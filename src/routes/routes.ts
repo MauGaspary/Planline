@@ -7,8 +7,8 @@ const express = Express;
 
 const routes = express.Router();
 
-routes.get('/squad/info/:project_id', squadController.info);
-routes.get('/project/info/:organization_id', projectController.info);
+routes.get('/squad/info/:project_id', squadController.infoByProjectId);
+routes.get('/project/info/:organization_id', projectController.infoByOrganizationId);
 routes.get('/organization/info', organizationController.info);
 
 export default routes;
