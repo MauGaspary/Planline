@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
-import Card from '../../components/Card';
+import Container from '../../components/Container';
 import { FileInput } from '../../components/FileInput/FileInput';
 import { usInfo } from '../../types/usInfo';
 
@@ -25,7 +25,7 @@ function Upload({ importer }: InputProps) {
 	};
 
 	return (
-		<Card title="Importe o arquivo" small>
+		<Container title="Importe o arquivo" small>
 			<div className="flex justify-center">
 				<div className="flex border-dashed border-triider-primary-orange-dark rounded-lg border-2 w-96 h-60 justify-center">
 					<div className="w-96 h-56 rounded-lg flex justify-center">
@@ -47,7 +47,7 @@ function Upload({ importer }: InputProps) {
 					Importar
 				</Button>
 			</div>
-		</Card>
+		</Container>
 	);
 }
 
