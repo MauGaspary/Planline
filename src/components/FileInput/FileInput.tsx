@@ -15,7 +15,7 @@ interface HasFileProps {
 }
 
 interface ButtonProps {
-	buttonState: (usArray: usInfo[] | null) => void;
+	buttonState: (usArray: usInfo[] | null, fileName: string) => void;
 }
 
 export const FileInput = ({ buttonState }: ButtonProps) => {
@@ -23,7 +23,7 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 
 	const removeFile = useCallback(() => {
 		setFile(null);
-		buttonState(null);
+		buttonState(null, '');
 	}, [file]);
 
 	const readUploadedFileAsText = (inputFile: Blob) => {
@@ -46,6 +46,7 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 		try {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const fileContents: any = await readUploadedFileAsText(files[0]);
+			const fileName: string = files[0].name;
 
 			const lines = fileContents?.split('\n');
 			const info: usInfo[] = [];
@@ -67,7 +68,7 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 			});
 			if (info) {
 				setFile(files[0]);
-				buttonState(info);
+				buttonState(info, fileName);
 			}
 		} catch (e) {
 			console.warn('Erro ao ler o arquivo');

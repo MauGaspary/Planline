@@ -7,10 +7,12 @@ import { usInfo } from '../../types/usInfo';
 function Resume() {
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<usInfo[] | null>(null);
+	const [fileName, setFileName] = useState<string>('');
 
-	function importFile(file: usInfo[]) {
+	function importFile(file: usInfo[] | null, fileName: string) {
 		setFile(file);
 		setUpload(true);
+		setFileName(fileName);
 	}
 
 	return (
@@ -26,9 +28,9 @@ function Resume() {
 							<span className="text-triider-grayscale-gray1">SQUAD:</span>
 							<span className="font-bold">Turma do bairro</span>
 						</div>
-						<div className="flex gap-2">
-							<span className="text-triider-grayscale-gray1">ARQUIVO:</span>
-							<span className="font-bold">Squad_Turma_do_Bairro.csv</span>
+						<div className="flex gap-2 row-span-2 break-all">
+							<span className="text-triider-grayscale-gray1 whitespace-nowrap">ARQUIVO:</span>
+							<span className="font-bold">{fileName}</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">PROJETO:</span>
