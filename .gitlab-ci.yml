@@ -34,11 +34,10 @@ deploy-node:
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - ssh-keyscan ec2-18-191-189-90.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
   script:
-    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com
-    - docker stop backend || true
-    - docker rm backend || true
-    - docker pull $DOCKER_USER/backend
-    - docker compose up -d
+    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com "docker stop backend || true"
+    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com "docker rm backend || true"
+    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com "docker pull $DOCKER_USER/backend"
+    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com "docker compose up -d"
   tags:
     - ages-runner
   when: manual
