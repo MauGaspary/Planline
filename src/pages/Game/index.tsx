@@ -41,34 +41,34 @@ export default function Game() {
 							<div className="flex justify-around items-center gap-3">
 								<VoteCard
 									label="1"
-									isSelect={cardSelected === '1'}
+									selected={cardSelected === '1'}
 									onClick={(e) => setCardSelected(e)}
 								/>
 								<VoteCard
 									label="2"
-									isSelect={cardSelected === '2'}
+									selected={cardSelected === '2'}
 									onClick={(e) => {
 										setCardSelected(e);
 									}}
 								/>
 								<VoteCard
 									label="3"
-									isSelect={cardSelected === '3'}
+									selected={cardSelected === '3'}
 									onClick={(e) => setCardSelected(e)}
 								/>
 								<VoteCard
 									label="5"
-									isSelect={cardSelected === '5'}
+									selected={cardSelected === '5'}
 									onClick={(e) => setCardSelected(e)}
 								/>
 								<VoteCard
 									label="8"
-									isSelect={cardSelected === '8'}
+									selected={cardSelected === '8'}
 									onClick={(e) => setCardSelected(e)}
 								/>
 								<VoteCard
 									label="13"
-									isSelect={cardSelected === '13'}
+									selected={cardSelected === '13'}
 									onClick={(e) => setCardSelected(e)}
 								/>
 							</div>

@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 
 interface VoteCardProps {
 	label: string;
-	isSelect?: boolean;
+	selected?: boolean;
 	onClick?: (label: string) => void;
 }
 
-export default function VoteCard({ label, isSelect, onClick }: VoteCardProps) {
-	const [cardState, setCardState] = useState(Boolean(isSelect));
+export default function VoteCard({ label, selected, onClick }: VoteCardProps) {
+	const [cardState, setCardState] = useState(Boolean(selected));
 	let style = '';
 	let textStyle = '';
 
@@ -20,8 +20,8 @@ export default function VoteCard({ label, isSelect, onClick }: VoteCardProps) {
 	};
 
 	useEffect(() => {
-		setCardState(Boolean(isSelect));
-	}, [isSelect]);
+		setCardState(Boolean(selected));
+	}, [selected]);
 
 	cardState
 		? ((style =
