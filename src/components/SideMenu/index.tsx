@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SideMenuItem from '../SideMenuItem';
 
-const SideMenu: React.FC = () => {
+const SideMenu = () => {
 	const [activeButton, setActiveButton] = useState<string | null>(null);
 
 	const handleButtonClick = (buttonName: string) => {
@@ -9,12 +9,12 @@ const SideMenu: React.FC = () => {
 	};
 
 	return (
-		<nav className="relative w-64 px-4 h-screen bg-triider-primary-orange-dark">
+		<nav className="flex-col w-64 px-4 h-screen bg-triider-primary-orange-dark">
 			<div className="py-10 space-x-4">
 				<img className="inline-block h-14" src="src/assets/triiderLogos/whiteVersion.svg" />
 				<h1 className="inline-block text-2xl text-white font-medium align-middle">PlanLine</h1>
 			</div>
-			<ol className="flex-col items-center">
+			<ol className="">
 				<SideMenuItem
 					onClick={() => handleButtonClick('votacao')}
 					isSelected={activeButton === 'votacao'}
