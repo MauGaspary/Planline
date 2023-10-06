@@ -10,7 +10,7 @@ function Resume() {
 	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<usInfo[] | null>(null);
-	const { setFileContext } = useContext(ResumeContext);
+	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
 
 	function importFile(file: usInfo[]) {
 		setFile(file);
@@ -25,11 +25,11 @@ function Resume() {
 					<div className="grid grid-cols-3 gap-4">
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">ORGANIZAÇÃO:</span>
-							<span className="font-bold">Triider</span>
+							<span className="font-bold">{organization}</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SQUAD:</span>
-							<span className="font-bold">Turma do bairro</span>
+							<span className="font-bold">{squad}</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">ARQUIVO:</span>
@@ -37,7 +37,7 @@ function Resume() {
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">PROJETO:</span>
-							<span className="font-bold">PlanLine</span>
+							<span className="font-bold">{project}</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SPRINT:</span>

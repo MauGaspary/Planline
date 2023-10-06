@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import { Select } from '../../components/Select/Select';
 import { useGet } from '../../hooks/useGet';
 import { InfoBody } from '../../types/InfoBody';
+import { ResumeContext } from '../../contexts/ResumeInfoContext';
 
 function Home() {
 	const [org, setOrg] = useState<InfoBody>({ name: 'Organização', id: '' });
 	const [project, setProject] = useState<InfoBody>({ name: 'Projeto', id: '' });
 	const [squad, setSquad] = useState<InfoBody>({ name: 'Squad', id: '' });
+	const { setProjectContext, setSquadContext, setOrganizationContext } = useContext(ResumeContext);
 
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
 	const {
@@ -28,6 +30,9 @@ function Home() {
 	const handleSelect = (placeholder: string, option: InfoBody) => {
 		if (placeholder === org.name) {
 			setProject({ name: 'Projeto', id: '' });
+			setProjectContext('');
+			setSquadContext('');
+			setOrganizationContext(option.name);
 			setSquad({ name: 'Squad', id: '' });
 			setOrg(option);
 			if (option.id.length > 0) {
@@ -36,10 +41,13 @@ function Home() {
 		}
 		if (placeholder === project.name) {
 			setSquad({ name: 'Squad', id: '' });
+			setSquadContext('');
+			setProjectContext(option.name);
 			setProject(option);
 			getSquads(`/squad/info/${option.id}`);
 		}
 		if (placeholder === squad.name) {
+			setSquadContext(option.name);
 			setSquad(option);
 		}
 		setOpenSelect(null);
