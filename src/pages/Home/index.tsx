@@ -49,14 +49,14 @@ function Home() {
 			<div className="flex flex-col px-20 gap-5 self-center">
 				<Select
 					placeholder={org.name}
-					options={organizations?.map((org) => org) || []}
+					options={organizations || []}
 					handleSelect={handleSelect}
 					isOpen={openSelect === 'org'}
 					onToggle={() => setOpenSelect(openSelect === 'org' ? null : 'org')}
 				/>
 				<Select
 					placeholder={project.name}
-					options={projects?.map((proj) => proj) || []}
+					options={projects || []}
 					handleSelect={handleSelect}
 					disabled={org.id === ''}
 					isOpen={openSelect === 'project'}
@@ -64,7 +64,7 @@ function Home() {
 				/>
 				<Select
 					placeholder={squad.name}
-					options={squads?.map((org) => org) || []}
+					options={squads || []}
 					handleSelect={handleSelect}
 					disabled={project.id === ''}
 					isOpen={openSelect === 'squad'}
