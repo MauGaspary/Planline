@@ -8,6 +8,17 @@ function Resume() {
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<usInfo[] | null>(null);
 
+	// TODO: use this hook to do the request
+	// const { data, error, isLoading, request } = usePost<
+	// 	 SessionCreationResponseDto,
+	// 	 SessionCreationDto
+	// >();
+
+	function createSession() {
+		// TODO: do the request
+		// request('/sessions', dto);
+	}
+
 	function importFile(file: usInfo[]) {
 		setFile(file);
 		setUpload(true);
@@ -80,7 +91,9 @@ function Resume() {
 						<Button variant="secondary" onClickAction={() => setUpload(false)}>
 							Voltar
 						</Button>
-						<Button variant="primary">Iniciar sessão</Button>
+						<Button variant="primary" onClickAction={createSession}>
+							Iniciar sessão
+						</Button>
 					</div>
 				</Container>
 			) : (
