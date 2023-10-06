@@ -39,7 +39,7 @@ function Upload({ importer }: InputProps) {
 						Voltar
 					</Button>
 				</Link>
-				<Button clickAction={onSubmit} disabled={buttonState} size="small">
+				<Button onClickAction={onSubmit} disabled={buttonState} size="small">
 					Importar
 				</Button>
 			</div>

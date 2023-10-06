@@ -3,41 +3,44 @@ import React from 'react';
 interface ButtonProps {
 	disabled?: boolean;
 	secondary?: boolean;
-	clickAction?: () => void;
 	secondaryOutline?: boolean;
-	size?: 'small' | 'medium';
+	size?: 'small' | 'medium' | 'large';
 	children: React.ReactNode;
+	variant?: 'primary' | 'secondary' | 'secondaryOutline' | 'disabled' | 'ghost';
+	onClickAction?: () => void;
 }
 
 const Button = ({
 	disabled,
-	secondary,
-	secondaryOutline,
-	size,
+	size = 'medium',
 	children,
-	clickAction,
+	variant = 'primary',
+	onClickAction,
 }: ButtonProps) => {
-	let buttonClass = size === 'medium' ? 'w-56' : 'w-80';
-	buttonClass = size === 'small' ? 'w-44' : 'w-80';
+	const sizeClasses = {
+		small: 'w-44',
+		medium: 'w-56',
+		large: 'w-80',
+	};
 
-	if (disabled) {
-		buttonClass +=
-			' h-12 text-white bg-triider-primary-orange-dark shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] p-2 rounded-lg opacity-30 cursor-default';
-	} else if (secondary) {
-		buttonClass +=
-			' h-12 text-stone-800 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] bg-white p-2 rounded-lg hover:animate-pulse hover:shadow-md';
-	} else if (secondaryOutline) {
-		buttonClass +=
-			' h-12 text-stone-800 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] border-2 border-triider-primary-orange-dark bg-white p-2 rounded-lg hover:animate-pulse hover:shadow-md';
-	} else {
-		buttonClass +=
-			' h-12 text-white bg-triider-primary-orange-dark shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] p-2 rounded-lg hover:animate-pulse hover:shadow-md';
-	}
+	const variantClasses = {
+		disabled: 'text-white bg-triider-primary-orange-dark opacity-30 cursor-default',
+		secondary: 'text-stone-800 bg-white hover:animate-pulse hover:shadow-md',
+		secondaryOutline:
+			'text-stone-800 border-2 border-triider-primary-orange-dark bg-white hover:animate-pulse hover:shadow-md',
+		primary: 'text-white bg-triider-primary-orange-dark hover:animate-pulse hover:shadow-md',
+		ghost:
+			'text-white bg-triider-primary-orange2 hover:animate-pulse hover:shadow-md border-2 border-white ',
+	};
+
+	const defaultClasses = 'h-12 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] p-2 rounded-lg';
+
+	const classes = `${defaultClasses} ${sizeClasses[size]} ${variantClasses[variant]}`;
 
 	return (
 		<button
-			onClick={clickAction}
-			className={buttonClass}
+			className={classes}
+			onClick={onClickAction}
 			type="submit"
 			value="Submit"
 			disabled={disabled}
