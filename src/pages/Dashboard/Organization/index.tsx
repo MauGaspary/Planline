@@ -1,7 +1,7 @@
-import Card from '../../../components/Card';
+import Container from '../../../components/Container';
 
 function Organization() {
-	return <Card title="organizações"></Card>;
+	return <Container title="organizações"></Container>;
 }
 
 export default Organization;

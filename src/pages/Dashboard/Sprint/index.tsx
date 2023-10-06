@@ -1,19 +1,18 @@
-// import { useState } from 'react';
-import Card from '../../../components/Card';
-// import SprintTable from '../../../mocks/sprintTable';
-import Carousel from '../../../components/Carousel';
+import { useState } from 'react';
+import Container from '../../../components/Container';
+import SprintTable from '../../../mocks/sprintTable';
 
 function Sprints() {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	// const [data, setData] = useState(SprintTable);
-	// const [search, setSearch] = useState('');
+	const [data, setData] = useState(SprintTable);
+	const [search, setSearch] = useState('');
 
-	// const filteredName =
-	// 	search.length > 0 ? data?.filter((item) => item.name.toLowerCase().includes(search)) : [];
+	const filteredName =
+		search.length > 0 ? data?.filter((item) => item.name.toLowerCase().includes(search)) : [];
 
 	return (
-		<Card title="sprints">
-			{/* <form>
+		<Container title="sprints">
+			<form>
 				<div className="relative">
 					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 						<svg
@@ -42,7 +41,7 @@ function Sprints() {
 					/>
 				</div>
 			</form>
-			<div className="flex flex-col overflow-y-auto overflow-x-hidden">
+			<div className="flex flex-col overflow-y-auto overflow-x-hidden h-60">
 				<div className="sm:-mx-6 lg:-mx-8">
 					<div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
 						<div>
@@ -99,9 +98,8 @@ function Sprints() {
 						</div>
 					</div>
 				</div>
-			</div> */}
-			<Carousel />
-		</Card>
+			</div>
+		</Container>
 	);
 }
 
