@@ -11,11 +11,13 @@ function Resume() {
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<usInfo[] | null>(null);
 	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
+	const [fileName, setFileName] = useState<string>('');
 
 	function importFile(file: usInfo[]) {
 		setFile(file);
 		setFileContext(file);
 		setUpload(true);
+		setFileName(fileName);
 	}
 
 	return (
@@ -41,7 +43,7 @@ function Resume() {
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SPRINT:</span>
-							<span className="font-bold">22</span>
+							<span className="font-bold">{fileName}</span>
 						</div>
 					</div>
 					<div className="overflow-y-scroll h-60 overflow-x-hidden mt-2 relative">

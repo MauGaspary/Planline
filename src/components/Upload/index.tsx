@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
-import Container from '../../components/Container';
+import Container from '../Container';
 import { FileInput } from '../../components/FileInput/FileInput';
 import { usInfo } from '../../types/usInfo';
 
@@ -12,10 +12,12 @@ interface InputProps {
 function Upload({ importer }: InputProps) {
 	const [buttonState, setButtonState] = useState<boolean>(true);
 	const [file, setFile] = useState<usInfo[] | null>(null);
+	const [fileName, setFileName] = useState<string>('');
 
 	const handleButton = (files: usInfo[] | null) => {
 		setButtonState(!buttonState);
 		setFile(files);
+		setFileName(fileName);
 	};
 
 	const onSubmit = () => {
