@@ -27,12 +27,15 @@ function Home() {
 
 	const handleSelect = (placeholder: string, option: InfoBody) => {
 		if (placeholder === org.name) {
+			setProject({ name: 'Projeto', id: '' });
+			setSquad({ name: 'Squad', id: '' });
 			setOrg(option);
 			if (option.id.length > 0) {
 				getProjects(`/project/info/${option.id}`);
 			}
 		}
 		if (placeholder === project.name) {
+			setSquad({ name: 'Squad', id: '' });
 			setProject(option);
 			getSquads(`/squad/info/${project.id}`);
 		}
