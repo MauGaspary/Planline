@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Upload from '../../components/Upload';
 import { usInfo } from '../../types/usInfo';
@@ -27,11 +28,11 @@ function Resume() {
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">ARQUIVO:</span>
-							<span className="font-bold">x.csv</span>
+							<span className="font-bold">Squad_Turma_do_Bairro.csv</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">PROJETO:</span>
-							<span className="font-bold">Guaíba city</span>
+							<span className="font-bold">PlanLine</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SPRINT:</span>
@@ -75,20 +76,11 @@ function Resume() {
 							</div>
 						))}
 					</div>
-					<div className="flex gap-32 justify-center mt-auto">
-						<button
-							type="submit"
-							className="text-triider-grayscale-black bg-triider-grayscale-gray4 focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-10 py-2"
-							onClick={() => setUpload(false)}
-						>
+					<div className="flex gap-32 justify-center mt-4">
+						<Button variant="secondary" onClickAction={() => setUpload(false)}>
 							Voltar
-						</button>
-						<button
-							type="submit"
-							className="text-triider-grayscale-white bg-triider-primary-orange-dark focus:ring-0 focus:outline-none rounded-lg text-sm px-6 py-2"
-						>
-							Iniciar sessão
-						</button>
+						</Button>
+						<Button variant="primary">Iniciar sessão</Button>
 					</div>
 				</Card>
 			) : (
