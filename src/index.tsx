@@ -7,6 +7,7 @@ import Sprint from './pages/Dashboard/Sprint';
 import Project from './pages/Dashboard/Project';
 import Organization from './pages/Dashboard/Organization';
 import Squad from './pages/Dashboard/Squad';
+import Upload from './pages/Upload';
 import User from './pages/Dashboard/User';
 import Resume from './pages/Resume';
 import './styles/globals.css';
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 			<Route path="/dashboard/squads" element={<Squad />} />
 			<Route path="/dashboard/users" element={<User />} />
 			<Route path="/resume" element={<Resume />} />
+			<Route path="/upload" element={<Upload />} />
 			<Route path="/game" element={<Game />} />
 			<Route path="*" element={<Error />} />
 		</Routes>
