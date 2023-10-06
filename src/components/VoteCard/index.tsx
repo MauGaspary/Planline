@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface VoteCardProps {
 	label: string;
@@ -18,6 +18,10 @@ export default function VoteCard({ label, isSelect, onClick }: VoteCardProps) {
 			setCardState(!cardState);
 		}
 	};
+
+	useEffect(() => {
+		setCardState(Boolean(isSelect));
+	}, [isSelect]);
 
 	cardState
 		? ((style =

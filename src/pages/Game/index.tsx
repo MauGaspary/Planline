@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 export default function Game() {
 	const [voteState, setVoteState] = useState('individual');
+	const [cardSelected, setCardSelected] = useState('1');
 
 	return (
 		<div className="w-screen h-screen bg-white">
@@ -38,12 +39,38 @@ export default function Game() {
 							<h2 className="text-center text-2xl font-medium text-white">Votação conjunta</h2>
 							<p className="text-lg text-white pb-2">Escolha a pontuação final da tarefa</p>
 							<div className="flex justify-around items-center gap-3">
-								<VoteCard label="1" isSelect={true} />
-								<VoteCard label="2" isSelect={false} />
-								<VoteCard label="3" isSelect={false} />
-								<VoteCard label="5" isSelect={false} />
-								<VoteCard label="8" isSelect={false} />
-								<VoteCard label="13" isSelect={false} />
+								<VoteCard
+									label="1"
+									isSelect={cardSelected === '1'}
+									onClick={(e) => setCardSelected(e)}
+								/>
+								<VoteCard
+									label="2"
+									isSelect={cardSelected === '2'}
+									onClick={(e) => {
+										setCardSelected(e);
+									}}
+								/>
+								<VoteCard
+									label="3"
+									isSelect={cardSelected === '3'}
+									onClick={(e) => setCardSelected(e)}
+								/>
+								<VoteCard
+									label="5"
+									isSelect={cardSelected === '5'}
+									onClick={(e) => setCardSelected(e)}
+								/>
+								<VoteCard
+									label="8"
+									isSelect={cardSelected === '8'}
+									onClick={(e) => setCardSelected(e)}
+								/>
+								<VoteCard
+									label="13"
+									isSelect={cardSelected === '13'}
+									onClick={(e) => setCardSelected(e)}
+								/>
 							</div>
 							<button
 								type="button"
