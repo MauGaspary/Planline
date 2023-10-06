@@ -15,19 +15,18 @@ const SideMenuItem = ({
 	imageOrange,
 }: SideMenuItemProps) => {
 	return (
-		<div
+		<li
 			onClick={onClick}
-			className={`select-none cursor-pointer flex justify-start items-center w-full h-7 ${
-				isSelected ? 'bg-white' : 'bg-triider-primary-orange-dark'
-			} space-x-4`}
+			className={`select-none cursor-pointer flex items-center ${
+				isSelected ? 'bg-white p-4 -mx-4' : 'bg-triider-primary-orange-dark'
+			} space-x-4 h-12
+			hover:bg-triider-primary-orange2 [&>*]:hover:text-white hover:p-4 hover:-mx-4`}
 		>
-			<div className="ml-4 ">
-				{isSelected ? <img src={imageOrange} /> : <img src={imageWhite} />}
-			</div>
+			<div className="">{isSelected ? <img src={imageOrange} /> : <img src={imageWhite} />}</div>
 			<div className={`${isSelected ? 'text-triider-primary-orange-dark' : 'text-white'}`}>
-				<p className="text-xl font-semibold">{title}</p>
+				<p className="text-xl font-medium">{title}</p>
 			</div>
-		</div>
+		</li>
 	);
 };
 
