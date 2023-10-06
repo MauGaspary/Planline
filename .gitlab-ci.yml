@@ -19,8 +19,8 @@ build-node:
   script:
     - docker build -t $DOCKER_USER/backend -f Dockerfile .
     - docker push $DOCKER_USER/backend
-#  only:
-#    - main
+  only:
+    - main
 
 # ------------- DEPLOY SCRIPT -------------
 deploy-node:
@@ -41,8 +41,8 @@ deploy-node:
   tags:
     - ages-runner
   when: manual
-#  only:
-#    - main
+  only:
+    - main
 
 # ------------- MIGRATE SCRIPT -------------
 migrate-prisma:
@@ -60,5 +60,5 @@ migrate-prisma:
   tags:
     - ages-runner
   when: manual
-#  only:
-#    - main
+  only:
+    - main
