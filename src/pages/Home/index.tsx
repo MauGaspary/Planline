@@ -37,7 +37,7 @@ function Home() {
 		if (placeholder === project.name) {
 			setSquad({ name: 'Squad', id: '' });
 			setProject(option);
-			getSquads(`/squad/info/${project.id}`);
+			getSquads(`/squad/info/${option.id}`);
 		}
 		if (placeholder === squad.name) {
 			setSquad(option);
