@@ -3,6 +3,8 @@ import { DropzoneState, useDropzone } from 'react-dropzone';
 import CloseIcon from '../../assets/icons/closeIcon.svg';
 import FileIcon from '../../assets/icons/fileIcon.svg';
 import UploadIcon from '../../assets/icons/uploadIcon.svg';
+import { usInfo } from '../../types/usInfo';
+
 interface InputProps {
 	dropzone: DropzoneState;
 }
@@ -13,7 +15,7 @@ interface HasFileProps {
 }
 
 interface ButtonProps {
-	buttonState: () => void;
+	buttonState: (usArray: usInfo[] | null) => void;
 }
 
 export const FileInput = ({ buttonState }: ButtonProps) => {
@@ -21,12 +23,55 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 
 	const removeFile = useCallback(() => {
 		setFile(null);
-		buttonState();
+		buttonState(null);
 	}, [file]);
 
-	const onDrop = useCallback((files: File[]) => {
-		setFile(files[0]);
-		buttonState();
+	const readUploadedFileAsText = (inputFile: Blob) => {
+		const temporaryFileReader = new FileReader();
+
+		return new Promise((resolve, reject) => {
+			temporaryFileReader.onerror = () => {
+				temporaryFileReader.abort();
+				reject(new DOMException('Problema ao realizar o parse do arquivo.'));
+			};
+
+			temporaryFileReader.onload = () => {
+				resolve(temporaryFileReader.result);
+			};
+			temporaryFileReader.readAsText(inputFile, 'ISO-8859-15');
+		});
+	};
+
+	const onDrop = useCallback(async (files: File[]) => {
+		try {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const fileContents: any = await readUploadedFileAsText(files[0]);
+
+			const lines = fileContents?.split('\n');
+			const info: usInfo[] = [];
+			lines?.forEach((line: string, index: number) => {
+				if (
+					line?.includes(
+						'Subitems;Name;Owner;Estimated task;Status task;Start;Dependent;Stack;End;Item ID (auto generated);'
+					)
+				) {
+					const previousLine = lines[index - 1];
+					const parsed = previousLine.split(';');
+					const us = parsed[0];
+					const tasks = parsed[1].split(', ');
+					info.push({
+						us: us,
+						tasks: tasks,
+					});
+				}
+			});
+			if (info) {
+				setFile(files[0]);
+				buttonState(info);
+			}
+		} catch (e) {
+			console.warn('Erro ao ler o arquivo');
+		}
 	}, []);
 
 	const dropzone = useDropzone({
@@ -67,16 +112,14 @@ const Input = ({ dropzone }: InputProps) => {
 	);
 };
 
-const HasFile = ({ file, removeFile }: HasFileProps) => {
-	return (
-		<div className="rounded-lg flex flex-col p-6 text-center justify-center transition-all">
-			<div className="border rounded-lg flex items-center justify-center gap-2">
-				<img src={FileIcon} alt="file" className="w-10 h-10 my-4 ml-4" />
-				<span className="text-sm my-4  text-stone-800 ">{file?.name}</span>
-				<button type="button" onClick={removeFile} className="place-self-start mt-1 p-1">
-					<img src={CloseIcon} alt="close" className="w-5 h-5" />
-				</button>
-			</div>
+const HasFile = ({ file, removeFile }: HasFileProps) => (
+	<div className="rounded-lg flex flex-col p-6 text-center justify-center transition-all">
+		<div className="border rounded-lg flex items-center justify-center gap-2">
+			<img src={FileIcon} alt="file" className="w-10 h-10 my-4 ml-4" />
+			<span className="text-sm my-4  text-stone-800 ">{file?.name}</span>
+			<button type="button" onClick={removeFile} className="place-self-start mt-1 p-1">
+				<img src={CloseIcon} alt="close" className="w-5 h-5" />
+			</button>
 		</div>
-	);
-};
+	</div>
+);

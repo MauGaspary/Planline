@@ -41,7 +41,7 @@ function Sprints() {
 					/>
 				</div>
 			</form>
-			<div className="flex flex-col overflow-y-auto overflow-x-hidden">
+			<div className="flex flex-col overflow-y-auto overflow-x-hidden h-60">
 				<div className="sm:-mx-6 lg:-mx-8">
 					<div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
 						<div>

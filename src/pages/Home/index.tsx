@@ -1,62 +1,81 @@
-import React, { useState } from 'react';
-import Container from '../../components/Container';
-import { Select } from '../../components/Select/Select';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
-
-const orgOptions = ['Organização 1', 'Organização 2', 'Organização 3'];
-const projOptions = ['Projeto 1', 'Projeto 2', 'Projeto 3', 'Projeto 4', 'Projeto 5'];
-const squadOptions = ['Squad 1', 'Squad 2', 'Squad 3', 'Squad 4', 'Squad 5'];
+import Container from '../../components/Container';
+import { Select } from '../../components/Select/Select';
+import { useGet } from '../../hooks/useGet';
+import { InfoBody } from '../../types/InfoBody';
 
 function Home() {
-	const [org, setOrg] = useState('Organização');
-	const [project, setProject] = useState('Projeto');
-	const [squad, setSquad] = useState('Squad');
+	const [org, setOrg] = useState<InfoBody>({ name: 'Organização', id: '' });
+	const [project, setProject] = useState<InfoBody>({ name: 'Projeto', id: '' });
+	const [squad, setSquad] = useState<InfoBody>({ name: 'Squad', id: '' });
 
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
+	const {
+		data: organizations,
+		isLoading: isLoadingOrganizations,
+		request: getOrganizations,
+	} = useGet<InfoBody[]>();
 
-	const handleSelect = (placeholder: string, option: string) => {
-		if (placeholder === org) {
+	const { data: projects, request: getProjects } = useGet<InfoBody[]>();
+	const { data: squads, request: getSquads } = useGet<InfoBody[]>();
+
+	useEffect(() => {
+		getOrganizations('/organization/info');
+	}, []);
+
+	const handleSelect = (placeholder: string, option: InfoBody) => {
+		if (placeholder === org.name) {
+			setProject({ name: 'Projeto', id: '' });
+			setSquad({ name: 'Squad', id: '' });
 			setOrg(option);
+			if (option.id.length > 0) {
+				getProjects(`/project/info/${option.id}`);
+			}
 		}
-		if (placeholder === project) {
+		if (placeholder === project.name) {
+			setSquad({ name: 'Squad', id: '' });
 			setProject(option);
+			getSquads(`/squad/info/${option.id}`);
 		}
-		if (placeholder === squad) {
+		if (placeholder === squad.name) {
 			setSquad(option);
 		}
 		setOpenSelect(null);
 	};
 
-	return (
+	return isLoadingOrganizations ? (
+		<h1>Carregando...</h1>
+	) : (
 		<Container title="Identifique-se para visualizar mais informações" small>
 			<div className="flex flex-col px-20 gap-5 self-center">
 				<Select
-					placeholder={org}
-					options={orgOptions}
+					placeholder={org.name}
+					options={organizations || []}
 					handleSelect={handleSelect}
 					isOpen={openSelect === 'org'}
 					onToggle={() => setOpenSelect(openSelect === 'org' ? null : 'org')}
 				/>
 				<Select
-					placeholder={project}
-					options={projOptions}
+					placeholder={project.name}
+					options={projects || []}
 					handleSelect={handleSelect}
-					disabled={org === 'Organização'}
+					disabled={org.id === ''}
 					isOpen={openSelect === 'project'}
 					onToggle={() => setOpenSelect(openSelect === 'project' ? null : 'project')}
 				/>
 				<Select
-					placeholder={squad}
-					options={squadOptions}
+					placeholder={squad.name}
+					options={squads || []}
 					handleSelect={handleSelect}
-					disabled={project === 'Projeto'}
+					disabled={project.id === ''}
 					isOpen={openSelect === 'squad'}
 					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 				/>
 
-				<Link to="/upload">
-					<Button size="medium" disabled={squad === 'Squad'}>
+				<Link to={squad.name === 'Squad' ? '#' : '/resume'}>
+					<Button size="large" variant={squad.name === 'Squad' ? 'disabled' : 'primary'}>
 						Confirmar
 					</Button>
 				</Link>
