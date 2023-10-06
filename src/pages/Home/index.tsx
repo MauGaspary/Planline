@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import Card from '../../components/Card';
-import { Select } from '../../components/Select/Select';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
+import Card from '../../components/Card';
+import { Select } from '../../components/Select/Select';
 import { useGet } from '../../hooks/useGet';
 
 type InfoDTO = {
@@ -73,8 +73,8 @@ function Home() {
 					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 				/>
 
-				<Link to="/resume">
-					<Button size="medium" disabled={squad === 'Squad'}>
+				<Link to={squad === 'Squad' ? '#' : '/resume'}>
+					<Button size="large" variant={squad === 'Squad' ? 'disabled' : 'primary'}>
 						Confirmar
 					</Button>
 				</Link>
