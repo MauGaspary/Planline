@@ -82,7 +82,7 @@ function Home() {
 					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 				/>
 
-				<Link to={squad.name === 'Squad' ? '#' : '/resume'}>
+				<Link to={squad.name === 'Squad' ? '#' : '/import'}>
 					<Button size="large" variant={squad.name === 'Squad' ? 'disabled' : 'primary'}>
 						Confirmar
 					</Button>
