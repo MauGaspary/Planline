@@ -1,12 +1,14 @@
 import Express from 'express';
 import organizationController from '../controllers/organizationController.js';
 import projectController from '../controllers/projectController.js';
+import squadController from '../controllers/squadController.js';
 
 const express = Express;
 
 const routes = express.Router();
 
-routes.get('/project/info/:organization_id', projectController.index);
-routes.get('/organization/info', organizationController.index);
+routes.get('/squad/info/:project_id', squadController.info);
+routes.get('/project/info/:organization_id', projectController.info);
+routes.get('/organization/info', organizationController.info);
 
 export default routes;
