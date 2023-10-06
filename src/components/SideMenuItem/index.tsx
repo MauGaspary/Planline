@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 interface SideMenuItemProps {
 	onClick: () => void;
 	isSelected: boolean;
@@ -14,25 +13,16 @@ const SideMenuItem = ({
 	imageWhite,
 	imageOrange,
 }: SideMenuItemProps) => {
-	const [isHovered, setIsHovered] = useState<boolean>(false);
-
-	/* const handleHover = () => {
-		setIsHovered(true);
-	};*/
-
 	return (
 		<li
 			onClick={onClick}
-			className={`select-none cursor-pointer flex items-center ${
-				isSelected ? 'bg-white p-4 -mx-4' : 'bg-triider-primary-orange-dark'
-			} space-x-4 h-12
-			hover:bg-triider-primary-orange2 [&>*]:hover:text-white hover:p-4 hover:-mx-4`}
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}
+			className={`select-none cursor-pointer flex items-center -mx-4 p-4 transition-all space-x-4 h-12 hover:p-6 hover:-mx-4 ${
+				isSelected
+					? 'bg-white p-4'
+					: 'bg-triider-primary-orange-dark hover:bg-triider-primary-orange2'
+			}`}
 		>
-			<div className="">
-				{<img src={isHovered ? imageWhite : isSelected ? imageOrange : imageWhite} />}
-			</div>
+			<div className="">{<img src={isSelected ? imageOrange : imageWhite} />}</div>
 			<div className={`${isSelected ? 'text-triider-primary-orange-dark' : 'text-white'}`}>
 				<p className="text-xl font-medium">{title}</p>
 			</div>
