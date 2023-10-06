@@ -6,7 +6,7 @@ import { FileInput } from '../../components/FileInput/FileInput';
 import { usInfo } from '../../types/usInfo';
 
 interface InputProps {
-	importer: (e: usInfo[]) => void;
+	importer: (e: usInfo[], fileName: string) => void;
 }
 
 function Upload({ importer }: InputProps) {
@@ -14,7 +14,7 @@ function Upload({ importer }: InputProps) {
 	const [file, setFile] = useState<usInfo[] | null>(null);
 	const [fileName, setFileName] = useState<string>('');
 
-	const handleButton = (files: usInfo[] | null) => {
+	const handleButton = (files: usInfo[] | null, fileName: string) => {
 		setButtonState(!buttonState);
 		setFile(files);
 		setFileName(fileName);
@@ -22,7 +22,7 @@ function Upload({ importer }: InputProps) {
 
 	const onSubmit = () => {
 		if (file) {
-			importer(file);
+			importer(file, fileName);
 		}
 	};
 

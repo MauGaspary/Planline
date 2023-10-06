@@ -13,11 +13,12 @@ function Resume() {
 	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
 
-	function importFile(file: usInfo[]) {
+	function importFile(file: usInfo[], fileName: string) {
 		setFile(file);
 		setFileContext(file);
 		setUpload(true);
 		setFileName(fileName);
+		console.log(fileName);
 	}
 
 	return (
@@ -25,7 +26,7 @@ function Resume() {
 			{upload ? (
 				<Container title="resumo">
 					<div className="grid grid-cols-3 gap-4">
-						<div className="flex gap-2">
+						<div className="flex gap-2 ">
 							<span className="text-triider-grayscale-gray1">ORGANIZAÇÃO:</span>
 							<span className="font-bold">{organization}</span>
 						</div>
@@ -33,9 +34,9 @@ function Resume() {
 							<span className="text-triider-grayscale-gray1">SQUAD:</span>
 							<span className="font-bold">{squad}</span>
 						</div>
-						<div className="flex gap-2">
-							<span className="text-triider-grayscale-gray1">ARQUIVO:</span>
-							<span className="font-bold">Squad_Turma_do_Bairro.csv</span>
+						<div className="flex gap-2 row-span-2 break-all">
+							<span className="text-triider-grayscale-gray1 whitespace-nowrap">ARQUIVO:</span>
+							<span className="font-bold">{fileName}</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">PROJETO:</span>
@@ -43,7 +44,7 @@ function Resume() {
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SPRINT:</span>
-							<span className="font-bold">{fileName}</span>
+							<span className="font-bold">TO BE ADDED</span>
 						</div>
 					</div>
 					<div className="overflow-y-scroll h-60 overflow-x-hidden mt-2 relative">
