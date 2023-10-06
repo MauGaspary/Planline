@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Button from '../../components/Button';
-import Card from '../../components/Card';
+import Container from '../../components/Container';
 import Upload from '../../components/Upload';
 import { usInfo } from '../../types/usInfo';
 
@@ -16,7 +16,7 @@ function Resume() {
 	return (
 		<>
 			{upload ? (
-				<Card title="resumo">
+				<Container title="resumo">
 					<div className="grid grid-cols-3 gap-4">
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">ORGANIZAÇÃO:</span>
@@ -82,7 +82,7 @@ function Resume() {
 						</Button>
 						<Button variant="primary">Iniciar sessão</Button>
 					</div>
-				</Card>
+				</Container>
 			) : (
 				<Upload importer={importFile} />
 			)}

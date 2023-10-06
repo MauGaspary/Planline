@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
-import Card from '../../components/Card';
+import Container from '../../components/Container';
 import { Select } from '../../components/Select/Select';
 import { useGet } from '../../hooks/useGet';
 import { InfoBody } from '../../types/InfoBody';
@@ -48,7 +48,7 @@ function Home() {
 	return isLoadingOrganizations ? (
 		<h1>Carregando...</h1>
 	) : (
-		<Card title="Identifique-se para visualizar mais informações" small>
+		<Container title="Identifique-se para visualizar mais informações" small>
 			<div className="flex flex-col px-20 gap-5 self-center">
 				<Select
 					placeholder={org.name}
@@ -80,7 +80,7 @@ function Home() {
 					</Button>
 				</Link>
 			</div>
-		</Card>
+		</Container>
 	);
 }
 
