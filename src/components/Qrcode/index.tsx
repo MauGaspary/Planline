@@ -2,7 +2,7 @@ import QRCode from 'react-qr-code';
 
 interface QrcodeProps {
 	link: string;
-	code: number;
+	code: string;
 }
 
 function Qrcode({ link, code }: QrcodeProps) {

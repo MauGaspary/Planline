@@ -1,26 +1,28 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
-import Container from '../../components/Container';
+import Container from '../Container';
 import { FileInput } from '../../components/FileInput/FileInput';
 import { usInfo } from '../../types/usInfo';
 
 interface InputProps {
-	importer: (e: usInfo[]) => void;
+	importer: (e: usInfo[], fileName: string) => void;
 }
 
 function Upload({ importer }: InputProps) {
 	const [buttonState, setButtonState] = useState<boolean>(true);
 	const [file, setFile] = useState<usInfo[] | null>(null);
+	const [fileName, setFileName] = useState<string>('');
 
-	const handleButton = (files: usInfo[] | null) => {
+	const handleButton = (files: usInfo[] | null, fileName: string) => {
 		setButtonState(!buttonState);
 		setFile(files);
+		setFileName(fileName);
 	};
 
 	const onSubmit = () => {
 		if (file) {
-			importer(file);
+			importer(file, fileName);
 		}
 	};
 
