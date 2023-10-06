@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import Card from '../../components/Card';
-import { Select } from '../../components/Select/Select';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
+import Card from '../../components/Card';
+import { Select } from '../../components/Select/Select';
 import { useGet } from '../../hooks/useGet';
 import { InfoBody } from '../../types/InfoBody';
 
@@ -74,8 +74,8 @@ function Home() {
 					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 				/>
 
-				<Link to="/upload">
-					<Button size="medium" disabled={squad.name === 'Squad'}>
+				<Link to={squad.name === 'Squad' ? '#' : '/resume'}>
+					<Button size="large" variant={squad.name === 'Squad' ? 'disabled' : 'primary'}>
 						Confirmar
 					</Button>
 				</Link>
