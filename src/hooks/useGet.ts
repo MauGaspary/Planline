@@ -21,6 +21,7 @@ export function useGet<T>(): UseGet<T> {
 
 	async function request(url: string): Promise<void> {
 		try {
+			setData(null);
 			setLoading(true);
 			const response = await axiosInstance.get(url);
 			setData(response.data);
