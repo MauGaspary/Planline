@@ -1,32 +1,62 @@
 import Header from '../../components/Header';
 import pokerTable from '../../assets/images/poker_table.svg';
 import VoteCard from '../../components/VoteCard';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import Qrcode from '../../components/Qrcode';
+import { Session, createFirebaseSession } from '../../services/firebase/firebaseSessions';
+import { onValue, ref } from 'firebase/database';
+import { getRealtimeDatabase } from '../../services/firebase/firebase';
+import Button from '../../components/Button';
+import { ResumeContext } from '../../contexts/ResumeInfoContext';
 
 export default function Game() {
+	const { fileContext } = useContext(ResumeContext);
+	console.log(fileContext);
 	const [voteState, setVoteState] = useState('individual');
-	const [cardSelected, setCardSelected] = useState('1');
+	const [cardSelected, setCardSelected] = useState('');
+
+	const [sessionId, setSessionId] = useState<string | null>(null);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [session, setSession] = useState<Session | null>(null);
+	const database = getRealtimeDatabase();
+
+	function createSession() {
+		const sessionId = Math.floor(1000 + Math.random() * 9000).toString();
+
+		createFirebaseSession(sessionId).then(() => {
+			setSessionId(sessionId);
+
+			onValue(ref(database, 'sessions/' + sessionId), (snapshot) => {
+				setSession(snapshot.val());
+			});
+		});
+	}
+
+	useEffect(() => {
+		createSession();
+	}, []);
 
 	return (
 		<div className="w-screen h-screen bg-white">
 			<Header squadName="Looney Tunes" sprintName="ABC" />
+			<div className="ml-16 mt-24">
+				<Qrcode link={sessionId || ''} code={sessionId || ''} />
+			</div>
 			{voteState === 'individual' ? (
 				<div>
-					<div className="h-36"></div>
 					<div className="flex h-72 items-center justify-center">
 						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
 						<div className="flex flex-col absolute items-center gap-2">
 							<h2 className="text-center text-2xl font-medium text-white">Votação individual</h2>
 							<p className="text-lg text-white pb-2">Aguarde enquanto seus colegas votam</p>
-							<button
-								type="button"
-								className="text-triider-grayscale-white bg-triider-primary-orange1 focus:ring-0 focus:outline-none rounded-lg text-md px-8 py-1 pb-2"
-								onClick={() => {
+							<Button
+								onClickAction={() => {
 									setVoteState('conjunta');
 								}}
+								size="small"
 							>
 								Revelar votos
-							</button>
+							</Button>
 						</div>
 					</div>
 				</div>
@@ -72,15 +102,14 @@ export default function Game() {
 									onClick={(e) => setCardSelected(e)}
 								/>
 							</div>
-							<button
-								type="button"
-								className="text-triider-grayscale-white bg-triider-primary-orange1 focus:ring-0 focus:outline-none rounded-lg text-md px-8 py-1 pb-2"
-								onClick={() => {
+							<Button
+								size="small"
+								onClickAction={() => {
 									setVoteState('individual');
 								}}
 							>
-								Abrir pontuação
-							</button>
+								Atribuir pontuação
+							</Button>
 						</div>
 					</div>
 				</div>

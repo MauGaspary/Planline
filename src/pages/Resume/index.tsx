@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Upload from '../../components/Upload';
 import { usInfo } from '../../types/usInfo';
+import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import { useNavigate } from 'react-router-dom';
 
 function Resume() {
+	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<usInfo[] | null>(null);
+	const { setFileContext } = useContext(ResumeContext);
 
 	function importFile(file: usInfo[]) {
 		setFile(file);
+		setFileContext(file);
 		setUpload(true);
 	}
 
@@ -80,7 +85,9 @@ function Resume() {
 						<Button variant="secondary" onClickAction={() => setUpload(false)}>
 							Voltar
 						</Button>
-						<Button variant="primary">Iniciar sessão</Button>
+						<Button onClickAction={() => router('/game')} variant="primary">
+							Iniciar sessão
+						</Button>
 					</div>
 				</Card>
 			) : (
