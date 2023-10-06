@@ -1,22 +1,13 @@
 import React from 'react';
 
 interface ButtonProps {
-	disabled?: boolean;
-	secondary?: boolean;
-	secondaryOutline?: boolean;
 	size?: 'small' | 'medium' | 'large';
 	children: React.ReactNode;
 	variant?: 'primary' | 'secondary' | 'secondaryOutline' | 'disabled' | 'ghost';
 	onClickAction?: () => void;
 }
 
-const Button = ({
-	disabled,
-	size = 'medium',
-	children,
-	variant = 'primary',
-	onClickAction,
-}: ButtonProps) => {
+const Button = ({ size = 'medium', children, variant = 'primary', onClickAction }: ButtonProps) => {
 	const sizeClasses = {
 		small: 'w-44',
 		medium: 'w-56',
@@ -38,13 +29,7 @@ const Button = ({
 	const classes = `${defaultClasses} ${sizeClasses[size]} ${variantClasses[variant]}`;
 
 	return (
-		<button
-			className={classes}
-			onClick={onClickAction}
-			type="submit"
-			value="Submit"
-			disabled={disabled}
-		>
+		<button className={classes} onClick={onClickAction} type="submit" value="Submit">
 			{children}
 		</button>
 	);

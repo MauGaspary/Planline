@@ -35,11 +35,15 @@ function Upload({ importer }: InputProps) {
 			</div>
 			<div className="flex justify-center gap-8 px-16">
 				<Link to="/">
-					<Button size="small" secondary>
+					<Button size="small" variant="secondary">
 						Voltar
 					</Button>
 				</Link>
-				<Button onClickAction={onSubmit} disabled={buttonState} size="small">
+				<Button
+					onClickAction={onSubmit}
+					variant={buttonState ? 'disabled' : 'primary'}
+					size="small"
+				>
 					Importar
 				</Button>
 			</div>
