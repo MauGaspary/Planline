@@ -39,7 +39,7 @@ export default function Game() {
 
 	return (
 		<div className="w-screen h-screen  bg-white">
-			<Header squadName="Looney Tunes" sprintName="ABC" />
+			<Header sprintName="ABC" />
 			<div className="ml-16 mt-24">
 				<Qrcode link={sessionId || ''} code={sessionId || ''} />
 			</div>

@@ -1,18 +1,21 @@
+import { useContext } from 'react';
 import logo from '../../assets/images/Simbolo Triider branco.png';
 import Button from '../Button';
+import { ResumeContext } from '../../contexts/ResumeInfoContext';
 
 interface HeaderProps {
-	squadName: string;
 	sprintName: string;
 }
 
-export default function Header({ squadName, sprintName }: HeaderProps) {
+export default function Header({ sprintName }: HeaderProps) {
+	const { squad } = useContext(ResumeContext);
+
 	return (
 		<div>
 			<header className="w-full h-16 grid grid-cols-3 bg-triider-primary-orange2">
 				<div className="text-white text-xl flex flex-row justify-start items-center ml-6">
 					<img className="w-12 h-12" src={logo}></img>
-					<p className="ml-4 self-center">{squadName}</p>
+					<p className="ml-4 self-center">{squad}</p>
 				</div>
 				<div className="text-white text-xl flex items-center justify-center">
 					Votação da sprint {sprintName}
