@@ -35,7 +35,15 @@ Para isso, é necessário estar com um terminal aberto na pasta raiz do projeto.
 
 4. É necessário renomear o arquivo .env.example para .env, dessa maneira as envs locais são importadas corretamente
 
-5. Para iniciar o servidor de desenvolvimento, execute os comandos:
+5. Também, é importante ter o Docker iniciado.
+
+6. Execute o comando abaixo para subir o Docker:
+
+```sh
+docker compose up
+```
+
+7. Para iniciar o servidor de desenvolvimento, execute os comandos:
 
 ```sh
 #gera o cli do prisma
@@ -52,9 +60,9 @@ yarn dev
 
 Depois, acesse o endereço `http://localhost:8000` no seu navegador.
 
-5. Para mais comandos, veja o arquivo `package.json` em 'scripts'.
+8. Para mais comandos, veja o arquivo `package.json` em 'scripts'.
 
-6. As configurações de endpoint da API se encontram no arquivo config.ts. Ao rodar localmente o projeto apontará para o backend local, em produção apontará para o backend em produção.
+9. As configurações de endpoint da API se encontram no arquivo config.ts. Ao rodar localmente o projeto apontará para o backend local, em produção apontará para o backend em produção.
 
 ## 🛠️ Extensões do VSCode
 
