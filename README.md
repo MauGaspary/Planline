@@ -36,12 +36,19 @@ Para isso, é necessário estar com um terminal aberto na pasta raiz do projeto.
 
 ```sh
 #gera o cli do prisma
-yarn prisma generate 
+yarn prisma generate
 ```
+
+```sh
+#sobe uma instância do banco via Docker
+docker compose up -d
+```
+
 ```sh
 #cria as estruturas descritas nas models dentro do banco
 yarn prisma migrate dev
 ```
+
 ```sh
 #roda o projeto
 yarn dev
