@@ -8,6 +8,7 @@ COPY . .
 RUN ls
 RUN yarn build
 RUN rm -rf node_modules && yarn install --production --ignore-scripts
+
 FROM node:18-alpine AS deploy
 
 COPY --chown=deploy --from=builder /opt/app /opt/app
@@ -19,4 +20,4 @@ ENV PATH /opt/node_app/node_modules/.bin:$PATH
 
 EXPOSE 8080
 
-CMD ["dist/index.js"]
+CMD ["dist/src/index.js"]

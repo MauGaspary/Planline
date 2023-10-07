@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   web:
-    contgit oainer_name: web
+    container_name: web
     image: planlineages/web:latest
     restart: unless-stopped
     build: .
