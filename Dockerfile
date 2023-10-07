@@ -5,6 +5,7 @@ COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install --ignore-optional
 COPY . .
+RUN ls
 RUN yarn build
 RUN rm -rf node_modules && yarn install --production --ignore-scripts
 FROM node:18-alpine AS deploy
