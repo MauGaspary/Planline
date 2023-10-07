@@ -1,9 +1,9 @@
 import React from 'react';
 
 interface ButtonProps {
-	size?: 'small' | 'medium' | 'large';
+	size?: 'small' | 'medium' | 'large' | 'icon' | 'xsmall';
 	children: React.ReactNode;
-	variant?: 'primary' | 'secondary' | 'secondaryOutline' | 'disabled' | 'ghost';
+	variant?: 'primary' | 'secondary' | 'secondaryOutline' | 'disabled' | 'ghost' | 'info';
 	onClickAction?: () => void;
 }
 
@@ -12,9 +12,12 @@ const Button = ({ size = 'medium', children, variant = 'primary', onClickAction 
 		small: 'w-44',
 		medium: 'w-56',
 		large: 'w-80',
+		icon: 'w-12',
+		xsmall: 'w-20',
 	};
 
 	const variantClasses = {
+		info: 'text-white bg-triider-secondary-purple2 hover:animate-pulse hover:shadow-md',
 		disabled: 'text-white bg-triider-primary-orange-dark opacity-30 cursor-default',
 		secondary: 'text-stone-800 bg-white hover:animate-pulse hover:shadow-md',
 		secondaryOutline:

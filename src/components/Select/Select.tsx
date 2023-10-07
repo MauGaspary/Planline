@@ -8,12 +8,17 @@ interface SelectProps {
 	disabled?: boolean;
 	isOpen: boolean;
 	onToggle: () => void;
+	width?: string;
 }
 
 export const Select = (props: SelectProps) => {
-	const buttonClass = props.disabled
-		? 'flex cursor-default items-center text-lg w-80 h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium opacity-30'
-		: 'flex cursor-pointer items-center text-lg w-80 h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium hover:bg-slate-200';
+	const widthClass = props.width === undefined ? 'w-80' : `w-${props.width}`;
+	const buttonClass =
+		(props.disabled
+			? 'flex cursor-default items-center text-lg h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium opacity-30 ' +
+			  widthClass
+			: 'flex cursor-pointer items-center text-lg h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium hover:bg-slate-200 ') +
+		widthClass;
 
 	return (
 		<div className="relative">
@@ -29,7 +34,12 @@ export const Select = (props: SelectProps) => {
 			</div>
 
 			{props.isOpen && (
-				<ul className="absolute max-h-40 overflow-auto text-start z-10 items-center text-lg w-80 bg-gray-200 rounded-lg text-gray-700 font-medium">
+				<ul
+					className={
+						'absolute max-h-40 overflow-auto text-start z-10 items-center text-lg bg-gray-200 rounded-lg text-gray-700 font-medium ' +
+						widthClass
+					}
+				>
 					{props.options.length > 0 ? (
 						props.options.map((option) => (
 							<li
