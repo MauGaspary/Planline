@@ -20,4 +20,4 @@ ENV PATH /opt/node_app/node_modules/.bin:$PATH
 
 EXPOSE 8080
 
-CMD ["dist/src/index.js"]
+CMD yarn run dev
