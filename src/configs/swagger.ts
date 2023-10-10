@@ -33,7 +33,7 @@ const swaggerOptions = {
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = [path.resolve('./dist/controllers/controller.js')];
+const endpointsFiles = [path.resolve('./dist/routes/routes.js')];
 
 swaggerAutogen()(outputFile, endpointsFiles, swaggerOptions).then(async () => {
 	await import(path.resolve('./dist/index.js'));
