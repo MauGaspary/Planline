@@ -4,10 +4,8 @@ import Container from '../../components/Container';
 import Upload from '../../components/Upload';
 import { usInfo } from '../../types/usInfo';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
-import { useNavigate } from 'react-router-dom';
 
 function Resume() {
-	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<usInfo[] | null>(null);
 	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
