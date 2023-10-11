@@ -1,25 +1,51 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Upload from '../../components/Upload';
 import { usInfo } from '../../types/usInfo';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import { SessionCreationDto, SessionCreationResponseDto } from '../../types/CreateSessionDto';
+import { usePost } from '../../hooks/usePost';
+import { useNavigate } from 'react-router-dom';
 
 function Resume() {
+	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<usInfo[] | null>(null);
-	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
+	const { setFileContext, organization, project, squad, fileContext } = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
 
-	// TODO: use this hook to do the request
-	// const { data, error, isLoading, request } = usePost<
-	// 	 SessionCreationResponseDto,
-	// 	 SessionCreationDto
-	// >();
+	const { data, request } = usePost<SessionCreationResponseDto, SessionCreationDto>();
+
+	useEffect(() => {
+		if (data) {
+			router(`/game/${data.session_id}`);
+		}
+	}, [data]);
 
 	function createSession() {
-		// TODO: do the request
-		// request('/sessions', dto);
+		request('/sessions', {
+			organization_id: organization ?? '',
+			project_id: project ?? '',
+			squad_id: squad ?? '',
+			// TODO: Get sprint from file
+			sprint: {
+				name: 'Sprint 1',
+				start_date: new Date(),
+				end_date: new Date(),
+				stories:
+					fileContext?.map((item, idx) => ({
+						// TODO: Get story_id from file
+						story_id: idx.toString(),
+						name: item.us,
+						tasks: item.tasks.map((task, idx) => ({
+							// TODO: Get task_id from file
+							task_id: idx.toString(),
+							name: task,
+						})),
+					})) ?? [],
+			},
+		});
 	}
 
 	function importFile(file: usInfo[], fileName: string) {
