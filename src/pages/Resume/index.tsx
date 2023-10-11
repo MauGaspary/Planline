@@ -13,6 +13,17 @@ function Resume() {
 	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
 
+	// TODO: use this hook to do the request
+	// const { data, error, isLoading, request } = usePost<
+	// 	 SessionCreationResponseDto,
+	// 	 SessionCreationDto
+	// >();
+
+	function createSession() {
+		// TODO: do the request
+		// request('/sessions', dto);
+	}
+
 	function importFile(file: usInfo[], fileName: string) {
 		setFile(file);
 		setFileContext(file);
@@ -88,7 +99,7 @@ function Resume() {
 						<Button variant="secondary" onClickAction={() => setUpload(false)}>
 							Voltar
 						</Button>
-						<Button onClickAction={() => router('/game')} variant="primary">
+						<Button variant="primary" onClickAction={createSession}>
 							Iniciar sessão
 						</Button>
 					</div>
