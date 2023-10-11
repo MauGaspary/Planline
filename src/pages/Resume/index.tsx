@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Upload from '../../components/Upload';
 import { usInfo } from '../../types/usInfo';
+import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import { useNavigate } from 'react-router-dom';
 
 function Resume() {
+	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<usInfo[] | null>(null);
+	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
+	const [fileName, setFileName] = useState<string>('');
 
 	// TODO: use this hook to do the request
 	// const { data, error, isLoading, request } = usePost<
@@ -19,9 +24,12 @@ function Resume() {
 		// request('/sessions', dto);
 	}
 
-	function importFile(file: usInfo[]) {
+	function importFile(file: usInfo[], fileName: string) {
 		setFile(file);
+		setFileContext(file);
 		setUpload(true);
+		setFileName(fileName);
+		console.log(fileName);
 	}
 
 	return (
@@ -29,25 +37,25 @@ function Resume() {
 			{upload ? (
 				<Container title="resumo">
 					<div className="grid grid-cols-3 gap-4">
-						<div className="flex gap-2">
+						<div className="flex gap-2 ">
 							<span className="text-triider-grayscale-gray1">ORGANIZAÇÃO:</span>
-							<span className="font-bold">Triider</span>
+							<span className="font-bold">{organization}</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SQUAD:</span>
-							<span className="font-bold">Turma do bairro</span>
+							<span className="font-bold">{squad}</span>
 						</div>
-						<div className="flex gap-2">
-							<span className="text-triider-grayscale-gray1">ARQUIVO:</span>
-							<span className="font-bold">Squad_Turma_do_Bairro.csv</span>
+						<div className="flex gap-2 row-span-2 break-all">
+							<span className="text-triider-grayscale-gray1 whitespace-nowrap">ARQUIVO:</span>
+							<span className="font-bold">{fileName}</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">PROJETO:</span>
-							<span className="font-bold">PlanLine</span>
+							<span className="font-bold">{project}</span>
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SPRINT:</span>
-							<span className="font-bold">22</span>
+							<span className="font-bold">TO BE ADDED</span>
 						</div>
 					</div>
 					<div className="overflow-y-scroll h-60 overflow-x-hidden mt-2 relative">
