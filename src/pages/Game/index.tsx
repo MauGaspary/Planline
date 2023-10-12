@@ -4,7 +4,7 @@ import VoteCard from '../../components/VoteCard';
 import { useEffect, useState } from 'react';
 import Qrcode from '../../components/Qrcode';
 import { Session } from '../../services/firebase/firebaseSessions';
-import { onValue, ref } from 'firebase/database';
+import { off, onValue, ref } from 'firebase/database';
 import { getRealtimeDatabase } from '../../services/firebase/firebase';
 import Button from '../../components/Button';
 import Carousel from '../../components/Carousel';
@@ -21,11 +21,18 @@ export default function Game() {
 	const [currentStory, setCurrentStory] = useState<string>('0');
 	const database = getRealtimeDatabase();
 
+	const refSession = ref(database, 'sessions/' + session_id);
+
 	function sessionListener() {
-		onValue(ref(database, 'sessions/' + session_id), (snapshot) => {
+		onValue(refSession, (snapshot) => {
 			setSession(snapshot.val());
 			console.log(snapshot.val());
 		});
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	function closeListener() {
+		off(refSession);
 	}
 
 	useEffect(() => {
