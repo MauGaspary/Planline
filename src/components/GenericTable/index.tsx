@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Container from '../.././components/Container';
 import SprintTable from '../.././mocks/sprintTable';
 
 interface GenericTableProps {
@@ -15,7 +14,7 @@ const GenericTable = ({ columns }: GenericTableProps) => {
 		search.length > 0 ? data?.filter((item) => item.name.toLowerCase().includes(search)) : [];
 
 	return (
-		<Container title="sprints">
+		<div>
 			<form>
 				<div className="relative">
 					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -103,7 +102,7 @@ const GenericTable = ({ columns }: GenericTableProps) => {
 					</div>
 				</div>
 			</div>
-		</Container>
+		</div>
 	);
 };
 
