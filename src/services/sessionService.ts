@@ -92,4 +92,9 @@ export default {
 
 		return { sessionId };
 	},
+	async finalize(sessionId: string) {
+		const database = firebaseService.dbInstance;
+		const finishedSession = ref(database, 'sessions/' + sessionId + '/finished');
+		await set(finishedSession, true);
+	},
 };

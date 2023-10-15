@@ -12,5 +12,6 @@ routes.get('/squad/info/:project_id', squadController.infoByProjectId);
 routes.get('/project/info/:organization_id', projectController.infoByOrganizationId);
 routes.get('/organization/info', organizationController.info);
 routes.get('/sessions', sessionsController.index);
+routes.get('/sessions/finalize/:sessionId', sessionsController.finalize);
 
 export default routes;

@@ -7,4 +7,9 @@ export default {
 		const sessionCreationDto = req.body as SessionCreationDto;
 		res.json(await sessionService.create(sessionCreationDto));
 	},
+
+	async finalize(req: Request, res: Response) {
+		const sessionIdDto = req.params.sessionId;
+		res.json(await sessionService.finalize(sessionIdDto));
+	},
 };
