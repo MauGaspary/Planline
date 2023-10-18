@@ -11,7 +11,11 @@
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"outDir": "dist"
+		"outDir": "dist",
+		"baseUrl": "./",
+		"paths": {
+			"@services/*": ["src/services/*"]
+		}
 	},
 	"include": ["src/**/*"],
 	"exclude": ["dist/**/*"]

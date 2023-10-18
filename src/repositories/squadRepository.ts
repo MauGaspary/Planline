@@ -1,4 +1,4 @@
-import { Squad, PrismaClient } from '@prisma/client';
+import { Squad, PrismaClient, User } from '@prisma/client';
 import { InfoDTO } from '../dto/InfoBody';
 
 const prisma = new PrismaClient();
@@ -25,5 +25,20 @@ export default {
 			data: { ...data },
 		});
 		return project;
+	},
+
+	async getAllUsers(squadId: string): Promise<User[]> {
+		return (
+			(
+				await prisma.userSquadBridge.findMany({
+					where: {
+						squad_id: squadId,
+					},
+					select: {
+						User: true,
+					},
+				})
+			)?.map((bridge) => bridge.User) ?? ([] as User[])
+		);
 	},
 };
