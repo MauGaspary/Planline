@@ -18,6 +18,6 @@ ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 ENV PATH /opt/node_app/node_modules/.bin:$PATH
 
-EXPOSE 8080
+EXPOSE 8000
 
 CMD yarn run dev
