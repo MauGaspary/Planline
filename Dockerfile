@@ -23,6 +23,6 @@ ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 ENV PATH /opt/node_app/node_modules/.bin:$PATH
 
-EXPOSE 8000
+EXPOSE 3000
 
 CMD ["dist/index.js"]
