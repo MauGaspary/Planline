@@ -3,16 +3,15 @@ import pokerTable from '../../assets/images/poker_table.svg';
 import VoteCard from '../../components/VoteCard';
 import { useContext, useEffect, useState } from 'react';
 import Qrcode from '../../components/Qrcode';
-import { Session, createFirebaseSession } from '../../services/firebase/firebaseSessions';
+import { Session, createFirebaseSession } from '../../services/firebaseSessions';
 import { onValue, ref } from 'firebase/database';
-import { getRealtimeDatabase } from '../../services/firebase/firebase';
+import { getRealtimeDatabase } from '../../services/firebase';
 import Button from '../../components/Button';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
 import Carousel from '../../components/Carousel';
 
 export default function Game() {
 	const { fileContext } = useContext(ResumeContext);
-	console.log(fileContext);
 	const [voteState, setVoteState] = useState('individual');
 	const [cardSelected, setCardSelected] = useState('');
 

@@ -1,9 +1,9 @@
 import NukaCarousel from 'nuka-carousel';
 import Task from './Task';
-import { usInfo } from '../../types/usInfo';
+import { UsInfo } from '../../types/UsInfo';
 
 interface TaskProps {
-	listaTasks: usInfo[];
+	listaTasks: UsInfo[];
 }
 
 function Carousel({ listaTasks }: TaskProps) {
