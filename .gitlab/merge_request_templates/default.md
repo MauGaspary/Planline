@@ -4,7 +4,7 @@
     - Under the "Associated docs" section, add a link to the Trello item associated with your task
     - Under the "Change type" subsection, remove the items that don't describe your task
     - Under the "Screenshots" subsection, add screenshots that show the you've changes made
-    
+
     After submitting the request, do not forget to check all the checkboxes that apply, under the "Change type" and "Code quality" subsections.
 
     Title template
