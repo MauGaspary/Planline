@@ -11,18 +11,21 @@ import User from './pages/Dashboard/User';
 import Resume from './pages/Resume';
 import './styles/globals.css';
 import { ResumeProvider } from './contexts/ResumeInfoContext';
+import Layout from './layout';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<ResumeProvider>
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/dashboard/sprints" element={<Sprint />} />
-				<Route path="/dashboard/projects" element={<Project />} />
-				<Route path="/dashboard/orgs" element={<Organization />} />
-				<Route path="/dashboard/squads" element={<Squad />} />
-				<Route path="/dashboard/users" element={<User />} />
-				<Route path="/import" element={<Resume />} />
+				<Route path="/" element={<Layout />}>
+					<Route path="/home" element={<Home />} />
+					<Route path="/dashboard/sprints" element={<Sprint />} />
+					<Route path="/dashboard/projects" element={<Project />} />
+					<Route path="/dashboard/orgs" element={<Organization />} />
+					<Route path="/dashboard/squads" element={<Squad />} />
+					<Route path="/dashboard/users" element={<User />} />
+					<Route path="/import" element={<Resume />} />
+				</Route>
 				<Route path="/game" element={<Game />} />
 				<Route path="*" element={<Error />} />
 			</Routes>

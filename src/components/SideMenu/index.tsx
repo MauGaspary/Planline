@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SideMenuItem from '../SideMenuItem';
 
-const SideMenu = () => {
+function SideMenu() {
 	const [activeButton, setActiveButton] = useState<string | null>(null);
 
 	const handleButtonClick = (buttonName: string) => {
@@ -9,7 +9,7 @@ const SideMenu = () => {
 	};
 
 	return (
-		<nav className="flex-col w-64 px-4 h-screen bg-triider-primary-orange-dark">
+		<nav className="flex-col w-64 px-4 h-screen absolute bg-triider-primary-orange-dark">
 			<div className="py-10 space-x-4">
 				<img className="inline-block h-14" src="src/assets/triiderLogos/whiteVersion.svg" />
 				<h1 className="inline-block text-2xl text-white font-medium align-middle">PlanLine</h1>
@@ -53,6 +53,6 @@ const SideMenu = () => {
 			</ol>
 		</nav>
 	);
-};
+}
 
 export default SideMenu;
