@@ -21,9 +21,9 @@ const SideMenuGroup = ({ onClick, title, image }: SideMenuGroupProps) => {
 			</div>
 			{/* <div>
 				{isVisible ? (
-					<img src="src\assets\down3White.svg" />
+					<img src="src\assets\caretDownWhite.svg" />
 				) : (
-					<img src="src\assets\up3White.svg " />
+					<img src="src\assets\caretUpWhite.svg" />
 				)}
 			</div> */}
 		</div>

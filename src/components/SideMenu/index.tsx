@@ -19,36 +19,36 @@ const SideMenu = () => {
 					onClick={() => handleButtonClick('votacao')}
 					isSelected={activeButton === 'votacao'}
 					title={'Votação'}
-					imageWhite={'src/assets/talkWhite.svg'}
-					imageOrange={'src/assets/talkOrange.svg'}
+					imageWhite={'src/assets/sideMenuIcons/talkWhite.svg'}
+					imageOrange={'src/assets/sideMenuIcons/talkOrange.svg'}
 				/>
 				<SideMenuItem
 					onClick={() => handleButtonClick('usuarios')}
 					isSelected={activeButton === 'usuarios'}
 					title={'Usuários'}
-					imageWhite={'src/assets/groupWhite.svg'}
-					imageOrange={'src/assets/groupOrange.svg'}
+					imageWhite={'src/assets/sideMenuIcons/groupWhite.svg'}
+					imageOrange={'src/assets/sideMenuIcons/groupOrange.svg'}
 				/>
 				<SideMenuItem
 					onClick={() => handleButtonClick('squads')}
 					isSelected={activeButton === 'squads'}
 					title={'Squads'}
-					imageWhite={'src/assets/laptopWhite.svg'}
-					imageOrange={'src/assets/laptopOrange.svg'}
+					imageWhite={'src/assets/sideMenuIcons/laptopWhite.svg'}
+					imageOrange={'src/assets/sideMenuIcons/laptopOrange.svg'}
 				/>
 				<SideMenuItem
 					onClick={() => handleButtonClick('projetos')}
 					isSelected={activeButton === 'projetos'}
 					title={'Projetos'}
-					imageWhite={'src/assets/registerWhite.svg'}
-					imageOrange={'src/assets/registerOrange.svg'}
+					imageWhite={'src/assets/sideMenuIcons/registerWhite.svg'}
+					imageOrange={'src/assets/sideMenuIcons/registerOrange.svg'}
 				/>
 				<SideMenuItem
 					onClick={() => handleButtonClick('organizacoes')}
 					isSelected={activeButton === 'organizacoes'}
 					title={'Organizações'}
-					imageWhite="src/assets/apartmentWhite.svg"
-					imageOrange="src/assets/apartmentOrange.svg"
+					imageWhite="src/assets/sideMenuIcons/apartmentWhite.svg"
+					imageOrange="src/assets/sideMenuIcons/apartmentOrange.svg"
 				/>
 			</ol>
 		</nav>

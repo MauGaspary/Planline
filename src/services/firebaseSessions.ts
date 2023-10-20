@@ -1,0 +1,77 @@
+import { getRealtimeDatabase } from './firebase';
+import { set, ref } from 'firebase/database';
+
+export type Session = {
+	current_task?: string;
+	finished: boolean;
+	stories: {
+		[key: string]: Story;
+	};
+	users: {
+		[key: string]: User;
+	};
+};
+
+export type Story = {
+	name: string;
+	tasks: {
+		[key: string]: Task;
+	};
+};
+
+export type Task = {
+	descritpion: string;
+	final_vote: number;
+	votes: {
+		[key: string]: number;
+	};
+};
+
+export type User = {
+	name: string;
+	level: string;
+	firebase_auth_id: string | null;
+};
+
+export async function createFirebaseSession(sessionId: string) {
+	const session: Session = {
+		finished: false,
+		stories: {
+			'1': {
+				name: 'Story 1',
+				tasks: {
+					'1': {
+						descritpion: 'Task 1',
+						final_vote: 0,
+						votes: {},
+					},
+				},
+			},
+		},
+		users: {
+			'1': {
+				name: 'Cassio Trindade',
+				level: 'junior',
+				firebase_auth_id: null,
+			},
+			'2': {
+				name: 'Joseph',
+				level: 'senior',
+				firebase_auth_id: null,
+			},
+		},
+	};
+
+	const database = getRealtimeDatabase();
+	const sessionRef = ref(database, 'sessions/' + sessionId);
+
+	await set(sessionRef, session);
+}
+export async function finishFirebaseSession(sessionId: string) {
+	const database = getRealtimeDatabase();
+	const sessionRef = ref(database, 'sessions/' + sessionId);
+
+	// TODO: remove this when backend is ready
+	// Use this insted: await set(sessionRef, { finished: true });
+	await set(sessionRef, null);
+}
