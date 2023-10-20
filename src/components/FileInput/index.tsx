@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { DropzoneState, useDropzone } from 'react-dropzone';
 import CloseIcon from '../../assets/icons/closeIcon.svg';
 import FileIcon from '../../assets/icons/fileIcon.svg';
 import UploadIcon from '../../assets/icons/uploadIcon.svg';
-import { usInfo } from '../../types/usInfo';
+import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import { UsInfo } from '../../types/UsInfo';
 
 interface InputProps {
 	dropzone: DropzoneState;
@@ -15,11 +16,12 @@ interface HasFileProps {
 }
 
 interface ButtonProps {
-	buttonState: (usArray: usInfo[] | null, fileName: string) => void;
+	buttonState: (usArray: UsInfo[] | null, fileName: string) => void;
 }
 
 export const FileInput = ({ buttonState }: ButtonProps) => {
 	const [file, setFile] = useState<File | null>(null);
+	const { setSprintContext } = useContext(ResumeContext);
 
 	const removeFile = useCallback(() => {
 		setFile(null);
@@ -48,8 +50,14 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 			const fileContents: any = await readUploadedFileAsText(files[0]);
 			const fileName: string = files[0].name;
 			const lines = fileContents?.split('\n');
-			const info: usInfo[] = [];
+			const info: UsInfo[] = [];
 			lines?.forEach((line: string, index: number) => {
+				let sprintName;
+				if (index === 1) {
+					sprintName = line.split(';')[0];
+					setSprintContext(sprintName);
+				}
+
 				if (
 					line?.includes(
 						'Subitems;Name;Owner;Estimated task;Status task;Start;Dependent;Stack;End;Item ID (auto generated);'

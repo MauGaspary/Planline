@@ -12,7 +12,6 @@ import Carousel from '../../components/Carousel';
 
 export default function Game() {
 	const { fileContext } = useContext(ResumeContext);
-	console.log(fileContext);
 	const [voteState, setVoteState] = useState('individual');
 	const [cardSelected, setCardSelected] = useState('');
 

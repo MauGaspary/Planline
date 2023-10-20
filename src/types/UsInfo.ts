@@ -1,4 +1,4 @@
-export type usInfo = {
+export type UsInfo = {
 	us: string;
 	tasks: string[];
 };
