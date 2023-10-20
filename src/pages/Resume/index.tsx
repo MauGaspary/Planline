@@ -2,13 +2,13 @@ import { useContext, useState } from 'react';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Upload from '../../components/Upload';
-import { usInfo } from '../../types/usInfo';
+import { UsInfo } from '../../types/UsInfo';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
 
 function Resume() {
 	const [upload, setUpload] = useState<boolean | null>(false);
-	const [file, setFile] = useState<usInfo[] | null>(null);
-	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
+	const [file, setFile] = useState<UsInfo[] | null>(null);
+	const { setFileContext, organization, project, squad, sprint } = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
 
 	// TODO: use this hook to do the request
@@ -22,12 +22,11 @@ function Resume() {
 		// request('/sessions', dto);
 	}
 
-	function importFile(file: usInfo[], fileName: string) {
+	function importFile(file: UsInfo[], fileName: string) {
 		setFile(file);
 		setFileContext(file);
 		setUpload(true);
 		setFileName(fileName);
-		console.log(fileName);
 	}
 
 	return (
@@ -53,7 +52,7 @@ function Resume() {
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SPRINT:</span>
-							<span className="font-bold">TO BE ADDED</span>
+							<span className="font-bold">{sprint}</span>
 						</div>
 					</div>
 					<div className="overflow-y-scroll h-60 overflow-x-hidden mt-2 relative">
