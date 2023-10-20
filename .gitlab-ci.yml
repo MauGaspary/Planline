@@ -18,8 +18,8 @@ build-node:
   script:
     - docker build -t $DOCKER_USER/web -f Dockerfile .
     - docker push $DOCKER_USER/web
-  only:
-    - main
+  # only:
+  #   - main
 
 # ------------- DEPLOY SCRIPT -------------
 deploy-node:
@@ -33,5 +33,5 @@ deploy-node:
   tags:
     - ages-runner
   when: manual
-  only:
-    - main
+  # only:
+  #   - main
