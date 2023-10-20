@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import logo from '../../assets/images/Simbolo Triider branco.png';
+import logo from '../../assets/triiderLogos/logoWhite.svg';
 import Button from '../Button';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
 
