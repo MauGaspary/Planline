@@ -4,6 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerFile from './configs/swagger-output.json' assert { type: 'json' };
 import routes from './routes/routes.js';
 import cors from 'cors';
+import sessionService from './services/sessionService.js';
 
 dotenv.config();
 
@@ -16,5 +17,6 @@ app.use(routes);
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(port, () => {
+	sessionService.getAllCurrentSessions();
 	console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
