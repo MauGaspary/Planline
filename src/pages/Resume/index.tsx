@@ -2,12 +2,12 @@ import { useContext, useState } from 'react';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Upload from '../../components/Upload';
-import { usInfo } from '../../types/usInfo';
+import { UsInfo } from '../../types/UsInfo';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
 
 function Resume() {
 	const [upload, setUpload] = useState<boolean | null>(false);
-	const [file, setFile] = useState<usInfo[] | null>(null);
+	const [file, setFile] = useState<UsInfo[] | null>(null);
 	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
 
@@ -22,7 +22,7 @@ function Resume() {
 		// request('/sessions', dto);
 	}
 
-	function importFile(file: usInfo[], fileName: string) {
+	function importFile(file: UsInfo[], fileName: string) {
 		setFile(file);
 		setFileContext(file);
 		setUpload(true);
