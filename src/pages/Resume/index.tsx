@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Upload from '../../components/Upload';
-import { usInfo } from '../../types/usInfo';
+import { UsInfo } from '../../types/UsInfo';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
 import { SessionCreationDto, SessionCreationResponseDto } from '../../types/CreateSessionDto';
 import { usePost } from '../../hooks/usePost';
@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 function Resume() {
 	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
-	const [file, setFile] = useState<usInfo[] | null>(null);
+	const [file, setFile] = useState<UsInfo[] | null>(null);
 	const { setFileContext, organization, project, squad, fileContext } = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
 
@@ -48,7 +48,7 @@ function Resume() {
 		});
 	}
 
-	function importFile(file: usInfo[], fileName: string) {
+	function importFile(file: UsInfo[], fileName: string) {
 		setFile(file);
 		setFileContext(file);
 		setUpload(true);

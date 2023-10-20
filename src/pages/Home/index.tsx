@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
-import { Select } from '../../components/Select/Select';
+import { Select } from '../../components/Select';
 import { useGet } from '../../hooks/useGet';
 import { InfoBody } from '../../types/InfoBody';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
