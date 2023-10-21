@@ -1,5 +1,6 @@
 import { Squad, PrismaClient, User } from '@prisma/client';
 import { InfoDTO } from '../dto/InfoBody';
+import { CreateSquadDTO } from '../dto/CreateSquadDTO';
 
 const prisma = new PrismaClient();
 
@@ -20,11 +21,11 @@ export default {
 		return infoSquads;
 	},
 
-	async creates(data: Squad): Promise<Squad> {
-		const project = await prisma.squad.create({
+	async create(data: CreateSquadDTO): Promise<string> {
+		const squad = await prisma.squad.create({
 			data: { ...data },
 		});
-		return project;
+		return squad.id;
 	},
 
 	async getAllUsers(squadId: string): Promise<User[]> {

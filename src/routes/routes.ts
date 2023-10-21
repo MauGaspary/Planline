@@ -13,4 +13,6 @@ routes.get('/project/info/:organization_id', projectController.infoByOrganizatio
 routes.get('/organization/info', organizationController.info);
 routes.get('/sessions', sessionsController.index);
 
+routes.post('/squad', squadController.create);
+
 export default routes;
