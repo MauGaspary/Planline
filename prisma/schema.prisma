@@ -33,6 +33,8 @@ model Squad {
   name               String               @db.VarChar(100)
   leader             User                 @relation(fields: [leaderId], references: [id])
   leaderId           String
+  organization       Organization         @relation(fields: [organization_id], references: [id])
+  organization_id    String
   updated_at         DateTime             @updatedAt
   created_at         DateTime             @default(now())
   ProjectSquadBridge ProjectSquadBridge[]
@@ -46,6 +48,7 @@ model Organization {
   updated_at DateTime  @updatedAt
   created_at DateTime  @default(now())
   Project    Project[]
+  Squad      Squad[]
 }
 
 model Project {
