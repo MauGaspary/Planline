@@ -3,12 +3,12 @@ import pokerTable from '../../assets/images/poker_table.svg';
 import VoteCard from '../../components/VoteCard';
 import { useEffect, useState } from 'react';
 import Qrcode from '../../components/Qrcode';
-import { Session } from '../../services/firebase/firebaseSessions';
 import { off, onValue, ref } from 'firebase/database';
-import { getRealtimeDatabase } from '../../services/firebase/firebase';
 import Button from '../../components/Button';
 import Carousel from '../../components/Carousel';
 import { useParams } from 'react-router-dom';
+import { getRealtimeDatabase } from '../../services/firebase';
+import { Session } from '../../services/firebaseSessions';
 
 export default function Game() {
 	const [voteState, setVoteState] = useState('individual');
