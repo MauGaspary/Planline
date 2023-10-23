@@ -6,6 +6,7 @@ import { Select } from '../../components/Select';
 import { useGet } from '../../hooks/useGet';
 import { InfoBody } from '../../types/InfoBody';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import Loader from '../../components/Loader';
 
 function Home() {
 	const [org, setOrg] = useState<InfoBody>({ name: 'Organização', id: '' });
@@ -54,7 +55,7 @@ function Home() {
 	};
 
 	return isLoadingOrganizations ? (
-		<h1>Carregando...</h1>
+		<Loader />
 	) : (
 		<Container title="Identifique-se para visualizar mais informações" small>
 			<div className="flex flex-col px-20 gap-5 self-center">
