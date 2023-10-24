@@ -63,6 +63,12 @@ Para mais comandos, veja o arquivo `package.json` em 'scripts'.
 
 As configurações de endpoint da API se encontram no arquivo config.ts. Ao rodar localmente o projeto apontará para o backend local, em produção apontará para o backend em produção.
 
+## 📋 Swagger
+
+O Swagger é uma lib para documentar rotas no backend.
+
+Para rodá-lo, deve-se executar o comando `yarn swagger`. Este comando irá pegar todas as rotas do arquivo `routes` e irá gerar um arquivo JSON em `dist/configs/swagger-output.json`, e este arquivo deve ser copiado para `src/configs/swagger-output.json`, para que as rotas geradas fiquem salvas. Desta forma, quando rodar `yarn dev`, o projeto irá recriar a pasta dist, e propagar o json já configurado.
+
 ## 🛠️ Extensões do VSCode
 
 - ESLint
