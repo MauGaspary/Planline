@@ -61,7 +61,6 @@ const GenericTable = ({ columns }: GenericTableProps) => {
 									))}
 								</tr>
 							</thead>
-							<hr className="flex min-w-full w-full h-px bg-zinc-300 border-0" />
 							<tbody>
 								{search.length > 0
 									? filteredName?.map((item, index) => (
