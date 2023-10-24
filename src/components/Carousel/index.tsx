@@ -1,6 +1,6 @@
 import NukaCarousel from 'nuka-carousel';
 import Task from './Task';
-import { Task as TaskDto } from '../../services/firebase/firebaseSessions';
+import { Task as TaskDto } from '../../services/firebaseSessions';
 
 interface TaskProps {
 	taskList: { [key: string]: TaskDto };

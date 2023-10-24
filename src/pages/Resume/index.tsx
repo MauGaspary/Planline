@@ -12,36 +12,46 @@ function Resume() {
 	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<UsInfo[] | null>(null);
-	const { setFileContext, organization, project, squad, fileContext } = useContext(ResumeContext);
+	const {
+		setFileContext,
+		organization,
+		project,
+		squad,
+		sprint,
+		fileContext,
+		organization_id,
+		project_id,
+		squad_id,
+	} = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
 	const { data, request } = usePost<SessionCreationResponseDto, SessionCreationDto>();
 
 	useEffect(() => {
 		if (data) {
-			router(`/game/${data.session_id}`);
+			console.log(data);
+			router(`/game/${data.sessionId}`);
 		}
 	}, [data]);
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	function createSession() {
+		console.log(organization, project, squad, sprint, fileContext);
+
 		request('/sessions', {
-			organization_id: organization ?? '',
-			project_id: project ?? '',
-			squad_id: squad ?? '',
-			// TODO: Get sprint from file
+			organization_id: organization_id ?? '',
+			project_id: project_id ?? '',
+			squad_id: squad_id ?? '',
 			sprint: {
-				name: 'Sprint 1',
+				name: sprint ?? '',
 				start_date: new Date(),
 				end_date: new Date(),
 				stories:
-					fileContext?.map((item, idx) => ({
-						// TODO: Get story_id from file
-						story_id: idx.toString(),
-						name: item.us,
-						tasks: item.tasks.map((task, idx) => ({
-							// TODO: Get task_id from file
-							task_id: idx.toString(),
-							name: task,
+					fileContext?.map((item) => ({
+						story_id: item.us.id,
+						name: item.us.name,
+						tasks: item.tasks.map((task) => ({
+							task_id: task.id,
+							name: task.name,
 						})),
 					})) ?? [],
 			},
@@ -53,7 +63,6 @@ function Resume() {
 		setFileContext(file);
 		setUpload(true);
 		setFileName(fileName);
-		console.log(fileName);
 	}
 
 	return (
@@ -87,8 +96,7 @@ function Resume() {
 
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SPRINT:</span>
-
-							<span className="font-bold">TO BE ADDED</span>
+							<span className="font-bold">{sprint}</span>
 						</div>
 					</div>
 

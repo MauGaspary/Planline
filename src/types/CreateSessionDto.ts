@@ -24,5 +24,5 @@ export type SessionCreationDto = {
 };
 
 export type SessionCreationResponseDto = {
-	session_id: string;
+	sessionId: string;
 };
