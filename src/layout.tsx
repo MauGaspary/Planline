@@ -1,13 +1,15 @@
 import SideMenu from './components/SideMenu';
-import { Outlet } from 'react-router-dom';
 
-function Layout() {
+interface LayoutProps {
+	children: React.ReactNode;
+}
+
+function Layout({ children }: LayoutProps) {
+	console.log(children);
 	return (
 		<>
 			<SideMenu />
-			<div className="ml-64">
-				<Outlet />
-			</div>
+			<div className="ml-64">{children}</div>
 		</>
 	);
 }
