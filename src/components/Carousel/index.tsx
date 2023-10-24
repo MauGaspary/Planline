@@ -3,12 +3,12 @@ import Task from './Task';
 import { Task as TaskDto } from '../../services/firebase/firebaseSessions';
 
 interface TaskProps {
-	listaTasks: { [key: string]: TaskDto };
+	taskList: { [key: string]: TaskDto };
 	currentTaskId: string | null;
 }
 
-function Carousel({ listaTasks, currentTaskId }: TaskProps) {
-	const tasks = Object.entries(listaTasks);
+function Carousel({ taskList, currentTaskId }: TaskProps) {
+	const tasks = Object.entries(taskList);
 
 	const params = {
 		slidesToShow: 3,
