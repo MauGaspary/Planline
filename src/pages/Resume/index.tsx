@@ -88,15 +88,15 @@ function Resume() {
 								<div className="grid grid-cols-1 place-items-start overflow-hidden">
 									<label
 										className="cursor-pointer z-10 w-full grow pl-4 pr-12 py-3 text-triider-grayscale-gray1"
-										htmlFor={item.us}
+										htmlFor={item.us.id}
 									>
-										{item.us}
+										{item.us.name}
 									</label>
 									<input
 										className="peer mx-4 my-3 h-0 w-0 appearance-none rounded border opacity-0 hidden"
 										type="checkbox"
-										name={item.us}
-										id={item.us}
+										name={item.us.name}
+										id={item.us.id}
 									/>
 									<svg
 										className="absolute right-2 mx-4 my-3 h-6 w-6 transition-all duration-200 peer-checked:rotate-45 content-end"
@@ -110,8 +110,8 @@ function Resume() {
 									</svg>
 									<div className="hidden scale-75 scale-y-0 px-4 py-3 peer-checked:relative peer-checked:translate-y-0 peer-checked:scale-100 peer-checked:scale-y-100 peer-checked:block">
 										{item.tasks.map((task) => (
-											<p key={task} className="flex ml-8">
-												{task}
+											<p key={task.id} className="flex ml-8">
+												{task.name}
 											</p>
 										))}
 									</div>
