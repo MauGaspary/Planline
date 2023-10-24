@@ -24,7 +24,12 @@ function Carousel({ listaTasks }: TaskProps) {
 		<div className="flex-row h-fit space-x-7 w-2/3 mx-auto ">
 			<NukaCarousel {...params} cellAlign="center" wrapAround withoutControls>
 				{listaTasks[7].tasks.map((task, key) => (
-					<Task title={task} voted={Math.random() * 2 > 1 ? true : false} next={false} key={key} />
+					<Task
+						title={task.name}
+						voted={Math.random() * 2 > 1 ? true : false}
+						next={false}
+						key={key}
+					/>
 				))}
 			</NukaCarousel>
 		</div>
