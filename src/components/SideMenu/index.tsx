@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import SideMenuItem from '../SideMenuItem';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SideMenuItem from '../SideMenuItem';
 
 function SideMenu() {
 	const [activeButton, setActiveButton] = useState<string | null>(null);
@@ -31,26 +31,15 @@ function SideMenu() {
 					imageWhite={'src/assets/sideMenuIcons/talkWhite.svg'}
 					imageOrange={'src/assets/sideMenuIcons/talkOrange.svg'}
 				/>
-
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('usuarios');
-						handleNav('/dashboard/users');
+						handleActiveButton('organizacoes');
+						handleNav('/dashboard/orgs');
 					}}
-					isSelected={activeButton === 'usuarios'}
-					title={'Usuários'}
-					imageWhite={'src/assets/sideMenuIcons/groupWhite.svg'}
-					imageOrange={'src/assets/sideMenuIcons/groupOrange.svg'}
-				/>
-				<SideMenuItem
-					onClick={() => {
-						handleActiveButton('squads');
-						handleNav('/dashboard/squads');
-					}}
-					isSelected={activeButton === 'squads'}
-					title={'Squads'}
-					imageWhite={'src/assets/sideMenuIcons/laptopWhite.svg'}
-					imageOrange={'src/assets/sideMenuIcons/laptopOrange.svg'}
+					isSelected={activeButton === 'organizacoes'}
+					title={'Organizações'}
+					imageWhite="src/assets/sideMenuIcons/apartmentWhite.svg"
+					imageOrange="src/assets/sideMenuIcons/apartmentOrange.svg"
 				/>
 				<SideMenuItem
 					onClick={() => {
@@ -64,13 +53,23 @@ function SideMenu() {
 				/>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('organizacoes');
-						handleNav('/dashboard/orgs');
+						handleActiveButton('squads');
+						handleNav('/dashboard/squads');
 					}}
-					isSelected={activeButton === 'organizacoes'}
-					title={'Organizações'}
-					imageWhite="src/assets/sideMenuIcons/apartmentWhite.svg"
-					imageOrange="src/assets/sideMenuIcons/apartmentOrange.svg"
+					isSelected={activeButton === 'squads'}
+					title={'Squads'}
+					imageWhite={'src/assets/sideMenuIcons/laptopWhite.svg'}
+					imageOrange={'src/assets/sideMenuIcons/laptopOrange.svg'}
+				/>
+				<SideMenuItem
+					onClick={() => {
+						handleActiveButton('usuarios');
+						handleNav('/dashboard/users');
+					}}
+					isSelected={activeButton === 'usuarios'}
+					title={'Usuários'}
+					imageWhite={'src/assets/sideMenuIcons/groupWhite.svg'}
+					imageOrange={'src/assets/sideMenuIcons/groupOrange.svg'}
 				/>
 			</ol>
 		</nav>
