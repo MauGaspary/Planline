@@ -1,20 +1,14 @@
 import NukaCarousel from 'nuka-carousel';
 import Task from './Task';
-import { UsInfo } from '../../types/UsInfo';
+import { Task as TaskDto } from '../../services/firebaseSessions';
 
 interface TaskProps {
-	listaTasks: UsInfo[];
+	taskList: { [key: string]: TaskDto };
+	currentTaskId: string | null;
 }
 
-function Carousel({ listaTasks }: TaskProps) {
-	// const listaTasks = [
-	// 	{ title: 'task 1 daopfkdsioghb', voted: true, next: false },
-	// 	{ title: 'task 2 acxgvvvvvvvvvvvv', voted: false, next: false },
-	// 	{ title: 'task 3 !!!!!!!!!', voted: false, next: true },
-	// 	{ title: 'task dhgdhfgkmjgh', voted: true, next: false },
-	// 	{ title: 'task 2 acxgvvvvvvvvvvvv', voted: false, next: false },
-	// 	{ title: 'task 3 !!!!!!!!!', voted: false, next: true },
-	// ];
+function Carousel({ taskList, currentTaskId }: TaskProps) {
+	const tasks = Object.entries(taskList);
 
 	const params = {
 		slidesToShow: 3,
@@ -23,8 +17,14 @@ function Carousel({ listaTasks }: TaskProps) {
 	return (
 		<div className="flex-row h-fit space-x-7 w-2/3 mx-auto ">
 			<NukaCarousel {...params} cellAlign="center" wrapAround withoutControls>
-				{listaTasks[7].tasks.map((task, key) => (
-					<Task title={task} voted={Math.random() * 2 > 1 ? true : false} next={false} key={key} />
+				{tasks.map(([task_id, task]) => (
+					<Task
+						title={task.name}
+						voted={task.final_vote > 0}
+						next={currentTaskId !== task_id}
+						finalVote={task.final_vote}
+						key={task_id}
+					/>
 				))}
 			</NukaCarousel>
 		</div>
