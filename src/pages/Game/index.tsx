@@ -1,46 +1,49 @@
 import Header from '../../components/Header';
 import pokerTable from '../../assets/images/poker_table.svg';
 import VoteCard from '../../components/VoteCard';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Qrcode from '../../components/Qrcode';
-import { Session, createFirebaseSession } from '../../services/firebaseSessions';
-import { onValue, ref } from 'firebase/database';
-import { getRealtimeDatabase } from '../../services/firebase';
+import { off, onValue, ref } from 'firebase/database';
 import Button from '../../components/Button';
-import { ResumeContext } from '../../contexts/ResumeInfoContext';
 import Carousel from '../../components/Carousel';
+import { useParams } from 'react-router-dom';
+import { getRealtimeDatabase } from '../../services/firebase';
+import { Session } from '../../services/firebaseSessions';
 
 export default function Game() {
-	const { fileContext } = useContext(ResumeContext);
 	const [voteState, setVoteState] = useState('individual');
 	const [cardSelected, setCardSelected] = useState('');
 
-	const [sessionId, setSessionId] = useState<string | null>(null);
+	const { session_id } = useParams();
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [session, setSession] = useState<Session | null>(null);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [currentStory, setCurrentStory] = useState<string>('0');
 	const database = getRealtimeDatabase();
 
-	function createSession() {
-		const sessionId = Math.floor(1000 + Math.random() * 9000).toString();
+	const refSession = ref(database, 'sessions/' + session_id);
 
-		createFirebaseSession(sessionId).then(() => {
-			setSessionId(sessionId);
-
-			onValue(ref(database, 'sessions/' + sessionId), (snapshot) => {
-				setSession(snapshot.val());
-			});
+	function sessionListener() {
+		onValue(refSession, (snapshot) => {
+			setSession(snapshot.val());
+			console.log(snapshot.val());
 		});
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	function closeListener() {
+		off(refSession);
+	}
+
 	useEffect(() => {
-		createSession();
+		sessionListener();
 	}, []);
 
 	return (
 		<div className="w-screen h-screen  bg-white">
 			<Header sprintName="ABC" />
 			<div className="ml-16 mt-24">
-				<Qrcode link={sessionId || ''} code={sessionId || ''} />
+				<Qrcode link={session_id || ''} code={session_id || ''} />
 			</div>
 			{voteState === 'individual' ? (
 				<div>
@@ -114,7 +117,10 @@ export default function Game() {
 				</div>
 			)}
 			<div className=" w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
-				<Carousel listaTasks={fileContext || []} />
+				<Carousel
+					listaTasks={session?.stories[currentStory].tasks || {}}
+					currentTaskId={session?.current_task ?? null}
+				/>
 			</div>
 		</div>
 	);

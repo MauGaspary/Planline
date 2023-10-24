@@ -65,12 +65,33 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 				) {
 					const previousLine = lines[index - 1];
 					const parsed = previousLine.split(';');
-					const us = parsed[0];
+					const usName = parsed[0];
+					const usId = parsed[15];
 					const tasks = parsed[1].split(', ');
+					const tasksWithIds = [];
+					let aux = 1;
+
+					if (tasks) {
+						for (let i = 0; i < tasks.length; i++) {
+							const id = lines[index + aux].split(';')[9];
+							aux++;
+							const taskWithId = {
+								id,
+								name: tasks[i],
+							};
+							tasksWithIds.push(taskWithId);
+						}
+					}
+
 					info.push({
-						us: us,
-						tasks: tasks,
+						us: {
+							name: usName,
+							id: usId,
+						},
+						tasks: tasksWithIds,
 					});
+				} else {
+					return;
 				}
 			});
 			if (info) {
