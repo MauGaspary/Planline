@@ -1,4 +1,5 @@
 import { PrismaClient, User } from '@prisma/client';
+import { CreateUserDTO } from 'src/dto/CreateUserDto';
 
 const prisma = new PrismaClient();
 
@@ -8,11 +9,22 @@ export default {
 		return users;
 	},
 
+	/*
+
 	async creates(data: User): Promise<User> {
 		const user = await prisma.user.create({
 			data: { ...data },
 		});
 		console.log(user);
 		return user;
+	},
+
+	*/
+
+	async create(data: CreateUserDTO): Promise<string> {
+		const user = await prisma.user.create({
+			data: { ...data },
+		});
+		return user.id;
 	},
 };

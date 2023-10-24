@@ -3,6 +3,7 @@ import organizationController from '../controllers/organizationController.js';
 import projectController from '../controllers/projectController.js';
 import squadController from '../controllers/squadController.js';
 import sessionsController from '../controllers/sessionsController.js';
+import userController from 'src/controllers/userController.js';
 
 const express = Express;
 
@@ -14,5 +15,5 @@ routes.get('/organization/info', organizationController.info);
 routes.get('/sessions', sessionsController.index);
 
 routes.post('/squad', squadController.create);
-
+routes.post('/user', userController.create);
 export default routes;

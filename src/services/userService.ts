@@ -1,6 +1,7 @@
 import { User, Prisma } from '@prisma/client';
 import { Request, Response } from 'express';
 import userRepository from '../repositories/userRepository.js';
+import { CreateUserDTO } from 'src/dto/CreateUserDto.js';
 
 export default {
 	async index(body: Request, res: Response) {
@@ -22,6 +23,8 @@ export default {
 		}
 	},
 
+	/*
+
 	async create(data: Request, res: Response) {
 		try {
 			const user = await userRepository.creates({ ...data.body });
@@ -36,5 +39,12 @@ export default {
 				}
 			}
 		}
+	},
+
+	*/
+
+	async create(user: CreateUserDTO): Promise<string> {
+		const userId: string = await userRepository.create(user);
+		return userId;
 	},
 };

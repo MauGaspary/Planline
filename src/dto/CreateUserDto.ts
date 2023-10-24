@@ -1,11 +1,13 @@
-export type CreateSquadDTO = {
+import { level } from '@prisma/client';
+
+export type CreateUserDTO = {
 	name: string;
 	email: string;
-	level: Level;
+	level: level;
 };
 
-enum Level {
-	JUNIOR,
-	PLENO,
-	SENIOR,
-}
+// enum Level {
+// JUNIOR,
+// PLENO,
+// SENIOR,
+// }
