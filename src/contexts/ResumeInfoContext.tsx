@@ -28,7 +28,7 @@ interface ResumeProviderProps {
 
 export const ResumeContext = createContext<ResumeContextType>({
 	fileContext: null,
-	setFileContext: () => { },
+	setFileContext: () => {},
 	organization: null,
 	organization_id: null,
 	sprint: null,
@@ -37,14 +37,14 @@ export const ResumeContext = createContext<ResumeContextType>({
 	sprint_id: null,
 	project_id: null,
 	squad_id: null,
-	setOrganizationContext: () => { },
-	setProjectContext: () => { },
-	setSquadContext: () => { },
-	setSprintContext: () => { },
-	setSprintIdContext: () => { },
-	setProjectIdContext: () => { },
-	setSquadIdContext: () => { },
-	setOrganizationIdContext: () => { },
+	setOrganizationContext: () => {},
+	setProjectContext: () => {},
+	setSquadContext: () => {},
+	setSprintContext: () => {},
+	setSprintIdContext: () => {},
+	setProjectIdContext: () => {},
+	setSquadIdContext: () => {},
+	setOrganizationIdContext: () => {},
 });
 
 export const ResumeProvider: React.FC<ResumeProviderProps> = ({ children }) => {

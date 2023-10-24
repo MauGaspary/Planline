@@ -118,7 +118,7 @@ export default function Game() {
 			)}
 			<div className=" w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
 				<Carousel
-					listaTasks={session?.stories[currentStory].tasks || {}}
+					taskList={session?.stories[currentStory].tasks || {}}
 					currentTaskId={session?.current_task ?? null}
 				/>
 			</div>
