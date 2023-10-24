@@ -4,19 +4,21 @@ import Container from '../../components/Container';
 import Upload from '../../components/Upload';
 import { UsInfo } from '../../types/UsInfo';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import { useNavigate } from 'react-router-dom';
 
 function Resume() {
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<UsInfo[] | null>(null);
 	const { setFileContext, organization, project, squad, sprint } = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
-
+	const router = useNavigate();
 	// TODO: use this hook to do the request
 	// const { data, error, isLoading, request } = usePost<
 	// 	 SessionCreationResponseDto,
 	// 	 SessionCreationDto
 	// >();
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	function createSession() {
 		// TODO: do the request
 		// request('/sessions', dto);
@@ -96,7 +98,7 @@ function Resume() {
 						<Button variant="secondary" onClickAction={() => setUpload(false)}>
 							Voltar
 						</Button>
-						<Button variant="primary" onClickAction={createSession}>
+						<Button variant="primary" onClickAction={() => router('/game')}>
 							Iniciar sessão
 						</Button>
 					</div>
