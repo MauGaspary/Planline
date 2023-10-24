@@ -1,6 +1,7 @@
 export type Task = {
 	task_id: string;
 	name: string;
+	final_vote: number;
 };
 
 export type Story = {

@@ -1,7 +1,7 @@
 import storyRepository from '../repositories/storyRepository.js';
 import { SessionCreationDto } from '../dto/CreateSessionDto.js';
 import firebaseService from './firebaseService.js';
-import { set, ref, get } from 'firebase/database';
+import { set, ref, get, child } from 'firebase/database';
 import squadRepository from '../repositories/squadRepository.js';
 import {
 	FirebaseCollection,
@@ -63,6 +63,8 @@ export default {
 			};
 		}
 
+		console.log(firebaseStories);
+
 		const [users, sessionId] = await Promise.all([
 			squadRepository.getAllUsers(sessionCreationDto.squad_id),
 			this.createRandomId(),
@@ -90,11 +92,56 @@ export default {
 
 		await set(sessionRef, session);
 
+		console.log(sessionId);
+
 		return { sessionId };
 	},
-	async finalize(sessionId: string) {
+
+	async finalizeWithoutSaving(sessionId: string) {
 		const database = firebaseService.dbInstance;
 		const finishedSession = ref(database, 'sessions/' + sessionId + '/finished');
 		await set(finishedSession, true);
+	},
+
+	async finalize(sessionId: string) {
+		const database = firebaseService.dbInstance;
+		const sessionRef = ref(database, 'sessions/' + sessionId);
+
+		const snapshot = await get(sessionRef);
+
+		if (snapshot.exists()) {
+			const session: FirebaseSession = snapshot.val();
+
+			const stories = [];
+
+			for (const storyId in session.stories) {
+				const story = session.stories[storyId];
+
+				const tasks = [];
+
+				for (const taskId in story.tasks) {
+					const task = story.tasks[taskId];
+
+					const votes = [];
+
+					for (const userId in task.votes) {
+						votes.push(task.votes[userId]);
+					}
+
+					tasks.push({
+						task_id: taskId,
+						final_vote: task.final_vote,
+						votes,
+					});
+				}
+
+				stories.push({
+					story_id: storyId,
+					tasks,
+				});
+			}
+		}
+
+		await set(child(sessionRef, 'finished'), true);
 	},
 };
