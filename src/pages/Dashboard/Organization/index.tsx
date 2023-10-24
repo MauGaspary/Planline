@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Container from '../../../components/Container';
-import GenericForm from '../../../components/GenericForm';
 import Modal from '../../../components/Modal';
+import GenericForm from '../../../components/OrganizationForm';
 
 function Organization() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +16,7 @@ function Organization() {
 					setIsOpen(!isOpen);
 				}}
 			>
-				<GenericForm id={id} type="org" isOpen={() => setIsOpen(!isOpen)} />
+				<GenericForm id={id} isOpen={() => setIsOpen(!isOpen)} />
 			</Modal>
 			<Container title="organizações">
 				<button

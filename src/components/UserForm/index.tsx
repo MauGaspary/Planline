@@ -13,8 +13,27 @@ interface UserInfo {
 	name: string;
 	email: string;
 	level: string;
-	squad: string;
+	squad: InfoBody[];
 }
+
+const orgMock = [
+	{
+		name: 'Org 1',
+		id: '1',
+	},
+	{
+		name: 'Org 2',
+		id: '2',
+	},
+	{
+		name: 'Org 3',
+		id: '3',
+	},
+	{
+		name: 'Org 4',
+		id: '4',
+	},
+];
 
 const squadsMock = [
 	{
@@ -58,7 +77,12 @@ const mockUser = {
 	name: 'João',
 	email: 'joao@email.com',
 	level: 'Junior',
-	squad: 'Squad 1',
+	squad: [
+		{
+			name: 'Squad 1',
+			id: '1',
+		},
+	],
 };
 
 export default function UserForm({ id, isOpen }: UserFormProps) {
@@ -66,19 +90,24 @@ export default function UserForm({ id, isOpen }: UserFormProps) {
 	const [userEmail, setUserEmail] = useState('');
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
 	const [levelSelected, setLevel] = useState('Escolha o nível');
-	const [squads, setSquads] = useState('Escolha a squad');
-	const { data: squadsMocks, request: getSquads } = useGet<InfoBody[]>();
+	const [org, setOrg] = useState<InfoBody>({ name: 'Escolha a organização', id: '' });
+	const [squad, setSquad] = useState<InfoBody[]>([]);
+	const { data: squads, request: getSquads } = useGet<InfoBody[]>();
 	const { data: userInfo, request: getUser } = useGet<UserInfo>();
 
 	const handleSelect = (placeholder: string, option: InfoBody) => {
 		if (placeholder === levelSelected) {
 			setLevel(option.name);
 		}
-
-		if (placeholder === squads) {
-			setSquads(option.name);
-		}
 		setOpenSelect(null);
+	};
+
+	const handleMultiselect = (option: InfoBody) => {
+		if (squad.includes(option)) {
+			setSquad(squad.filter((s) => s.id !== option.id));
+		} else {
+			setSquad([...squad, option]);
+		}
 	};
 
 	useEffect(() => {
@@ -91,7 +120,7 @@ export default function UserForm({ id, isOpen }: UserFormProps) {
 			setUserName(name);
 			setUserEmail(email);
 			setLevel(level);
-			setSquads(squad);
+			setSquad(squad);
 		}
 	}, []);
 
@@ -102,11 +131,16 @@ export default function UserForm({ id, isOpen }: UserFormProps) {
 		isOpen();
 	};
 
+	const handleSelectOrg = (_placeholder: string, option: InfoBody) => {
+		setOrg(option);
+		setOpenSelect(null);
+	};
+
 	return (
 		<div className="flex flex-col gap-4 justify-center">
 			<div className="flex items-end gap-2">
 				<label
-					className="text-lg mb-4 text-triider-grayscale-gray1 w-20 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
+					className="text-lg mb-4 min-w-[128px] text-triider-grayscale-gray1 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
 					htmlFor="name"
 				>
 					NOME
@@ -122,7 +156,7 @@ export default function UserForm({ id, isOpen }: UserFormProps) {
 			</div>
 			<div className="flex items-end gap-2">
 				<label
-					className="text-lg mb-4 text-triider-grayscale-gray1 w-20 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
+					className="text-lg min-w-[128px] mb-4 text-triider-grayscale-gray1 w-20 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
 					htmlFor="email"
 				>
 					EMAIL
@@ -138,10 +172,10 @@ export default function UserForm({ id, isOpen }: UserFormProps) {
 			</div>
 			<div className="flex items-end gap-2">
 				<label
-					className="text-lg mb-5 text-triider-grayscale-gray1 w-20 mr-2 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
-					htmlFor="email"
+					className="text-lg mb-4 text-triider-grayscale-gray1 w-32 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
+					htmlFor="level"
 				>
-					NÍVEL
+					LEVEL
 				</label>
 				<Select
 					placeholder={levelSelected}
@@ -153,17 +187,17 @@ export default function UserForm({ id, isOpen }: UserFormProps) {
 			</div>
 			<div className="flex items-end gap-2">
 				<label
-					className="text-lg mb-4 text-triider-grayscale-gray1 w-20 mr-2 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
-					htmlFor="squad"
+					className="text-lg mb-4 text-triider-grayscale-gray1 w-32 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
+					htmlFor="org"
 				>
-					SQUADS
+					ORGANIZAÇÃO
 				</label>
 				<Select
-					placeholder={squads}
-					options={squadsMocks || squadsMock}
-					handleSelect={handleSelect}
-					isOpen={openSelect === 'squad'}
-					onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
+					placeholder={org.name}
+					options={orgMock || []}
+					handleSelect={handleSelectOrg}
+					isOpen={openSelect === 'org'}
+					onToggle={() => setOpenSelect(openSelect === 'org' ? null : 'org')}
 				/>
 			</div>
 			<div className="flex mt-5 justify-center items-center">
