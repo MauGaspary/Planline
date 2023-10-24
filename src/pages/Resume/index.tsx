@@ -2,13 +2,13 @@ import { useContext, useState } from 'react';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Upload from '../../components/Upload';
-import { usInfo } from '../../types/usInfo';
+import { UsInfo } from '../../types/UsInfo';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
 
 function Resume() {
 	const [upload, setUpload] = useState<boolean | null>(false);
-	const [file, setFile] = useState<usInfo[] | null>(null);
-	const { setFileContext, organization, project, squad } = useContext(ResumeContext);
+	const [file, setFile] = useState<UsInfo[] | null>(null);
+	const { setFileContext, organization, project, squad, sprint } = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
 
 	// TODO: use this hook to do the request
@@ -22,12 +22,11 @@ function Resume() {
 		// request('/sessions', dto);
 	}
 
-	function importFile(file: usInfo[], fileName: string) {
+	function importFile(file: UsInfo[], fileName: string) {
 		setFile(file);
 		setFileContext(file);
 		setUpload(true);
 		setFileName(fileName);
-		console.log(fileName);
 	}
 
 	return (
@@ -53,7 +52,7 @@ function Resume() {
 						</div>
 						<div className="flex gap-2">
 							<span className="text-triider-grayscale-gray1">SPRINT:</span>
-							<span className="font-bold">TO BE ADDED</span>
+							<span className="font-bold">{sprint}</span>
 						</div>
 					</div>
 					<div className="overflow-y-scroll h-60 overflow-x-hidden mt-2 relative">
@@ -62,15 +61,15 @@ function Resume() {
 								<div className="grid grid-cols-1 place-items-start overflow-hidden">
 									<label
 										className="cursor-pointer z-10 w-full grow pl-4 pr-12 py-3 text-triider-grayscale-gray1"
-										htmlFor={item.us}
+										htmlFor={item.us.id}
 									>
-										{item.us}
+										{item.us.name}
 									</label>
 									<input
 										className="peer mx-4 my-3 h-0 w-0 appearance-none rounded border opacity-0 hidden"
 										type="checkbox"
-										name={item.us}
-										id={item.us}
+										name={item.us.name}
+										id={item.us.id}
 									/>
 									<svg
 										className="absolute right-2 mx-4 my-3 h-6 w-6 transition-all duration-200 peer-checked:rotate-45 content-end"
@@ -84,8 +83,8 @@ function Resume() {
 									</svg>
 									<div className="hidden scale-75 scale-y-0 px-4 py-3 peer-checked:relative peer-checked:translate-y-0 peer-checked:scale-100 peer-checked:scale-y-100 peer-checked:block">
 										{item.tasks.map((task) => (
-											<p key={task} className="flex ml-8">
-												{task}
+											<p key={task.id} className="flex ml-8">
+												{task.name}
 											</p>
 										))}
 									</div>

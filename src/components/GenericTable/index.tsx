@@ -1,17 +1,21 @@
 import { useState } from 'react';
-import SprintTable from '../.././mocks/sprintTable';
+import PencilIcon from '../../assets/icons/pencilIcon.svg';
+import TrashIcon from '../../assets/icons/trashIcon.svg';
+import GenericTableMock from '../../mocks/genericTable';
 
 interface GenericTableProps {
-	columns: number;
+	columns: string[];
 }
 
 const GenericTable = ({ columns }: GenericTableProps) => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [data, setData] = useState(SprintTable);
+	const [data, setData] = useState(GenericTableMock);
 	const [search, setSearch] = useState('');
 
 	const filteredName =
-		search.length > 0 ? data?.filter((item) => item.name.toLowerCase().includes(search)) : [];
+		search.length > 0
+			? data?.filter((item) => item.firstItem.toLowerCase().includes(search.toLowerCase()))
+			: [];
 
 	return (
 		<div>
@@ -37,68 +41,87 @@ const GenericTable = ({ columns }: GenericTableProps) => {
 					<input
 						type="text"
 						className="block w-full p-4 pl-10 text-sm border border-triider-grayscale-gray3 rounded-lg bg-triider-grayscale-gray4 focus:outline-none focus:ring-2 focus:ring-triider-primary-orange2"
-						placeholder="Nome"
+						placeholder={columns[0]}
 						required
 						onChange={(e) => setSearch(e.target.value)}
 						value={search}
 					/>
 				</div>
 			</form>
-			<div className="flex flex-col overflow-y-auto overflow-x-hidden h-60">
+			<div className="flex flex-col overflow-y-auto overflow-x-hidden h-60 mt-8">
 				<div className="sm:-mx-6 lg:-mx-8">
 					<div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-						<div>
-							<table className="min-w-full text-left text-sm font-light">
-								<thead className="font-medium">
-									<tr>
-										{(() => {
-											const headerCells = [];
-											for (let i = 0; i < columns; i++) {
-												headerCells.push(
-													<th
-														key={i}
-														scope="col"
-														className="px-8 py-4 text-triider-grayscale-gray1"
-													>
-														Header {i + 1}
-													</th>
-												);
-											}
-											return headerCells;
-										})()}
-									</tr>
-								</thead>
-								<tbody>
-									{search.length > 0
-										? filteredName?.map((item) => (
-												<tr key={item.id}>
-													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
+						<table className="min-w-full text-left text-sm font-light">
+							<thead className="font-medium">
+								<tr>
+									{columns.map((column, index) => (
+										<th key={index} scope="col" className="px-8 py-4 text-triider-grayscale-gray1">
+											{column}
+										</th>
+									))}
+								</tr>
+							</thead>
+							<hr className="flex min-w-full w-full h-px bg-zinc-300 border-0" />
+							<tbody>
+								{search.length > 0
+									? filteredName?.map((item, index) => (
+											<tr key={index}>
+												<td className="whitespace-nowrap px-8 py-4 font-medium">
+													{item.firstItem}
+												</td>
+												<td className="whitespace-nowrap px-8 py-4 font-medium">
+													{item.secondItem}
+												</td>
+												{item?.thirdItem && (
 													<td className="whitespace-nowrap px-8 py-4 font-medium">
-														{item.startDate}
+														{item.thirdItem}
 													</td>
+												)}
+												{item?.fourthItem && (
 													<td className="whitespace-nowrap px-8 py-4 font-medium">
-														{item.endDate}
+														{item.fourthItem}
 													</td>
-													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.points}</td>
-													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.status}</td>
-												</tr>
-										  ))
-										: data?.map((item) => (
-												<tr key={item.id}>
-													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.name}</td>
+												)}
+												<td className="whitespace-nowrap px-2 py-4 font-medium">
+													<div className="flex flex-row gap-2">
+														<img src={PencilIcon} />
+														<img src={TrashIcon} />
+													</div>
+												</td>
+											</tr>
+									  ))
+									: data?.map((item, index) => (
+											<tr key={index}>
+												<td className="whitespace-nowrap px-8 py-4 font-medium">
+													{item.firstItem}
+												</td>
+												<td className="whitespace-nowrap px-8 py-4 font-medium">
+													{item.secondItem}
+												</td>
+												{item?.thirdItem && (
 													<td className="whitespace-nowrap px-8 py-4 font-medium">
-														{item.startDate}
+														{item.thirdItem}
 													</td>
+												)}
+												{item?.fourthItem && (
 													<td className="whitespace-nowrap px-8 py-4 font-medium">
-														{item.endDate}
+														{item.fourthItem}
 													</td>
-													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.points}</td>
-													<td className="whitespace-nowrap px-8 py-4 font-medium">{item.status}</td>
-												</tr>
-										  ))}
-								</tbody>
-							</table>
-						</div>
+												)}
+												<td className="whitespace-nowrap px-2 py-4 font-medium">
+													<div className="flex flex-row gap-2">
+														<button onClick={() => {}}>
+															<img src={PencilIcon} />
+														</button>
+														<button onClick={() => {}}>
+															<img src={TrashIcon} />
+														</button>
+													</div>
+												</td>
+											</tr>
+									  ))}
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
