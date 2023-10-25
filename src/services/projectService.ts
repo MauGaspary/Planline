@@ -16,4 +16,7 @@ export default {
 		const projects: Project[] = await projectRepository.read();
 		return projects;
 	},
+	async delete(projectId: string): Promise<void> {
+		await projectRepository.delete(projectId);
+	},
 };

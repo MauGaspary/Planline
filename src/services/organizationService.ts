@@ -16,4 +16,7 @@ export default {
 		const orgs: Organization[] = await organizationRepository.read();
 		return orgs;
 	},
+	async delete(orgId: string): Promise<void> {
+		await organizationRepository.delete(orgId);
+	},
 };

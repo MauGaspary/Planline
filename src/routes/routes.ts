@@ -25,8 +25,10 @@ routes.delete('/user/:userId', userController.delete);
 
 routes.post('/project', projectController.create);
 routes.get('/project', projectController.read);
+routes.delete('/project/:projectId', projectController.delete);
 
 routes.post('/organization', organizationController.create);
 routes.get('/organization', organizationController.read);
+routes.delete('/organization/:organizationId', organizationController.delete);
 
 export default routes;

@@ -31,4 +31,11 @@ export default {
 		const orgs: Organization[] = await prisma.organization.findMany();
 		return orgs;
 	},
+	async delete(organizationId: string): Promise<void> {
+		await prisma.organization.delete({
+			where: {
+				id: organizationId,
+			},
+		});
+	},
 };

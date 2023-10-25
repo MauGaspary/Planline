@@ -47,4 +47,18 @@ export default {
 			}
 		}
 	},
+	async delete(req: Request, res: Response) {
+		try {
+			const organizationId: string = req.params.organizationId;
+			await organizationService.delete(organizationId);
+			res.status(204).json();
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				res.status(500).json({
+					error: e.message,
+					...e.meta,
+				});
+			}
+		}
+	},
 };

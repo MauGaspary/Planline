@@ -35,4 +35,11 @@ export default {
 		const projects: Project[] = await prisma.project.findMany();
 		return projects;
 	},
+	async delete(projectId: string): Promise<void> {
+		await prisma.project.delete({
+			where: {
+				id: projectId,
+			},
+		});
+	},
 };
