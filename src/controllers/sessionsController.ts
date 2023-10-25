@@ -13,11 +13,13 @@ export default {
 		const isToSave = req.query.save;
 
 		const sessionIdDto = req.params.sessionId;
+
 		if (isToSave) {
-			res.json(await sessionService.finalize(sessionIdDto));
-			return;
+			await sessionService.finalize(sessionIdDto);
+		} else {
+			await sessionService.finalizeWithoutSaving(sessionIdDto);
 		}
 
-		res.json(await sessionService.finalizeWithoutSaving(sessionIdDto));
+		res.status(204);
 	},
 };
