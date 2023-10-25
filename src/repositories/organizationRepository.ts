@@ -27,4 +27,8 @@ export default {
 		});
 		return organization.id;
 	},
+	async read(): Promise<Organization[]> {
+		const orgs: Organization[] = await prisma.organization.findMany();
+		return orgs;
+	},
 };

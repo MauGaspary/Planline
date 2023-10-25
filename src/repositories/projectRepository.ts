@@ -31,4 +31,8 @@ export default {
 		});
 		return project.id;
 	},
+	async read(): Promise<Project[]> {
+		const projects: Project[] = await prisma.project.findMany();
+		return projects;
+	},
 };

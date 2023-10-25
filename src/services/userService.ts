@@ -27,6 +27,10 @@ export default {
 		const userId: string = await userRepository.create(user);
 		return userId;
 	},
+	async read(): Promise<User[]> {
+		const users: User[] = await userRepository.read();
+		return users;
+	},
 	async delete(user: string): Promise<string> {
 		const userId: string = await userRepository.delete(user);
 		return userId;

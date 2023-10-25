@@ -27,6 +27,10 @@ export default {
 		});
 		return user.id;
 	},
+	async read(): Promise<User[]> {
+		const users: User[] = await prisma.user.findMany();
+		return users;
+	},
 	async delete(data: string): Promise<string> {
 		const user = await prisma.user.delete({
 			where: {

@@ -20,8 +20,13 @@ routes.delete('/squad/:squadId', squadController.delete);
 routes.put('/squad', squadController.put);
 
 routes.post('/user', userController.create);
-routes.post('/project', projectController.create);
-routes.post('/organization', organizationController.create);
+routes.get('/user', userController.read);
+routes.delete('/user/:userId', userController.delete);
 
-routes.delete('/user', userController.delete);
+routes.post('/project', projectController.create);
+routes.get('/project', projectController.read);
+
+routes.post('/organization', organizationController.create);
+routes.get('/organization', organizationController.read);
+
 export default routes;
