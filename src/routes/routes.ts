@@ -12,7 +12,8 @@ const routes = express.Router();
 routes.get('/squad/info/:project_id', squadController.infoByProjectId);
 routes.get('/project/info/:organization_id', projectController.infoByOrganizationId);
 routes.get('/organization/info', organizationController.info);
-routes.get('/sessions', sessionsController.index);
+routes.post('/sessions', sessionsController.index);
+routes.delete('/sessions/finalize/:sessionId', sessionsController.finalize);
 
 routes.post('/squad', squadController.create);
 routes.get('/squad', squadController.read);
