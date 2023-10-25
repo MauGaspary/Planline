@@ -23,26 +23,6 @@ export default {
 		}
 	},
 
-	/*
-
-	async create(data: Request, res: Response) {
-		try {
-			const user = await userRepository.creates({ ...data.body });
-			res.json(user);
-		} catch (e) {
-			if (e instanceof Prisma.PrismaClientKnownRequestError) {
-				if (e.code === 'P2002') {
-					res.status(500).json({
-						error: 'There is a unique constraint violation',
-						...e.meta,
-					});
-				}
-			}
-		}
-	},
-
-	*/
-
 	async create(user: CreateUserDTO): Promise<string> {
 		const userId: string = await userRepository.create(user);
 		return userId;
