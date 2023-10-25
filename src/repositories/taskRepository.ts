@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default {
 	async update(id: string, points: number) {
-		return prisma.task.updateMany({
+		return prisma.task.update({
 			where: { task_id: id },
 			data: {
 				points,
