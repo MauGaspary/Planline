@@ -1,6 +1,6 @@
 import { SessionCreationDto } from '../dto/CreateSessionDto.js';
 import firebaseService from './firebaseService.js';
-import { set, ref, get, child } from 'firebase/database';
+import { set, ref, get } from 'firebase/database';
 import squadRepository from '../repositories/squadRepository.js';
 import {
 	FirebaseCollection,
@@ -53,7 +53,7 @@ export default {
 
 			for (const task of story.tasks) {
 				firebaseTasks[task.task_id] = {
-					descritpion: task.name,
+					description: task.name,
 					final_vote: 0,
 					votes: {},
 				};
@@ -81,10 +81,15 @@ export default {
 			};
 		}
 
+		const firstStory = stories[0];
+		const firstTask = firstStory.tasks[0];
+
 		const session: FirebaseSession = {
 			finished: false,
 			stories: firebaseStories,
 			users: firebaseUsers,
+			current_task: firstTask.task_id,
+			current_story: firstStory.story_id,
 		};
 
 		const database = firebaseService.dbInstance;
@@ -115,7 +120,7 @@ export default {
 			for (const storyId in session.stories) {
 				const story = session.stories[storyId];
 
-				let average = 0;
+				const voteCount: { [key: number]: number } = {};
 
 				for (const taskId in story.tasks) {
 					const task = story.tasks[taskId];
@@ -140,12 +145,18 @@ export default {
 						);
 					}
 
-					average += task.final_vote;
+					voteCount[task.final_vote] = voteCount[task.final_vote] + 1 || 1;
 
 					promises.push(taskRepository.update(taskId, task.final_vote));
 				}
 
-				average /= Object.keys(story.tasks).length;
+				let average = 0;
+
+				for (const vote in voteCount) {
+					if (voteCount[vote] > average) {
+						average = parseInt(vote);
+					}
+				}
 
 				promises.push(storyRepository.update(storyId, average));
 			}
