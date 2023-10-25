@@ -17,13 +17,17 @@ function VotingTriider({ type, number, name }: VotingTriiderProps) {
 		image = coffeeVote;
 	}
 
-	return (
-		<div className="w-40 h-36 flex mt-10 flex-col">
-			<p className="text-black font-bold text-xl">{name}</p>
-			<p className="text-black self-start font-bold text-2xl absolute pl-4 pt-9">{number}</p>
-			<img src={image} className="w-32 h-24 self-center" />
-		</div>
-	);
+	if (name) {
+		return (
+			<div className="w-40 h-36 flex mt-10 flex-col">
+				<p className="text-black font-bold text-xl self-center">{name}</p>
+				<p className="text-black self-start font-bold text-2xl absolute pl-4 pt-9">{number}</p>
+				<img src={image} className="w-32 h-24 self-center" />
+			</div>
+		);
+	} else {
+		return <></>;
+	}
 }
 
 export default VotingTriider;

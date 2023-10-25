@@ -9,6 +9,7 @@ import { getRealtimeDatabase } from '../../services/firebase';
 import Button from '../../components/Button';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
 import Carousel from '../../components/Carousel';
+import VotingTriider from '../../components/VotingTriider';
 
 export default function Game() {
 	const { fileContext } = useContext(ResumeContext);
@@ -36,6 +37,53 @@ export default function Game() {
 		createSession();
 	}, []);
 
+	function ShowPlayers() {
+		// const numberOfPlayers = 12;
+
+		return (
+			<>
+				<div>
+					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-36 z-10">
+						<VotingTriider type="card" number={1} name="Jorge" />
+					</div>
+					<div className="absolute -bottom-40 left-32 z-10">
+						<VotingTriider type="card" number={2} name="aaaa" />
+					</div>
+					<div className="absolute -bottom-28 -left-10 z-10">
+						<VotingTriider type="card" number={3} name="bbbb" />
+					</div>
+					<div className="absolute top-1/2 pb-10 -left-36 transform -translate-y-1/2 z-10">
+						<VotingTriider type="card" number={4} name="cccc" />
+					</div>
+					<div className="absolute -top-36 -left-10 z-10">
+						<VotingTriider type="card" number={5} name="dddd" />
+					</div>
+					<div className="absolute -top-48 left-32 z-10">
+						<VotingTriider type="card" number={6} name="eeee" />
+					</div>
+					<div className="absolute -top-48 left-1/2 transform -translate-x-1/2 z-10">
+						<VotingTriider type="card" number={7} name="ffff" />
+					</div>
+					<div className="absolute -top-48 right-32 z-10">
+						<VotingTriider type="card" number={8} name="gggg" />
+					</div>
+					<div className="absolute -top-36 -right-10 z-10">
+						<VotingTriider type="card" number={9} name="hhhh" />
+					</div>
+					<div className="absolute top-1/2 pb-10 -right-36 transform -translate-y-1/2 z-10">
+						<VotingTriider type="card" number={10} name="iiii" />
+					</div>
+					<div className="absolute -bottom-28 -right-10 z-10">
+						<VotingTriider type="card" number={11} name="jjjj" />
+					</div>
+					<div className="absolute -bottom-40 right-32 z-10">
+						<VotingTriider type="card" number={12} name="kkkk" />
+					</div>
+				</div>
+			</>
+		);
+	}
+
 	return (
 		<div className="w-screen h-screen  bg-white">
 			<Header sprintName="ABC" />
@@ -43,8 +91,9 @@ export default function Game() {
 				<Qrcode link={sessionId || ''} code={sessionId || ''} />
 			</div>
 			{voteState === 'individual' ? (
-				<div>
-					<div className="flex h-72 items-center justify-center">
+				<div className="justify-center">
+					<div className="flex h-72 items-center justify-center w-fit m-auto relative">
+						<ShowPlayers />
 						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
 						<div className="flex flex-col absolute items-center gap-2">
 							<h2 className="text-center text-2xl font-medium text-white">Votação individual</h2>
@@ -62,6 +111,7 @@ export default function Game() {
 				</div>
 			) : (
 				<div>
+					<ShowPlayers />
 					<div className="flex h-72 items-center justify-center">
 						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
 						<div className="flex flex-col absolute items-center gap-2">
