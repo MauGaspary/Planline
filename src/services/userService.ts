@@ -47,4 +47,8 @@ export default {
 		const userId: string = await userRepository.create(user);
 		return userId;
 	},
+	async delete(user: string): Promise<string> {
+		const userId: string = await userRepository.delete(user);
+		return userId;
+	},
 };

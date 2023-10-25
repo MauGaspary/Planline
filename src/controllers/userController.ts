@@ -18,4 +18,18 @@ export default {
 			}
 		}
 	},
+	async delete(req: Request, res: Response) {
+		try {
+			const userId: string = req.body.id;
+			const respId: string = await userService.delete(userId);
+			res.json({ respId: respId });
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				res.status(500).json({
+					error: e.message,
+					...e.meta,
+				});
+			}
+		}
+	},
 };

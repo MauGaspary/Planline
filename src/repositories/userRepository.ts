@@ -27,4 +27,12 @@ export default {
 		});
 		return user.id;
 	},
+	async delete(data: string): Promise<string> {
+		const user = await prisma.user.delete({
+			where: {
+				id: data, // Supondo que a ID seja a chave primária 'id'.
+			},
+		});
+		return user.id;
+	},
 };

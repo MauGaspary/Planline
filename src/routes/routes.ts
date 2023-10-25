@@ -18,4 +18,6 @@ routes.post('/squad', squadController.create);
 routes.post('/user', userController.create);
 routes.post('/project', projectController.create);
 routes.post('/organization', organizationController.create);
+
+routes.delete('/user', userController.delete);
 export default routes;
