@@ -72,7 +72,7 @@ model Sprint {
 
 model Story {
   id           String   @id @default(uuid())
-  story_id     String   @db.VarChar(15)
+  story_id     String   @db.VarChar(15) @unique
   name         String   @db.VarChar(100)
   final_points Int      @db.Integer
   updated_at   DateTime @updatedAt
@@ -82,7 +82,7 @@ model Story {
 
 model Task {
   id         String   @id @default(uuid())
-  task_id    String   @db.VarChar(15)
+  task_id    String   @db.VarChar(15) @unique
   name       String   @db.VarChar(100)
   points     Int      @db.Integer
   updated_at DateTime @updatedAt

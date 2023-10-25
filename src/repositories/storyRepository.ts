@@ -28,4 +28,13 @@ export default {
 			})
 		);
 	},
+
+	async update(id: string, finalPoints: number) {
+		return prisma.story.update({
+			where: { story_id: id },
+			data: {
+				final_points: finalPoints,
+			},
+		});
+	},
 };

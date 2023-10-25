@@ -3,7 +3,8 @@ export type FirebaseCollection<T> = {
 };
 
 export type FirebaseSession = {
-	current_task?: string;
+	current_task: string;
+	current_story: string;
 	finished: boolean;
 	stories: FirebaseCollection<FirebaseStory>;
 	users: FirebaseCollection<FirebaseUser>;
@@ -15,7 +16,7 @@ export type FirebaseStory = {
 };
 
 export type FirebaseTask = {
-	descritpion: string;
+	description: string;
 	final_vote: number;
 	votes: FirebaseCollection<number>;
 };
