@@ -17,4 +17,5 @@ routes.get('/sessions', sessionsController.index);
 routes.post('/squad', squadController.create);
 routes.post('/user', userController.create);
 routes.post('/project', projectController.create);
+routes.post('/organization', organizationController.create);
 export default routes;
