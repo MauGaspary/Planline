@@ -9,6 +9,18 @@ export default {
 		return users;
 	},
 
+	/*
+
+	async creates(data: User): Promise<User> {
+		const user = await prisma.user.create({
+			data: { ...data },
+		});
+		console.log(user);
+		return user;
+	},
+
+	*/
+
 	async create(data: CreateUserDTO): Promise<string> {
 		const user = await prisma.user.create({
 			data: { ...data },
@@ -18,7 +30,7 @@ export default {
 	async delete(data: string): Promise<string> {
 		const user = await prisma.user.delete({
 			where: {
-				id: data, // Supondo que a ID seja a chave primária 'id'.
+				id: data,
 			},
 		});
 		return user.id;
