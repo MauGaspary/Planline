@@ -10,7 +10,7 @@ export type Story = {
 	tasks: Task[];
 };
 
-type Sprint = {
+export type Sprint = {
 	name: string;
 	start_date: Date;
 	end_date: Date;

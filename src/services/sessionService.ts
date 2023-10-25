@@ -1,4 +1,3 @@
-import storyRepository from '../repositories/storyRepository.js';
 import { SessionCreationDto } from '../dto/CreateSessionDto.js';
 import firebaseService from './firebaseService.js';
 import { set, ref, get, child } from 'firebase/database';
@@ -10,6 +9,9 @@ import {
 	FirebaseTask,
 	FirebaseUser,
 } from '../dto/FirebaseDtos.js';
+import storyRepository from '../repositories/storyRepository.js';
+import taskRepository from '../repositories/taskRepository.js';
+import voteRepository from '../repositories/voteRepository.js';
 
 function generateFourDigitId(): string {
 	return Math.floor(1000 + Math.random() * 9000).toString();
@@ -51,7 +53,7 @@ export default {
 
 			for (const task of story.tasks) {
 				firebaseTasks[task.task_id] = {
-					descritpion: '',
+					descritpion: task.name,
 					final_vote: 0,
 					votes: {},
 				};
@@ -62,8 +64,6 @@ export default {
 				tasks: firebaseTasks,
 			};
 		}
-
-		console.log(firebaseStories);
 
 		const [users, sessionId] = await Promise.all([
 			squadRepository.getAllUsers(sessionCreationDto.squad_id),
@@ -92,8 +92,6 @@ export default {
 
 		await set(sessionRef, session);
 
-		console.log(sessionId);
-
 		return { sessionId };
 	},
 
@@ -109,39 +107,51 @@ export default {
 
 		const snapshot = await get(sessionRef);
 
+		const promises = [];
+
 		if (snapshot.exists()) {
 			const session: FirebaseSession = snapshot.val();
-
-			const stories = [];
 
 			for (const storyId in session.stories) {
 				const story = session.stories[storyId];
 
-				const tasks = [];
+				let average = 0;
 
 				for (const taskId in story.tasks) {
 					const task = story.tasks[taskId];
 
-					const votes = [];
+					for (const votes in task.votes) {
+						const vote = task.votes[votes];
 
-					for (const userId in task.votes) {
-						votes.push(task.votes[userId]);
+						promises.push(
+							voteRepository.create({
+								score: vote,
+								Task: {
+									connect: {
+										task_id: taskId,
+									},
+								},
+								User: {
+									connect: {
+										id: votes,
+									},
+								},
+							})
+						);
 					}
 
-					tasks.push({
-						task_id: taskId,
-						final_vote: task.final_vote,
-						votes,
-					});
+					average += task.final_vote;
+
+					promises.push(taskRepository.update(taskId, task.final_vote));
 				}
 
-				stories.push({
-					story_id: storyId,
-					tasks,
-				});
+				average /= Object.keys(story.tasks).length;
+
+				promises.push(storyRepository.update(storyId, average));
 			}
 		}
 
-		await set(child(sessionRef, 'finished'), true);
+		promises.push(this.finalizeWithoutSaving(sessionId));
+		await Promise.all(promises);
 	},
 };

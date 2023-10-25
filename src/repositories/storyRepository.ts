@@ -29,31 +29,12 @@ export default {
 		);
 	},
 
-	async updateMany(stories: Story[]) {
-		await Promise.all([
-			stories.map((story) => {
-				const tasks = story.tasks.map((task) => ({
-					task_id: task.task_id,
-					name: task.name,
-					points: task.final_vote,
-				}));
-
-				const storyDto = {
-					name: story.name,
-					story_id: story.story_id,
-					final_points: 0,
-					tasks: {
-						create: tasks,
-					},
-				};
-
-				return prisma.story.updateMany({
-					where: {
-						story_id: story.story_id,
-					},
-					data: storyDto,
-				});
-			}),
-		]);
+	async update(id: string, finalPoints: number) {
+		return prisma.story.updateMany({
+			where: { story_id: id },
+			data: {
+				final_points: finalPoints,
+			},
+		});
 	},
 };

@@ -6,8 +6,6 @@ export default {
 	async index(req: Request, res: Response) {
 		const sessionCreationDto = req.body as SessionCreationDto;
 
-		console.log(sessionCreationDto);
-
 		res.json(await sessionService.create(sessionCreationDto));
 	},
 
