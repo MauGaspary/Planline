@@ -1,0 +1,64 @@
+stages:
+  - build
+  - deploy
+  - migrate
+
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+
+# ------------- BUILD SCRIPT -------------
+
+build-node:
+  image: docker:dind
+  tags: 
+    - ages-runner
+  stage: build
+  script:
+    - docker build -t $DOCKER_USER/backend -f Dockerfile .
+    - docker push $DOCKER_USER/backend
+  only:
+    - main
+
+# ------------- DEPLOY SCRIPT -------------
+deploy-node:
+  stage: deploy
+  image: docker:dind
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - ssh-keyscan ec2-18-191-189-90.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+  script:
+    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com "docker stop backend || true"
+    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com "docker rm backend || true"
+    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com "docker pull $DOCKER_USER/backend"
+    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com "docker compose up -d"
+  tags:
+    - ages-runner
+  when: manual
+  only:
+    - main
+
+# ------------- MIGRATE SCRIPT -------------
+migrate-prisma:
+  stage: migrate
+  image: docker:dind
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - ssh-keyscan ec2-18-191-189-90.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+  script:
+    - ssh -T ec2-user@ec2-18-191-189-90.us-east-2.compute.amazonaws.com "docker exec backend yarn prisma migrate deploy"
+  tags:
+    - ages-runner
+  when: manual
+  only:
+    - main
