@@ -6,11 +6,14 @@ import Qrcode from '../../components/Qrcode';
 import { off, onValue, ref } from 'firebase/database';
 import Button from '../../components/Button';
 import Carousel from '../../components/Carousel';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getRealtimeDatabase } from '../../services/firebase';
 import { Session } from '../../services/firebaseSessions';
+import { useDelete } from '../../hooks/useDelete';
 
 export default function Game() {
+	const router = useNavigate();
+
 	const [voteState, setVoteState] = useState('individual');
 	const [cardSelected, setCardSelected] = useState('');
 
@@ -18,21 +21,23 @@ export default function Game() {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [session, setSession] = useState<Session | null>(null);
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [currentStory, setCurrentStory] = useState<string>('0');
 	const database = getRealtimeDatabase();
+
+	const { request } = useDelete<void>();
 
 	const refSession = ref(database, 'sessions/' + session_id);
 
 	function sessionListener() {
 		onValue(refSession, (snapshot) => {
-			setSession(snapshot.val());
-			console.log(snapshot.val());
+			const session = snapshot.val();
+			setSession(session);
 		});
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	function closeListener() {
+	async function closeListener(save: boolean) {
+		await request(`/sessions/finalize/${session_id}?save=${save}`);
 		off(refSession);
+		router('/');
 	}
 
 	useEffect(() => {
@@ -41,7 +46,7 @@ export default function Game() {
 
 	return (
 		<div className="w-screen h-screen  bg-white">
-			<Header sprintName="ABC" />
+			<Header sprintName="ABC" onCancelPlanning={() => closeListener(false)} />
 			<div className="ml-16 mt-24">
 				<Qrcode link={session_id || ''} code={session_id || ''} />
 			</div>
@@ -118,7 +123,7 @@ export default function Game() {
 			)}
 			<div className=" w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
 				<Carousel
-					taskList={session?.stories[currentStory].tasks || {}}
+					taskList={session?.stories[session.current_story].tasks || {}}
 					currentTaskId={session?.current_task ?? null}
 				/>
 			</div>

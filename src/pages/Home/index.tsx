@@ -16,7 +16,7 @@ function Home() {
 		setProjectContext,
 		setSquadContext,
 		setOrganizationContext,
-		setSprintIdContext,
+		setSquadIdContext,
 		setProjectIdContext,
 		setOrganizationIdContext,
 	} = useContext(ResumeContext);
@@ -40,7 +40,7 @@ function Home() {
 			setProject({ name: 'Projeto', id: '' });
 			setProjectContext('');
 			setSquadContext('');
-			setSprintIdContext('');
+			setSquadIdContext('');
 			setProjectIdContext('');
 			setOrganizationContext(option.name);
 			setOrganizationIdContext(option.id);
@@ -60,7 +60,7 @@ function Home() {
 		}
 		if (placeholder === squad.name) {
 			setSquadContext(option.name);
-			setSprintIdContext(option.id);
+			setSquadIdContext(option.id);
 			setSquad(option);
 		}
 		setOpenSelect(null);

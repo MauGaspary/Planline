@@ -28,7 +28,6 @@ function Resume() {
 
 	useEffect(() => {
 		if (data) {
-			console.log(data);
 			router(`/game/${data.sessionId}`);
 		}
 	}, [data]);
@@ -146,7 +145,7 @@ function Resume() {
 							Voltar
 						</Button>
 
-						<Button variant="primary" onClickAction={() => router('/game')}>
+						<Button variant="primary" onClickAction={() => createSession()}>
 							Iniciar sessão
 						</Button>
 					</div>

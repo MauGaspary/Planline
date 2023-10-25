@@ -19,7 +19,7 @@ function Carousel({ taskList, currentTaskId }: TaskProps) {
 			<NukaCarousel {...params} cellAlign="center" wrapAround withoutControls>
 				{tasks.map(([task_id, task]) => (
 					<Task
-						title={task.name}
+						title={task.description}
 						voted={task.final_vote > 0}
 						next={currentTaskId !== task_id}
 						finalVote={task.final_vote}
