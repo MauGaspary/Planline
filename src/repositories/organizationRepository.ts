@@ -1,5 +1,6 @@
 import { Organization, PrismaClient } from '@prisma/client';
 import { InfoDTO } from '../dto/InfoBody.js';
+import { CreateOrganizationDTO } from 'src/dto/CreateOrganizationDTO.js';
 
 const prisma = new PrismaClient();
 
@@ -19,5 +20,11 @@ export default {
 			data: { ...data },
 		});
 		return organization;
+	},
+	async create(data: CreateOrganizationDTO): Promise<string> {
+		const organization = await prisma.organization.create({
+			data: { ...data },
+		});
+		return organization.id;
 	},
 };

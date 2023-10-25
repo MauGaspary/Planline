@@ -1,5 +1,6 @@
 import { Project, PrismaClient } from '@prisma/client';
 import { InfoDTO } from '../dto/InfoBody.js';
+import { CreateProjectDTO } from 'src/dto/CreateProjectDTO.js';
 
 const prisma = new PrismaClient();
 
@@ -22,5 +23,12 @@ export default {
 			data: { ...data },
 		});
 		return project;
+	},
+
+	async create(data: CreateProjectDTO): Promise<string> {
+		const project = await prisma.project.create({
+			data: { ...data },
+		});
+		return project.id;
 	},
 };
