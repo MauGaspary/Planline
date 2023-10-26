@@ -112,7 +112,7 @@ function Home() {
 					</div>
 				</Container>
 			)}
-			{breadcrumbDisplay === 'resume' && <Resume />}
+			{breadcrumbDisplay === 'import' && <Resume />}
 		</div>
 	);
 }
