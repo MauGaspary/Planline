@@ -1,5 +1,5 @@
 import { ImageBackground, ScrollView, Text, View } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
@@ -12,13 +12,18 @@ import { RootStackParamList } from '../..';
 export default function SelectUser() {
 	const route = useRoute();
 	const { code } = route.params as { code: string };
-
+	const code1 = '6129';
 	const { dispatch, state } = useAppContext();
 
-	dispatch({ type: 'SET_SESSION_ID', payload: +code });
+	useEffect(() => {
+		dispatch({ type: 'SET_SESSION_ID', payload: +code1 });
+	}, []);
 
 	const session = state.session;
 	const users = Object.entries(session?.users || {});
+	console.log(code);
+	console.log(users);
+	console.log(session);
 
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -49,7 +54,7 @@ export default function SelectUser() {
 			<View className="flex-col mt-12 items-center flex h-80 ">
 				<ScrollView showsVerticalScrollIndicator={false}>
 					{users
-						.filter((user) => user[1].firebase_auth_id)
+						.filter((user) => !user[1].firebase_auth_id)
 						.map(([userId, user]) => (
 							<View key={userId} className="mb-6">
 								<MemberCard
