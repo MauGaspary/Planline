@@ -5,9 +5,3 @@ export type CreateUserDTO = {
 	email: string;
 	level: level;
 };
-
-// enum Level {
-// JUNIOR,
-// PLENO,
-// SENIOR,
-// }

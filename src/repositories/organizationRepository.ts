@@ -1,6 +1,7 @@
 import { Organization, PrismaClient } from '@prisma/client';
 import { InfoDTO } from '../dto/InfoBody.js';
-import { CreateOrganizationDTO } from 'src/dto/CreateOrganizationDTO.js';
+import { CreateOrganizationDTO } from '../dto/CreateOrganizationDTO.js';
+import { UpdateOrganizationDTO } from '../dto/UpdateOrganizationDTO.js';
 
 const prisma = new PrismaClient();
 
@@ -37,5 +38,14 @@ export default {
 				id: organizationId,
 			},
 		});
+	},
+	async put(data: UpdateOrganizationDTO): Promise<string> {
+		const organization = await prisma.organization.update({
+			data: { ...data },
+			where: {
+				id: data.id,
+			},
+		});
+		return organization.id;
 	},
 };

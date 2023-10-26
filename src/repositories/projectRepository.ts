@@ -1,6 +1,7 @@
 import { Project, PrismaClient } from '@prisma/client';
 import { InfoDTO } from '../dto/InfoBody.js';
-import { CreateProjectDTO } from 'src/dto/CreateProjectDTO.js';
+import { CreateProjectDTO } from '../dto/CreateProjectDTO.js';
+import { UpdateProjectDTO } from '../dto/UpdateProjectDTO.js';
 
 const prisma = new PrismaClient();
 
@@ -41,5 +42,15 @@ export default {
 				id: projectId,
 			},
 		});
+	},
+
+	async put(data: UpdateProjectDTO): Promise<string> {
+		const project = await prisma.project.update({
+			data: { ...data },
+			where: {
+				id: data.id,
+			},
+		});
+		return project.id;
 	},
 };

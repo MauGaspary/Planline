@@ -2,6 +2,7 @@ import projectRepository from '../repositories/projectRepository.js';
 import { InfoDTO } from '../dto/InfoBody.js';
 import { CreateProjectDTO } from 'src/dto/CreateProjectDTO.js';
 import { Project } from '@prisma/client';
+import { UpdateProjectDTO } from '../dto/UpdateProjectDTO.js';
 
 export default {
 	async infoByOrganizationId(organization_id: string): Promise<InfoDTO[]> {
@@ -18,5 +19,9 @@ export default {
 	},
 	async delete(projectId: string): Promise<void> {
 		await projectRepository.delete(projectId);
+	},
+	async put(project: UpdateProjectDTO): Promise<string> {
+		const projectId: string = await projectRepository.put(project);
+		return projectId;
 	},
 };

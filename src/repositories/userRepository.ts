@@ -1,5 +1,6 @@
 import { PrismaClient, User } from '@prisma/client';
-import { CreateUserDTO } from 'src/dto/CreateUserDto';
+import { CreateUserDTO } from '../dto/CreateUserDto';
+import { UpdateUserDTO } from '../dto/UpdateUserDTO';
 
 const prisma = new PrismaClient();
 
@@ -8,18 +9,6 @@ export default {
 		const users = await prisma.user.findMany();
 		return users;
 	},
-
-	/*
-
-	async creates(data: User): Promise<User> {
-		const user = await prisma.user.create({
-			data: { ...data },
-		});
-		console.log(user);
-		return user;
-	},
-
-	*/
 
 	async create(data: CreateUserDTO): Promise<string> {
 		const user = await prisma.user.create({
@@ -35,6 +24,16 @@ export default {
 		const user = await prisma.user.delete({
 			where: {
 				id: data,
+			},
+		});
+		return user.id;
+	},
+
+	async put(data: UpdateUserDTO): Promise<string> {
+		const user = await prisma.user.update({
+			data: { ...data },
+			where: {
+				id: data.id,
 			},
 		});
 		return user.id;
