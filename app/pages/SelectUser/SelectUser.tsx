@@ -5,13 +5,13 @@ import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
 import ButtonComponent from '../../components/Button';
 import { useAppContext } from '../../hooks/useSessionContexts';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
 
 export default function SelectUser() {
-	const route = useRoute();
-	const { code } = route.params as { code: string };
+	// const route = useRoute();
+	// const { code } = route.params as { code: string };
 	const code1 = '6129';
 	const { dispatch, state } = useAppContext();
 
@@ -21,17 +21,18 @@ export default function SelectUser() {
 
 	const session = state.session;
 	const users = Object.entries(session?.users || {});
-	console.log(code);
-	console.log(users);
-	console.log(session);
-
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-	const [selectedUser, setSelectedUser] = useState<string>('');
+	const [selectedUserId, setSelectedUserId] = useState<string>('');
 
-	const toggleSelection = (userName: string) => {
-		setSelectedUser(userName);
-	};
+	function handleButtonClick() {
+		dispatch({
+			type: 'SET_USER',
+			payload: { userId: selectedUserId, firebase_auth_id: selectedUserId },
+		});
+
+		navigation.navigate('Voting');
+	}
 
 	return (
 		<View className="items-center flex-1">
@@ -60,18 +61,15 @@ export default function SelectUser() {
 								<MemberCard
 									name={user.name}
 									role={user.level}
-									isSelected={user.name === selectedUser}
-									onClick={() => toggleSelection(user.name)}
+									isSelected={userId === selectedUserId}
+									onClick={() => setSelectedUserId(userId)}
 								/>
 							</View>
 						))}
 				</ScrollView>
 			</View>
 			<View className="mt-16 justify-between h-32">
-				<ButtonComponent
-					label="Iniciar"
-					onClick={() => navigation.navigate('Voting', { userName: selectedUser, code: code })}
-				/>
+				<ButtonComponent label="Iniciar" onClick={handleButtonClick} />
 				<ButtonComponent label="Voltar" variant="ghost" onClick={() => navigation.goBack()} />
 			</View>
 			<StatusBar style="inverted" />

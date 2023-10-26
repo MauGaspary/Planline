@@ -1,33 +1,11 @@
 import { child, onValue, ref, set } from 'firebase/database';
 import { ReactNode, createContext, useContext, useEffect, useReducer } from 'react';
 
-import { initializeApp } from 'firebase/app';
-import { getDatabase } from 'firebase/database';
-
-const {
-	EXPO_PUBLIC_API_KEY,
-	EXPO_PUBLIC_AUTH_DOMAIN,
-	EXPO_PUBLIC_PROJECT_ID,
-	EXPO_PUBLIC_STORAGE_BUCKET,
-	EXPO_PUBLIC_MESSAGING_SENDER_ID,
-	EXPO_PUBLIC_APP_ID,
-} = process.env;
-
-const firebaseConfig = {
-	apiKey: EXPO_PUBLIC_API_KEY,
-	authDomain: EXPO_PUBLIC_AUTH_DOMAIN,
-	projectId: EXPO_PUBLIC_PROJECT_ID,
-	storageBucket: EXPO_PUBLIC_STORAGE_BUCKET,
-	messagingSenderId: EXPO_PUBLIC_MESSAGING_SENDER_ID,
-	appId: EXPO_PUBLIC_APP_ID,
-};
-
-const app = initializeApp(firebaseConfig);
-
-const database = getDatabase(app);
+import { realtimeDatabase } from '../services/firebase';
 
 export type Session = {
-	current_task?: string;
+	current_story: string;
+	current_task: string;
 	finished: boolean;
 	stories: {
 		[key: string]: Story;
@@ -45,7 +23,7 @@ export type Story = {
 };
 
 export type Task = {
-	descritpion: string;
+	description: string;
 	final_vote: number;
 	votes: {
 		[key: string]: number;
@@ -55,12 +33,17 @@ export type Task = {
 export type User = {
 	name: string;
 	level: string;
-	firebase_auth_id?: string;
+	firebase_auth_id: string | null;
 };
 
 type SessionUser = {
-	userId: number;
+	userId: string;
 	firebase_auth_id: string;
+};
+
+export type CurrentUser = {
+	id: string;
+	user: User;
 };
 
 type SessionAction =
@@ -79,11 +62,11 @@ type SessionAction =
 
 type ContextState = {
 	session: Session | null;
-	user: User | null;
+	user: CurrentUser | null;
 	sessionId: number | null;
 };
 
-const sessionsRef = ref(database, 'sessions');
+const sessionsRef = ref(realtimeDatabase(), 'sessions');
 
 type SessionContextType = {
 	state: ContextState;
@@ -131,7 +114,7 @@ function sessionReducer(state: ContextState, action: SessionAction): ContextStat
 				action.payload.firebase_auth_id
 			);
 
-			return { ...state, user };
+			return { ...state, user: { id: action.payload.userId, user } };
 		default:
 			return { ...state };
 	}

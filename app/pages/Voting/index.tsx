@@ -2,40 +2,52 @@ import { Text, View } from 'react-native';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import { useState } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
-import { push, ref, set } from 'firebase/database';
-import { realtimeDatabase } from '../../services/firebase';
+import { CurrentUser, Session, useAppContext } from '../../hooks/useSessionContexts';
+import { vote } from '../../services/votes';
 
 export default function Voting() {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-	const route = useRoute();
+	const { state } = useAppContext();
 
-	const { userName } = route.params as { userName: string };
-	const { code } = route.params as { code: string };
+	const session = state.session as Session;
+	const user = state.user as CurrentUser;
 
-	const database = realtimeDatabase();
+	const currentStory = session?.stories[session?.current_story];
+	const currentTask = currentStory?.tasks[session?.current_task];
 
 	const [selectedCard, setSelectedCard] = useState('-1');
 	const handleCardClick = (label: string) => {
 		setSelectedCard(label);
 	};
 
-	const handleButtonClick = () => {
-		const usersRef = ref(database, `sessions/${code}/users`);
-		const newUserRef = push(usersRef);
-		set(newUserRef, { name: userName });
-		navigation.navigate('Wait');
+	const handleButtonClick = async () => {
+		if (selectedCard === '') {
+			return;
+		}
+
+		await vote(
+			state.sessionId ?? 0,
+			session.current_story,
+			session.current_task,
+			user.id,
+			+selectedCard
+		);
+
+		navigation.navigate('Wait', { waitingTask: session?.current_task || '' });
 	};
 
 	return (
 		<View className="items-center flex-1">
 			<View className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400">
 				<Text className="mt-10 text-2xl font-body">SPRINT TESTE</Text>
-				<Text className="mt-8 text-lg text-triider-primary-orange1">STORY 01</Text>
+				<Text className="mt-8 text-lg text-triider-primary-orange1">
+					{currentStory?.name || 'Não há histórias nessa sprint'}
+				</Text>
 				<Text className="mt-4 mb-6 text-lg text-triider-grayscale-gray1">
-					Resolver os bugs do boilerplate
+					{currentTask?.description || 'Não há tarefas nessa história'}
 				</Text>
 			</View>
 			<View className="flex-row mt-10 justify-between w-80">
