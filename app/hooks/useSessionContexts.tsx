@@ -1,21 +1,50 @@
-import { ReactNode, createContext, useContext, useReducer } from 'react';
+import { child, onValue, ref, set } from 'firebase/database';
+import { ReactNode, createContext, useContext, useEffect, useReducer } from 'react';
+
+import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
+
+const {
+	VITE_API_KEY,
+	VITE_AUTH_DOMAIN,
+	VITE_PROJECT_ID,
+	VITE_STORAGE_BUCKET,
+	VITE_MESSAGING_SENDER_ID,
+	VITE_APP_ID,
+} = process.env;
+
+const firebaseConfig = {
+	apiKey: VITE_API_KEY,
+	authDomain: VITE_AUTH_DOMAIN,
+	projectId: VITE_PROJECT_ID,
+	storageBucket: VITE_STORAGE_BUCKET,
+	messagingSenderId: VITE_MESSAGING_SENDER_ID,
+	appId: VITE_APP_ID,
+};
+
+const app = initializeApp(firebaseConfig);
+
+const database = getDatabase(app);
 
 export type Session = {
-	id: number;
 	current_task?: string;
 	finished: boolean;
-	stories: Story[];
-	users: User[];
+	stories: {
+		[key: string]: Story;
+	};
+	users: {
+		[key: string]: User;
+	};
 };
 
 export type Story = {
-	id: number;
 	name: string;
-	tasks: Task[];
+	tasks: {
+		[key: string]: Task;
+	};
 };
 
 export type Task = {
-	id: number;
 	descritpion: string;
 	final_vote: number;
 	votes: {
@@ -24,7 +53,6 @@ export type Task = {
 };
 
 export type User = {
-	id: number;
 	name: string;
 	level: string;
 	firebase_auth_id?: string;
@@ -35,96 +63,86 @@ type SessionUser = {
 	firebase_auth_id: string;
 };
 
-type Action =
-	| { type: 'SET_SESSION_NUMBER'; payload: number }
-	| { type: 'SET_USER_FIREBASE_AUTH'; payload: SessionUser }
-	| { type: 'SET_TASK'; payload: string };
+type SessionAction =
+	| {
+			type: 'SET_SESSION_ID';
+			payload: number;
+	  }
+	| {
+			type: 'SET_SESSION';
+			payload: Session;
+	  }
+	| {
+			type: 'SET_USER';
+			payload: SessionUser;
+	  };
 
-const SessionContext = createContext<
-	{ state: Session; dispatch: React.Dispatch<Action> } | undefined
->(undefined);
-
-const initialState: Session = {
-	id: 0,
-	current_task: '',
-	finished: false,
-	stories: [],
-	users: [
-		{
-			id: 1,
-			name: 'Cássio Trindade',
-			level: 'Estagiário',
-		},
-		{
-			id: 2,
-			name: 'Augusto Linhares',
-			level: 'Desenvolvedor Senior',
-		},
-		{
-			id: 3,
-			name: 'Leticia Reis',
-			level: 'UI/UX Designer',
-		},
-		{
-			id: 4,
-			name: 'John Doe',
-			level: 'Desenvolvedor Junior',
-		},
-		{
-			id: 5,
-			name: 'John Doe',
-			level: 'Desenvolvedor Senior',
-		},
-		{
-			id: 6,
-			name: 'John Doe',
-			level: 'Desenvolvedor Senior',
-		},
-		{
-			id: 7,
-			name: 'John Doe',
-			level: 'Desenvolvedor Junior',
-		},
-	],
+type ContextState = {
+	session: Session | null;
+	user: User | null;
+	sessionId: number | null;
 };
 
-interface AppProviderProps {
-	children: ReactNode;
-}
+const sessionsRef = ref(database, 'sessions');
 
-export const SessionProvider = ({ children }: AppProviderProps) => {
-	const [state, dispatch] = useReducer(sessionReducer, initialState);
+type SessionContextType = {
+	state: ContextState;
+	dispatch: React.Dispatch<SessionAction>;
+};
+
+export const SessionContext = createContext<SessionContextType>({} as SessionContextType);
+
+export const SessionProvider = ({ children }: { children: ReactNode }) => {
+	const [state, dispatch] = useReducer(sessionReducer, {
+		session: null,
+		user: null,
+		sessionId: null,
+	});
+
+	useEffect(() => {
+		if (!state.sessionId) return;
+
+		onValue(child(sessionsRef, state.sessionId.toString()), (snapshot) => {
+			const session = snapshot.val();
+
+			if (!session) return;
+
+			dispatch({ type: 'SET_SESSION', payload: session });
+		});
+	}, [state.sessionId]);
+
 	return <SessionContext.Provider value={{ state, dispatch }}>{children}</SessionContext.Provider>;
 };
 
-export const useSession = () => {
-	const context = useContext(SessionContext);
-	if (context === undefined) {
-		throw new Error('useSession must be used with asign Session');
-	}
-	return context;
-};
+function sessionReducer(state: ContextState, action: SessionAction): ContextState {
+	let user;
 
-const sessionReducer = (state: Session, action: Action): Session => {
 	switch (action.type) {
-		case 'SET_SESSION_NUMBER':
-			return { ...state, id: action.payload };
-		case 'SET_USER_FIREBASE_AUTH':
-			return {
-				...state,
-				users: state.users.map((user: User) => {
-					if (user.id == action.payload.userId) {
-						return {
-							...user,
-							firebase_auth_id: action.payload.firebase_auth_id,
-						};
-					}
-					return user;
-				}),
-			};
-		case 'SET_TASK':
-			return { ...state, current_task: action.payload };
+		case 'SET_SESSION_ID':
+			return { ...state, sessionId: action.payload };
+		case 'SET_SESSION':
+			return { ...state, session: action.payload };
+		case 'SET_USER':
+			if (!state?.session) return { ...state };
+			user = state.session.users[action.payload.userId];
+
+			set(
+				child(sessionsRef, `${state.sessionId}/users/${action.payload.userId}/firebase_auth_id`),
+				action.payload.firebase_auth_id
+			);
+
+			return { ...state, user };
 		default:
-			return state;
+			return { ...state };
 	}
-};
+}
+
+export function useAppContext() {
+	const context = useContext(SessionContext);
+
+	if (!context) {
+		throw new Error('useDispatcher must be used within a SessionProvider');
+	}
+
+	return context;
+}

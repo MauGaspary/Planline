@@ -4,17 +4,22 @@ import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
 import ButtonComponent from '../../components/Button';
-import { useSession } from '../../hooks/useSessionContexts';
+import { useAppContext } from '../../hooks/useSessionContexts';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
 
 export default function SelectUser() {
-	const { state } = useSession();
-	const { users } = state;
-
 	const route = useRoute();
 	const { code } = route.params as { code: string };
+
+	const { dispatch, state } = useAppContext();
+
+	dispatch({ type: 'SET_SESSION_ID', payload: +code });
+
+	const session = state.session;
+	const users = Object.entries(session?.users || {});
+
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
 	const [selectedUser, setSelectedUser] = useState<string>('');
@@ -43,16 +48,18 @@ export default function SelectUser() {
 			</View>
 			<View className="flex-col mt-12 items-center flex h-80 ">
 				<ScrollView showsVerticalScrollIndicator={false}>
-					{users.map((user) => (
-						<View key={user.id} className="mb-6">
-							<MemberCard
-								name={user.name}
-								role={user.level}
-								isSelected={user.name === selectedUser}
-								onClick={() => toggleSelection(user.name)}
-							/>
-						</View>
-					))}
+					{users
+						.filter((user) => user[1].firebase_auth_id)
+						.map(([userId, user]) => (
+							<View key={userId} className="mb-6">
+								<MemberCard
+									name={user.name}
+									role={user.level}
+									isSelected={user.name === selectedUser}
+									onClick={() => toggleSelection(user.name)}
+								/>
+							</View>
+						))}
 				</ScrollView>
 			</View>
 			<View className="mt-16 justify-between h-32">
