@@ -1,5 +1,5 @@
 import { ImageBackground, ScrollView, Text, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
@@ -10,14 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
 
 export default function SelectUser() {
-	// const route = useRoute();
-	// const { code } = route.params as { code: string };
-	const code1 = '6129';
 	const { dispatch, state } = useAppContext();
-
-	useEffect(() => {
-		dispatch({ type: 'SET_SESSION_ID', payload: +code1 });
-	}, []);
 
 	const session = state.session;
 	const users = Object.entries(session?.users || {});
