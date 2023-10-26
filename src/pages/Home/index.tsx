@@ -7,10 +7,7 @@ import { InfoBody } from '../../types/InfoBody';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
 import Loader from '../../components/Loader';
 import Breadcrumb from '../../components/Breadcrumb';
-import { UsInfo } from '../../types/UsInfo';
-import Upload from '../../components/Upload';
 import Resume from '../Resume';
-import { Link } from 'react-router-dom';
 
 function Home() {
 	const [breadcrumbDisplay, setBreadcrumbDisplay] = useState<string>('home');
@@ -35,18 +32,6 @@ function Home() {
 
 	const { data: projects, request: getProjects } = useGet<InfoBody[]>();
 	const { data: squads, request: getSquads } = useGet<InfoBody[]>();
-
-	const [upload, setUpload] = useState<boolean | null>(false);
-	const [file, setFile] = useState<UsInfo[] | null>(null);
-	const { setFileContext } = useContext(ResumeContext);
-	const [fileName, setFileName] = useState<string>('');
-
-	function importFile(file: UsInfo[], fileName: string) {
-		setFile(file);
-		setFileContext(file);
-		setUpload(true);
-		setFileName(fileName);
-	}
 
 	useEffect(() => {
 		getOrganizations('/organization/info');
@@ -89,7 +74,7 @@ function Home() {
 
 	return (
 		<div className="App">
-			<Breadcrumb display={breadcrumbDisplay} />
+			<Breadcrumb display={'home'} />
 			{breadcrumbDisplay === 'home' && (
 				<Container title="Identifique-se para visualizar mais informações" small>
 					<div className="flex flex-col px-20 gap-5 self-center">
@@ -117,15 +102,16 @@ function Home() {
 							onToggle={() => setOpenSelect(openSelect === 'squad' ? null : 'squad')}
 						/>
 
-						<Link to={squad.name === 'Squad' ? '#' : '/import'}>
-							<Button size="large" variant={squad.name === 'Squad' ? 'disabled' : 'primary'}>
-								Confirmar
-							</Button>
-						</Link>
+						<Button
+							size="large"
+							onClickAction={() => setBreadcrumbDisplay('import')}
+							variant={squad.name === 'Squad' ? 'disabled' : 'primary'}
+						>
+							Confirmar
+						</Button>
 					</div>
 				</Container>
 			)}
-			{breadcrumbDisplay === 'import' && <Upload importer={importFile} />}
 			{breadcrumbDisplay === 'resume' && <Resume />}
 		</div>
 	);
