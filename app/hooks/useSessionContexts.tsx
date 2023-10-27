@@ -1,4 +1,4 @@
-import { child, onValue, ref, set } from 'firebase/database';
+import { child, off, onValue, ref, set } from 'firebase/database';
 import { ReactNode, createContext, useContext, useEffect, useReducer } from 'react';
 
 import { realtimeDatabase } from '../services/firebase';
@@ -58,12 +58,19 @@ type SessionAction =
 	| {
 			type: 'SET_USER';
 			payload: SessionUser;
+	  }
+	| {
+			type: 'CLOSE_SESSION';
+	  }
+	| {
+			type: 'CLEAR';
 	  };
 
 type ContextState = {
 	session: Session | null;
 	user: CurrentUser | null;
 	sessionId: number | null;
+	close: boolean;
 };
 
 const sessionsRef = ref(realtimeDatabase(), 'sessions');
@@ -80,6 +87,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 		session: null,
 		user: null,
 		sessionId: null,
+		close: false,
 	});
 
 	useEffect(() => {
@@ -93,6 +101,14 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 			dispatch({ type: 'SET_SESSION', payload: session });
 		});
 	}, [state.sessionId]);
+
+	useEffect(() => {
+		if (state.close) {
+			if (!state.sessionId) return;
+			off(child(sessionsRef, state.sessionId.toString()));
+			dispatch({ type: 'CLEAR' });
+		}
+	}, [state.close]);
 
 	return <SessionContext.Provider value={{ state, dispatch }}>{children}</SessionContext.Provider>;
 };
@@ -115,6 +131,10 @@ function sessionReducer(state: ContextState, action: SessionAction): ContextStat
 			);
 
 			return { ...state, user: { id: action.payload.userId, user } };
+		case 'CLOSE_SESSION':
+			return { ...state, close: true };
+		case 'CLEAR':
+			return { session: null, user: null, sessionId: null, close: false };
 		default:
 			return { ...state };
 	}

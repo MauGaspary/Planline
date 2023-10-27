@@ -18,16 +18,12 @@ export default function Voting() {
 	const currentStory = session?.stories[session?.current_story];
 	const currentTask = currentStory?.tasks[session?.current_task];
 
-	const [selectedCard, setSelectedCard] = useState('-1');
+	const [selectedCard, setSelectedCard] = useState('');
 	const handleCardClick = (label: string) => {
 		setSelectedCard(label);
 	};
 
 	const handleButtonClick = async () => {
-		if (selectedCard === '') {
-			return;
-		}
-
 		await vote(
 			state.sessionId ?? 0,
 			session.current_story,
@@ -62,7 +58,7 @@ export default function Voting() {
 			</View>
 			<View className="mt-10 items-center">
 				<Button label="Próximo" onClick={handleButtonClick} />
-				<Card label="" isSelected={selectedCard === ''} onClick={handleCardClick} />
+				<Card label="" isSelected={selectedCard === '-1'} onClick={handleCardClick} />
 			</View>
 		</View>
 	);

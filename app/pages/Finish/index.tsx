@@ -4,8 +4,16 @@ import Button from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
+import { useAppContext } from '../../hooks/useSessionContexts';
+import { useEffect } from 'react';
 
 export default function Finish() {
+	const { dispatch } = useAppContext();
+
+	useEffect(() => {
+		dispatch({ type: 'CLOSE_SESSION' });
+	}, []);
+
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 	return (
 		<View className="items-center bg-white flex-1">
