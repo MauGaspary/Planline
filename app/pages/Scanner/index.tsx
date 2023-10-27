@@ -23,11 +23,7 @@ export default function App() {
 	const handleBarCodeScanned = ({ data }: { data: string }) => {
 		setScanned(true);
 		Number(data) <= 9999 && Number(data) >= Number('0000')
-			? navigation.navigate({
-					name: 'Home',
-					params: { code: data },
-					merge: true,
-			  })
+			? navigation.replace('Home', { code: data })
 			: navigation.navigate('Error', { label: 'Código inválido' });
 	};
 

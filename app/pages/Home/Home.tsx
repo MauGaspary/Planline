@@ -28,13 +28,11 @@ export default function Home() {
 
 	useEffect(() => {
 		if (state.session) {
-			navigation.navigate('SelectUser');
+			navigation.replace('SelectUser');
 		}
 	}, [state.session]);
 
 	function handleButtonClick() {
-		console.log(inputCode);
-
 		if (inputCode.length !== 4) return;
 		const code = inputCode.join('');
 
