@@ -2,7 +2,7 @@ import Container from '../../../components/Container';
 import { InputHeader } from '../../../components/InputHeader/Index';
 import { InputText } from '../../../components/InputText/Index';
 
-function Squad() {
+function Project() {
 	return (
 		<Container title="projetos">
 			<InputHeader>
@@ -12,4 +12,4 @@ function Squad() {
 	);
 }
 
-export default Squad;
+export default Project;

@@ -7,7 +7,7 @@ export interface InputTextProps {
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export function InputText(props: InputTextProps) {
+export function InputText({ placeholder, size, isRequired, onChange }: InputTextProps) {
 	const sizeClasses = {
 		small: 'w-44',
 		medium: 'w-56',
@@ -19,14 +19,14 @@ export function InputText(props: InputTextProps) {
 
 	const defaultClasses =
 		'block p-4 text-sm border border-triider-grayscale-gray3 rounded-lg bg-triider-grayscale-gray4 focus:outline-none focus:ring-2 focus:ring-triider-primary-orange2 ' +
-		sizeClasses[props.size];
+		sizeClasses[size];
 	return (
 		<input
 			type="text"
 			className={defaultClasses}
-			placeholder={props.placeholder}
-			required={props.isRequired}
-			onChange={props.onChange}
+			placeholder={placeholder}
+			required={isRequired}
+			onChange={onChange}
 		/>
 	);
 }

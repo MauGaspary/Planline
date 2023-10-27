@@ -10,10 +10,9 @@ function User() {
 	const columns = ['Nome', 'Email', 'Nível', 'Squads'];
 
 	return (
-		(
 		<Container title="usuários">
 			<GenericTable columns={columns} />
-		
+
 			<InputHeader>
 				<InputText placeholder="Nome" size="medium" isRequired={true} />
 
@@ -34,7 +33,6 @@ function User() {
 				/>
 			</InputHeader>
 		</Container>
-	)
 	);
 }
 

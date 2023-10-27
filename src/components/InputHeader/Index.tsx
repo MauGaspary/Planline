@@ -6,14 +6,14 @@ export interface InputHeaderProps {
 	onAddButtonClick?: () => void;
 }
 
-export function InputHeader(props: InputHeaderProps) {
+export function InputHeader({ children, onSearchButtonClick, onAddButtonClick }: InputHeaderProps) {
 	return (
 		<div className="flex space-x-5">
-			{props.children}
-			<Button variant="primary" size="small" onClickAction={props.onSearchButtonClick}>
+			{children}
+			<Button variant="primary" size="small" onClickAction={onSearchButtonClick}>
 				Buscar
 			</Button>
-			<Button variant="info" size="xsmall" onClickAction={props.onAddButtonClick}>
+			<Button variant="info" size="xsmall" onClickAction={onAddButtonClick}>
 				+
 			</Button>
 		</div>
