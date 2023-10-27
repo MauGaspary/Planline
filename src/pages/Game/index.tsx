@@ -38,51 +38,50 @@ export default function Game() {
 	}, []);
 
 	function ShowPlayers() {
-		// const numberOfPlayers = 12;
-
 		return (
 			<>
 				<div>
 					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-36 z-10">
-						<VotingTriider type="card" number={1} name="Jorge" />
+						<VotingTriider type="card" number={1} name={session?.users[1]?.name || ''} />
 					</div>
 					<div className="absolute -bottom-40 left-32 z-10">
-						<VotingTriider type="card" number={2} name="aaaa" />
+						<VotingTriider type="card" number={2} name={session?.users[2]?.name || ''} />
 					</div>
 					<div className="absolute -bottom-28 -left-10 z-10">
-						<VotingTriider type="card" number={3} name="bbbb" />
+						<VotingTriider type="card" number={3} name={session?.users[3]?.name || ''} />
 					</div>
 					<div className="absolute top-1/2 pb-10 -left-36 transform -translate-y-1/2 z-10">
-						<VotingTriider type="card" number={4} name="cccc" />
+						<VotingTriider type="card" number={4} name={session?.users[4]?.name || ''} />
 					</div>
 					<div className="absolute -top-36 -left-10 z-10">
-						<VotingTriider type="card" number={5} name="dddd" />
+						<VotingTriider type="card" number={5} name={session?.users[5]?.name || ''} />
 					</div>
 					<div className="absolute -top-48 left-32 z-10">
-						<VotingTriider type="card" number={6} name="eeee" />
+						<VotingTriider type="card" number={6} name={session?.users[6]?.name || ''} />
 					</div>
 					<div className="absolute -top-48 left-1/2 transform -translate-x-1/2 z-10">
-						<VotingTriider type="card" number={7} name="ffff" />
+						<VotingTriider type="card" number={7} name={session?.users[7]?.name || ''} />
 					</div>
 					<div className="absolute -top-48 right-32 z-10">
-						<VotingTriider type="card" number={8} name="gggg" />
+						<VotingTriider type="card" number={8} name={session?.users[8]?.name || ''} />
 					</div>
 					<div className="absolute -top-36 -right-10 z-10">
-						<VotingTriider type="card" number={9} name="hhhh" />
+						<VotingTriider type="card" number={9} name={session?.users[9]?.name || ''} />
 					</div>
 					<div className="absolute top-1/2 pb-10 -right-36 transform -translate-y-1/2 z-10">
-						<VotingTriider type="card" number={10} name="iiii" />
+						<VotingTriider type="card" number={10} name={session?.users[10]?.name || ''} />
 					</div>
 					<div className="absolute -bottom-28 -right-10 z-10">
-						<VotingTriider type="card" number={11} name="jjjj" />
+						<VotingTriider type="card" number={11} name={session?.users[11]?.name || ''} />
 					</div>
 					<div className="absolute -bottom-40 right-32 z-10">
-						<VotingTriider type="card" number={12} name="kkkk" />
+						<VotingTriider type="card" number={12} name={session?.users[12]?.name || ''} />
 					</div>
 				</div>
 			</>
 		);
 	}
+	console.log(session?.users[1].name);
 
 	return (
 		<div className="w-screen h-screen  bg-white">
