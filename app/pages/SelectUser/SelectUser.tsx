@@ -23,13 +23,11 @@ export default function SelectUser() {
 			type: 'SET_USER',
 			payload: { userId: selectedUserId, firebase_auth_id: selectedUserId },
 		});
-
-		navigation.navigate('Voting');
 	}
 
 	useEffect(() => {
 		if (state.user) {
-			navigation.navigate('Voting');
+			navigation.replace('Voting');
 		}
 	}, [state.user]);
 

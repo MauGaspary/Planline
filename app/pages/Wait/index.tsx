@@ -14,18 +14,16 @@ export default function Wait() {
 	const session = state.session;
 	const { waitingTask } = router.params as { waitingTask: string };
 
-	if (!session) return null;
-
 	useEffect(() => {
-		if (session.current_task !== waitingTask) {
-			if (!session.current_task) {
-				navigation.navigate('Finish');
+		if (session?.current_task !== waitingTask) {
+			if (!session?.current_task) {
+				navigation.replace('Finish');
 				return;
 			}
-			navigation.navigate('Voting');
+			navigation.replace('Voting');
 			return;
 		}
-	}, [session.current_task]);
+	}, [session?.current_task]);
 
 	return (
 		<View className="items-center flex-1">

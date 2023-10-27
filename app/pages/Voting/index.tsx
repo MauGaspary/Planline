@@ -32,7 +32,7 @@ export default function Voting() {
 			+selectedCard
 		);
 
-		navigation.navigate('Wait', { waitingTask: session?.current_task || '' });
+		navigation.replace('Wait', { waitingTask: session?.current_task || '' });
 	};
 
 	return (
