@@ -12,13 +12,15 @@ export default function CodeInput({ pullCode, code }: CodeProps) {
 	const thirdInput = useRef<null | TextInput>(null);
 	const fourthInput = useRef<null | TextInput>(null);
 
-	const [otp, setOtp] = useState(['', '', '', '']);
+	const [otp, setOtp] = useState<string[]>(['', '', '', '']);
 
 	useEffect(() => {
-		setOtp([code[0], code[1], code[2], code[3]]);
+		if (code.length === 4) setOtp([code[0], code[1], code[2], code[3]]);
 	}, [code]);
 
-	pullCode(otp);
+	useEffect(() => {
+		pullCode(otp);
+	}, [otp]);
 
 	const handleKeyPress = (
 		inputNumber: number,
@@ -26,29 +28,39 @@ export default function CodeInput({ pullCode, code }: CodeProps) {
 	) => {
 		if (event.nativeEvent.key === 'Backspace') {
 			if (inputNumber >= 0) {
+				const newOtp = [...otp];
+
 				switch (inputNumber) {
 					case 0:
 						firstInput.current?.focus();
-						setOtp({ ...otp, [inputNumber]: '' });
+						newOtp[inputNumber] = '';
+						setOtp(newOtp);
 						break;
 					case 1:
 						firstInput.current?.focus();
-						setOtp({ ...otp, [inputNumber]: '' });
+						newOtp[inputNumber] = '';
+						setOtp(newOtp);
 						break;
 					case 2:
 						secondInput.current?.focus();
-						setOtp({ ...otp, [inputNumber]: '' });
+						newOtp[inputNumber] = '';
+						setOtp(newOtp);
 						break;
 					case 3:
 						thirdInput.current?.focus();
-						setOtp({ ...otp, [inputNumber]: '' });
+						newOtp[inputNumber] = '';
+						setOtp(newOtp);
 						break;
 					default:
 						break;
 				}
 			}
 		} else if (/^[0-9]$/.test(event.nativeEvent.key)) {
-			setOtp({ ...otp, [inputNumber]: event.nativeEvent.key });
+			const newOtp = [...otp];
+
+			newOtp[inputNumber] = event.nativeEvent.key;
+
+			setOtp(newOtp);
 			if (inputNumber < 3) {
 				switch (inputNumber) {
 					case 0:

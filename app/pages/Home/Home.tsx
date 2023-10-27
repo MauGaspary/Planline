@@ -6,20 +6,40 @@ import CodeInput from '../../components/CodeInput/CodeInput';
 import { RootStackParamList } from '../..';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useCallback } from 'react';
+import { useEffect } from 'react';
+import { useAppContext } from '../../hooks/useSessionContexts';
 
 export default function Home() {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 	const route = useRoute();
 	const { code } = route.params as { code: string };
+
 	const handleScreenPress = () => {
 		Keyboard.dismiss();
 	};
+
 	let inputCode = [''];
 
-	const pullCode = useCallback((data: string[]) => {
+	const pullCode = (data: string[]) => {
 		inputCode = data;
-	}, []);
+	};
+
+	const { dispatch, state } = useAppContext();
+
+	useEffect(() => {
+		if (state.session) {
+			navigation.navigate('SelectUser');
+		}
+	}, [state.session]);
+
+	function handleButtonClick() {
+		console.log(inputCode);
+
+		if (inputCode.length !== 4) return;
+		const code = inputCode.join('');
+
+		dispatch({ type: 'SET_SESSION_ID', payload: +code });
+	}
 
 	return (
 		<TouchableWithoutFeedback onPress={handleScreenPress}>
@@ -38,11 +58,7 @@ export default function Home() {
 					<CodeInput pullCode={pullCode} code={code} key={Math.random()} />
 				</View>
 				<View className="justify-between mt-36 h-32">
-					<Button
-						label="Entrar"
-						variant="primary"
-						onClick={() => navigation.navigate('SelectUser', { code: inputCode })}
-					/>
+					<Button label="Entrar" variant="primary" onClick={handleButtonClick} />
 					<Button
 						label="Scanear QRCode"
 						variant="ghost"

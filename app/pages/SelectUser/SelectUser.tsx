@@ -1,27 +1,37 @@
 import { ImageBackground, ScrollView, Text, View } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
 import ButtonComponent from '../../components/Button';
-import { useSession } from '../../hooks/useSessionContexts';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useAppContext } from '../../hooks/useSessionContexts';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
 
 export default function SelectUser() {
-	const { state } = useSession();
-	const { users } = state;
+	const { dispatch, state } = useAppContext();
 
-	const route = useRoute();
-	const { code } = route.params as { code: string };
+	const session = state.session;
+	const users = Object.entries(session?.users || {});
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-	const [selectedUser, setSelectedUser] = useState<string>('');
+	const [selectedUserId, setSelectedUserId] = useState<string>('');
 
-	const toggleSelection = (userName: string) => {
-		setSelectedUser(userName);
-	};
+	function handleButtonClick() {
+		dispatch({
+			type: 'SET_USER',
+			payload: { userId: selectedUserId, firebase_auth_id: selectedUserId },
+		});
+
+		navigation.navigate('Voting');
+	}
+
+	useEffect(() => {
+		if (state.user) {
+			navigation.navigate('Voting');
+		}
+	}, [state.user]);
 
 	return (
 		<View className="items-center flex-1">
@@ -43,23 +53,22 @@ export default function SelectUser() {
 			</View>
 			<View className="flex-col mt-12 items-center flex h-80 ">
 				<ScrollView showsVerticalScrollIndicator={false}>
-					{users.map((user) => (
-						<View key={user.id} className="mb-6">
-							<MemberCard
-								name={user.name}
-								role={user.level}
-								isSelected={user.name === selectedUser}
-								onClick={() => toggleSelection(user.name)}
-							/>
-						</View>
-					))}
+					{users
+						.filter((user) => !user[1].firebase_auth_id)
+						.map(([userId, user]) => (
+							<View key={userId} className="mb-6">
+								<MemberCard
+									name={user.name}
+									role={user.level}
+									isSelected={userId === selectedUserId}
+									onClick={() => setSelectedUserId(userId)}
+								/>
+							</View>
+						))}
 				</ScrollView>
 			</View>
 			<View className="mt-16 justify-between h-32">
-				<ButtonComponent
-					label="Iniciar"
-					onClick={() => navigation.navigate('Voting', { userName: selectedUser, code: code })}
-				/>
+				<ButtonComponent label="Iniciar" onClick={handleButtonClick} />
 				<ButtonComponent label="Voltar" variant="ghost" onClick={() => navigation.goBack()} />
 			</View>
 			<StatusBar style="inverted" />
