@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Resume from '../Resume';
+import Resume from '../../components/Breadcrumb/Resume';
 import Identify from '../../components/Breadcrumb/Identify';
 
 function Home() {
-	const [breadcrumbDisplay, setBreadcrumbDisplay] = useState<string>('home');
+	const [breadcrumbDisplay, setBreadcrumbDisplay] = useState<string>('import');
 
 	return (
 		<div className="App">

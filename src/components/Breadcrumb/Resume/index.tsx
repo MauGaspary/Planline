@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
-import Button from '../../components/Button';
-import Container from '../../components/Container';
-import Upload from '../../components/Upload';
-import { UsInfo } from '../../types/UsInfo';
-import { ResumeContext } from '../../contexts/ResumeInfoContext';
-import { SessionCreationDto, SessionCreationResponseDto } from '../../types/CreateSessionDto';
-import { usePost } from '../../hooks/usePost';
+import Button from '../../Button';
+import Container from '../../Container';
+import Upload from '../../Upload';
+import { UsInfo } from '../../../types/UsInfo';
+import { ResumeContext } from '../../../contexts/ResumeInfoContext';
+import { SessionCreationDto, SessionCreationResponseDto } from '../../../types/CreateSessionDto';
+import { usePost } from '../../../hooks/usePost';
 import { useNavigate } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumb';
+import Breadcrumb from '..';
 
 interface ResumeProps {
 	setBreadcrumbDisplay: (display: string) => void;

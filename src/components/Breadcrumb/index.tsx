@@ -18,16 +18,27 @@ const Breadcrumb = ({ display }: BreadcrumbProps) => {
 			<nav>
 				<ol className="breadcrumb flex justify-start gap-3">
 					{items.map((item, index) => (
-						<li
-							key={index}
-							className={`w-44 flex border-b-[6px] text-xl ${
-								isActive(display, index)
-									? 'border-b-orange-500 font-medium'
-									: 'border-b-gray-300 text-gray-300'
-							}`}
-						>
-							{item.label}
-						</li>
+						<div key={index} className="flex flex-col items-center">
+							<li
+								className={`w-44 flex text-xl ${
+									isActive(display, index) ? 'font-medium' : 'text-gray-300'
+								}`}
+							>
+								{item.label}
+							</li>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="180"
+								height="6"
+								viewBox="0 0 180 6"
+								fill="none"
+							>
+								<path
+									d="M3.23375 0H180L175.8 6H0L3.23375 0Z"
+									fill={isActive(display, index) ? '#F07E31' : '#CBCBCB'}
+								/>
+							</svg>
+						</div>
 					))}
 				</ol>
 			</nav>
