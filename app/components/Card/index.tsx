@@ -16,7 +16,11 @@ export default function Card({ label, isSelected, onClick }: CardProps) {
 	let styleBtn = '';
 
 	const handlePress = () => {
-		onClick(label);
+		if (label === '') {
+			onClick('-1');
+		} else {
+			onClick(label);
+		}
 	};
 
 	isSelected
