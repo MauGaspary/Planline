@@ -1,4 +1,4 @@
-import ArrowIcon from '../../assets/icons/arrowIcon.svg';
+import ArrowDownIcon from '../../assets/icons/arrowDownIcon.svg';
 import { InfoBody } from '../../types/InfoBody';
 
 interface SelectProps {
@@ -30,7 +30,7 @@ export const Select = (props: SelectProps) => {
 				className={buttonClass}
 			>
 				<p>{props.placeholder}</p>
-				<img src={ArrowIcon} alt="arrow" className="absolute right-3 top-4" />
+				<img src={ArrowDownIcon} alt="arrow" className="absolute right-3 top-4" />
 			</div>
 
 			{props.isOpen && (

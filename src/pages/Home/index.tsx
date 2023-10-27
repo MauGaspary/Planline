@@ -2,16 +2,24 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
-import { Select } from '../../components/Select/Select';
+import { Select } from '../../components/Select';
 import { useGet } from '../../hooks/useGet';
 import { InfoBody } from '../../types/InfoBody';
 import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import Loader from '../../components/Loader';
 
 function Home() {
 	const [org, setOrg] = useState<InfoBody>({ name: 'Organização', id: '' });
 	const [project, setProject] = useState<InfoBody>({ name: 'Projeto', id: '' });
 	const [squad, setSquad] = useState<InfoBody>({ name: 'Squad', id: '' });
-	const { setProjectContext, setSquadContext, setOrganizationContext } = useContext(ResumeContext);
+	const {
+		setProjectContext,
+		setSquadContext,
+		setOrganizationContext,
+		setSquadIdContext,
+		setProjectIdContext,
+		setOrganizationIdContext,
+	} = useContext(ResumeContext);
 
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
 	const {
@@ -32,7 +40,10 @@ function Home() {
 			setProject({ name: 'Projeto', id: '' });
 			setProjectContext('');
 			setSquadContext('');
+			setSquadIdContext('');
+			setProjectIdContext('');
 			setOrganizationContext(option.name);
+			setOrganizationIdContext(option.id);
 			setSquad({ name: 'Squad', id: '' });
 			setOrg(option);
 			if (option.id.length > 0) {
@@ -43,18 +54,20 @@ function Home() {
 			setSquad({ name: 'Squad', id: '' });
 			setSquadContext('');
 			setProjectContext(option.name);
+			setProjectIdContext(option.id);
 			setProject(option);
 			getSquads(`/squad/info/${option.id}`);
 		}
 		if (placeholder === squad.name) {
 			setSquadContext(option.name);
+			setSquadIdContext(option.id);
 			setSquad(option);
 		}
 		setOpenSelect(null);
 	};
 
 	return isLoadingOrganizations ? (
-		<h1>Carregando...</h1>
+		<Loader />
 	) : (
 		<Container title="Identifique-se para visualizar mais informações" small>
 			<div className="flex flex-col px-20 gap-5 self-center">

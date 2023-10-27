@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { DropzoneState, useDropzone } from 'react-dropzone';
 import CloseIcon from '../../assets/icons/closeIcon.svg';
 import FileIcon from '../../assets/icons/fileIcon.svg';
 import UploadIcon from '../../assets/icons/uploadIcon.svg';
-import { usInfo } from '../../types/usInfo';
+import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import { UsInfo } from '../../types/UsInfo';
 
 interface InputProps {
 	dropzone: DropzoneState;
@@ -15,11 +16,12 @@ interface HasFileProps {
 }
 
 interface ButtonProps {
-	buttonState: (usArray: usInfo[] | null, fileName: string) => void;
+	buttonState: (usArray: UsInfo[] | null, fileName: string) => void;
 }
 
 export const FileInput = ({ buttonState }: ButtonProps) => {
 	const [file, setFile] = useState<File | null>(null);
+	const { setSprintContext } = useContext(ResumeContext);
 
 	const removeFile = useCallback(() => {
 		setFile(null);
@@ -48,8 +50,14 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 			const fileContents: any = await readUploadedFileAsText(files[0]);
 			const fileName: string = files[0].name;
 			const lines = fileContents?.split('\n');
-			const info: usInfo[] = [];
+			const info: UsInfo[] = [];
 			lines?.forEach((line: string, index: number) => {
+				let sprintName;
+				if (index === 1) {
+					sprintName = line.split(';')[0];
+					setSprintContext(sprintName);
+				}
+
 				if (
 					line?.includes(
 						'Subitems;Name;Owner;Estimated task;Status task;Start;Dependent;Stack;End;Item ID (auto generated);'
@@ -57,12 +65,33 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 				) {
 					const previousLine = lines[index - 1];
 					const parsed = previousLine.split(';');
-					const us = parsed[0];
+					const usName = parsed[0];
+					const usId = parsed[15];
 					const tasks = parsed[1].split(', ');
+					const tasksWithIds = [];
+					let aux = 1;
+
+					if (tasks) {
+						for (let i = 0; i < tasks.length; i++) {
+							const id = lines[index + aux].split(';')[9];
+							aux++;
+							const taskWithId = {
+								id,
+								name: tasks[i],
+							};
+							tasksWithIds.push(taskWithId);
+						}
+					}
+
 					info.push({
-						us: us,
-						tasks: tasks,
+						us: {
+							name: usName,
+							id: usId,
+						},
+						tasks: tasksWithIds,
 					});
+				} else {
+					return;
 				}
 			});
 			if (info) {
