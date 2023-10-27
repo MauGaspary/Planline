@@ -1,5 +1,5 @@
 import { ImageBackground, ScrollView, Text, View } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/SimboloTriiderlaranja.png';
 import MemberCard from '../../components/MemberCard';
@@ -26,6 +26,12 @@ export default function SelectUser() {
 
 		navigation.navigate('Voting');
 	}
+
+	useEffect(() => {
+		if (state.user) {
+			navigation.navigate('Voting');
+		}
+	}, [state.user]);
 
 	return (
 		<View className="items-center flex-1">

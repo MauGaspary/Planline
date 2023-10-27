@@ -4,6 +4,7 @@ import { useAppContext } from '../../hooks/useSessionContexts';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
+import { useEffect } from 'react';
 
 export default function Wait() {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -15,10 +16,16 @@ export default function Wait() {
 
 	if (!session) return null;
 
-	if (session.current_task !== waitingTask) {
-		navigation.navigate('Voting');
-		return null;
-	}
+	useEffect(() => {
+		if (session.current_task !== waitingTask) {
+			if (!session.current_task) {
+				navigation.navigate('Finish');
+				return;
+			}
+			navigation.navigate('Voting');
+			return;
+		}
+	}, [session.current_task]);
 
 	return (
 		<View className="items-center flex-1">
