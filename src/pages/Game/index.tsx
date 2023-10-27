@@ -21,6 +21,11 @@ export default function Game() {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [session, setSession] = useState<Session | null>(null);
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [storieNumber, setStorieNumber] = useState({
+		current: 0,
+		total: 0,
+	});
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const database = getRealtimeDatabase();
 
 	const { request } = useDelete<void>();
@@ -45,15 +50,42 @@ export default function Game() {
 	}, []);
 
 	return (
-		<div className="w-screen h-screen  bg-white">
-			<Header sprintName="ABC" onCancelPlanning={() => closeListener(false)} />
+		<div className="w-screen h-screen bg-triider-grayscale-game">
+			<Header onCancelPlanning={() => closeListener(false)} />
 			<div className="ml-16 mt-24">
 				<Qrcode link={session_id || ''} code={session_id || ''} />
+			</div>
+			<div className="flex-col absolute top-28 right-20">
+				<div className="w-72 h-52 border-2 p-6 rounded-2xl bg-white font-medium border-transparent shadow-xl mb-20">
+					<div className="font-medium text-xl">Resumo</div>
+					<div className="flex flex-row justify-between mt-4">
+						<div className="font-medium">Mínima</div>
+						<div className="font-medium">2</div>
+					</div>
+					<div className="flex flex-row justify-between mt-4">
+						<div className="font-medium">Média</div>
+						<div className="font-medium">4</div>
+					</div>
+					<div className="flex flex-row justify-between mt-4">
+						<div className="font-medium">Máxima</div>
+						<div className="font-medium">8</div>
+					</div>
+				</div>
+				Votando a user story {storieNumber.current} de {storieNumber.total}
+				<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
+					<div className="font-medium text-white text-xl">Votação</div>
+					<div className="flex flex-row justify-end items-center gap-2">
+						<div className="text-white">Pontuação atual</div>
+						<div className="item-center justify-center w-fit p-4 border-2 rounded-2xl bg-triider-helper-green2 font-medium border-transparent shadow-xl">
+							<div className="font-bold">13</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			{voteState === 'individual' ? (
 				<div>
 					<div className="flex h-72 items-center justify-center">
-						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
+						<img src={pokerTable} alt="Poker table" className="relative px-4" />
 						<div className="flex flex-col absolute items-center gap-2">
 							<h2 className="text-center text-2xl font-medium text-white">Votação individual</h2>
 							<p className="text-lg text-white pb-2">Aguarde enquanto seus colegas votam</p>
@@ -71,7 +103,7 @@ export default function Game() {
 			) : (
 				<div>
 					<div className="flex h-72 items-center justify-center">
-						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
+						<img src={pokerTable} alt="Poker table" className="relative px-4" />
 						<div className="flex flex-col absolute items-center gap-2">
 							<h2 className="text-center text-2xl font-medium text-white">Votação conjunta</h2>
 							<p className="text-lg text-white pb-2">Escolha a pontuação final da tarefa</p>
@@ -121,7 +153,7 @@ export default function Game() {
 					</div>
 				</div>
 			)}
-			<div className=" w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
+			<div className="w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
 				<Carousel
 					taskList={session?.stories[session.current_story].tasks || {}}
 					currentTaskId={session?.current_task ?? null}
