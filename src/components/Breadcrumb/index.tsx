@@ -5,24 +5,24 @@ interface BreadcrumbProps {
 }
 const items = [{ label: 'Identificação' }, { label: 'Importação' }, { label: 'Resumo' }];
 
-const getBreadcrumbItemClass = (display: string, index: number) => {
-	if (display === 'home' && index === 0) return 'active';
-	if (display === 'import' && index <= 1) return 'active';
-	if (display === 'resume' && index <= 2) return 'active';
-	return 'inactive';
+const isActive = (display: string, index: number) => {
+	if (display === 'home' && index === 0) return true;
+	if (display === 'import' && index <= 1) return true;
+	if (display === 'resume' && index <= 2) return true;
+	return false;
 };
 
 const Breadcrumb = ({ display }: BreadcrumbProps) => {
 	return (
 		<div className="bg-red-500 flex justify-center">
-			<nav className="absolute">
+			<nav className="absolute top-0 z-10">
 				<ol className="breadcrumb flex justify-start gap-3">
 					{items.map((item, index) => (
 						<li
 							key={index}
-							className={`w-44 flex border-b-[6px] text-xl font-medium ${
-								getBreadcrumbItemClass(display, index) === 'active'
-									? 'border-b-orange-500'
+							className={`w-44 flex border-b-[6px] text-xl ${
+								isActive(display, index)
+									? 'border-b-orange-500 font-medium'
 									: 'border-b-gray-300 text-gray-300'
 							}`}
 						>

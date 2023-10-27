@@ -9,9 +9,11 @@ import { usePost } from '../../hooks/usePost';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumb';
 
-// FALTA POSICIONAR E VER SE FUNCIONA COM O BACK RODANDO
+interface ResumeProps {
+	setBreadcrumbDisplay: (display: string) => void;
+}
 
-function Resume() {
+function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<UsInfo[] | null>(null);
@@ -158,7 +160,7 @@ function Resume() {
 					</Container>
 				</>
 			) : (
-				<Upload importer={importFile} />
+				<Upload importer={importFile} setBreadcrumbDisplay={setBreadcrumbDisplay} />
 			)}
 		</>
 	);

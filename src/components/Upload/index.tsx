@@ -8,13 +8,13 @@ import Breadcrumb from '../Breadcrumb';
 
 interface InputProps {
 	importer: (e: UsInfo[], fileName: string) => void;
+	setBreadcrumbDisplay: (display: string) => void;
 }
 
-function Upload({ importer }: InputProps) {
+function Upload({ importer, setBreadcrumbDisplay }: InputProps) {
 	const [buttonState, setButtonState] = useState<boolean>(true);
 	const [file, setFile] = useState<UsInfo[] | null>(null);
 	const [fileName, setFileName] = useState<string>('');
-	const [breadcrumbDisplay, setBreadcrumbDisplay] = useState<string>('import');
 
 	const handleButton = (files: UsInfo[] | null, fileName: string) => {
 		setButtonState(!buttonState);
@@ -26,12 +26,11 @@ function Upload({ importer }: InputProps) {
 		if (file) {
 			importer(file, fileName);
 		}
-		setBreadcrumbDisplay('resume');
 	};
 
 	return (
 		<>
-			<Breadcrumb display={breadcrumbDisplay} />
+			<Breadcrumb display={'import'} />
 			<Container title="Importe o arquivo" small>
 				<div className="flex justify-center">
 					<div className="flex border-dashed border-triider-primary-orange-dark rounded-lg border-2 w-96 h-60 justify-center">
@@ -42,7 +41,11 @@ function Upload({ importer }: InputProps) {
 				</div>
 				<div className="flex justify-center gap-8 px-16">
 					<Link to="/">
-						<Button size="small" variant="secondary">
+						<Button
+							onClickAction={() => setBreadcrumbDisplay('home')}
+							size="small"
+							variant="secondary"
+						>
 							Voltar
 						</Button>
 					</Link>
