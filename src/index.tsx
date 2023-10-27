@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 					<Route path="/dashboard/users" element={<User />} />
 					<Route path="/import" element={<Resume />} />
 					<Route path="/game/:session_id" element={<Game />} />
-					<Route path="*" element={<Error />} />z
+					<Route path="*" element={<Error />} />
 				</Routes>
 			</Layout>
 		</BrowserRouter>
