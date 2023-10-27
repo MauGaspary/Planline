@@ -42,7 +42,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 	function createSession() {
 		console.log(organization, project, squad, sprint, fileContext);
 
-		request('/sessions', {
+		const dto = {
 			organization_id: organization_id ?? '',
 			project_id: project_id ?? '',
 			squad_id: squad_id ?? '',
@@ -60,7 +60,11 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 						})),
 					})) ?? [],
 			},
-		});
+		};
+
+		console.log(dto);
+
+		request('/sessions', dto);
 	}
 
 	function importFile(file: UsInfo[], fileName: string) {
@@ -153,7 +157,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 								Voltar
 							</Button>
 
-							<Button variant="primary" onClickAction={() => router('/game')}>
+							<Button variant="primary" onClickAction={() => createSession()}>
 								Iniciar sessão
 							</Button>
 						</div>

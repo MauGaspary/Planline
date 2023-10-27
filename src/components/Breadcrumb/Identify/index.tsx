@@ -20,9 +20,9 @@ function Identify({ setBreadcrumbDisplay }: IdentifyProps) {
 		setProjectContext,
 		setSquadContext,
 		setOrganizationContext,
-		setSprintIdContext,
 		setProjectIdContext,
 		setOrganizationIdContext,
+		setSquadIdContext,
 	} = useContext(ResumeContext);
 
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
@@ -44,8 +44,9 @@ function Identify({ setBreadcrumbDisplay }: IdentifyProps) {
 			setProject({ name: 'Projeto', id: '' });
 			setProjectContext('');
 			setSquadContext('');
-			setSprintIdContext('');
+			setSquadIdContext('');
 			setProjectIdContext('');
+			setOrganizationIdContext('');
 			setOrganizationContext(option.name);
 			setOrganizationIdContext(option.id);
 			setSquad({ name: 'Squad', id: '' });
@@ -57,6 +58,7 @@ function Identify({ setBreadcrumbDisplay }: IdentifyProps) {
 		if (placeholder === project.name) {
 			setSquad({ name: 'Squad', id: '' });
 			setSquadContext('');
+			setSquadIdContext('');
 			setProjectContext(option.name);
 			setProjectIdContext(option.id);
 			setProject(option);
@@ -64,7 +66,7 @@ function Identify({ setBreadcrumbDisplay }: IdentifyProps) {
 		}
 		if (placeholder === squad.name) {
 			setSquadContext(option.name);
-			setSprintIdContext(option.id);
+			setSquadIdContext(option.id);
 			setSquad(option);
 		}
 		setOpenSelect(null);

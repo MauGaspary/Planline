@@ -2,7 +2,8 @@ import { getRealtimeDatabase } from './firebase';
 import { set, ref } from 'firebase/database';
 
 export type Session = {
-	current_task?: string;
+	current_story: string;
+	current_task: string;
 	finished: boolean;
 	stories: {
 		[key: string]: Story;
@@ -20,7 +21,7 @@ export type Story = {
 };
 
 export type Task = {
-	name: string;
+	description: string;
 	final_vote: number;
 	votes: {
 		[key: string]: number;
