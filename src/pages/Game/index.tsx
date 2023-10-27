@@ -370,9 +370,10 @@ export default function Game() {
 						<div className="font-medium">{isToShow && max > -Infinity && max}</div>
 					</div>
 				</div>
-				Votando a user story {storieNumber.current} de {storieNumber.total}
 				<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
-					<div className="font-medium text-white text-xl">Votação</div>
+					<div className="font-medium text-white text-xl line-clamp-3">
+						{session?.stories[session.current_story].name}
+					</div>
 					<div className="flex flex-row justify-end items-center gap-2">
 						<div className="text-white">Pontuação atual</div>
 						<div className="item-center justify-center w-fit p-4 border-2 rounded-2xl bg-triider-helper-green2 font-medium border-transparent shadow-xl">
