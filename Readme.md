@@ -15,7 +15,6 @@
 ![Static Badge](https://img.shields.io/badge/Gerenciador_De_Pacotes%3A--gray)
 ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
 
-
 Esse é o repositório Mobile do projeto PlanLine. Ele é responsável por prover a aplicação mobile do projeto.
 
 ## Desenvolvimento
