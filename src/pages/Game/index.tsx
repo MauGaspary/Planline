@@ -41,8 +41,15 @@ export default function Game() {
 		router('/');
 	}
 
+	let usersList = Object.entries(session?.users || {});
+	console.log(usersList, 'usersList');
+
 	useEffect(() => {
 		sessionListener();
+		if (session) {
+			usersList = Object.entries(session?.users || {});
+			ShowPlayers();
+		}
 	}, []);
 
 	function ShowPlayers() {
@@ -50,46 +57,167 @@ export default function Game() {
 			<>
 				<div>
 					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-36 z-10">
-						<VotingTriider type="card" number={1} name={session?.users[1]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={1}
+							name={
+								usersList.length > 0
+									? usersList[0][1].firebase_auth_id
+										? usersList[0][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute -bottom-40 left-32 z-10">
-						<VotingTriider type="card" number={2} name={session?.users[2]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={2}
+							name={
+								usersList.length > 1
+									? usersList[1][1].firebase_auth_id
+										? usersList[1][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute -bottom-28 -left-10 z-10">
-						<VotingTriider type="card" number={3} name={session?.users[3]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={3}
+							name={
+								usersList.length > 2
+									? usersList[2][1].firebase_auth_id
+										? usersList[2][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute top-1/2 pb-10 -left-36 transform -translate-y-1/2 z-10">
-						<VotingTriider type="card" number={4} name={session?.users[4]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={4}
+							name={
+								usersList.length > 3
+									? usersList[3][1].firebase_auth_id
+										? usersList[3][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute -top-36 -left-10 z-10">
-						<VotingTriider type="card" number={5} name={session?.users[5]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={5}
+							name={
+								usersList.length > 4
+									? usersList[4][1].firebase_auth_id
+										? usersList[4][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute -top-48 left-32 z-10">
-						<VotingTriider type="card" number={6} name={session?.users[6]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={6}
+							name={
+								usersList.length > 5
+									? usersList[5][1].firebase_auth_id
+										? usersList[5][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute -top-48 left-1/2 transform -translate-x-1/2 z-10">
-						<VotingTriider type="card" number={7} name={session?.users[7]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={7}
+							name={
+								usersList.length > 6
+									? usersList[6][1].firebase_auth_id
+										? usersList[6][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute -top-48 right-32 z-10">
-						<VotingTriider type="card" number={8} name={session?.users[8]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={8}
+							name={
+								usersList.length > 7
+									? usersList[7][1].firebase_auth_id
+										? usersList[7][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute -top-36 -right-10 z-10">
-						<VotingTriider type="card" number={9} name={session?.users[9]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={9}
+							name={
+								usersList.length > 8
+									? usersList[8][1].firebase_auth_id
+										? usersList[8][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute top-1/2 pb-10 -right-36 transform -translate-y-1/2 z-10">
-						<VotingTriider type="card" number={10} name={session?.users[10]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={10}
+							name={
+								usersList.length > 9
+									? usersList[9][1].firebase_auth_id
+										? usersList[9][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute -bottom-28 -right-10 z-10">
-						<VotingTriider type="card" number={11} name={session?.users[11]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={11}
+							name={
+								usersList.length > 10
+									? usersList[10][1].firebase_auth_id
+										? usersList[10][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 					<div className="absolute -bottom-40 right-32 z-10">
-						<VotingTriider type="card" number={12} name={session?.users[12]?.name || ''} />
+						<VotingTriider
+							type="card"
+							number={12}
+							name={
+								usersList.length > 11
+									? usersList[11][1].firebase_auth_id
+										? usersList[11][1]?.name
+										: ''
+									: ''
+							}
+						/>
 					</div>
 				</div>
 			</>
 		);
 	}
-	console.log(session?.users[1].name);
+
+	console.log(session, 'session');
 
 	return (
 		<div className="w-screen h-screen  bg-white">
@@ -100,7 +228,7 @@ export default function Game() {
 			{voteState === 'individual' ? (
 				<div className="justify-center">
 					<div className="flex h-72 items-center justify-center w-fit m-auto relative">
-						<ShowPlayers />
+						{session && <ShowPlayers />}
 						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
 						<div className="flex flex-col absolute items-center gap-2">
 							<h2 className="text-center text-2xl font-medium text-white">Votação individual</h2>
@@ -118,8 +246,8 @@ export default function Game() {
 				</div>
 			) : (
 				<div>
-					<ShowPlayers />
-					<div className="flex h-72 items-center justify-center">
+					<div className="flex h-72 items-center justify-center w-fit m-auto relative">
+						{session && <ShowPlayers />}
 						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
 						<div className="flex flex-col absolute items-center gap-2">
 							<h2 className="text-center text-2xl font-medium text-white">Votação conjunta</h2>
