@@ -11,8 +11,6 @@ function User() {
 
 	return (
 		<Container title="usuários">
-			<GenericTable columns={columns} />
-
 			<InputHeader>
 				<InputText placeholder="Nome" size="medium" isRequired={true} />
 
@@ -32,6 +30,7 @@ function User() {
 					width="32"
 				/>
 			</InputHeader>
+			<GenericTable columns={columns} />
 		</Container>
 	);
 }

@@ -10,6 +10,7 @@ interface GenericTableProps {
 const GenericTable = ({ columns }: GenericTableProps) => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [data, setData] = useState(GenericTableMock);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [search, setSearch] = useState('');
 
 	const filteredName =
@@ -20,7 +21,7 @@ const GenericTable = ({ columns }: GenericTableProps) => {
 	return (
 		<div>
 			<form>
-				<div className="relative">
+				{/* <div className="relative">
 					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 						<svg
 							className="w-4 h-4"
@@ -46,7 +47,7 @@ const GenericTable = ({ columns }: GenericTableProps) => {
 						onChange={(e) => setSearch(e.target.value)}
 						value={search}
 					/>
-				</div>
+				</div> */}
 			</form>
 			<div className="flex flex-col overflow-y-auto overflow-x-hidden h-60 mt-8">
 				<div className="sm:-mx-6 lg:-mx-8">
