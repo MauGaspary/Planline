@@ -5,9 +5,10 @@ import { ResumeContext } from '../../contexts/ResumeInfoContext';
 
 interface HeaderProps {
 	sprintName: string;
+	onCancelPlanning?: () => void;
 }
 
-export default function Header({ sprintName }: HeaderProps) {
+export default function Header({ sprintName, onCancelPlanning }: HeaderProps) {
 	const { squad } = useContext(ResumeContext);
 
 	return (
@@ -24,7 +25,7 @@ export default function Header({ sprintName }: HeaderProps) {
 					<Button size="small" variant="ghost">
 						Reiniciar Votação
 					</Button>
-					<Button size="small" variant="ghost">
+					<Button size="small" variant="ghost" onClickAction={onCancelPlanning}>
 						Cancelar Votação
 					</Button>
 				</div>
