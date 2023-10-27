@@ -14,8 +14,8 @@ const isActive = (display: string, index: number) => {
 
 const Breadcrumb = ({ display }: BreadcrumbProps) => {
 	return (
-		<div className="bg-red-500 flex justify-center">
-			<nav className="absolute top-0 z-10">
+		<div className="flex justify-center absolute -top-14 left-0">
+			<nav>
 				<ol className="breadcrumb flex justify-start gap-3">
 					{items.map((item, index) => (
 						<li

@@ -74,8 +74,8 @@ function Identify({ setBreadcrumbDisplay }: IdentifyProps) {
 		<Loader />
 	) : (
 		<>
-			<Breadcrumb display={'home'} />
 			<Container title="Identifique-se para visualizar mais informações" small>
+				<Breadcrumb display={'home'} />
 				<div className="flex flex-col px-20 gap-5 self-center">
 					<Select
 						placeholder={org.name}

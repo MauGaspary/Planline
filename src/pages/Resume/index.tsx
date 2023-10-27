@@ -74,8 +74,8 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 		<>
 			{upload ? (
 				<>
-					<Breadcrumb display={'resume'} />
 					<Container title="resumo">
+						<Breadcrumb display={'resume'} />
 						<div className="grid grid-cols-3 gap-4">
 							<div className="flex gap-2 ">
 								<span className="text-triider-grayscale-gray1">ORGANIZAÇÃO:</span>

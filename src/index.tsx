@@ -8,7 +8,6 @@ import Project from './pages/Dashboard/Project';
 import Organization from './pages/Dashboard/Organization';
 import Squad from './pages/Dashboard/Squad';
 import User from './pages/Dashboard/User';
-import Resume from './pages/Resume';
 import './styles/globals.css';
 import { ResumeProvider } from './contexts/ResumeInfoContext';
 import Layout from './layout';

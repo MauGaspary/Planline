@@ -30,8 +30,8 @@ function Upload({ importer, setBreadcrumbDisplay }: InputProps) {
 
 	return (
 		<>
-			<Breadcrumb display={'import'} />
 			<Container title="Importe o arquivo" small>
+				<Breadcrumb display={'import'} />
 				<div className="flex justify-center">
 					<div className="flex border-dashed border-triider-primary-orange-dark rounded-lg border-2 w-96 h-60 justify-center">
 						<div className="w-96 h-56 rounded-lg flex justify-center">
