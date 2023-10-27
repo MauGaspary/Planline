@@ -32,7 +32,15 @@ const Button = ({ size = 'medium', children, variant = 'primary', onClickAction 
 	const classes = `${defaultClasses} ${sizeClasses[size]} ${variantClasses[variant]}`;
 
 	return (
-		<button className={classes} onClick={onClickAction} type="submit" value="Submit">
+		<button
+			className={classes}
+			onClick={() => {
+				if (variant === 'disabled' || !onClickAction) return;
+				onClickAction();
+			}}
+			type="submit"
+			value="Submit"
+		>
 			{children}
 		</button>
 	);

@@ -8,7 +8,6 @@ import Project from './pages/Dashboard/Project';
 import Organization from './pages/Dashboard/Organization';
 import Squad from './pages/Dashboard/Squad';
 import User from './pages/Dashboard/User';
-import Resume from './pages/Resume';
 import './styles/globals.css';
 import { ResumeProvider } from './contexts/ResumeInfoContext';
 import Layout from './layout';
@@ -24,7 +23,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 					<Route path="/dashboard/orgs" element={<Organization />} />
 					<Route path="/dashboard/squads" element={<Squad />} />
 					<Route path="/dashboard/users" element={<User />} />
-					<Route path="/import" element={<Resume />} />
 					<Route path="/game/:session_id" element={<Game />} />
 					<Route path="*" element={<Error />} />
 				</Routes>
