@@ -13,9 +13,12 @@ type ResumeProps = {
 
 function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 	const router = useNavigate();
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [upload, setUpload] = useState<boolean | null>(false);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [file, setFile] = useState<UsInfo[] | null>(null);
 	const {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		setFileContext,
 		organization,
 		project,
@@ -26,6 +29,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 		project_id,
 		squad_id,
 	} = useContext(ResumeContext);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [fileName, setFileName] = useState<string>('');
 	const { data, request } = usePost<SessionCreationResponseDto, SessionCreationDto>();
 
@@ -60,12 +64,12 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 		});
 	}
 
-	function importFile(file: UsInfo[], fileName: string) {
-		setFile(file);
-		setFileContext(file);
-		setUpload(true);
-		setFileName(fileName);
-	}
+	// function importFile(file: UsInfo[], fileName: string) {
+	// 	setFile(file);
+	// 	setFileContext(file);
+	// 	setUpload(true);
+	// 	setFileName(fileName);
+	// }
 
 	return (
 		<>
