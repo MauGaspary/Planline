@@ -31,33 +31,43 @@ function SideMenu() {
 				<img className="inline-block h-14" src={logoWhite} />
 				<h1 className="inline-block text-2xl text-white font-medium align-middle">PlanLine</h1>
 			</div>
-			<ol className="">
+			<ol>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('votacao');
-						handleNav('/import');
+						handleActiveButton('voting');
+						handleNav('/');
 					}}
-					isSelected={activeButton === 'votacao'}
+					isSelected={activeButton === 'voting'}
 					title={'Votação'}
 					imageWhite={talkWhite}
 					imageOrange={talkOrange}
 				/>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('organizacoes');
+						handleActiveButton('history');
+						handleNav('/history');
+					}}
+					isSelected={activeButton === 'history'}
+					title="Histórico"
+					imageWhite={talkWhite}
+					imageOrange={talkOrange}
+				/>
+				<SideMenuItem
+					onClick={() => {
+						handleActiveButton('orgs');
 						handleNav('/dashboard/orgs');
 					}}
-					isSelected={activeButton === 'organizacoes'}
-					title={'Organizações'}
+					isSelected={activeButton === 'orgs'}
+					title="Organizações"
 					imageWhite={apartmentWhite}
 					imageOrange={apartmentOrange}
 				/>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('projetos');
+						handleActiveButton('projects');
 						handleNav('/dashboard/projects');
 					}}
-					isSelected={activeButton === 'projetos'}
+					isSelected={activeButton === 'projects'}
 					title="Projetos"
 					imageWhite={registerWhite}
 					imageOrange={registerOrange}
@@ -74,10 +84,10 @@ function SideMenu() {
 				/>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('usuarios');
+						handleActiveButton('users');
 						handleNav('/dashboard/users');
 					}}
-					isSelected={activeButton === 'usuarios'}
+					isSelected={activeButton === 'users'}
 					title="Usuários"
 					imageWhite={groupWhite}
 					imageOrange={groupOrange}

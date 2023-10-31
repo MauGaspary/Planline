@@ -8,7 +8,7 @@ interface LayoutProps {
 function Layout({ children }: LayoutProps) {
 	const location = useLocation();
 	const path = location.pathname;
-	if (path.includes('/dashboard') || path === '/' || path === '/import') {
+	if (path.includes('/dashboard') || path === '/' || path === '/import' || path === '/history') {
 		return (
 			<>
 				<SideMenu />
