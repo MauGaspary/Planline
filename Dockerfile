@@ -57,7 +57,8 @@ COPY --chown=deploy --from=builder /opt/app /opt/app
 RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=builder /opt/app/dist /usr/share/nginx/html
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/nginx.conf /etc/nginx/sites-enabled/development/default.conf
+COPY ./nginx/nginx2.conf /etc/nginx/sites-enabled/development/localhost.conf
 # Containers run nginx with global directives and daemon off
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
