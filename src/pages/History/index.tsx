@@ -4,7 +4,7 @@ import { InputText } from '../../components/InputText/Index';
 
 function History() {
 	return (
-		<Container title="history">
+		<Container title="histórico">
 			<InputHeader>
 				<InputText placeholder="Nome" size="medium" isRequired={true} />
 			</InputHeader>
