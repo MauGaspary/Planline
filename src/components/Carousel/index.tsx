@@ -1,20 +1,17 @@
 import NukaCarousel from 'nuka-carousel';
 import Task from './Task';
-import { usInfo } from '../../types/usInfo';
+import leftArrow from '../../assets/images/ArrowLeft.png';
+import rightArrow from '../../assets/images/ArrowRight.png';
+import { Task as TaskDto } from '../../services/firebaseSessions';
 
 interface TaskProps {
-	listaTasks: usInfo[];
+	taskList: { [key: string]: TaskDto };
+	currentTaskId: string | null;
+	voteLater: (taskId: string) => void;
 }
 
-function Carousel({ listaTasks }: TaskProps) {
-	// const listaTasks = [
-	// 	{ title: 'task 1 daopfkdsioghb', voted: true, next: false },
-	// 	{ title: 'task 2 acxgvvvvvvvvvvvv', voted: false, next: false },
-	// 	{ title: 'task 3 !!!!!!!!!', voted: false, next: true },
-	// 	{ title: 'task dhgdhfgkmjgh', voted: true, next: false },
-	// 	{ title: 'task 2 acxgvvvvvvvvvvvv', voted: false, next: false },
-	// 	{ title: 'task 3 !!!!!!!!!', voted: false, next: true },
-	// ];
+function Carousel({ taskList, currentTaskId, voteLater }: TaskProps) {
+	const tasks = Object.entries(taskList);
 
 	const params = {
 		slidesToShow: 3,
@@ -22,9 +19,32 @@ function Carousel({ listaTasks }: TaskProps) {
 
 	return (
 		<div className="flex-row h-fit space-x-7 w-2/3 mx-auto ">
-			<NukaCarousel {...params} cellAlign="center" wrapAround withoutControls>
-				{listaTasks[7].tasks.map((task, key) => (
-					<Task title={task} voted={Math.random() * 2 > 1 ? true : false} next={false} key={key} />
+			<NukaCarousel
+				{...params}
+				cellAlign="center"
+				wrapAround
+				renderBottomCenterControls={null}
+				renderCenterLeftControls={({ previousSlide }) => (
+					<button onClick={previousSlide}>
+						<img src={leftArrow} />
+					</button>
+				)}
+				renderCenterRightControls={({ nextSlide }) => (
+					<button onClick={nextSlide}>
+						<img src={rightArrow} />
+					</button>
+				)}
+			>
+				{tasks.map(([task_id, task]) => (
+					<Task
+						taskId={task_id}
+						title={task.description}
+						voted={task.final_vote > 0}
+						next={currentTaskId !== task_id}
+						finalVote={task.final_vote}
+						key={task_id}
+						voteLater={voteLater}
+					/>
 				))}
 			</NukaCarousel>
 		</div>

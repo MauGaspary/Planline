@@ -2,7 +2,8 @@ import { getRealtimeDatabase } from './firebase';
 import { set, ref } from 'firebase/database';
 
 export type Session = {
-	current_task?: string;
+	current_story: string;
+	current_task: string;
 	finished: boolean;
 	stories: {
 		[key: string]: Story;
@@ -20,7 +21,7 @@ export type Story = {
 };
 
 export type Task = {
-	descritpion: string;
+	description: string;
 	final_vote: number;
 	votes: {
 		[key: string]: number;
@@ -33,40 +34,6 @@ export type User = {
 	firebase_auth_id: string | null;
 };
 
-export async function createFirebaseSession(sessionId: string) {
-	const session: Session = {
-		finished: false,
-		stories: {
-			'1': {
-				name: 'Story 1',
-				tasks: {
-					'1': {
-						descritpion: 'Task 1',
-						final_vote: 0,
-						votes: {},
-					},
-				},
-			},
-		},
-		users: {
-			'1': {
-				name: 'Cassio Trindade',
-				level: 'junior',
-				firebase_auth_id: null,
-			},
-			'2': {
-				name: 'Joseph',
-				level: 'senior',
-				firebase_auth_id: null,
-			},
-		},
-	};
-
-	const database = getRealtimeDatabase();
-	const sessionRef = ref(database, 'sessions/' + sessionId);
-
-	await set(sessionRef, session);
-}
 export async function finishFirebaseSession(sessionId: string) {
 	const database = getRealtimeDatabase();
 	const sessionRef = ref(database, 'sessions/' + sessionId);
