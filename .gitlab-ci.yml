@@ -12,7 +12,7 @@ before_script:
 
 build-node:
   image: docker:dind
-  tags: 
+  tags:
     - ages-runner
   stage: build
   script:
