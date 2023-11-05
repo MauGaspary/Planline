@@ -31,6 +31,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 	const [fileName, setFileName] = useState<string>('');
 	const { data, request } = usePost<SessionCreationResponseDto, SessionCreationDto>();
 
+	console.log('squad: ', squad);
 	useEffect(() => {
 		if (data) {
 			console.log(data);
@@ -46,6 +47,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 			organization_id: organization_id ?? '',
 			project_id: project_id ?? '',
 			squad_id: squad_id ?? '',
+			squad_name: squad ?? '',
 			sprint: {
 				name: sprint ?? '',
 				start_date: new Date(),
