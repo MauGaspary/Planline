@@ -24,7 +24,7 @@ function Upload({ importer, setBreadcrumbDisplay }: InputProps) {
 	useEffect(() => {
 		// TODO:
 		getAvailableSession(`/session/available/${squad_id}`);
-	}, [file]);
+	}, []);
 
 	const handleButton = (files: UsInfo[] | null, fileName: string) => {
 		setButtonState(!buttonState);
@@ -40,8 +40,9 @@ function Upload({ importer, setBreadcrumbDisplay }: InputProps) {
 
 	return (
 		<>
-			TODO: toast component
-			{(availableSession?.length ?? 0) > 0 && <Toast></Toast>}
+			{(availableSession?.length ?? 0 > 0) && (
+				<Toast sessions={availableSession ? availableSession : []} />
+			)}
 			<Container title="Importe o arquivo" small>
 				<Breadcrumb display={'import'} />
 				<div className="flex justify-center">
