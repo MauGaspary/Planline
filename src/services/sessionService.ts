@@ -90,6 +90,8 @@ export default {
 			users: firebaseUsers,
 			current_task: firstTask.task_id,
 			current_story: firstStory.story_id,
+			sprint_name: sessionCreationDto.sprint.name,
+			squad_name: sessionCreationDto.squad_name,
 		};
 
 		const database = firebaseService.dbInstance;

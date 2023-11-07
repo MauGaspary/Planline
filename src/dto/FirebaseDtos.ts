@@ -8,6 +8,8 @@ export type FirebaseSession = {
 	finished: boolean;
 	stories: FirebaseCollection<FirebaseStory>;
 	users: FirebaseCollection<FirebaseUser>;
+	squad_name: string;
+	sprint_name: string;
 };
 
 export type FirebaseStory = {
