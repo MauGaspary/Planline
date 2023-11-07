@@ -91,6 +91,7 @@ export default {
 			current_task: firstTask.task_id,
 			current_story: firstStory.story_id,
 			squad_id: sessionCreationDto.squad_id,
+			opened_at: new Date().toISOString(),
 		};
 
 		const sessionRef = child(sessionsRef, sessionId);
@@ -172,15 +173,16 @@ export default {
 		}
 
 		const sessions: FirebaseCollection<FirebaseSession> = snapshot.val();
-		const availableSessions: string[] = [];
 
-		for (const [sessionId, session] of Object.entries(sessions)) {
-			if (!session.finished && session.squad_id !== squadId) {
-				continue;
-			}
-			availableSessions.push(sessionId);
-		}
+		return Object.entries(sessions)
+			.filter((entry) => entry[1].squad_id === squadId && !entry[1].finished)
+			.sort((a, b) => {
+				const aDate = new Date(a[1].opened_at);
+				const bDate = new Date(b[1].opened_at);
 
-		return availableSessions;
+				return aDate.getTime() - bDate.getTime();
+			})
+			.slice(0, 6)
+			.map((entry) => entry[0]);
 	},
 };

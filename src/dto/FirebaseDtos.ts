@@ -7,6 +7,7 @@ export type FirebaseSession = {
 	current_story: string;
 	finished: boolean;
 	squad_id: string;
+	opened_at: string;
 	stories: FirebaseCollection<FirebaseStory>;
 	users: FirebaseCollection<FirebaseUser>;
 };
