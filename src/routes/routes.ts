@@ -13,5 +13,6 @@ routes.get('/project/info/:organization_id', projectController.infoByOrganizatio
 routes.get('/organization/info', organizationController.info);
 routes.post('/sessions', sessionsController.index);
 routes.delete('/sessions/finalize/:sessionId', sessionsController.finalize);
+routes.get('/sessions/available/:squad_id', sessionsController.available);
 
 export default routes;

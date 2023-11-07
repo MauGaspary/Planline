@@ -1,6 +1,6 @@
 import { SessionCreationDto } from '../dto/CreateSessionDto.js';
 import firebaseService from './firebaseService.js';
-import { set, ref, get } from 'firebase/database';
+import { set, ref, get, child } from 'firebase/database';
 import squadRepository from '../repositories/squadRepository.js';
 import {
 	FirebaseCollection,
@@ -17,6 +17,9 @@ function generateFourDigitId(): string {
 	return Math.floor(1000 + Math.random() * 9000).toString();
 }
 
+const database = firebaseService.dbInstance;
+const sessionsRef = ref(database, '/sessions');
+
 export default {
 	async createRandomId(): Promise<string> {
 		let randomId = generateFourDigitId();
@@ -32,9 +35,6 @@ export default {
 	},
 
 	async getAllCurrentSessions(): Promise<FirebaseCollection<FirebaseSession> | null> {
-		const database = firebaseService.dbInstance;
-		const sessionsRef = ref(database, '/sessions');
-
 		const snapshot = await get(sessionsRef);
 
 		if (snapshot.exists()) {
@@ -90,10 +90,10 @@ export default {
 			users: firebaseUsers,
 			current_task: firstTask.task_id,
 			current_story: firstStory.story_id,
+			squad_id: sessionCreationDto.squad_id,
 		};
 
-		const database = firebaseService.dbInstance;
-		const sessionRef = ref(database, 'sessions/' + sessionId);
+		const sessionRef = child(sessionsRef, sessionId);
 
 		await set(sessionRef, session);
 
@@ -101,14 +101,12 @@ export default {
 	},
 
 	async finalizeWithoutSaving(sessionId: string) {
-		const database = firebaseService.dbInstance;
-		const finishedSession = ref(database, 'sessions/' + sessionId + '/finished');
+		const finishedSession = child(sessionsRef, sessionId + '/finished');
 		await set(finishedSession, true);
 	},
 
 	async finalize(sessionId: string) {
-		const database = firebaseService.dbInstance;
-		const sessionRef = ref(database, 'sessions/' + sessionId);
+		const sessionRef = child(sessionsRef, sessionId);
 
 		const snapshot = await get(sessionRef);
 
@@ -164,5 +162,25 @@ export default {
 
 		promises.push(this.finalizeWithoutSaving(sessionId));
 		await Promise.all(promises);
+	},
+
+	async available(squadId: string): Promise<string[]> {
+		const snapshot = await get(sessionsRef);
+
+		if (!snapshot.exists()) {
+			return [];
+		}
+
+		const sessions: FirebaseCollection<FirebaseSession> = snapshot.val();
+		const availableSessions: string[] = [];
+
+		for (const [sessionId, session] of Object.entries(sessions)) {
+			if (!session.finished && session.squad_id !== squadId) {
+				continue;
+			}
+			availableSessions.push(sessionId);
+		}
+
+		return availableSessions;
 	},
 };
