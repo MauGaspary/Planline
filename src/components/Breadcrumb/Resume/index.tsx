@@ -46,6 +46,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 			organization_id: organization_id ?? '',
 			project_id: project_id ?? '',
 			squad_id: squad_id ?? '',
+			squad_name: squad ?? '',
 			sprint: {
 				name: sprint ?? '',
 				start_date: new Date(),
