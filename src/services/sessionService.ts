@@ -92,6 +92,8 @@ export default {
 			current_story: firstStory.story_id,
 			squad_id: sessionCreationDto.squad_id,
 			opened_at: new Date().toISOString(),
+			sprint_name: sessionCreationDto.sprint.name,
+			squad_name: sessionCreationDto.squad_name,
 		};
 
 		const sessionRef = child(sessionsRef, sessionId);

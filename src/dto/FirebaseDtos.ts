@@ -10,6 +10,8 @@ export type FirebaseSession = {
 	opened_at: string;
 	stories: FirebaseCollection<FirebaseStory>;
 	users: FirebaseCollection<FirebaseUser>;
+	squad_name: string;
+	sprint_name: string;
 };
 
 export type FirebaseStory = {
