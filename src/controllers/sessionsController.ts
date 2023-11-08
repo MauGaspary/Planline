@@ -22,4 +22,9 @@ export default {
 
 		res.status(204);
 	},
+
+	async available(req: Request, res: Response) {
+		const squadIdDto = req.params.squad_id;
+		res.json(await sessionService.available(squadIdDto));
+	},
 };

@@ -1,6 +1,6 @@
 import { SessionCreationDto } from '../dto/CreateSessionDto.js';
 import firebaseService from './firebaseService.js';
-import { set, ref, get } from 'firebase/database';
+import { set, ref, get, child } from 'firebase/database';
 import squadRepository from '../repositories/squadRepository.js';
 import {
 	FirebaseCollection,
@@ -17,6 +17,9 @@ function generateFourDigitId(): string {
 	return Math.floor(1000 + Math.random() * 9000).toString();
 }
 
+const database = firebaseService.dbInstance;
+const sessionsRef = ref(database, '/sessions');
+
 export default {
 	async createRandomId(): Promise<string> {
 		let randomId = generateFourDigitId();
@@ -32,9 +35,6 @@ export default {
 	},
 
 	async getAllCurrentSessions(): Promise<FirebaseCollection<FirebaseSession> | null> {
-		const database = firebaseService.dbInstance;
-		const sessionsRef = ref(database, '/sessions');
-
 		const snapshot = await get(sessionsRef);
 
 		if (snapshot.exists()) {
@@ -90,12 +90,13 @@ export default {
 			users: firebaseUsers,
 			current_task: firstTask.task_id,
 			current_story: firstStory.story_id,
+			squad_id: sessionCreationDto.squad_id,
+			opened_at: new Date().toISOString(),
 			sprint_name: sessionCreationDto.sprint.name,
 			squad_name: sessionCreationDto.squad_name,
 		};
 
-		const database = firebaseService.dbInstance;
-		const sessionRef = ref(database, 'sessions/' + sessionId);
+		const sessionRef = child(sessionsRef, sessionId);
 
 		await set(sessionRef, session);
 
@@ -103,14 +104,12 @@ export default {
 	},
 
 	async finalizeWithoutSaving(sessionId: string) {
-		const database = firebaseService.dbInstance;
-		const finishedSession = ref(database, 'sessions/' + sessionId + '/finished');
+		const finishedSession = child(sessionsRef, sessionId + '/finished');
 		await set(finishedSession, true);
 	},
 
 	async finalize(sessionId: string) {
-		const database = firebaseService.dbInstance;
-		const sessionRef = ref(database, 'sessions/' + sessionId);
+		const sessionRef = child(sessionsRef, sessionId);
 
 		const snapshot = await get(sessionRef);
 
@@ -166,5 +165,26 @@ export default {
 
 		promises.push(this.finalizeWithoutSaving(sessionId));
 		await Promise.all(promises);
+	},
+
+	async available(squadId: string): Promise<string[]> {
+		const snapshot = await get(sessionsRef);
+
+		if (!snapshot.exists()) {
+			return [];
+		}
+
+		const sessions: FirebaseCollection<FirebaseSession> = snapshot.val();
+
+		return Object.entries(sessions)
+			.filter((entry) => entry[1].squad_id === squadId && !entry[1].finished)
+			.sort((a, b) => {
+				const aDate = new Date(a[1].opened_at);
+				const bDate = new Date(b[1].opened_at);
+
+				return aDate.getTime() - bDate.getTime();
+			})
+			.slice(0, 6)
+			.map((entry) => entry[0]);
 	},
 };
