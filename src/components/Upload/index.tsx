@@ -23,7 +23,7 @@ function Upload({ importer, setBreadcrumbDisplay }: InputProps) {
 
 	useEffect(() => {
 		// TODO:
-		getAvailableSession(`/session/available/${squad_id}`);
+		getAvailableSession(`/sessions/available/${squad_id}`);
 	}, []);
 
 	const handleButton = (files: UsInfo[] | null, fileName: string) => {
