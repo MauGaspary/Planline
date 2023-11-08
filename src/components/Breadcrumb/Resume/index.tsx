@@ -31,7 +31,6 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 	const [fileName, setFileName] = useState<string>('');
 	const { data, request } = usePost<SessionCreationResponseDto, SessionCreationDto>();
 
-	console.log('squad: ', squad);
 	useEffect(() => {
 		if (data) {
 			console.log(data);
