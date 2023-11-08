@@ -46,7 +46,7 @@ const Toast = ({ sessions }: ToastProps) => {
 								Você tem uma sessão em andamento. <br />
 							</p>
 							<p className="my-4">
-								<b>/game/{item.toastSession}</b>
+								código: <b>{item.toastSession}</b>
 							</p>
 							<Button
 								variant="primary"
