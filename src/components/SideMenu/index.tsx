@@ -12,6 +12,8 @@ import laptopWhite from '../../assets/sideMenuIcons/laptopWhite.svg';
 import laptopOrange from '../../assets/sideMenuIcons/laptopOrange.svg';
 import groupWhite from '../../assets/sideMenuIcons/groupWhite.svg';
 import groupOrange from '../../assets/sideMenuIcons/groupOrange.svg';
+import historyOrange from '../../assets/sideMenuIcons/historyOrange.svg';
+import historyWhite from '../../assets/sideMenuIcons/historyWhite.svg';
 
 function SideMenu() {
 	const [activeButton, setActiveButton] = useState<string | null>(null);
@@ -49,8 +51,8 @@ function SideMenu() {
 					}}
 					isSelected={activeButton === 'history'}
 					title="Histórico"
-					imageWhite={talkWhite}
-					imageOrange={talkOrange}
+					imageWhite={historyWhite}
+					imageOrange={historyOrange}
 				/>
 				<SideMenuItem
 					onClick={() => {
