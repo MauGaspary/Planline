@@ -1,16 +1,17 @@
-import Header from '../../components/Header';
-import pokerTable from '../../assets/images/poker_table.svg';
-import VoteCard from '../../components/VoteCard';
-import { useEffect, useState } from 'react';
-import Qrcode from '../../components/Qrcode';
 import { child, off, onValue, ref, set } from 'firebase/database';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import pokerTable from '../../assets/images/poker_table.svg';
 import Button from '../../components/Button';
 import Carousel from '../../components/Carousel';
+import Header from '../../components/Header';
+import Qrcode from '../../components/Qrcode';
+import ToolTip from '../../components/Tooltip';
+import VoteCard from '../../components/VoteCard';
 import VotingTriider from '../../components/VotingTriider';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useDelete } from '../../hooks/useDelete';
 import { getRealtimeDatabase } from '../../services/firebase';
 import { Session } from '../../services/firebaseSessions';
-import { useDelete } from '../../hooks/useDelete';
 
 export default function Game() {
 	const router = useNavigate();
@@ -371,9 +372,18 @@ export default function Game() {
 					</div>
 				</div>
 				<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
-					<div className="font-medium text-white text-xl line-clamp-3">
-						{session?.stories[session.current_story].name}
-					</div>
+					{session?.stories[session.current_story]?.name &&
+						session?.stories[session.current_story]?.name.length > 67 ? (
+						<ToolTip tooltip={session?.stories[session.current_story]?.name}>
+							<div className="text-white text-xl line-clamp-3">
+								{session?.stories[session.current_story]?.name}
+							</div>
+						</ToolTip>
+					) : (
+						<div className="text-white text-xl line-clamp-3">
+							{session?.stories[session.current_story]?.name}
+						</div>
+					)}
 					<div className="flex flex-row justify-end items-center gap-2">
 						<div className="text-white">Pontuação atual</div>
 						<div className="item-center justify-center w-fit p-4 border-2 rounded-2xl bg-triider-helper-green2 font-medium border-transparent shadow-xl">
