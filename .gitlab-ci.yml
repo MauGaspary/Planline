@@ -19,7 +19,7 @@ test-node:
   script:
     - yarn add eslint prettier
     - yarn lint
-    - yarn typecheck
+    - npx -c tsc
     
 # ------------- BUILD SCRIPT -------------
 
