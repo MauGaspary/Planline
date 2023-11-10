@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Story } from '../dto/CreateSessionDto';
+import { Story } from '../dto/CreateSessionDTO';
 
 const prisma = new PrismaClient();
 

@@ -1,15 +1,8 @@
 import projectRepository from '../repositories/projectRepository.js';
-import { InfoDTO } from '../dto/InfoBody.js';
-import { CreateProjectDTO } from '../dto/CreateProjectDTO.js';
 import { Project } from '@prisma/client';
-import { UpdateProjectDTO } from '../dto/UpdateProjectDTO.js';
 
 export default {
-	async infoByOrganizationId(organization_id: string): Promise<InfoDTO[]> {
-		const projects: InfoDTO[] = await projectRepository.infoByOrganizationId(organization_id);
-		return projects;
-	},
-	async create(project: CreateProjectDTO): Promise<string> {
+	async create(project: Project): Promise<string> {
 		const projectId: string = await projectRepository.create(project);
 		return projectId;
 	},
@@ -17,10 +10,14 @@ export default {
 		const projects: Project[] = await projectRepository.read();
 		return projects;
 	},
+	async getByProjectId(projectId: string): Promise<Project | null> {
+		const project: Project | null = await projectRepository.getByProjectId(projectId);
+		return project;
+	},
 	async delete(projectId: string): Promise<void> {
 		await projectRepository.delete(projectId);
 	},
-	async put(project: UpdateProjectDTO): Promise<string> {
+	async put(project: Project): Promise<string> {
 		const projectId: string = await projectRepository.put(project);
 		return projectId;
 	},

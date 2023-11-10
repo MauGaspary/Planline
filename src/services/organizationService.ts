@@ -1,15 +1,8 @@
-import { CreateOrganizationDTO } from '../dto/CreateOrganizationDTO.js';
-import { InfoDTO } from '../dto/InfoBody.js';
 import organizationRepository from '../repositories/organizationRepository.js';
 import { Organization } from '@prisma/client';
-import { UpdateOrganizationDTO } from '../dto/UpdateOrganizationDTO.js';
 
 export default {
-	async info(): Promise<InfoDTO[]> {
-		const organization = await organizationRepository.info();
-		return organization;
-	},
-	async create(organization: CreateOrganizationDTO): Promise<string> {
+	async create(organization: Organization): Promise<string> {
 		this.validateEmail(organization.email);
 		const organizationId: string = await organizationRepository.create(organization);
 		return organizationId;
@@ -18,10 +11,15 @@ export default {
 		const orgs: Organization[] = await organizationRepository.read();
 		return orgs;
 	},
+	async getByOrganizationId(organizationId: string): Promise<Organization | null> {
+		const organization: Organization | null =
+			await organizationRepository.getByOrganizationId(organizationId);
+		return organization;
+	},
 	async delete(orgId: string): Promise<void> {
 		await organizationRepository.delete(orgId);
 	},
-	async put(organization: UpdateOrganizationDTO): Promise<string> {
+	async put(organization: Organization): Promise<string> {
 		this.validateEmail(organization.email);
 		const organizationId: string = await organizationRepository.put(organization);
 		return organizationId;

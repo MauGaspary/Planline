@@ -1,38 +1,35 @@
-import { PrismaClient, Squad, User } from '@prisma/client';
-import { InfoDTO } from '../dto/InfoBody';
-import { CreateSquadDTO } from '../dto/CreateSquadDTO';
-import { UpdateSquadDTO } from '../dto/UpdateSquadDTO';
+import { PrismaClient, Squad } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export default {
-	async infoByProjectId(project_id: string): Promise<InfoDTO[]> {
-		const projectSquadBridge = await prisma.projectSquadBridge.findMany({
-			where: {
-				project_id: project_id,
-			},
-			select: {
-				Squad: {
-					select: {
-						id: true,
-						name: true,
-					},
-				},
-			},
-		});
-		const infoSquads: InfoDTO[] = projectSquadBridge.map((item) => item.Squad);
-		return infoSquads;
-	},
-
-	async create(data: CreateSquadDTO): Promise<string> {
+	async create(data: Squad): Promise<string> {
 		const squad = await prisma.squad.create({
 			data: { ...data },
 		});
 		return squad.id;
 	},
 
+	async getBySquadId(squadId: string): Promise<Squad | null> {
+		const squad: Squad | null = await prisma.squad.findFirst({
+			where: {
+				id: squadId,
+			},
+			include: {
+				users: true,
+				organization: true,
+			},
+		});
+		return squad;
+	},
+
 	async read(): Promise<Squad[]> {
-		const squads: Squad[] = await prisma.squad.findMany();
+		const squads: Squad[] = await prisma.squad.findMany({
+			include: {
+				users: true,
+				organization: true,
+			},
+		});
 		return squads;
 	},
 
@@ -44,7 +41,7 @@ export default {
 		});
 	},
 
-	async put(data: UpdateSquadDTO): Promise<string> {
+	async put(data: Squad): Promise<string> {
 		const squad = await prisma.squad.update({
 			data: { ...data },
 			where: {
@@ -52,20 +49,5 @@ export default {
 			},
 		});
 		return squad.id;
-	},
-
-	async getAllUsers(squadId: string): Promise<User[]> {
-		return (
-			(
-				await prisma.userSquadBridge.findMany({
-					where: {
-						squad_id: squadId,
-					},
-					select: {
-						User: true,
-					},
-				})
-			)?.map((bridge) => bridge.User) ?? ([] as User[])
-		);
 	},
 };

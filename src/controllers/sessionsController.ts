@@ -1,4 +1,4 @@
-import { SessionCreationDto } from '../dto/CreateSessionDto.js';
+import { SessionCreationDto } from '../dto/CreateSessionDTO.js';
 import sessionService from '../services/sessionService.js';
 import type { Request, Response } from 'express';
 

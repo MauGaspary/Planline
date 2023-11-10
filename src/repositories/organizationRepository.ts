@@ -1,35 +1,37 @@
 import { Organization, PrismaClient } from '@prisma/client';
-import { InfoDTO } from '../dto/InfoBody.js';
-import { CreateOrganizationDTO } from '../dto/CreateOrganizationDTO.js';
-import { UpdateOrganizationDTO } from '../dto/UpdateOrganizationDTO.js';
 
 const prisma = new PrismaClient();
 
 export default {
-	async info(): Promise<InfoDTO[]> {
-		const organization: InfoDTO[] = await prisma.organization.findMany({
-			select: {
-				id: true,
-				name: true,
-			},
-		});
-		return organization;
-	},
-
 	async creates(data: Organization): Promise<Organization> {
 		const organization = await prisma.organization.create({
 			data: { ...data },
 		});
 		return organization;
 	},
-	async create(data: CreateOrganizationDTO): Promise<string> {
+	async create(data: Organization): Promise<string> {
 		const organization = await prisma.organization.create({
 			data: { ...data },
 		});
 		return organization.id;
 	},
+	async getByOrganizationId(organizationId: string): Promise<Organization | null> {
+		const organization: Organization | null = await prisma.organization.findFirst({
+			where: {
+				id: organizationId,
+			},
+			include: {
+				projects: true,
+			},
+		});
+		return organization;
+	},
 	async read(): Promise<Organization[]> {
-		const orgs: Organization[] = await prisma.organization.findMany();
+		const orgs: Organization[] = await prisma.organization.findMany({
+			include: {
+				projects: true,
+			},
+		});
 		return orgs;
 	},
 	async delete(organizationId: string): Promise<void> {
@@ -39,7 +41,7 @@ export default {
 			},
 		});
 	},
-	async put(data: UpdateOrganizationDTO): Promise<string> {
+	async put(data: Organization): Promise<string> {
 		const organization = await prisma.organization.update({
 			data: { ...data },
 			where: {

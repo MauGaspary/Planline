@@ -43,8 +43,8 @@ model Organization {
   id         String    @id @default(uuid())
   name       String    @db.VarChar(100)
   email      String    @db.VarChar(50)
-	Project    Project[]
-  Squad      Squad[]
+	projects    Project[]
+  squads      Squad[]
   updated_at DateTime  @updatedAt
   created_at DateTime  @default(now())
 }

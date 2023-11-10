@@ -1,30 +1,12 @@
-import { User, Prisma } from '@prisma/client';
-import { Request, Response } from 'express';
+import { User } from '@prisma/client';
 import userRepository from '../repositories/userRepository.js';
-import { CreateUserDTO } from '../dto/CreateUserDto.js';
-import { UpdateUserDTO } from '../dto/UpdateUserDTO.js';
 
 export default {
-	async index(body: Request, res: Response) {
-		try {
-			const users: Array<User> = await userRepository.index();
-			if (users.length == 0) {
-				res.status(404).json({
-					message: 'There are no entities registered',
-				});
-			}
-			res.json({ ...users });
-		} catch (e) {
-			if (e instanceof Prisma.PrismaClientKnownRequestError) {
-				res.status(500).json({
-					error: e.message,
-					...e.meta,
-				});
-			}
-		}
+	async getByUserId(userId: string): Promise<User | null> {
+		const user: User | null = await userRepository.getByUserId(userId);
+		return user;
 	},
-
-	async create(user: CreateUserDTO): Promise<string> {
+	async create(user: User): Promise<string> {
 		this.validateEmail(user.email);
 		const userId: string = await userRepository.create(user);
 		return userId;
@@ -38,7 +20,7 @@ export default {
 		return userId;
 	},
 
-	async put(user: UpdateUserDTO): Promise<string> {
+	async put(user: User): Promise<string> {
 		this.validateEmail(user.email);
 		const userId: string = await userRepository.put(user);
 		return userId;
