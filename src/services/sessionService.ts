@@ -1,7 +1,6 @@
 import { SessionCreationDto } from '../dto/CreateSessionDTO.js';
 import firebaseService from './firebaseService.js';
 import { set, ref, get, child } from 'firebase/database';
-import squadRepository from '../repositories/squadRepository.js';
 import {
 	FirebaseCollection,
 	FirebaseSession,
@@ -12,6 +11,7 @@ import {
 import storyRepository from '../repositories/storyRepository.js';
 import taskRepository from '../repositories/taskRepository.js';
 import voteRepository from '../repositories/voteRepository.js';
+import squadService from './squadService.js';
 
 function generateFourDigitId(): string {
 	return Math.floor(1000 + Math.random() * 9000).toString();
@@ -65,11 +65,13 @@ export default {
 			};
 		}
 
-		const [users, sessionId] = await Promise.all([
-			squadRepository.getAllUsers(sessionCreationDto.squad_id),
+		const [squad, sessionId] = await Promise.all([
+			squadService.getBySquadId(sessionCreationDto.squad_id),
 			this.createRandomId(),
 			storyRepository.createMany(stories),
 		]);
+
+		const users = squad?.users ?? [];
 
 		const firebaseUsers: FirebaseCollection<FirebaseUser> = {};
 

@@ -1,4 +1,5 @@
 import { PrismaClient, Squad } from '@prisma/client';
+import { SquadDTO } from '../dto/SquadDTO';
 
 const prisma = new PrismaClient();
 
@@ -10,8 +11,8 @@ export default {
 		return squad.id;
 	},
 
-	async getBySquadId(squadId: string): Promise<Squad | null> {
-		const squad: Squad | null = await prisma.squad.findFirst({
+	async getBySquadId(squadId: string): Promise<SquadDTO | null> {
+		const squad: SquadDTO | null = await prisma.squad.findFirst({
 			where: {
 				id: squadId,
 			},

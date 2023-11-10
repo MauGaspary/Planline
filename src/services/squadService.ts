@@ -1,3 +1,4 @@
+import { SquadDTO } from '../dto/SquadDTO.js';
 import squadRepository from '../repositories/squadRepository.js';
 import { Squad } from '@prisma/client';
 
@@ -6,8 +7,8 @@ export default {
 		const squadId: string = await squadRepository.create(squad);
 		return squadId;
 	},
-	async getBySquadId(squadId: string) {
-		const squad: Squad | null = await squadRepository.getBySquadId(squadId);
+	async getBySquadId(squadId: string): Promise<SquadDTO | null> {
+		const squad: SquadDTO | null = await squadRepository.getBySquadId(squadId);
 		return squad;
 	},
 	async read(): Promise<Squad[]> {
