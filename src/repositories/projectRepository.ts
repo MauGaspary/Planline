@@ -1,24 +1,8 @@
 import { Project, PrismaClient } from '@prisma/client';
-import { InfoDTO } from '../dto/InfoBody.js';
-import { CreateProjectDTO } from '../dto/CreateProjectDTO.js';
-import { UpdateProjectDTO } from '../dto/UpdateProjectDTO.js';
 
 const prisma = new PrismaClient();
 
 export default {
-	async infoByOrganizationId(organization_id: string): Promise<InfoDTO[]> {
-		const project = await prisma.project.findMany({
-			select: {
-				id: true,
-				name: true,
-			},
-			where: {
-				organization_id: organization_id,
-			},
-		});
-		return project;
-	},
-
 	async creates(data: Project): Promise<Project> {
 		const project = await prisma.project.create({
 			data: { ...data },
@@ -26,14 +10,29 @@ export default {
 		return project;
 	},
 
-	async create(data: CreateProjectDTO): Promise<string> {
+	async create(data: Project): Promise<string> {
 		const project = await prisma.project.create({
 			data: { ...data },
 		});
 		return project.id;
 	},
+	async getByProjectId(projectId: string): Promise<Project | null> {
+		const project: Project | null = await prisma.project.findFirst({
+			where: {
+				id: projectId,
+			},
+			include: {
+				squads: true,
+			},
+		});
+		return project;
+	},
 	async read(): Promise<Project[]> {
-		const projects: Project[] = await prisma.project.findMany();
+		const projects: Project[] = await prisma.project.findMany({
+			include: {
+				squads: true,
+			},
+		});
 		return projects;
 	},
 	async delete(projectId: string): Promise<void> {
@@ -44,7 +43,7 @@ export default {
 		});
 	},
 
-	async put(data: UpdateProjectDTO): Promise<string> {
+	async put(data: Project): Promise<string> {
 		const project = await prisma.project.update({
 			data: { ...data },
 			where: {

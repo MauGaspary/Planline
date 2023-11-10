@@ -1,4 +1,4 @@
-import { SessionCreationDto } from '../dto/CreateSessionDto.js';
+import { SessionCreationDto } from '../dto/CreateSessionDTO.js';
 import firebaseService from './firebaseService.js';
 import { set, ref, get, child } from 'firebase/database';
 import squadRepository from '../repositories/squadRepository.js';

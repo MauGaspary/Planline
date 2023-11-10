@@ -1,20 +1,15 @@
 import squadRepository from '../repositories/squadRepository.js';
-import { InfoDTO } from '../dto/InfoBody.js';
-import { CreateSquadDTO } from '../dto/CreateSquadDTO.js';
 import { Squad } from '@prisma/client';
-import { UpdateSquadDTO } from '../dto/UpdateSquadDTO.js';
 
 export default {
-	async infoByProjectId(project_id: string): Promise<InfoDTO[]> {
-		const projects: InfoDTO[] = await squadRepository.infoByProjectId(project_id);
-		return projects;
-	},
-
-	async create(squad: CreateSquadDTO): Promise<string> {
+	async create(squad: Squad): Promise<string> {
 		const squadId: string = await squadRepository.create(squad);
 		return squadId;
 	},
-
+	async getBySquadId(squadId: string) {
+		const squad: Squad | null = await squadRepository.getBySquadId(squadId);
+		return squad;
+	},
 	async read(): Promise<Squad[]> {
 		const squads: Squad[] = await squadRepository.read();
 		return squads;
@@ -22,7 +17,7 @@ export default {
 	async delete(squadId: string): Promise<void> {
 		await squadRepository.delete(squadId);
 	},
-	async put(squad: UpdateSquadDTO): Promise<string> {
+	async put(squad: Squad): Promise<string> {
 		const squadId: string = await squadRepository.put(squad);
 		return squadId;
 	},
