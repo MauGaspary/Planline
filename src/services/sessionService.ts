@@ -7,7 +7,7 @@ import {
 	FirebaseStory,
 	FirebaseTask,
 	FirebaseUser,
-} from '../dto/FirebaseDtos.js';
+} from '../dto/FirebaseDTO.js';
 import storyRepository from '../repositories/storyRepository.js';
 import taskRepository from '../repositories/taskRepository.js';
 import voteRepository from '../repositories/voteRepository.js';
