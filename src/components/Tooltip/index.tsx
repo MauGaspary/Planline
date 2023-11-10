@@ -1,36 +1,31 @@
-import { FC, ReactNode, useRef } from 'react';
+import { MouseEvent, ReactNode, useState } from 'react';
 
-interface Props {
+interface ToolTipProps {
 	children: ReactNode;
 	tooltip?: string;
 }
 
-const ToolTip: FC<Props> = ({ children, tooltip }): JSX.Element => {
-	const tooltipRef = useRef<HTMLSpanElement>(null);
-	const container = useRef<HTMLDivElement>(null);
+export default function ToolTip({ children, tooltip }: ToolTipProps) {
+	const [tooltipPosition, setTooltipPosition] = useState({ left: 0 });
+
+	const handleMouseEnter = (event: MouseEvent<HTMLDivElement>): void => {
+		const { left } = event.currentTarget.getBoundingClientRect();
+
+		setTooltipPosition({ left: event.clientX - left });
+	};
 
 	return (
-		<div
-			ref={container}
-			onMouseEnter={({ clientX }) => {
-				if (!tooltipRef.current || !container.current) return;
-				const { left } = container.current.getBoundingClientRect();
-
-				tooltipRef.current.style.left = clientX - left + 'px';
-			}}
-			className="group relative inline-block"
-		>
+		<div onMouseEnter={handleMouseEnter} className="group relative inline-block">
 			{children}
-			{tooltip ? (
+
+			{tooltip && (
 				<span
-					ref={tooltipRef}
+					style={{ left: `${tooltipPosition.left}px` }}
 					className="invisible max-w-[240px] group-hover:visible opacity-0 group-hover:opacity-100 transition bg-triider-helper-green2 text-white p-1 rounded absolute top-full mt-2"
 				>
 					{tooltip}
 				</span>
-			) : null}
+			)}
 		</div>
 	);
-};
-
-export default ToolTip;
+}
