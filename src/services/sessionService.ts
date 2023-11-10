@@ -65,11 +65,13 @@ export default {
 			};
 		}
 
-		const [users, sessionId] = await Promise.all([
-			squadRepository.getAllUsers(sessionCreationDto.squad_id),
+		const [squad, sessionId] = await Promise.all([
+			squadRepository.getBySquadId(sessionCreationDto.squad_id),
 			this.createRandomId(),
 			storyRepository.createMany(stories),
 		]);
+
+		const users = squad?.users ?? [];
 
 		const firebaseUsers: FirebaseCollection<FirebaseUser> = {};
 

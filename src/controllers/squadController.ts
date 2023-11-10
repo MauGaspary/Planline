@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import squadService from '../services/squadService.js';
 import { Prisma, Squad } from '@prisma/client';
+import { SquadDTO } from '../dto/SquadDTO.js';
 
 export default {
 	async create(req: Request, res: Response) {
@@ -21,7 +22,7 @@ export default {
 	async getBySquadId(req: Request, res: Response) {
 		try {
 			const squadId: string = req.params.squadId;
-			const squad: Squad | null = await squadService.getBySquadId(squadId);
+			const squad: SquadDTO | null = await squadService.getBySquadId(squadId);
 			res.json(squad);
 		} catch (e) {
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {
