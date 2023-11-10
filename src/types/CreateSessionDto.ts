@@ -21,6 +21,7 @@ export type SessionCreationDto = {
 	project_id: string;
 	squad_id: string;
 	sprint: Sprint;
+	squad_name: string;
 };
 
 export type SessionCreationResponseDto = {
