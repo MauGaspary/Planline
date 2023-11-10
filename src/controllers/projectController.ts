@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import projectService from '../services/projectService.js';
 import { InfoDTO } from '../dto/InfoBody.js';
-import { Prisma } from '@prisma/client';
+import { Prisma, Project } from '@prisma/client';
+import { CreateProjectDTO } from '../dto/CreateProjectDTO.js';
+import { UpdateProjectDTO } from '../dto/UpdateProjectDTO.js';
 
 export default {
 	async infoByOrganizationId(req: Request, res: Response) {
@@ -9,6 +11,62 @@ export default {
 			const organization_id: string = req.params.organization_id;
 			const projects: InfoDTO[] = await projectService.infoByOrganizationId(organization_id);
 			res.json(projects);
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				res.status(500).json({
+					error: e.message,
+					...e.meta,
+				});
+			}
+		}
+	},
+
+	async create(req: Request, res: Response) {
+		try {
+			const project: CreateProjectDTO = req.body;
+			const projectId: string = await projectService.create(project);
+			res.status(201).json({ projectId: projectId });
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				res.status(500).json({
+					error: e.message,
+					...e.meta,
+				});
+			}
+		}
+	},
+	async read(req: Request, res: Response) {
+		try {
+			const projects: Project[] = await projectService.read();
+			res.json({ projects });
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				res.status(500).json({
+					error: e.message,
+					...e.meta,
+				});
+			}
+		}
+	},
+	async delete(req: Request, res: Response) {
+		try {
+			const projectId: string = req.params.projectId;
+			await projectService.delete(projectId);
+			res.status(204).json();
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				res.status(500).json({
+					error: e.message,
+					...e.meta,
+				});
+			}
+		}
+	},
+	async put(req: Request, res: Response) {
+		try {
+			const project: UpdateProjectDTO = req.body;
+			const projectId: string = await projectService.put(project);
+			res.status(200).json({ projectId: projectId });
 		} catch (e) {
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {
 				res.status(500).json({
