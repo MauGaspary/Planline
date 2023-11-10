@@ -14,7 +14,7 @@ before_script:
 
 test-node:
   stage: test
-  image: docker:dind
+  image: node:18-alpine
   script:
     - yarn install eslint prettier
     - yarn lint
