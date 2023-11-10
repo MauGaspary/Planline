@@ -1,6 +1,6 @@
 import projectRepository from '../repositories/projectRepository.js';
 import { InfoDTO } from '../dto/InfoBody.js';
-import { CreateProjectDTO } from 'src/dto/CreateProjectDTO.js';
+import { CreateProjectDTO } from '../dto/CreateProjectDTO.js';
 import { Project } from '@prisma/client';
 import { UpdateProjectDTO } from '../dto/UpdateProjectDTO.js';
 
