@@ -1,5 +1,7 @@
 import { Project, PrismaClient } from '@prisma/client';
 import { InfoDTO } from '../dto/InfoBody.js';
+import { CreateProjectDTO } from '../dto/CreateProjectDTO.js';
+import { UpdateProjectDTO } from '../dto/UpdateProjectDTO.js';
 
 const prisma = new PrismaClient();
 
@@ -22,5 +24,33 @@ export default {
 			data: { ...data },
 		});
 		return project;
+	},
+
+	async create(data: CreateProjectDTO): Promise<string> {
+		const project = await prisma.project.create({
+			data: { ...data },
+		});
+		return project.id;
+	},
+	async read(): Promise<Project[]> {
+		const projects: Project[] = await prisma.project.findMany();
+		return projects;
+	},
+	async delete(projectId: string): Promise<void> {
+		await prisma.project.delete({
+			where: {
+				id: projectId,
+			},
+		});
+	},
+
+	async put(data: UpdateProjectDTO): Promise<string> {
+		const project = await prisma.project.update({
+			data: { ...data },
+			where: {
+				id: data.id,
+			},
+		});
+		return project.id;
 	},
 };
