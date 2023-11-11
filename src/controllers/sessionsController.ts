@@ -1,3 +1,4 @@
+import loggerService from '../services/loggerService.js';
 import { SessionCreationDto } from '../dto/CreateSessionDTO.js';
 import sessionService from '../services/sessionService.js';
 import type { Request, Response } from 'express';
@@ -5,8 +6,14 @@ import type { Request, Response } from 'express';
 export default {
 	async index(req: Request, res: Response) {
 		const sessionCreationDto = req.body as SessionCreationDto;
-
-		res.json(await sessionService.create(sessionCreationDto));
+		try {
+			const result = await sessionService.create(sessionCreationDto);
+			loggerService.info('RESPONSE', JSON.stringify(result));
+			res.json(result);
+		} catch (e) {
+			loggerService.error(e);
+			res.status(500).json({ message: 'Erro ao criar sessão.' });
+		}
 	},
 
 	async finalize(req: Request, res: Response) {
@@ -14,17 +21,29 @@ export default {
 
 		const sessionIdDto = req.params.sessionId;
 
-		if (isToSave) {
-			await sessionService.finalize(sessionIdDto);
-		} else {
-			await sessionService.finalizeWithoutSaving(sessionIdDto);
+		try {
+			if (isToSave) {
+				await sessionService.finalize(sessionIdDto);
+			} else {
+				await sessionService.finalizeWithoutSaving(sessionIdDto);
+			}
+			loggerService.info('RESPONSE no response body');
+			res.status(204);
+		} catch (e) {
+			loggerService.error(e);
+			res.status(500).json({ message: 'Erro ao finalizar sessão.' });
 		}
-
-		res.status(204);
 	},
 
 	async available(req: Request, res: Response) {
 		const squadIdDto = req.params.squad_id;
-		res.json(await sessionService.available(squadIdDto));
+		try {
+			const result = await sessionService.available(squadIdDto);
+			loggerService.info('RESPONSE', JSON.stringify(result));
+			res.json(result);
+		} catch (e) {
+			loggerService.error(e);
+			res.status(500).json({ message: 'Erro ao pegar sessões ativas.' });
+		}
 	},
 };
