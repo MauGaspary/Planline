@@ -1,5 +1,5 @@
 stages:
-	- sonarqube-check
+  - sonarqube-check
   - build
   - deploy
   - migrate
@@ -26,7 +26,7 @@ sonarqube-check:
     - sonar-scanner
   allow_failure: true
   only:
-		- build/redo-envs
+    - build/redo-envs
     - merge_requests
     - main
     - develop
