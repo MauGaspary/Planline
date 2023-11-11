@@ -17,7 +17,7 @@ export type Sprint = {
 	stories: Story[];
 };
 
-export type SessionCreationDto = {
+export type SessionCreationDTO = {
 	organization_id: string;
 	project_id: string;
 	squad_id: string;
