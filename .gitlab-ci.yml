@@ -30,7 +30,7 @@ build-node:
       --build-arg PORT="$PORT" \
       --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" \
       --build-arg POSTGRES_USER="$POSTGRES_USER" \
-      -t "$DOCKER_USER"/backend -f Dockerfile .
+      -t "$DOCKER_USER/backend" -f Dockerfile .
 
     - docker push $DOCKER_USER/backend
   #only:
