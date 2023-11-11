@@ -40,7 +40,7 @@ export const FileInput = ({ buttonState }: ButtonProps) => {
 			temporaryFileReader.onload = () => {
 				resolve(temporaryFileReader.result);
 			};
-			temporaryFileReader.readAsText(inputFile, 'ISO-8859-15');
+			temporaryFileReader.readAsText(inputFile, 'ISO-8859-1');
 		});
 	};
 
