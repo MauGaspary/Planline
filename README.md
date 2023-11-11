@@ -57,7 +57,7 @@ yarn prisma migrate dev
 yarn dev
 ```
 
-Depois, acesse o endereço `http://localhost:8000` no seu navegador.
+Depois, acesse o endereço `http://localhost:3000` no seu navegador.
 
 Para mais comandos, veja o arquivo `package.json` em 'scripts'.
 
@@ -67,7 +67,9 @@ As configurações de endpoint da API se encontram no arquivo config.ts. Ao roda
 
 O Swagger é uma lib para documentar rotas no backend.
 
-Para rodá-lo, deve-se executar o comando `yarn swagger`. Este comando irá pegar todas as rotas do arquivo `routes` e irá gerar um arquivo JSON em `dist/configs/swagger-output.json`, e este arquivo deve ser copiado para `src/configs/swagger-output.json`, para que as rotas geradas fiquem salvas. Desta forma, quando rodar `yarn dev`, o projeto irá recriar a pasta dist, e propagar o json já configurado.
+Para rodá-lo, deve-se executar o comando `yarn swagger`. E acessá-lo em `http://localhost:3000/doc`.
+
+O comando irá pegar todas as rotas do arquivo `routes` e irá gerar um arquivo JSON em `dist/configs/swagger-output.json`, e este arquivo deve ser copiado para `src/configs/swagger-output.json`.Para que as rotas geradas fiquem salvas.
 
 ## 🛠️ Extensões do VSCode
 
