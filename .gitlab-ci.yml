@@ -17,8 +17,8 @@ test-node:
   before_script: []
   script:
     - yarn add eslint prettier
-    - yarn lint
     - npx -c tsc
+    - yarn lint
 
 # ------------- BUILD SCRIPT -------------
 
