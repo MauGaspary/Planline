@@ -3,6 +3,16 @@ export default {
 	content: ['./src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
+			animation: {
+				'spin-jump': 'spinJump 1s ease forwards',
+			},
+			keyframes: {
+				spinJump: {
+					'0%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.1) ' },
+					'100%': { transform: 'scale(1) ' },
+				},
+			},
 			colors: {
 				'triider-primary': {
 					'orange-dark': '#DC6A1D',

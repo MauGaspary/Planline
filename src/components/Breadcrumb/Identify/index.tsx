@@ -84,7 +84,7 @@ function Identify({ setBreadcrumbDisplay }: IdentifyProps) {
 		}
 		setOpenSelect(null);
 	};
-
+	console.log(organizations);
 	return isLoadingOrganizations ? (
 		<Loader />
 	) : (

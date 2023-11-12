@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { child, off, onValue, ref, set } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,7 +8,7 @@ import Carousel from '../../components/Carousel';
 import Header from '../../components/Header';
 import Qrcode from '../../components/Qrcode';
 import ToolTip from '../../components/Tooltip';
-import VoteCard from '../../components/VoteCard';
+import { VoteCard } from '../../components/VoteCard';
 import VotingTriider from '../../components/VotingTriider';
 import { useDelete } from '../../hooks/useDelete';
 import { getRealtimeDatabase } from '../../services/firebase';
@@ -179,7 +180,6 @@ export default function Game() {
 					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-36 z-10">
 						<VotingTriider
 							isToShow={isToShow}
-							type="card"
 							number={usersList.length > 0 ? votes[usersList[0][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 0
@@ -190,7 +190,9 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute -bottom-40 left-32 z-10">
+					{/* <div
+						className={`absolute -bottom-40 left-32 z-10 ${isToShow ? 'animate-spin-jump' : ''}`}
+					>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -204,7 +206,9 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute -bottom-28 -left-10 z-10">
+					<div
+						className={`absolute -bottom-28 -left-10 z-10 ${isToShow ? 'animate-spin-jump' : ''}`}
+					>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -218,7 +222,11 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute top-1/2 pb-10 -left-36 transform -translate-y-1/2 z-10">
+					<div
+						className={`absolute top-1/2 pb-10 -left-36 transform -translate-y-1/2 z-10 ${
+							isToShow ? 'animate-spin-jump' : ''
+						}`}
+					>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -232,7 +240,7 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute -top-36 -left-10 z-10">
+					<div className={`absolute -top-36 -left-10 z-10 ${isToShow ? 'animate-spin-jump' : ''}`}>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -246,7 +254,7 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute -top-48 left-32 z-10">
+					<div className={`absolute -top-48 left-32 z-10 ${isToShow ? 'animate-spin-jump' : ''}`}>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -260,7 +268,11 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute -top-48 left-1/2 transform -translate-x-1/2 z-10">
+					<div
+						className={`absolute -top-48 left-1/2 transform -translate-x-1/2 z-10 ${
+							isToShow ? 'animate-spin-jump' : ''
+						}`}
+					>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -274,7 +286,7 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute -top-48 right-32 z-10">
+					<div className={`absolute -top-48 right-32 z-10 ${isToShow ? 'animate-spin-jump' : ''}`}>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -288,7 +300,7 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute -top-36 -right-10 z-10">
+					<div className={`absolute -top-36 -right-10 z-10 ${isToShow ? 'animate-spin-jump' : ''}`}>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -302,7 +314,11 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute top-1/2 pb-10 -right-36 transform -translate-y-1/2 z-10">
+					<div
+						className={`absolute top-1/2 pb-10 -right-36 transform -translate-y-1/2 z-10 ${
+							isToShow ? 'animate-spin-jump' : ''
+						}`}
+					>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -316,7 +332,9 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute -bottom-28 -right-10 z-10">
+					<div
+						className={`absolute -bottom-28 -right-10 z-10 ${isToShow ? 'animate-spin-jump' : ''}`}
+					>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -330,7 +348,9 @@ export default function Game() {
 							}
 						/>
 					</div>
-					<div className="absolute -bottom-40 right-32 z-10">
+					<div
+						className={`absolute -bottom-40 right-32 z-10 ${isToShow ? 'animate-spin-jump' : ''}`}
+					>
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -343,7 +363,7 @@ export default function Game() {
 									: ''
 							}
 						/>
-					</div>
+					</div> */}
 				</div>
 			</>
 		);
@@ -373,7 +393,7 @@ export default function Game() {
 				</div>
 				<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
 					{session?.stories[session.current_story]?.name &&
-						session?.stories[session.current_story]?.name.length > 67 ? (
+					session?.stories[session.current_story]?.name.length > 67 ? (
 						<ToolTip tooltip={session?.stories[session.current_story]?.name}>
 							<div className="text-white text-xl line-clamp-3">
 								{session?.stories[session.current_story]?.name}
@@ -425,34 +445,34 @@ export default function Game() {
 								<VoteCard
 									label="1"
 									selected={cardSelected === '1'}
-									onClick={(e) => setCardSelected(e)}
+									onClick={(e: any) => setCardSelected(e)}
 								/>
 								<VoteCard
 									label="2"
 									selected={cardSelected === '2'}
-									onClick={(e) => {
+									onClick={(e: any) => {
 										setCardSelected(e);
 									}}
 								/>
 								<VoteCard
 									label="3"
 									selected={cardSelected === '3'}
-									onClick={(e) => setCardSelected(e)}
+									onClick={(e: any) => setCardSelected(e)}
 								/>
 								<VoteCard
 									label="5"
 									selected={cardSelected === '5'}
-									onClick={(e) => setCardSelected(e)}
+									onClick={(e: any) => setCardSelected(e)}
 								/>
 								<VoteCard
 									label="8"
 									selected={cardSelected === '8'}
-									onClick={(e) => setCardSelected(e)}
+									onClick={(e: any) => setCardSelected(e)}
 								/>
 								<VoteCard
 									label="13"
 									selected={cardSelected === '13'}
-									onClick={(e) => setCardSelected(e)}
+									onClick={(e: any) => setCardSelected(e)}
 								/>
 							</div>
 							<Button

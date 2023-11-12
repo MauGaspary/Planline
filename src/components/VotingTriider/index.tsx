@@ -27,7 +27,10 @@ function VotingTriider({ number, name, isToShow }: VotingTriiderProps) {
 				<p className="text-black self-start font-bold text-2xl absolute pl-4 pt-9">
 					{(number ?? 0) > 0 && isToShow ? number : ''}
 				</p>
-				<img src={image} className="w-32 h-24 self-center" />
+				<img
+					src={image}
+					className={`w-32 h-24 self-center ${noVote ? 'animate-spin-jump' : ''} `}
+				/>
 			</div>
 		);
 	} else {
