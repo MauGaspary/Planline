@@ -355,21 +355,23 @@ export default function Game() {
 				<Qrcode link={session_id || ''} code={session_id || ''} />
 			</div>
 			<div className="flex-col absolute top-28 right-20">
-				<div className="w-72 h-52 border-2 p-6 rounded-2xl bg-white font-medium border-transparent shadow-xl mb-20">
-					<div className="font-medium text-xl">Resumo</div>
-					<div className="flex flex-row justify-between mt-4">
-						<div className="font-medium">Mínima</div>
-						<div className="font-medium">{isToShow && min < Number.MAX_SAFE_INTEGER && min}</div>
+				{!(voteState === 'individual') && (
+					<div className="w-72 h-52 border-2 p-6 rounded-2xl bg-white font-medium border-transparent shadow-xl mb-20">
+						<div className="font-medium text-xl">Resumo</div>
+						<div className="flex flex-row justify-between mt-4">
+							<div className="font-medium">Mínima</div>
+							<div className="font-medium">{isToShow && min < Number.MAX_SAFE_INTEGER && min}</div>
+						</div>
+						<div className="flex flex-row justify-between mt-4">
+							<div className="font-medium">Média</div>
+							<div className="font-medium">{isToShow && !isNaN(average) && average}</div>
+						</div>
+						<div className="flex flex-row justify-between mt-4">
+							<div className="font-medium">Máxima</div>
+							<div className="font-medium">{isToShow && max > -Infinity && max}</div>
+						</div>
 					</div>
-					<div className="flex flex-row justify-between mt-4">
-						<div className="font-medium">Média</div>
-						<div className="font-medium">{isToShow && !isNaN(average) && average}</div>
-					</div>
-					<div className="flex flex-row justify-between mt-4">
-						<div className="font-medium">Máxima</div>
-						<div className="font-medium">{isToShow && max > -Infinity && max}</div>
-					</div>
-				</div>
+				)}
 				<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
 					<div className="font-medium text-white text-xl line-clamp-3">
 						{session?.stories[session.current_story].name}
