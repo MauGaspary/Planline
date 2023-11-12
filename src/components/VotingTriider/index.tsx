@@ -1,4 +1,5 @@
 import cardVote from '../../assets/images/cardVote.svg';
+import cardVote13 from '../../assets/images/cardVote13.svg';
 import coffeeVote from '../../assets/images/coffeeVote.svg';
 import noVote from '../../assets/images/noVote.svg';
 
@@ -17,7 +18,29 @@ function VotingTriider({ number, name, isToShow }: VotingTriiderProps) {
 	} else if (number === -1 && isToShow) {
 		image = coffeeVote;
 	} else {
-		image = cardVote;
+		switch (number) {
+			case 1:
+				image = cardVote;
+				break;
+			case 2:
+				image = cardVote;
+				break;
+			case 3:
+				image = cardVote;
+				break;
+			case 5:
+				image = cardVote;
+				break;
+			case 8:
+				image = cardVote;
+				break;
+			case 13:
+				image = cardVote13;
+				break;
+			default:
+				image = noVote;
+				break;
+		}
 	}
 
 	if (name) {
