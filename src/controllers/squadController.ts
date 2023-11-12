@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
-import squadService from '../services/squadService.js';
 import { Prisma, Squad } from '@prisma/client';
+import { Request, Response } from 'express';
 import { SquadDTO } from '../dto/SquadDTO.js';
+import squadService from '../services/squadService.js';
 
 export default {
 	async create(req: Request, res: Response) {
@@ -16,7 +16,6 @@ export default {
 					...e.meta,
 				});
 			}
-			console.log(e);
 		}
 	},
 	async getBySquadId(req: Request, res: Response) {
@@ -37,7 +36,7 @@ export default {
 	async read(req: Request, res: Response) {
 		try {
 			const squads: Squad[] = await squadService.read();
-			res.json({ squads });
+			res.json(squads);
 		} catch (e) {
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {
 				res.status(500).json({

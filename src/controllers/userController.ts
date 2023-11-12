@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import { Prisma, User } from '@prisma/client';
+import { Request, Response } from 'express';
 import userService from '../services/userService.js';
 
 export default {
@@ -34,7 +34,7 @@ export default {
 	async read(req: Request, res: Response) {
 		try {
 			const users: User[] = await userService.read();
-			res.json({ users });
+			res.json(users);
 		} catch (e) {
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {
 				res.status(500).json({

@@ -35,7 +35,7 @@ export default {
 	async read(req: Request, res: Response) {
 		try {
 			const organizations: Organization[] = await organizationService.read();
-			res.json({ organizations });
+			res.json(organizations);
 		} catch (e) {
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {
 				res.status(500).json({
