@@ -188,6 +188,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -bottom-40 left-32 z-10">
@@ -202,6 +203,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute -bottom-28 -left-10 z-10">
@@ -216,6 +218,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute top-1/2 pb-10 -left-36 transform -translate-y-1/2 z-10">
@@ -230,6 +233,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-36 -left-10 z-10">
@@ -244,6 +248,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-48 left-32 z-10">
@@ -258,6 +263,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-48 left-1/2 transform -translate-x-1/2 z-10">
@@ -272,6 +278,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-48 right-32 z-10">
@@ -286,6 +293,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-36 -right-10 z-10">
@@ -300,6 +308,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute top-1/2 pb-10 -right-36 transform -translate-y-1/2 z-10">
@@ -314,6 +323,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -bottom-28 -right-10 z-10">
@@ -328,6 +338,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute -bottom-40 right-32 z-10">
@@ -342,6 +353,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 				</div>
@@ -373,7 +385,7 @@ export default function Game() {
 				</div>
 				<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
 					{session?.stories[session.current_story]?.name &&
-						session?.stories[session.current_story]?.name.length > 67 ? (
+					session?.stories[session.current_story]?.name.length > 67 ? (
 						<ToolTip tooltip={session?.stories[session.current_story]?.name}>
 							<div className="text-white text-xl line-clamp-3">
 								{session?.stories[session.current_story]?.name}
