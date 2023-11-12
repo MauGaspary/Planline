@@ -8,6 +8,7 @@ import { SessionCreationDto, SessionCreationResponseDto } from '../../../types/C
 import { usePost } from '../../../hooks/usePost';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '..';
+import Toast from '../../Toast';
 
 interface ResumeProps {
 	setBreadcrumbDisplay: (display: string) => void;
@@ -17,6 +18,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<UsInfo[] | null>(null);
+	const [showToast, setShowToast] = useState<boolean>(false);
 	const {
 		setFileContext,
 		organization,
@@ -29,19 +31,20 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 		squad_id,
 	} = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
-	const { data, request } = usePost<SessionCreationResponseDto, SessionCreationDto>();
+	const { data, request, error } = usePost<SessionCreationResponseDto, SessionCreationDto>();
 
 	useEffect(() => {
 		if (data) {
 			console.log(data);
 			router(`/game/${data.sessionId}`);
+		} else {
+			console.log(error);
+			setShowToast(true);
 		}
-	}, [data]);
+	}, [data, error]);
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	function createSession() {
-		console.log(organization, project, squad, sprint, fileContext);
-
 		const dto = {
 			organization_id: organization_id ?? '',
 			project_id: project_id ?? '',
@@ -62,9 +65,6 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 					})) ?? [],
 			},
 		};
-
-		console.log(dto);
-
 		request('/sessions', dto);
 	}
 
@@ -77,6 +77,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 
 	return (
 		<>
+			{showToast && <Toast errorMessage="Erro ao criar sessão" isError={true} />}
 			{upload ? (
 				<>
 					<Container title="resumo">
