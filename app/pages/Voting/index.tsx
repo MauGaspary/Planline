@@ -38,7 +38,7 @@ export default function Voting() {
 	return (
 		<View className="items-center flex-1">
 			<View className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400">
-				<Text className="mt-10 text-2xl font-body">SPRINT TESTE</Text>
+				<Text className="mt-10 text-2xl font-body">{session.sprint_name}</Text>
 				<Text className="mt-8 text-lg text-triider-primary-orange1">
 					{currentStory?.name || 'Não há histórias nessa sprint'}
 				</Text>

@@ -13,6 +13,8 @@ export type Session = {
 	users: {
 		[key: string]: User;
 	};
+	sprint_name: string;
+	squad_name: string;
 };
 
 export type Story = {
