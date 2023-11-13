@@ -1,11 +1,11 @@
 import loggerService from '../services/loggerService.js';
-import { SessionCreationDto } from '../dto/CreateSessionDTO.js';
+import { SessionCreationDTO } from '../dto/CreateSessionDTO.js';
 import sessionService from '../services/sessionService.js';
 import type { Request, Response } from 'express';
 
 export default {
 	async index(req: Request, res: Response) {
-		const sessionCreationDto = req.body as SessionCreationDto;
+		const sessionCreationDto = req.body as SessionCreationDTO;
 		try {
 			const result = await sessionService.create(sessionCreationDto);
 			loggerService.info('RESPONSE', JSON.stringify(result));
@@ -19,13 +19,13 @@ export default {
 	async finalize(req: Request, res: Response) {
 		const isToSave = req.query.save;
 
-		const sessionIdDto = req.params.sessionId;
+		const sessionIdDTO = req.params.sessionId;
 
 		try {
 			if (isToSave) {
-				await sessionService.finalize(sessionIdDto);
+				await sessionService.finalize(sessionIdDTO);
 			} else {
-				await sessionService.finalizeWithoutSaving(sessionIdDto);
+				await sessionService.finalizeWithoutSaving(sessionIdDTO);
 			}
 			loggerService.info('RESPONSE no response body');
 			res.status(204);
@@ -36,9 +36,9 @@ export default {
 	},
 
 	async available(req: Request, res: Response) {
-		const squadIdDto = req.params.squad_id;
+		const squadIdDTO = req.params.squad_id;
 		try {
-			const result = await sessionService.available(squadIdDto);
+			const result = await sessionService.available(squadIdDTO);
 			loggerService.info('RESPONSE', JSON.stringify(result));
 			res.json(result);
 		} catch (e) {

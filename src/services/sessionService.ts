@@ -1,4 +1,4 @@
-import { SessionCreationDto } from '../dto/CreateSessionDTO.js';
+import { SessionCreationDTO } from '../dto/CreateSessionDTO.js';
 import firebaseService from './firebaseService.js';
 import { set, ref, get, child } from 'firebase/database';
 import {
@@ -7,7 +7,7 @@ import {
 	FirebaseStory,
 	FirebaseTask,
 	FirebaseUser,
-} from '../dto/FirebaseDtos.js';
+} from '../dto/FirebaseDTO.js';
 import storyRepository from '../repositories/storyRepository.js';
 import taskRepository from '../repositories/taskRepository.js';
 import voteRepository from '../repositories/voteRepository.js';
@@ -44,8 +44,8 @@ export default {
 		}
 	},
 
-	async create(sessionCreationDto: SessionCreationDto): Promise<{ sessionId: string }> {
-		const stories = sessionCreationDto.sprint.stories;
+	async create(sessionCreationDTO: SessionCreationDTO): Promise<{ sessionId: string }> {
+		const stories = sessionCreationDTO.sprint.stories;
 		const firebaseStories: FirebaseCollection<FirebaseStory> = {};
 
 		for (const story of stories) {
@@ -66,7 +66,7 @@ export default {
 		}
 
 		const [squad, sessionId] = await Promise.all([
-			squadService.getBySquadId(sessionCreationDto.squad_id),
+			squadService.getBySquadId(sessionCreationDTO.squad_id),
 			this.createRandomId(),
 			storyRepository.createMany(stories),
 		]);
@@ -92,10 +92,10 @@ export default {
 			users: firebaseUsers,
 			current_task: firstTask.task_id,
 			current_story: firstStory.story_id,
-			squad_id: sessionCreationDto.squad_id,
+			squad_id: sessionCreationDTO.squad_id,
 			opened_at: new Date().toISOString(),
-			sprint_name: sessionCreationDto.sprint.name,
-			squad_name: sessionCreationDto.squad_name,
+			sprint_name: sessionCreationDTO.sprint.name,
+			squad_name: sessionCreationDTO.squad_name,
 		};
 
 		const sessionRef = child(sessionsRef, sessionId);

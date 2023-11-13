@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import { User } from '@prisma/client';
+import { Request, Response } from 'express';
 import userService from '../services/userService.js';
 import loggerService from '../services/loggerService.js';
 
@@ -30,7 +30,7 @@ export default {
 		try {
 			const users: User[] = await userService.read();
 			loggerService.info('RESPONSE', JSON.stringify(users));
-			res.json({ users });
+			res.json(users);
 		} catch (e) {
 			loggerService.error(e);
 			res.status(500).json({ message: 'Erro ao buscar usuários.' });

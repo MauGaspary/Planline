@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
-import squadService from '../services/squadService.js';
-import { Squad } from '@prisma/client';
-import { SquadDTO } from '../dto/SquadDTO.js';
 import loggerService from '../services/loggerService.js';
+import { Squad } from '@prisma/client';
+import { Request, Response } from 'express';
+import { SquadDTO } from '../dto/SquadDTO.js';
+import squadService from '../services/squadService.js';
 
 export default {
 	async create(req: Request, res: Response) {
@@ -32,7 +32,7 @@ export default {
 		try {
 			const squads: Squad[] = await squadService.read();
 			loggerService.info('RESPONSE', JSON.stringify(squads));
-			res.json({ squads });
+			res.json(squads);
 		} catch (e) {
 			loggerService.error(e);
 			res.status(500).json({ message: 'Erro ao buscar projetos.' });

@@ -31,7 +31,7 @@ export default {
 		try {
 			const organizations: Organization[] = await organizationService.read();
 			loggerService.info('RESPONSE', JSON.stringify(organizations));
-			res.json({ organizations });
+			res.json(organizations);
 		} catch (e) {
 			loggerService.error(e);
 			res.status(500).json({ message: 'Erro ao buscar organizações.' });
