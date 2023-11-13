@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Container from '../../../components/Container';
 import { Select } from '../../../components/Select';
-import { useState } from 'react';
 import { InputHeader } from '../../../components/InputHeader/Index';
 import { InputText } from '../../../components/InputText/Index';
 import GenericTable from '../../../components/GenericTable';

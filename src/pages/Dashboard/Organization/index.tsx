@@ -4,10 +4,12 @@ import Modal from '../../../components/Modal';
 import GenericForm from '../../../components/OrganizationForm';
 import { InputHeader } from '../../../components/InputHeader/Index';
 import { InputText } from '../../../components/InputText/Index';
+import GenericTable from '../../../components/GenericTable';
 
 function Organization() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState('');
+	const columns = ['Nome', 'Email', 'Projetos'];
 
 	return (
 		<>
@@ -24,10 +26,11 @@ function Organization() {
 				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
+				<GenericTable columns={columns} />
 				<button
 					onClick={() => {
 						setIsOpen(!isOpen);
-						setId('1');
+						setId('a8d5f125-112b-490b-802f-7715a3cad338');
 					}}
 				>
 					Abrir edit

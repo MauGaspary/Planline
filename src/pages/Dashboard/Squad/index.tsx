@@ -4,10 +4,12 @@ import Modal from '../../../components/Modal';
 import SquadForm from '../../../components/SquadForm';
 import { InputHeader } from '../../../components/InputHeader/Index';
 import { InputText } from '../../../components/InputText/Index';
+import GenericTable from '../../../components/GenericTable';
 
 function Squad() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState('');
+	const columns = ['Nome', 'Organização', 'Membros'];
 
 	return (
 		<>
@@ -24,6 +26,7 @@ function Squad() {
 				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
+				<GenericTable columns={columns} />
 				<button
 					onClick={() => {
 						setIsOpen(!isOpen);

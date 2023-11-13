@@ -47,33 +47,33 @@ export const Multiselect = ({
 
 			{isOpen && (
 				<ul className="absolute max-h-40 overflow-auto text-start z-10 items-center text-lg w-full bg-gray-200 rounded-lg text-gray-700 font-medium">
-					{options.length > 0 ? (
-						options.map((option) =>
-							selected.includes(option) ? (
-								<li
-									onClick={() => {
-										handleMultiselect(option);
-									}}
-									className="p-4 flex justify-between cursor-pointer bg-slate-300"
-									key={option.id}
-									value={option.name}
-								>
-									{option.name}
-									<img src={checkMarkIcon} className="w-4 h-4" />
-								</li>
-							) : (
-								<li
-									onClick={() => {
-										handleMultiselect(option);
-									}}
-									className="p-4 cursor-pointer hover:bg-slate-300"
-									key={option.id}
-									value={option.name}
-								>
-									{option.name}
-								</li>
-							)
-						)
+					{selected.length > 0 ? (
+						selected.map((option) => (
+							<li
+								onClick={() => {
+									handleMultiselect(option);
+								}}
+								className="p-4 flex justify-between cursor-pointer bg-slate-300"
+								key={option.id}
+								value={option.name}
+							>
+								{option.name}
+								<img src={checkMarkIcon} className="w-4 h-4" />
+							</li>
+						))
+					) : options.length > 0 ? (
+						options.map((option) => (
+							<li
+								onClick={() => {
+									handleMultiselect(option);
+								}}
+								className="p-4 cursor-pointer hover:bg-slate-300"
+								key={option.id}
+								value={option.name}
+							>
+								{option.name}
+							</li>
+						))
 					) : (
 						<li className="p-4 cursor-pointer hover:bg-slate-300">Sem opções disponíveis</li>
 					)}
