@@ -11,19 +11,19 @@ export default function Wait() {
 	const router = useRoute();
 	const { state } = useAppContext();
 
-	const session = state.session;
+	const game = state.game;
 	const { waitingTask } = router.params as { waitingTask: string };
 
 	useEffect(() => {
-		if (session?.current_task !== waitingTask) {
-			if (!session?.current_task) {
+		if (game?.current_task !== waitingTask) {
+			if (!game?.current_task) {
 				navigation.replace('Finish');
 				return;
 			}
 			navigation.replace('Voting');
 			return;
 		}
-	}, [session?.current_task]);
+	}, [game?.current_task]);
 
 	return (
 		<View className="items-center flex-1">
