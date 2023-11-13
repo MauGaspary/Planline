@@ -32,7 +32,7 @@ export default {
 		try {
 			const projects: Project[] = await projectService.read();
 			loggerService.info('RESPONSE', JSON.stringify(projects));
-			res.json({ projects });
+			res.json(projects);
 		} catch (e) {
 			loggerService.error(e);
 			res.status(500).json({ message: 'Erro ao buscar projetos.' });
