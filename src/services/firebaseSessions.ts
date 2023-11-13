@@ -2,14 +2,18 @@ import { getRealtimeDatabase } from './firebase';
 import { set, ref } from 'firebase/database';
 
 export type Session = {
+	game: Game;
+	users: {
+		[key: string]: User;
+	};
+};
+
+export type Game = {
 	current_story: string;
 	current_task: string;
 	finished: boolean;
 	stories: {
 		[key: string]: Story;
-	};
-	users: {
-		[key: string]: User;
 	};
 };
 

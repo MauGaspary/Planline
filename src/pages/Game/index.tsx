@@ -48,7 +48,8 @@ export default function Game() {
 
 	let usersList = Object.entries(session?.users || {});
 
-	const votes = session?.stories[session.current_story].tasks[session.current_task].votes || {};
+	const votes =
+		session?.game.stories[session.game.current_story].tasks[session.game.current_task].votes || {};
 
 	let min = Number.MAX_SAFE_INTEGER;
 	const max = Math.max(...Object.values(votes));
@@ -67,7 +68,7 @@ export default function Game() {
 	average /= count;
 
 	let storieDificulty = 0;
-	const storie = session?.stories[session.current_story];
+	const storie = session?.game.stories[session.game.current_story];
 
 	for (const task in storie?.tasks) {
 		storieDificulty += storie.tasks[task].final_vote || 0;
@@ -84,12 +85,13 @@ export default function Game() {
 	useEffect(() => {
 		if (!session) return;
 
-		const currentTask = session.stories[session.current_story].tasks[session.current_task];
+		const currentTask =
+			session.game.stories[session.game.current_story].tasks[session.game.current_task];
 
 		if (currentTask.final_vote) {
 			let nextTask = getNextTask();
 
-			let nextStory: string | undefined = session.current_story;
+			let nextStory: string | undefined = session.game.current_story;
 
 			if (nextTask == null) {
 				nextStory = getNextStory();
@@ -99,7 +101,7 @@ export default function Game() {
 					return;
 				}
 
-				nextTask = Object.keys(session.stories[nextStory].tasks)[0];
+				nextTask = Object.keys(session.game.stories[nextStory].tasks)[0];
 			}
 
 			set(refSession, {
@@ -116,7 +118,7 @@ export default function Game() {
 	function getNextTask() {
 		if (!session) return;
 
-		const tasks = session.stories[session.current_story].tasks;
+		const tasks = session.game.stories[session.game.current_story].tasks;
 
 		for (const task in tasks) {
 			if (tasks[task].final_vote) continue;
@@ -139,7 +141,7 @@ export default function Game() {
 
 	function getNextStory() {
 		if (!session) return;
-		const stories = session.stories;
+		const stories = session.game.stories;
 
 		for (const story in stories) {
 			let allVoted = true;
@@ -163,7 +165,7 @@ export default function Game() {
 		await set(
 			child(
 				refSession,
-				`stories/${session.current_story}/tasks/${session.current_task}/final_vote`
+				`stories/${session.game.current_story}/tasks/${session.game.current_task}/final_vote`
 			),
 
 			+cardSelected
@@ -372,16 +374,16 @@ export default function Game() {
 					</div>
 				</div>
 				<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
-					{session?.stories[session.current_story]?.name &&
-						session?.stories[session.current_story]?.name.length > 67 ? (
-						<ToolTip tooltip={session?.stories[session.current_story]?.name}>
+					{session?.game.stories[session.game.current_story]?.name &&
+						session?.game.stories[session.game.current_story]?.name.length > 67 ? (
+						<ToolTip tooltip={session?.game.stories[session.game.current_story]?.name}>
 							<div className="text-white text-xl line-clamp-3">
-								{session?.stories[session.current_story]?.name}
+								{session?.game.stories[session.game.current_story]?.name}
 							</div>
 						</ToolTip>
 					) : (
 						<div className="text-white text-xl line-clamp-3">
-							{session?.stories[session.current_story]?.name}
+							{session?.game.stories[session.game.current_story]?.name}
 						</div>
 					)}
 					<div className="flex flex-row justify-end items-center gap-2">
@@ -469,8 +471,8 @@ export default function Game() {
 			)}
 			<div className="w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
 				<Carousel
-					taskList={session?.stories[session.current_story].tasks || {}}
-					currentTaskId={session?.current_task ?? null}
+					taskList={session?.game.stories[session.game.current_story].tasks || {}}
+					currentTaskId={session?.game.current_task ?? null}
 					voteLater={voteLater}
 				/>
 			</div>
