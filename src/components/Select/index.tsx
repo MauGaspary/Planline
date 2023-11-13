@@ -8,34 +8,52 @@ interface SelectProps {
 	disabled?: boolean;
 	isOpen: boolean;
 	onToggle: () => void;
+	width?: string;
 }
 
-export const Select = (props: SelectProps) => {
-	const buttonClass = props.disabled
-		? 'flex cursor-default items-center text-lg w-80 h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium opacity-30'
-		: 'flex cursor-pointer items-center text-lg w-80 h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium hover:bg-slate-200';
+export const Select = ({
+	placeholder,
+	options,
+	handleSelect,
+	disabled,
+	isOpen,
+	onToggle,
+	width,
+}: SelectProps) => {
+	const widthClass = width === undefined ? 'w-80' : `w-${width}`;
+	const buttonClass =
+		(disabled
+			? 'flex cursor-default items-center text-lg h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium opacity-30 ' +
+			  widthClass
+			: 'flex cursor-pointer items-center text-lg h-14 bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium hover:bg-slate-200 ') +
+		widthClass;
 
 	return (
 		<div className="relative">
 			<div
 				onClick={() => {
-					if (props.disabled) return;
-					props.onToggle();
+					if (disabled) return;
+					onToggle();
 				}}
 				className={buttonClass}
 			>
-				<p>{props.placeholder}</p>
+				<p>{placeholder}</p>
 				<img src={ArrowDownIcon} alt="arrow" className="absolute right-3 top-4" />
 			</div>
 
-			{props.isOpen && (
-				<ul className="absolute max-h-40 overflow-auto text-start z-10 items-center text-lg w-80 bg-gray-200 rounded-lg text-gray-700 font-medium">
-					{props.options.length > 0 ? (
-						props.options.map((option) => (
+			{isOpen && (
+				<ul
+					className={
+						'absolute max-h-40 overflow-auto text-start z-10 items-center text-lg bg-gray-200 rounded-lg text-gray-700 font-medium ' +
+						widthClass
+					}
+				>
+					{options.length > 0 ? (
+						options.map((option) => (
 							<li
 								onClick={() => {
-									props.onToggle();
-									props.handleSelect(props.placeholder, option);
+									onToggle();
+									handleSelect(placeholder, option);
 								}}
 								className="p-4 cursor-pointer hover:bg-slate-300"
 								key={option.id}

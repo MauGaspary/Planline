@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import Container from '../../../components/Container';
+import { Select } from '../../../components/Select';
+import { useState } from 'react';
+import { InputHeader } from '../../../components/InputHeader/Index';
+import { InputText } from '../../../components/InputText/Index';
 import GenericTable from '../../../components/GenericTable';
 import Modal from '../../../components/Modal';
 import UserForm from '../../../components/UserForm';
@@ -21,16 +25,27 @@ function User() {
 			>
 				<UserForm id={id} isOpen={() => setIsOpen(!isOpen)} />
 			</Modal>
-			<Container title="Usuários">
+			<Container title="usuários">
+				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
+					<InputText placeholder="Nome" size="medium" isRequired={true} />
+
+					<Select
+						placeholder="Nível"
+						options={[
+							{ id: '1', name: 'Junior' },
+							{ id: '2', name: 'Pleno' },
+							{ id: '3', name: 'Senior' },
+						]}
+						handleSelect={() => {}}
+						disabled={false}
+						isOpen={isOpen}
+						onToggle={() => {
+							setIsOpen(!isOpen);
+						}}
+						width="32"
+					/>
+				</InputHeader>
 				<GenericTable columns={columns} />
-				<button
-					onClick={() => {
-						setIsOpen(!isOpen);
-						setId('');
-					}}
-				>
-					Abrir
-				</button>
 				<button
 					onClick={() => {
 						setIsOpen(!isOpen);

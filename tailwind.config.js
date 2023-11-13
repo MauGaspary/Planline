@@ -36,6 +36,7 @@ export default {
 					gray5: '#FBFBFB',
 					white: '#FFFFFF',
 					black: '#1D1D1D',
+					game: '#FFEFE0',
 				},
 			},
 		},

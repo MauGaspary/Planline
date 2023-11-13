@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Container from '../../../components/Container';
 import Modal from '../../../components/Modal';
 import ProjectForm from '../../../components/ProjectForm';
+import { InputHeader } from '../../../components/InputHeader/Index';
+import { InputText } from '../../../components/InputText/Index';
 
 function Project() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -19,14 +21,9 @@ function Project() {
 				<ProjectForm id={id} isOpen={() => setIsOpen(!isOpen)} />
 			</Modal>
 			<Container title="projetos">
-				<button
-					onClick={() => {
-						setIsOpen(!isOpen);
-						setId('');
-					}}
-				>
-					Abrir
-				</button>
+				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
+					<InputText placeholder="Nome" size="medium" isRequired={true} />
+				</InputHeader>
 				<button
 					onClick={() => {
 						setIsOpen(!isOpen);
