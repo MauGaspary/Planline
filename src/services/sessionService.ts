@@ -3,6 +3,7 @@ import firebaseService from './firebaseService.js';
 import { set, ref, get, child } from 'firebase/database';
 import {
 	FirebaseCollection,
+	FirebaseGame,
 	FirebaseSession,
 	FirebaseStory,
 	FirebaseTask,
@@ -86,16 +87,20 @@ export default {
 		const firstStory = stories[0];
 		const firstTask = firstStory.tasks[0];
 
-		const session: FirebaseSession = {
+		const firebaseGame: FirebaseGame = {
 			finished: false,
 			stories: firebaseStories,
-			users: firebaseUsers,
 			current_task: firstTask.task_id,
 			current_story: firstStory.story_id,
 			squad_id: sessionCreationDTO.squad_id,
 			opened_at: new Date().toISOString(),
 			sprint_name: sessionCreationDTO.sprint.name,
 			squad_name: sessionCreationDTO.squad_name,
+		};
+
+		const session: FirebaseSession = {
+			game: firebaseGame,
+			users: firebaseUsers,
 		};
 
 		const sessionRef = child(sessionsRef, sessionId);
@@ -111,14 +116,14 @@ export default {
 	},
 
 	async finalize(sessionId: string) {
-		const sessionRef = child(sessionsRef, sessionId);
+		const sessionRef = child(sessionsRef, `${sessionId}/game`);
 
 		const snapshot = await get(sessionRef);
 
 		const promises = [];
 
 		if (snapshot.exists()) {
-			const session: FirebaseSession = snapshot.val();
+			const session: FirebaseGame = snapshot.val();
 
 			for (const storyId in session.stories) {
 				const story = session.stories[storyId];
@@ -179,10 +184,10 @@ export default {
 		const sessions: FirebaseCollection<FirebaseSession> = snapshot.val();
 
 		return Object.entries(sessions)
-			.filter((entry) => entry[1].squad_id === squadId && !entry[1].finished)
+			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].game.finished)
 			.sort((a, b) => {
-				const aDate = new Date(a[1].opened_at);
-				const bDate = new Date(b[1].opened_at);
+				const aDate = new Date(a[1].game.opened_at);
+				const bDate = new Date(b[1].game.opened_at);
 
 				return aDate.getTime() - bDate.getTime();
 			})

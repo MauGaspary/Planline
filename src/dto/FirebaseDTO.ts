@@ -3,13 +3,17 @@ export type FirebaseCollection<T> = {
 };
 
 export type FirebaseSession = {
+	game: FirebaseGame;
+	users: FirebaseCollection<FirebaseUser>;
+};
+
+export type FirebaseGame = {
 	current_task: string;
 	current_story: string;
 	finished: boolean;
 	squad_id: string;
 	opened_at: string;
 	stories: FirebaseCollection<FirebaseStory>;
-	users: FirebaseCollection<FirebaseUser>;
 	squad_name: string;
 	sprint_name: string;
 };
