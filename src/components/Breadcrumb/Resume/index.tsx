@@ -64,8 +64,6 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 			},
 		};
 
-		console.log(dto);
-
 		request('/sessions', dto);
 	}
 
