@@ -26,7 +26,7 @@ export type Story = {
 };
 
 export type TaskVotes = {
-	final_vote: number;
+	final_vote?: number;
 	votes: {
 		[key: string]: number;
 	};

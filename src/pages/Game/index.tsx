@@ -101,8 +101,11 @@ export default function Game() {
 
 			set(refSession, {
 				...session,
-				current_story: nextStory,
-				current_task: nextTask,
+				game: {
+					...session.game,
+					current_story: nextStory,
+					current_task: nextTask,
+				},
 			}).then(() => {
 				setVoteState('individual');
 				setCardSelected('');
@@ -130,7 +133,7 @@ export default function Game() {
 		const nextTask = getNextTask();
 
 		if (nextTask) {
-			await set(child(refSession, 'current_task'), nextTask);
+			await set(child(refSession, 'game/current_task'), nextTask);
 		}
 	}
 

@@ -40,9 +40,9 @@ function Carousel({ taskList, currentTaskId, voteLater, finalVotes }: TaskProps)
 					<Task
 						taskId={task_id}
 						title={task.description}
-						voted={finalVotes[task_id].final_vote > 0}
+						voted={(finalVotes[task_id]?.final_vote ?? 0) > 0}
 						next={currentTaskId !== task_id}
-						finalVote={finalVotes[task_id].final_vote}
+						finalVote={finalVotes[task_id]?.final_vote ?? 0}
 						key={task_id}
 						voteLater={voteLater}
 					/>
