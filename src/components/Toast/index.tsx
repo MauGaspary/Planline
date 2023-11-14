@@ -10,20 +10,26 @@ interface ToastProps {
 }
 
 interface ToastState {
-	toastSession: string;
+	toastSession?: string;
 	toastOpen: boolean;
 	isError: boolean;
 	errorMessage: string;
 }
 
 const Toast = ({ sessions = [], isError = false, errorMessage = '' }: ToastProps) => {
-	const [toasts, setToasts] = useState<ToastState[]>(
-		sessions.map((item) => ({ toastSession: item, toastOpen: true, isError, errorMessage }))
-	);
+	if (sessions.length === 0 && !isError) {
+		return null;
+	}
+	const initialToasts =
+		sessions.length > 0
+			? sessions.map((item) => ({ toastSession: item, toastOpen: true, isError, errorMessage }))
+			: [{ toastSession: '', toastOpen: true, isError, errorMessage }];
+
+	const [toasts, setToasts] = useState<ToastState[]>(initialToasts);
 
 	const router = useNavigate();
 
-	const redirectFunction = (sessionId: string) => {
+	const redirectFunction = (sessionId?: string) => {
 		router(`/game/${sessionId}`);
 	};
 
@@ -49,7 +55,7 @@ const Toast = ({ sessions = [], isError = false, errorMessage = '' }: ToastProps
 							<p>{item.errorMessage}</p>
 						</div>
 					);
-				} else {
+				} else if (item.toastSession) {
 					return (
 						item.toastOpen == true && (
 							<div key={idx} className="relative bg-white mb-5 w-80 rounded-lg shadow-lg p-4 m-4">
