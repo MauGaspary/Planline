@@ -1,4 +1,5 @@
 stages:
+  - test
   - build
   - deploy
   - migrate
@@ -9,6 +10,17 @@ services:
 before_script:
   - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
 
+# ------------- TEST SCRIPT ---------------
+
+test-node:
+  stage: test
+  image: node:18-alpine
+  before_script: []
+  script:
+    - yarn add eslint prettier
+    - npx -c tsc
+    - yarn lint
+    
 # ------------- BUILD SCRIPT -------------
 
 build-node:
