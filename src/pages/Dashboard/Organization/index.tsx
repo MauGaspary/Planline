@@ -7,9 +7,11 @@ import { InputText } from '../../../components/InputText/Index';
 import GenericTable from '../../../components/GenericTable';
 import { useGet } from '../../../hooks/useGet';
 import { OrganizationDTO } from '../../../types/OrganizationDTO';
+import DeleteModal from '../../../components/DeleteModal';
 
 function Organization() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [id, setId] = useState('');
 	const columns = ['Nome', 'Email', 'Projetos'];
 	const { data: info, request: getInfo } = useGet<OrganizationDTO[]>();
@@ -29,6 +31,14 @@ function Organization() {
 			>
 				<GenericForm id={id} isOpen={() => setIsOpen(!isOpen)} />
 			</Modal>
+			<DeleteModal
+				isOpen={isOpenDelete}
+				id={id}
+				onClose={() => {
+					setIsOpenDelete(!isOpenDelete);
+				}}
+				type="organization"
+			/>
 			<Container title="organizações">
 				<InputHeader
 					onAddButtonClick={() => {

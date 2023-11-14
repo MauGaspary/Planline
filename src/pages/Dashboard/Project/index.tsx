@@ -8,9 +8,11 @@ import GenericTable from '../../../components/GenericTable';
 import { useGet } from '../../../hooks/useGet';
 import { ProjectDTO } from '../../../types/ProjectDTO';
 import { useSearchParams } from 'react-router-dom';
+import DeleteModal from '../../../components/DeleteModal';
 
 function Project() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [id, setId] = useState('');
 	const { data: info, request: getInfo } = useGet<ProjectDTO[]>();
 	const [searchParams] = useSearchParams();
@@ -37,6 +39,14 @@ function Project() {
 			>
 				<ProjectForm id={id} isOpen={() => setIsOpen(!isOpen)} />
 			</Modal>
+			<DeleteModal
+				isOpen={isOpenDelete}
+				id={id}
+				onClose={() => {
+					setIsOpenDelete(!isOpenDelete);
+				}}
+				type="project"
+			/>
 			<Container title="projetos">
 				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
@@ -45,6 +55,10 @@ function Project() {
 					listItems={info || []}
 					onEdit={(e) => {
 						setIsOpen(!isOpen);
+						setId(e);
+					}}
+					onDelete={(e) => {
+						setIsOpenDelete(!isOpenDelete);
 						setId(e);
 					}}
 					columns={columns}

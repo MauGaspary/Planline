@@ -7,9 +7,11 @@ import { InputText } from '../../../components/InputText/Index';
 import GenericTable from '../../../components/GenericTable';
 import { SquadDTO } from '../../../types/SquadDTO';
 import { useGet } from '../../../hooks/useGet';
+import DeleteModal from '../../../components/DeleteModal';
 
 function Squad() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [id, setId] = useState('');
 	const { data: info, request: getInfo } = useGet<SquadDTO[]>();
 	const columns = ['Nome', 'Membros', 'Organização'];
@@ -29,6 +31,14 @@ function Squad() {
 			>
 				<SquadForm id={id} isOpen={() => setIsOpen(!isOpen)} />
 			</Modal>
+			<DeleteModal
+				isOpen={isOpenDelete}
+				id={id}
+				onClose={() => {
+					setIsOpenDelete(!isOpenDelete);
+				}}
+				type="squad"
+			/>
 			<Container title="SQUADS">
 				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
@@ -37,6 +47,10 @@ function Squad() {
 					listItems={info || []}
 					onEdit={(e) => {
 						setIsOpen(!isOpen);
+						setId(e);
+					}}
+					onDelete={(e) => {
+						setIsOpenDelete(!isOpenDelete);
 						setId(e);
 					}}
 					columns={columns}

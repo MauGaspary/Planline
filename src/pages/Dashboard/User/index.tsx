@@ -8,9 +8,11 @@ import Modal from '../../../components/Modal';
 import UserForm from '../../../components/UserForm';
 import { UserDTO } from '../../../types/UserDTO';
 import { useGet } from '../../../hooks/useGet';
+import DeleteModal from '../../../components/DeleteModal';
 
 function User() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [id, setId] = useState('');
 	const { data: info, request: getInfo } = useGet<UserDTO[]>();
 
@@ -31,6 +33,14 @@ function User() {
 			>
 				<UserForm id={id} isOpen={() => setIsOpen(!isOpen)} />
 			</Modal>
+			<DeleteModal
+				isOpen={isOpenDelete}
+				id={id}
+				onClose={() => {
+					setIsOpenDelete(!isOpenDelete);
+				}}
+				type="user"
+			/>
 			<Container title="usuários">
 				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
@@ -58,7 +68,8 @@ function User() {
 						setId(e);
 					}}
 					onDelete={(e) => {
-						console.log(e);
+						setIsOpenDelete(!isOpenDelete);
+						setId(e);
 					}}
 					columns={columns}
 				/>

@@ -25,8 +25,6 @@ const GenericTable = ({
 			? listItems?.filter((item) => item.firstItem.toLowerCase().includes(search?.toLowerCase()))
 			: [];
 
-	console.log(listItems);
-
 	return (
 		<div>
 			<div className="flex flex-col overflow-y-auto overflow-x-hidden h-60 mt-8">
@@ -56,7 +54,6 @@ const GenericTable = ({
 														) {
 															return (
 																<td key={idx} className="whitespace-nowrap px-8 py-4 font-medium">
-																	{console.log(idx)}
 																	{Array.isArray(item2[1])
 																		? item2[1].map((item3) => item3.name).join(', ')
 																		: Object.is(item2[1], Object(item2[1]))
