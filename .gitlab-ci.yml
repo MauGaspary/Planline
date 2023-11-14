@@ -8,6 +8,9 @@ stages:
 services:
   - docker:dind
 
+before_script:
+  - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+
 # ------------- SONARQUBE SCRIPT ---------------
 
 sonarqube-check:
@@ -44,8 +47,6 @@ test-node:
 # ------------- BUILD SCRIPT -------------
 
 build-node:
-  before_script:
-    - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
   image: docker:dind
   tags: 
     - ages-runner
