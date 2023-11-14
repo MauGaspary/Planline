@@ -37,7 +37,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 		if (data) {
 			console.log(data);
 			router(`/game/${data.sessionId}`);
-		} else {
+		} else if (error) {
 			console.log(error);
 			setShowToast(true);
 		}
@@ -77,7 +77,6 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 
 	return (
 		<>
-			{showToast && <Toast errorMessage="Erro ao criar sessão" isError={true} />}
 			{upload ? (
 				<>
 					<Container title="resumo">
@@ -164,6 +163,8 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 							</Button>
 						</div>
 					</Container>
+					{console.log(showToast)}
+					{showToast && <Toast errorMessage="Erro ao criar sessão" isError={true} />}
 				</>
 			) : (
 				<Upload importer={importFile} setBreadcrumbDisplay={setBreadcrumbDisplay} />

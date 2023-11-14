@@ -40,7 +40,7 @@ function Upload({ importer, setBreadcrumbDisplay }: InputProps) {
 
 	return (
 		<>
-			{(availableSession?.length ?? 0) > 0 && (
+			{(availableSession?.length ?? 0 > 0) && (
 				<Toast sessions={availableSession ? availableSession : []} />
 			)}
 			<Container title="Importe o arquivo" small>
