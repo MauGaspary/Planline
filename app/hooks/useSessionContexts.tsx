@@ -4,15 +4,20 @@ import { ReactNode, createContext, useContext, useEffect, useReducer } from 'rea
 import { realtimeDatabase } from '../services/firebase';
 
 export type Session = {
+	users: {
+		[key: string]: User;
+	};
+};
+
+export type Game = {
 	current_story: string;
 	current_task: string;
 	finished: boolean;
 	stories: {
 		[key: string]: Story;
 	};
-	users: {
-		[key: string]: User;
-	};
+	sprint_name: string;
+	squad_name: string;
 };
 
 export type Story = {
@@ -52,8 +57,12 @@ type SessionAction =
 			payload: number;
 	  }
 	| {
-			type: 'SET_SESSION';
-			payload: Session;
+			type: 'SET_GAME';
+			payload: Game;
+	  }
+	| {
+			type: 'SET_USERS';
+			payload: { [key: string]: User };
 	  }
 	| {
 			type: 'SET_USER';
@@ -67,7 +76,8 @@ type SessionAction =
 	  };
 
 type ContextState = {
-	session: Session | null;
+	game: Game | null;
+	users: { [key: string]: User } | null;
 	user: CurrentUser | null;
 	sessionId: number | null;
 	close: boolean;
@@ -84,7 +94,8 @@ export const SessionContext = createContext<SessionContextType>({} as SessionCon
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
 	const [state, dispatch] = useReducer(sessionReducer, {
-		session: null,
+		game: null,
+		users: null,
 		user: null,
 		sessionId: null,
 		close: false,
@@ -93,19 +104,34 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		if (!state.sessionId) return;
 
-		onValue(child(sessionsRef, state.sessionId.toString()), (snapshot) => {
-			const session = snapshot.val();
+		onValue(child(sessionsRef, `${state.sessionId}/users`), (snapshot) => {
+			const users: { [key: string]: User } = snapshot.val();
+			console.log(users);
 
-			if (!session) return;
+			if (!users) return;
 
-			dispatch({ type: 'SET_SESSION', payload: session });
+			dispatch({ type: 'SET_USERS', payload: users });
 		});
 	}, [state.sessionId]);
 
 	useEffect(() => {
+		if (!state.user) return;
+
+		off(child(sessionsRef, `${state.sessionId}/users`));
+
+		onValue(child(sessionsRef, `${state.sessionId}/game`), (snapshot) => {
+			const game: Game = snapshot.val();
+
+			if (!game) return;
+
+			dispatch({ type: 'SET_GAME', payload: game });
+		});
+	}, [state.user]);
+
+	useEffect(() => {
 		if (state.close) {
 			if (!state.sessionId) return;
-			off(child(sessionsRef, state.sessionId.toString()));
+			off(child(sessionsRef, `${state.sessionId}/game`));
 			dispatch({ type: 'CLEAR' });
 		}
 	}, [state.close]);
@@ -119,11 +145,13 @@ function sessionReducer(state: ContextState, action: SessionAction): ContextStat
 	switch (action.type) {
 		case 'SET_SESSION_ID':
 			return { ...state, sessionId: action.payload };
-		case 'SET_SESSION':
-			return { ...state, session: action.payload };
+		case 'SET_GAME':
+			return { ...state, game: action.payload };
+		case 'SET_USERS':
+			return { ...state, users: action.payload };
 		case 'SET_USER':
-			if (!state?.session) return { ...state };
-			user = state.session.users[action.payload.userId];
+			if (!state?.users) return { ...state };
+			user = state.users[action.payload.userId];
 
 			set(
 				child(sessionsRef, `${state.sessionId}/users/${action.payload.userId}/firebase_auth_id`),
@@ -134,7 +162,7 @@ function sessionReducer(state: ContextState, action: SessionAction): ContextStat
 		case 'CLOSE_SESSION':
 			return { ...state, close: true };
 		case 'CLEAR':
-			return { session: null, user: null, sessionId: null, close: false };
+			return { game: null, users: null, user: null, sessionId: null, close: false };
 		default:
 			return { ...state };
 	}

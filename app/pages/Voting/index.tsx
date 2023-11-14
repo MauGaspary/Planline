@@ -5,18 +5,26 @@ import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
-import { CurrentUser, Session, useAppContext } from '../../hooks/useSessionContexts';
+import { CurrentUser, Game, useAppContext } from '../../hooks/useSessionContexts';
 import { vote } from '../../services/votes';
 
 export default function Voting() {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 	const { state } = useAppContext();
 
-	const session = state.session as Session;
+	if (!state.game || !state.user) {
+		return (
+			<>
+				<Text>Carregando...</Text>
+			</>
+		);
+	}
+
+	const game = state.game as Game;
 	const user = state.user as CurrentUser;
 
-	const currentStory = session?.stories[session?.current_story];
-	const currentTask = currentStory?.tasks[session?.current_task];
+	const currentStory = game?.stories[game?.current_story];
+	const currentTask = currentStory?.tasks[game?.current_task];
 
 	const [selectedCard, setSelectedCard] = useState('');
 	const handleCardClick = (label: string) => {
@@ -24,21 +32,15 @@ export default function Voting() {
 	};
 
 	const handleButtonClick = async () => {
-		await vote(
-			state.sessionId ?? 0,
-			session.current_story,
-			session.current_task,
-			user.id,
-			+selectedCard
-		);
+		await vote(state.sessionId ?? 0, game.current_task, user.id, +selectedCard);
 
-		navigation.replace('Wait', { waitingTask: session?.current_task || '' });
+		navigation.replace('Wait', { waitingTask: game?.current_task || '' });
 	};
 
 	return (
 		<View className="items-center flex-1">
 			<View className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400">
-				<Text className="mt-8 text-2xl font-body">SPRINT TESTE</Text>
+				<Text className="mt-8 text-2xl font-body">{game.sprint_name}</Text>
 				<Text
 					numberOfLines={2}
 					className="mt-4 mx-7 line-clamp-3 text-lg text-triider-primary-orange1"
