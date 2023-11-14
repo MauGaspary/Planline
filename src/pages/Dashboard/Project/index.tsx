@@ -50,7 +50,12 @@ function Project() {
 				type="project"
 			/>
 			<Container title="projetos">
-				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
+				<InputHeader
+					onAddButtonClick={() => {
+						setId('');
+						setIsOpen(!isOpen);
+					}}
+				>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
 				<GenericTable

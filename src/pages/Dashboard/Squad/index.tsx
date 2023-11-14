@@ -42,7 +42,12 @@ function Squad() {
 				type="squad"
 			/>
 			<Container title="SQUADS">
-				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
+				<InputHeader
+					onAddButtonClick={() => {
+						setId('');
+						setIsOpen(!isOpen);
+					}}
+				>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
 				<GenericTable

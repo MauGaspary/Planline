@@ -22,7 +22,7 @@ const GenericTable = ({
 }: GenericTableProps) => {
 	const filteredName =
 		search.length > 0
-			? listItems?.filter((item) => item.firstItem.toLowerCase().includes(search?.toLowerCase()))
+			? listItems?.filter((item) => item.name.toLowerCase().includes(search?.toLowerCase()))
 			: [];
 
 	return (
@@ -42,91 +42,103 @@ const GenericTable = ({
 							</thead>
 							<tbody>
 								{search.length < 0
-									? filteredName?.map((item, index) => {
-											const items = Object.entries(item);
-											return (
-												<tr key={index}>
-													{items.map((item2, idx) => {
-														if (
-															item2[0] != 'id' &&
-															item2[0] != 'updated_at' &&
-															item2[0] != 'created_at'
-														) {
-															return (
-																<td key={idx} className="whitespace-nowrap px-8 py-4 font-medium">
-																	{Array.isArray(item2[1])
-																		? item2[1].map((item3) => item3.name).join(', ')
-																		: Object.is(item2[1], Object(item2[1]))
-																		? item2[1].name
-																		: item2[1]}
-																</td>
-															);
-														}
-													})}
-													<td className="whitespace-nowrap px-2 py-4 font-medium">
-														<div className="flex flex-row gap-2">
-															<button
-																onClick={() => {
-																	onEdit(item.id);
-																}}
-															>
-																<img src={PencilIcon} />
-															</button>
-															<button
-																onClick={() => {
-																	onDelete(item.id);
-																}}
-															>
-																<img src={TrashIcon} />
-															</button>
-														</div>
-													</td>
-												</tr>
-											);
-									  })
-									: listItems?.map((item, index) => {
-											const items = Object.entries(item);
-											return (
-												<tr key={index}>
-													{items.map((item2, idx) => {
-														if (
-															item2[0] != 'id' &&
-															item2[0] != 'updated_at' &&
-															item2[0] != 'created_at' &&
-															!(columns.includes('Membros') && item2[0] == 'organization_id')
-														) {
-															return (
-																<td key={idx} className="whitespace-nowrap px-8 py-4 font-medium">
-																	{Array.isArray(item2[1])
-																		? item2[1].map((item3) => item3.name).join(', ')
-																		: Object.is(item2[1], Object(item2[1]))
-																		? item2[1].name
-																		: item2[1]}
-																</td>
-															);
-														}
-													})}
-													<td className="whitespace-nowrap px-2 py-4 font-medium">
-														<div className="flex flex-row gap-2">
-															<button
-																onClick={() => {
-																	onEdit(item.id);
-																}}
-															>
-																<img src={PencilIcon} />
-															</button>
-															<button
-																onClick={() => {
-																	onDelete(item.id);
-																}}
-															>
-																<img src={TrashIcon} />
-															</button>
-														</div>
-													</td>
-												</tr>
-											);
-									  })}
+									? filteredName
+											?.sort(function (a, b) {
+												// Turn your strings into dates, and then subtract them
+												// to get a value that is either negative, positive, or zero.
+												return new Date(b.created_at) - new Date(a.created_at);
+											})
+											.map((item, index) => {
+												const items = Object.entries(item);
+												return (
+													<tr key={index}>
+														{items.map((item2, idx) => {
+															if (
+																item2[0] != 'id' &&
+																item2[0] != 'updated_at' &&
+																item2[0] != 'created_at'
+															) {
+																return (
+																	<td key={idx} className="whitespace-nowrap px-8 py-4 font-medium">
+																		{Array.isArray(item2[1])
+																			? item2[1].map((item3) => item3.name).join(', ')
+																			: Object.is(item2[1], Object(item2[1]))
+																			? item2[1].name
+																			: item2[1]}
+																	</td>
+																);
+															}
+														})}
+														<td className="whitespace-nowrap px-2 py-4 font-medium">
+															<div className="flex flex-row gap-2">
+																<button
+																	onClick={() => {
+																		onEdit(item.id);
+																	}}
+																>
+																	<img src={PencilIcon} />
+																</button>
+																<button
+																	onClick={() => {
+																		onDelete(item.id);
+																	}}
+																>
+																	<img src={TrashIcon} />
+																</button>
+															</div>
+														</td>
+													</tr>
+												);
+											})
+									: listItems
+											?.sort(function (a, b) {
+												// Turn your strings into dates, and then subtract them
+												// to get a value that is either negative, positive, or zero.
+												return new Date(b.created_at) - new Date(a.created_at);
+											})
+											.map((item, index) => {
+												const items = Object.entries(item);
+												return (
+													<tr key={index}>
+														{items.map((item2, idx) => {
+															if (
+																item2[0] != 'id' &&
+																item2[0] != 'updated_at' &&
+																item2[0] != 'created_at' &&
+																!(columns.includes('Membros') && item2[0] == 'organization_id')
+															) {
+																return (
+																	<td key={idx} className="whitespace-nowrap px-8 py-4 font-medium">
+																		{Array.isArray(item2[1])
+																			? item2[1].map((item3) => item3.name).join(', ')
+																			: Object.is(item2[1], Object(item2[1]))
+																			? item2[1].name
+																			: item2[1]}
+																	</td>
+																);
+															}
+														})}
+														<td className="whitespace-nowrap px-2 py-4 font-medium">
+															<div className="flex flex-row gap-2">
+																<button
+																	onClick={() => {
+																		onEdit(item.id);
+																	}}
+																>
+																	<img src={PencilIcon} />
+																</button>
+																<button
+																	onClick={() => {
+																		onDelete(item.id);
+																	}}
+																>
+																	<img src={TrashIcon} />
+																</button>
+															</div>
+														</td>
+													</tr>
+												);
+											})}
 							</tbody>
 						</table>
 					</div>

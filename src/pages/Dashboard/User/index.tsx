@@ -44,7 +44,12 @@ function User() {
 				type="user"
 			/>
 			<Container title="usuários">
-				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
+				<InputHeader
+					onAddButtonClick={() => {
+						setId('');
+						setIsOpen(!isOpen);
+					}}
+				>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 
 					<Select

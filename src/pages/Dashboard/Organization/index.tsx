@@ -56,6 +56,10 @@ function Organization() {
 						setIsOpen(!isOpen);
 						setId(e);
 					}}
+					onDelete={(e) => {
+						setIsOpenDelete(!isOpenDelete);
+						setId(e);
+					}}
 					columns={columns}
 				/>
 			</Container>
