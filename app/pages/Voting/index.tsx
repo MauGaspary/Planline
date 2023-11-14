@@ -40,11 +40,14 @@ export default function Voting() {
 	return (
 		<View className="items-center flex-1">
 			<View className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400">
-				<Text className="mt-10 text-2xl font-body">{game.sprint_name}</Text>
-				<Text className="mt-8 text-lg text-triider-primary-orange1">
+				<Text className="mt-8 text-2xl font-body">{game.sprint_name}</Text>
+				<Text
+					numberOfLines={2}
+					className="mt-4 mx-7 line-clamp-3 text-lg text-triider-primary-orange1"
+				>
 					{currentStory?.name || 'Não há histórias nessa sprint'}
 				</Text>
-				<Text className="mt-4 mb-6 text-lg text-triider-grayscale-gray1">
+				<Text className="mt-4 mx-2 mb-6 text-lg text-triider-grayscale-gray1">
 					{currentTask?.description || 'Não há tarefas nessa história'}
 				</Text>
 			</View>
@@ -59,7 +62,11 @@ export default function Voting() {
 				<Card label="13" isSelected={selectedCard === '13'} onClick={handleCardClick} />
 			</View>
 			<View className="mt-10 items-center">
-				<Button label="Próximo" onClick={handleButtonClick} />
+				<Button
+					disabled={selectedCard === '' ? true : false}
+					label="Próximo"
+					onClick={handleButtonClick}
+				/>
 				<Card label="" isSelected={selectedCard === '-1'} onClick={handleCardClick} />
 			</View>
 		</View>

@@ -23,7 +23,7 @@ export default function SelectUser() {
 			payload: { userId: selectedUserId, firebase_auth_id: selectedUserId },
 		});
 	}
-
+	console.log(selectedUserId);
 	useEffect(() => {
 		if (state.user) {
 			navigation.replace('Voting');
@@ -65,7 +65,11 @@ export default function SelectUser() {
 				</ScrollView>
 			</View>
 			<View className="mt-16 justify-between h-32">
-				<ButtonComponent label="Iniciar" onClick={handleButtonClick} />
+				<ButtonComponent
+					disabled={selectedUserId === '' ? true : false}
+					label="Iniciar"
+					onClick={handleButtonClick}
+				/>
 				<ButtonComponent label="Voltar" variant="ghost" onClick={() => navigation.goBack()} />
 			</View>
 			<StatusBar style="inverted" />
