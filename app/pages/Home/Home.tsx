@@ -27,10 +27,11 @@ export default function Home() {
 	const { dispatch, state } = useAppContext();
 
 	useEffect(() => {
-		if (state.session) {
+		console.log(state);
+		if (state.users) {
 			navigation.replace('SelectUser');
 		}
-	}, [state.session]);
+	}, [state.users]);
 
 	function handleButtonClick() {
 		if (inputCode.length !== 4) return;
