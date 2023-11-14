@@ -20,7 +20,7 @@ sonarqube-check:
     paths:
       - .sonar/cache
   script: 
-		- sleep 1h
+    - sleep 1h
     - sonar-scanner
   allow_failure: true
   only:
