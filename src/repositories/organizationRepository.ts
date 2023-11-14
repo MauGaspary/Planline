@@ -34,12 +34,13 @@ export default {
 		});
 		return orgs;
 	},
-	async delete(organizationId: string): Promise<void> {
-		await prisma.organization.delete({
+	async delete(organizationId: string): Promise<string> {
+		const organization = await prisma.organization.delete({
 			where: {
 				id: organizationId,
 			},
 		});
+		return organization.id;
 	},
 	async put(data: Organization): Promise<string> {
 		const organization = await prisma.organization.update({

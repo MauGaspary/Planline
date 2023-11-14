@@ -41,8 +41,7 @@ export default {
 		try {
 			const userId: string = req.params.userId;
 			const respId: string = await userService.delete(userId);
-			res.status(204).json();
-			res.json({ respId: respId });
+			res.status(201).json({ respId });
 		} catch (e) {
 			loggerService.error(e);
 			res.status(500).json({ message: 'Erro ao deletar usuários.' });

@@ -15,8 +15,9 @@ export default {
 		const squads: Squad[] = await squadRepository.read();
 		return squads;
 	},
-	async delete(squadId: string): Promise<void> {
-		await squadRepository.delete(squadId);
+	async delete(squad: string): Promise<string> {
+		const squadId: string = await squadRepository.delete(squad);
+		return squadId;
 	},
 	async put(squad: Squad): Promise<string> {
 		const squadId: string = await squadRepository.put(squad);
