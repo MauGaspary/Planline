@@ -6,6 +6,7 @@ export type Session = {
 	users: {
 		[key: string]: User;
 	};
+	votes?: { [key: string]: TaskVotes };
 };
 
 export type Game = {
@@ -24,12 +25,15 @@ export type Story = {
 	};
 };
 
-export type Task = {
-	description: string;
+export type TaskVotes = {
 	final_vote: number;
 	votes: {
 		[key: string]: number;
 	};
+};
+
+export type Task = {
+	description: string;
 };
 
 export type User = {

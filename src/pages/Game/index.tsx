@@ -20,13 +20,8 @@ export default function Game() {
 	const [cardSelected, setCardSelected] = useState('');
 
 	const { session_id } = useParams();
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [session, setSession] = useState<Session | null>(null);
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [storieNumber, setStorieNumber] = useState({
-		current: 0,
-		total: 0,
-	});
+
 	const database = getRealtimeDatabase();
 
 	const { request } = useDelete<void>();
@@ -48,20 +43,21 @@ export default function Game() {
 
 	let usersList = Object.entries(session?.users || {});
 
-	const votes =
-		session?.game.stories[session.game.current_story].tasks[session.game.current_task].votes || {};
+	const votes = session?.votes || {};
+
+	const taskVotes = votes[session?.game.current_task || '']?.votes || {};
 
 	let min = Number.MAX_SAFE_INTEGER;
-	const max = Math.max(...Object.values(votes));
+	const max = Math.max(...Object.values(taskVotes));
 
 	let average = 0;
 	let count = 0;
 
-	for (const vote in votes) {
-		if (votes[vote] === -1) continue;
-		if (votes[vote] < min) min = votes[vote];
+	for (const vote in taskVotes) {
+		if (taskVotes[vote] === -1) continue;
+		if (taskVotes[vote] < min) min = taskVotes[vote];
 
-		average += votes[vote];
+		average += taskVotes[vote];
 		count++;
 	}
 
@@ -71,7 +67,7 @@ export default function Game() {
 	const storie = session?.game.stories[session.game.current_story];
 
 	for (const task in storie?.tasks) {
-		storieDificulty += storie.tasks[task].final_vote || 0;
+		storieDificulty += votes[task]?.final_vote || 0;
 	}
 
 	useEffect(() => {
@@ -85,10 +81,9 @@ export default function Game() {
 	useEffect(() => {
 		if (!session) return;
 
-		const currentTask =
-			session.game.stories[session.game.current_story].tasks[session.game.current_task];
+		const currentTask = votes[session.game.current_task];
 
-		if (currentTask.final_vote) {
+		if (currentTask?.final_vote) {
 			let nextTask = getNextTask();
 
 			let nextStory: string | undefined = session.game.current_story;
@@ -121,7 +116,7 @@ export default function Game() {
 		const tasks = session.game.stories[session.game.current_story].tasks;
 
 		for (const task in tasks) {
-			if (tasks[task].final_vote) continue;
+			if (votes[task]?.final_vote) continue;
 
 			return task;
 		}
@@ -147,7 +142,7 @@ export default function Game() {
 			let allVoted = true;
 
 			for (const task in stories[story].tasks) {
-				if (!stories[story].tasks[task].final_vote) {
+				if (!votes[task]?.final_vote) {
 					allVoted = false;
 					break;
 				}
@@ -162,14 +157,7 @@ export default function Game() {
 	async function handleVote() {
 		if (cardSelected === '' || !session) return;
 
-		await set(
-			child(
-				refSession,
-				`stories/${session.game.current_story}/tasks/${session.game.current_task}/final_vote`
-			),
-
-			+cardSelected
-		);
+		await set(child(refSession, `votes/${session.game.current_task}/final_vote`), +cardSelected);
 	}
 
 	const isToShow = voteState === 'conjunta';
@@ -182,7 +170,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 0 ? votes[usersList[0][0] ?? ''] || 0 : 0}
+							number={usersList.length > 0 ? taskVotes[usersList[0][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 0
 									? usersList[0][1].firebase_auth_id
@@ -196,7 +184,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 1 ? votes[usersList[1][0] ?? ''] || 0 : 0}
+							number={usersList.length > 1 ? taskVotes[usersList[1][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 1
 									? usersList[1][1].firebase_auth_id
@@ -210,7 +198,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 2 ? votes[usersList[2][0] ?? ''] || 0 : 0}
+							number={usersList.length > 2 ? taskVotes[usersList[2][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 2
 									? usersList[2][1].firebase_auth_id
@@ -224,7 +212,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 3 ? votes[usersList[3][0] ?? ''] || 0 : 0}
+							number={usersList.length > 3 ? taskVotes[usersList[3][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 3
 									? usersList[3][1].firebase_auth_id
@@ -238,7 +226,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 4 ? votes[usersList[4][0] ?? ''] || 0 : 0}
+							number={usersList.length > 4 ? taskVotes[usersList[4][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 4
 									? usersList[4][1].firebase_auth_id
@@ -252,7 +240,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 5 ? votes[usersList[5][0] ?? ''] || 0 : 0}
+							number={usersList.length > 5 ? taskVotes[usersList[5][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 5
 									? usersList[5][1].firebase_auth_id
@@ -266,7 +254,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 6 ? votes[usersList[6][0] ?? ''] || 0 : 0}
+							number={usersList.length > 6 ? taskVotes[usersList[6][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 6
 									? usersList[6][1].firebase_auth_id
@@ -280,7 +268,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 7 ? votes[usersList[7][0] ?? ''] || 0 : 0}
+							number={usersList.length > 7 ? taskVotes[usersList[7][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 7
 									? usersList[7][1].firebase_auth_id
@@ -294,7 +282,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 8 ? votes[usersList[8][0] ?? ''] || 0 : 0}
+							number={usersList.length > 8 ? taskVotes[usersList[8][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 8
 									? usersList[8][1].firebase_auth_id
@@ -308,7 +296,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 9 ? votes[usersList[9][0] ?? ''] || 0 : 0}
+							number={usersList.length > 9 ? taskVotes[usersList[9][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 9
 									? usersList[9][1].firebase_auth_id
@@ -322,7 +310,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 10 ? votes[usersList[10][0] ?? ''] || 0 : 0}
+							number={usersList.length > 10 ? taskVotes[usersList[10][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 10
 									? usersList[10][1].firebase_auth_id
@@ -336,7 +324,7 @@ export default function Game() {
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
-							number={usersList.length > 11 ? votes[usersList[11][0] ?? ''] || 0 : 0}
+							number={usersList.length > 11 ? taskVotes[usersList[11][0] ?? ''] || 0 : 0}
 							name={
 								usersList.length > 11
 									? usersList[11][1].firebase_auth_id
@@ -471,6 +459,7 @@ export default function Game() {
 			)}
 			<div className="w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
 				<Carousel
+					finalVotes={votes}
 					taskList={session?.game.stories[session.game.current_story].tasks || {}}
 					currentTaskId={session?.game.current_task ?? null}
 					voteLater={voteLater}

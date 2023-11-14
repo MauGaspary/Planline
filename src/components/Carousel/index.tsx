@@ -2,15 +2,16 @@ import NukaCarousel from 'nuka-carousel';
 import Task from './Task';
 import leftArrow from '../../assets/images/ArrowLeft.png';
 import rightArrow from '../../assets/images/ArrowRight.png';
-import { Task as TaskDto } from '../../services/firebaseSessions';
+import { Task as TaskDto, TaskVotes } from '../../services/firebaseSessions';
 
 interface TaskProps {
+	finalVotes: { [key: string]: TaskVotes };
 	taskList: { [key: string]: TaskDto };
 	currentTaskId: string | null;
 	voteLater: (taskId: string) => void;
 }
 
-function Carousel({ taskList, currentTaskId, voteLater }: TaskProps) {
+function Carousel({ taskList, currentTaskId, voteLater, finalVotes }: TaskProps) {
 	const tasks = Object.entries(taskList);
 
 	const params = {
@@ -39,9 +40,9 @@ function Carousel({ taskList, currentTaskId, voteLater }: TaskProps) {
 					<Task
 						taskId={task_id}
 						title={task.description}
-						voted={task.final_vote > 0}
+						voted={finalVotes[task_id].final_vote > 0}
 						next={currentTaskId !== task_id}
-						finalVote={task.final_vote}
+						finalVote={finalVotes[task_id].final_vote}
 						key={task_id}
 						voteLater={voteLater}
 					/>
