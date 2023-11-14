@@ -3,9 +3,11 @@ import firebaseService from './firebaseService.js';
 import { set, ref, get, child } from 'firebase/database';
 import {
 	FirebaseCollection,
+	FirebaseGame,
 	FirebaseSession,
 	FirebaseStory,
 	FirebaseTask,
+	FirebaseTaskVote,
 	FirebaseUser,
 } from '../dto/FirebaseDTO.js';
 import storyRepository from '../repositories/storyRepository.js';
@@ -54,8 +56,6 @@ export default {
 			for (const task of story.tasks) {
 				firebaseTasks[task.task_id] = {
 					description: task.name,
-					final_vote: 0,
-					votes: {},
 				};
 			}
 
@@ -86,16 +86,20 @@ export default {
 		const firstStory = stories[0];
 		const firstTask = firstStory.tasks[0];
 
-		const session: FirebaseSession = {
+		const firebaseGame: FirebaseGame = {
 			finished: false,
 			stories: firebaseStories,
-			users: firebaseUsers,
 			current_task: firstTask.task_id,
 			current_story: firstStory.story_id,
 			squad_id: sessionCreationDTO.squad_id,
 			opened_at: new Date().toISOString(),
 			sprint_name: sessionCreationDTO.sprint.name,
 			squad_name: sessionCreationDTO.squad_name,
+		};
+
+		const session: FirebaseSession = {
+			game: firebaseGame,
+			users: firebaseUsers,
 		};
 
 		const sessionRef = child(sessionsRef, sessionId);
@@ -111,7 +115,7 @@ export default {
 	},
 
 	async finalize(sessionId: string) {
-		const sessionRef = child(sessionsRef, sessionId);
+		const sessionRef = child(sessionsRef, `${sessionId}`);
 
 		const snapshot = await get(sessionRef);
 
@@ -119,17 +123,24 @@ export default {
 
 		if (snapshot.exists()) {
 			const session: FirebaseSession = snapshot.val();
+			const game: FirebaseGame = session.game;
 
-			for (const storyId in session.stories) {
-				const story = session.stories[storyId];
+			const votes: FirebaseCollection<FirebaseTaskVote> = session.votes ?? {};
+
+			for (const storyId in game.stories) {
+				const story = game.stories[storyId];
 
 				const voteCount: { [key: number]: number } = {};
 
 				for (const taskId in story.tasks) {
-					const task = story.tasks[taskId];
+					const task: FirebaseTaskVote | null = votes[taskId];
 
-					for (const votes in task.votes) {
-						const vote = task.votes[votes];
+					if (!task) {
+						continue;
+					}
+
+					for (const userId in task.votes) {
+						const vote = task.votes[userId];
 
 						promises.push(
 							voteRepository.create({
@@ -141,7 +152,7 @@ export default {
 								},
 								User: {
 									connect: {
-										id: votes,
+										id: userId,
 									},
 								},
 							})
@@ -179,10 +190,10 @@ export default {
 		const sessions: FirebaseCollection<FirebaseSession> = snapshot.val();
 
 		return Object.entries(sessions)
-			.filter((entry) => entry[1].squad_id === squadId && !entry[1].finished)
+			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].game.finished)
 			.sort((a, b) => {
-				const aDate = new Date(a[1].opened_at);
-				const bDate = new Date(b[1].opened_at);
+				const aDate = new Date(a[1].game.opened_at);
+				const bDate = new Date(b[1].game.opened_at);
 
 				return aDate.getTime() - bDate.getTime();
 			})
