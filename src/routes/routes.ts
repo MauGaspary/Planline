@@ -4,10 +4,12 @@ import projectController from '../controllers/projectController.js';
 import squadController from '../controllers/squadController.js';
 import sessionsController from '../controllers/sessionsController.js';
 import userController from '../controllers/userController.js';
+import { loggerMiddleware } from '../services/loggerService.js';
 
 const express = Express;
 
 const routes = express.Router();
+routes.use(loggerMiddleware);
 
 routes.post('/sessions', sessionsController.index);
 routes.delete('/sessions/finalize/:sessionId', sessionsController.finalize);

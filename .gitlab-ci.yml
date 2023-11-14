@@ -1,5 +1,6 @@
 stages:
   - sonarqube-check
+  - test
   - build
   - deploy
   - migrate
@@ -25,6 +26,17 @@ sonarqube-check:
   only:
     - build/redo-envs
 
+# ------------- TEST SCRIPT ---------------
+
+test-node:
+  stage: test
+  image: node:18-alpine
+  before_script: []
+  script:
+    - yarn add eslint prettier
+    - npx -c tsc
+    - yarn lint
+    
 # ------------- BUILD SCRIPT -------------
 
 build-node:
