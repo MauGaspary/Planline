@@ -21,7 +21,7 @@ const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
 				onClick={onClose}
 			></div>
 			<div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-				<div className="flex flex-col min-w-fit w-fit border-2 p-16 bg-white rounded-3xl relative">
+				<div className="flex flex-col min-w-fit w-fit border-2 p-16 bg-white rounded-lg relative">
 					<h1 className="text-4xl font-bold underline decoration-triider-primary-orange2 mb-6 underline-offset-8">
 						{title?.toUpperCase()}
 					</h1>

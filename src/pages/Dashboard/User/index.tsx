@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from '../../../components/Container';
 import { Select } from '../../../components/Select';
 import { InputHeader } from '../../../components/InputHeader/Index';
@@ -6,12 +6,19 @@ import { InputText } from '../../../components/InputText/Index';
 import GenericTable from '../../../components/GenericTable';
 import Modal from '../../../components/Modal';
 import UserForm from '../../../components/UserForm';
+import { UserDTO } from '../../../types/UserDTO';
+import { useGet } from '../../../hooks/useGet';
 
 function User() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState('');
+	const { data: info, request: getInfo } = useGet<UserDTO[]>();
 
-	const columns = ['Nome', 'Email', 'Nível', 'Squads'];
+	const columns = ['Nome', 'Email', 'Nível'];
+
+	useEffect(() => {
+		getInfo(`/user`);
+	}, []);
 
 	return (
 		<>
@@ -44,15 +51,17 @@ function User() {
 						width="32"
 					/>
 				</InputHeader>
-				<GenericTable columns={columns} />
-				<button
-					onClick={() => {
+				<GenericTable
+					listItems={info || []}
+					onEdit={(e) => {
 						setIsOpen(!isOpen);
-						setId('1');
+						setId(e);
 					}}
-				>
-					Abrir edit
-				</button>
+					onDelete={(e) => {
+						console.log(e);
+					}}
+					columns={columns}
+				/>
 			</Container>
 		</>
 	);

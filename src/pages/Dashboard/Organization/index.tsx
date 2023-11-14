@@ -38,21 +38,14 @@ function Organization() {
 				>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
-				<GenericTable columns={columns} />
-				{info &&
-					info.map((item) => {
-						return (
-							<button
-								onClick={() => {
-									setIsOpen(!isOpen);
-									setId(item.id);
-								}}
-								key={item.id}
-							>
-								Abrir edit {item.name}
-							</button>
-						);
-					})}
+				<GenericTable
+					listItems={info || []}
+					onEdit={(e) => {
+						setIsOpen(!isOpen);
+						setId(e);
+					}}
+					columns={columns}
+				/>
 			</Container>
 		</>
 	);

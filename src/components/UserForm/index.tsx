@@ -3,137 +3,97 @@ import { useGet } from '../../hooks/useGet';
 import { InfoBody } from '../../types/InfoBody';
 import Button from '../Button';
 import { Select } from '../Select';
+import Spinner from '../Spinner';
+import { UserDTO } from '../../types/UserDTO';
+import { usePost } from '../../hooks/usePost';
+import { usePut } from '../../hooks/usePut';
 
 interface UserFormProps {
 	id?: string;
 	isOpen: () => void;
 }
 
-interface UserInfo {
-	name: string;
-	email: string;
-	level: string;
-	squad: InfoBody[];
-}
-
-const orgMock = [
+const level = [
 	{
-		name: 'Org 1',
+		name: 'JUNIOR',
 		id: '1',
 	},
 	{
-		name: 'Org 2',
+		name: 'PLENO',
 		id: '2',
 	},
 	{
-		name: 'Org 3',
+		name: 'SENIOR',
 		id: '3',
 	},
-	{
-		name: 'Org 4',
-		id: '4',
-	},
 ];
-
-const squadsMock = [
-	{
-		name: 'Squad 1',
-		id: '1',
-	},
-	{
-		name: 'Squad 2',
-		id: '2',
-	},
-	{
-		name: 'Squad 3',
-		id: '3',
-	},
-	{
-		name: 'Squad 4',
-		id: '4',
-	},
-];
-
-const levelMock = [
-	{
-		name: 'Junior',
-		id: '1',
-	},
-	{
-		name: 'Estagiário',
-		id: '2',
-	},
-	{
-		name: 'Pleno',
-		id: '3',
-	},
-	{
-		name: 'Senior',
-		id: '4',
-	},
-];
-
-const mockUser = {
-	name: 'João',
-	email: 'joao@email.com',
-	level: 'Junior',
-	squad: [
-		{
-			name: 'Squad 1',
-			id: '1',
-		},
-	],
-};
 
 export default function UserForm({ id, isOpen }: UserFormProps) {
 	const [userName, setUserName] = useState('');
 	const [userEmail, setUserEmail] = useState('');
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
-	const [levelSelected, setLevel] = useState('Escolha o nível');
-	const [org, setOrg] = useState<InfoBody>({ name: 'Escolha a organização', id: '' });
-	const [squad, setSquad] = useState<InfoBody[]>([]);
-	const { data: squads, request: getSquads } = useGet<InfoBody[]>();
-	const { data: userInfo, request: getUser } = useGet<UserInfo>();
+	const [levelSelected, setLevel] = useState<InfoBody>({ name: 'Escolha o nível', id: '' });
+	const { data: userInfo, request: getUser } = useGet<UserDTO>();
+	const { data: newUser, request: createUser, error, isLoading } = usePost<T>();
+	const { dataEdit: editedUser, request: editUser, errorEdit, isLoadingEdit } = usePut<T>();
 
-	const handleSelect = (placeholder: string, option: InfoBody) => {
-		if (placeholder === levelSelected) {
-			setLevel(option.name);
-		}
+	const handleSelect = (_placeholder: string, option: InfoBody) => {
+		setLevel(option);
 		setOpenSelect(null);
-	};
-
-	const handleMultiselect = (option: InfoBody) => {
-		if (squad.includes(option)) {
-			setSquad(squad.filter((s) => s.id !== option.id));
-		} else {
-			setSquad([...squad, option]);
-		}
 	};
 
 	useEffect(() => {
-		getSquads(`/squad/info`);
-		getUser(`/user/info/${id}`);
-		// if (userInfo) {
 		if (id) {
-			const { name, email, level, squad } = mockUser;
-			// const { name, email, level, squad } = userInfo || {};
-			setUserName(name);
-			setUserEmail(email);
-			setLevel(level);
-			setSquad(squad);
+			getUser(`/user/${id}`);
 		}
 	}, []);
 
-	const handleCreateUser = () => {
-		console.log('criar usuário');
-		// criar usuário chamada api
-		console.log(userName, userEmail, levelSelected, squads);
-		isOpen();
-	};
+	useEffect(() => {
+		if (id) {
+			setUserName(userInfo?.name || '');
+			setUserEmail(userInfo?.email || '');
+			setLevel({ name: userInfo?.level || '', id: levelSelected.id });
+		}
+	}, [userInfo]);
 
-	const handleSelectOrg = (_placeholder: string, option: InfoBody) => {
-		setOrg(option);
-		setOpenSelect(null);
+	useEffect(() => {
+		if (newUser) {
+			console.log(`Criou usuario`);
+			isOpen();
+		} else if (error) {
+			console.log(`Deu erro, `, error);
+		}
+	}, [newUser, error]);
+
+	useEffect(() => {
+		if (editedUser) {
+			console.log(`Editou usuario`);
+			isOpen();
+		} else if (errorEdit) {
+			console.log(`Deu erro edit, `, error);
+		}
+	}, [editedUser, errorEdit]);
+
+	const handleCreate = () => {
+		if (id) {
+			// chamada api para editar
+			const editedUser = {
+				id,
+				name: userName,
+				email: userEmail,
+				level: levelSelected.name,
+			};
+
+			editUser('/user', editedUser);
+		} else {
+			// chamada api para criar
+			const newUser = {
+				name: userName,
+				email: userEmail,
+				level: levelSelected.name,
+			};
+			createUser('/user', newUser);
+		}
 	};
 
 	return (
@@ -178,30 +138,18 @@ export default function UserForm({ id, isOpen }: UserFormProps) {
 					LEVEL
 				</label>
 				<Select
-					placeholder={levelSelected}
-					options={levelMock || []}
+					placeholder={levelSelected.name}
+					options={level}
 					handleSelect={handleSelect}
 					isOpen={openSelect === 'level'}
 					onToggle={() => setOpenSelect(openSelect === 'level' ? null : 'level')}
 				/>
 			</div>
-			<div className="flex items-end gap-2">
-				<label
-					className="text-lg mb-4 text-triider-grayscale-gray1 w-32 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
-					htmlFor="org"
-				>
-					ORGANIZAÇÃO
-				</label>
-				<Select
-					placeholder={org.name}
-					options={orgMock || []}
-					handleSelect={handleSelectOrg}
-					isOpen={openSelect === 'org'}
-					onToggle={() => setOpenSelect(openSelect === 'org' ? null : 'org')}
-				/>
-			</div>
 			<div className="flex mt-5 justify-center items-center">
-				<Button onClickAction={handleCreateUser}>{userName ? 'Editar' : 'Criar'}</Button>
+				<Button onClickAction={handleCreate}>
+					{(isLoading || isLoadingEdit) && <Spinner />}
+					{id ? 'Editar' : 'Criar'}
+				</Button>
 			</div>
 		</div>
 	);

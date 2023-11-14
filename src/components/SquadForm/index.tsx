@@ -4,119 +4,102 @@ import { InfoBody } from '../../types/InfoBody';
 import Button from '../Button';
 import { Multiselect } from '../Multiselect';
 import { Select } from '../Select';
+import { SquadDTO } from '../../types/SquadDTO';
+import Spinner from '../Spinner';
+import { usePost } from '../../hooks/usePost';
+import { usePut } from '../../hooks/usePut';
 
 interface FormProps {
 	id?: string;
 	isOpen: () => void;
 }
 
-const usersMock = [
-	{
-		name: 'User 1',
-		id: '1',
-	},
-	{
-		name: 'User 2',
-		id: '2',
-	},
-	{
-		name: 'User 3',
-		id: '3',
-	},
-	{
-		name: 'User 4',
-		id: '4',
-	},
-	{
-		name: 'User 5',
-		id: '5',
-	},
-	{
-		name: 'User 6',
-		id: '6',
-	},
-	{
-		name: 'User 7',
-		id: '7',
-	},
-	{
-		name: 'User 8',
-		id: '8',
-	},
-	{
-		name: 'User 9',
-		id: '9',
-	},
-];
-
-const orgMock = [
-	{
-		name: 'Org 1',
-		id: '1',
-	},
-	{
-		name: 'Org 2',
-		id: '2',
-	},
-	{
-		name: 'Org 3',
-		id: '3',
-	},
-	{
-		name: 'Org 4',
-		id: '4',
-	},
-	{
-		name: 'Org 5',
-		id: '5',
-	},
-	{
-		name: 'Org 6',
-		id: '6',
-	},
-	{
-		name: 'Org 7',
-		id: '7',
-	},
-	{
-		name: 'Org 8',
-		id: '8',
-	},
-	{
-		name: 'Org 9',
-		id: '9',
-	},
-];
-
 export default function SquadForm({ id, isOpen }: FormProps) {
 	const [name, setName] = useState('');
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
 	const [selectedUsers, setSelectedUsers] = useState<InfoBody[]>([]);
 	const [org, setOrg] = useState<InfoBody>({ name: 'Escolha a organização', id: '' });
-	const { data: info, request: getInfo } = useGet<InfoBody[]>();
-	const { data: users, isLoading: isLoadingUsers, request: getUsers } = useGet<InfoBody[]>();
-	const {
-		data: organizations,
-		isLoading: isLoadingOrganizations,
-		request: getOrganizations,
-	} = useGet<InfoBody[]>();
+	const { data: info, request: getInfo } = useGet<SquadDTO>();
+	const { data: users, request: getUsers } = useGet<InfoBody[]>();
+	const { data: organizations, request: getOrganizations } = useGet<InfoBody[]>();
+	const { data: newSquad, request: createSquad, error, isLoading } = usePost<T>();
+	const { dataEdit: editedSquad, request: editSquad, errorEdit, isLoadingEdit } = usePut<T>();
 
 	useEffect(() => {
-		getOrganizations('/organization/info');
-		getUsers('/users/info');
-		getInfo(`/squad/info/${id}`);
-		// if (info) {
+		getOrganizations('/organization');
 		if (id) {
-			// setName(info[0].name);
-			setName('Nome de algo');
+			getInfo(`/squad/${id}`);
+			getUsers('/user');
 		}
 	}, []);
 
+	useEffect(() => {
+		if (info) {
+			setName(info.name || '');
+			const org = organizations?.find((org) => org.id === info.organization_id);
+			if (org) {
+				setOrg({ name: org.name, id: org.id });
+			}
+			if (info.users) {
+				const usersSelected = info.users.map((squad) => ({ name: squad.name, id: squad.id }));
+				setSelectedUsers(usersSelected);
+			}
+		}
+	}, [info, organizations]);
+
+	useEffect(() => {
+		if (newSquad) {
+			console.log(`Criou squad`);
+			isOpen();
+		} else if (error) {
+			console.log(`Deu erro, `, error);
+		}
+	}, [newSquad, error]);
+
+	useEffect(() => {
+		if (editedSquad) {
+			console.log(`Editou projeto`);
+			isOpen();
+		} else if (errorEdit) {
+			console.log(`Deu erro edit, `, error);
+		}
+	}, [editedSquad, errorEdit]);
+
 	const handleCreate = () => {
-		console.log(`Criar squad`);
-		// chamada api para criar
-		console.log(name, users);
-		isOpen();
+		if (id) {
+			// chamada api para editar
+			const connectedUsers = selectedUsers.map((p) => {
+				return {
+					id: p.id,
+				};
+			});
+			const disconnectedUsers = users
+				?.filter(
+					(option) => !selectedUsers.some((selectedOption) => selectedOption.id === option.id)
+				)
+				.map((p) => {
+					return {
+						id: p.id,
+					};
+				});
+			const editedSquad = {
+				id,
+				name,
+				organization_id: org.id,
+				users: {
+					connect: connectedUsers,
+					disconnect: disconnectedUsers,
+				},
+			};
+			editSquad('/squad', editedSquad);
+		} else {
+			// chamada api para criar
+			const newSquad = {
+				name,
+				organization_id: org.id,
+			};
+			createSquad('/squad', newSquad);
+		}
 	};
 
 	const handleMultiselect = (option: InfoBody) => {
@@ -159,30 +142,35 @@ export default function SquadForm({ id, isOpen }: FormProps) {
 				</label>
 				<Select
 					placeholder={org.name}
-					options={orgMock || []}
+					options={organizations || []}
 					handleSelect={handleSelect}
 					isOpen={openSelect === 'org'}
 					onToggle={() => setOpenSelect(openSelect === 'org' ? null : 'org')}
 				/>
 			</div>
-			<div className="flex items-end gap-2">
-				<label
-					className="text-lg mb-4 text-triider-grayscale-gray1 w-32 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
-					htmlFor="name"
-				>
-					USUÁRIOS
-				</label>
-				<Multiselect
-					handleMultiselect={handleMultiselect}
-					selected={selectedUsers}
-					options={usersMock || []}
-					isOpen={openSelect === 'user'}
-					onToggle={() => setOpenSelect(openSelect === 'user' ? null : 'user')}
-				/>
-			</div>
+			{id && (
+				<div className="flex items-end gap-2">
+					<label
+						className="text-lg mb-4 text-triider-grayscale-gray1 w-32 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
+						htmlFor="name"
+					>
+						USUÁRIOS
+					</label>
+					<Multiselect
+						handleMultiselect={handleMultiselect}
+						selected={selectedUsers}
+						options={users || []}
+						isOpen={openSelect === 'user'}
+						onToggle={() => setOpenSelect(openSelect === 'user' ? null : 'user')}
+					/>
+				</div>
+			)}
 
 			<div className="flex mt-5 justify-center items-center">
-				<Button onClickAction={handleCreate}>{name ? 'Editar' : 'Criar'}</Button>
+				<Button onClickAction={handleCreate}>
+					{(isLoading || isLoadingEdit) && <Spinner />}
+					{id ? 'Editar' : 'Criar'}
+				</Button>
 			</div>
 		</div>
 	);

@@ -3,9 +3,12 @@ import { useGet } from '../../hooks/useGet';
 import { InfoBody } from '../../types/InfoBody';
 import Button from '../Button';
 import { OrganizationDTO } from '../../types/OrganizationDTO';
-import { Multiselect } from '../Multiselect';
 import { usePost } from '../../hooks/usePost';
 import { usePut } from '../../hooks/usePut';
+import ArrowDownIcon from '../../assets/icons/arrowDownIcon.svg';
+import NewTabIcon from '../../assets/icons/newTabIcon.svg';
+import { Link } from 'react-router-dom';
+import Spinner from '../Spinner';
 
 interface FormProps {
 	id?: string;
@@ -15,9 +18,7 @@ interface FormProps {
 export default function OrganizationForm({ id, isOpen }: FormProps) {
 	const [name, setName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
-	const [project, setProject] = useState<InfoBody[]>([]);
-	const [selectedProjects, setSelectedProjects] = useState<InfoBody[]>([]);
-	const [openSelect, setOpenSelect] = useState<string | null>(null);
+	const [openSelect, setOpenSelect] = useState<boolean | null>(false);
 
 	const { data: info, request: getInfo } = useGet<OrganizationDTO>();
 	const { data: projects, request: getProjects } = useGet<InfoBody[]>();
@@ -30,16 +31,16 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 	} = usePut<T>();
 
 	useEffect(() => {
-		getInfo(`/organization/${id}`);
-		getProjects(`/project`);
+		if (id) {
+			getProjects(`/project`);
+			getInfo(`/organization/${id}`);
+		}
 	}, []);
 
 	useEffect(() => {
 		if (info) {
-			setName(info.name);
-			setEmail(info.email);
-			setProject(projects ?? []);
-			setSelectedProjects(info.projects ?? []);
+			setName(info.name || '');
+			setEmail(info.email || '');
 		}
 	}, [info, projects]);
 
@@ -64,61 +65,13 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 	const handleCreate = () => {
 		if (id) {
 			// chamada api para editar
-			const connectedProjects = selectedProjects.map((p) => {
-				return {
-					id: p.id,
-				};
-			});
+			const editedOrganization = {
+				id,
+				name,
+				email,
+			};
 
-			const disconnectedProjects = info?.projects
-				?.filter((p) => !selectedProjects.includes(p))
-				.map((p) => {
-					return {
-						id: p.id,
-					};
-				});
-
-			let newOrganization;
-
-			if (connectedProjects.length > 0 && disconnectedProjects && disconnectedProjects.length > 0) {
-				newOrganization = {
-					id,
-					name,
-					email,
-					projects: {
-						connect: connectedProjects,
-						disconnect: disconnectedProjects,
-					},
-				};
-			} else if (connectedProjects.length > 0) {
-				newOrganization = {
-					id,
-					name,
-					email,
-					projects: {
-						connect: connectedProjects,
-					},
-				};
-			} else if (disconnectedProjects && disconnectedProjects.length > 0) {
-				newOrganization = {
-					id,
-					name,
-					email,
-					projects: {
-						disconnect: disconnectedProjects,
-					},
-				};
-			} else {
-				newOrganization = {
-					id,
-					name,
-					email,
-				};
-			}
-
-			console.log(`newOrganization`, newOrganization);
-
-			editOrganization('/organization', newOrganization);
+			editOrganization('/organization', editedOrganization);
 		} else {
 			// chamada api para criar
 			const newOrganization = {
@@ -126,14 +79,6 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 				email,
 			};
 			createOrganization('/organization', newOrganization);
-		}
-	};
-
-	const handleMultiselect = (option: InfoBody) => {
-		if (selectedProjects.includes(option)) {
-			setSelectedProjects(selectedProjects.filter((s) => s.id !== option.id));
-		} else {
-			setSelectedProjects([...selectedProjects, option]);
 		}
 	};
 
@@ -171,7 +116,7 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 					className="block w-full p-4 min-w-[248px] text-sm border border-triider-grayscale-gray3 rounded-lg bg-triider-grayscale-gray4 focus:outline-none focus:ring-2 focus:ring-triider-primary-orange2"
 				/>
 			</div>
-			{id && (
+			{id && info?.projects && (
 				<div className="flex items-end gap-2">
 					<label
 						className="text-lg mb-4 text-triider-grayscale-gray1 w-32 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
@@ -179,13 +124,45 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 					>
 						PROJETOS
 					</label>
-					<Multiselect
-						handleMultiselect={handleMultiselect}
-						selected={selectedProjects}
-						options={project || []}
-						isOpen={openSelect === 'project'}
-						onToggle={() => setOpenSelect(openSelect === 'project' ? null : 'project')}
-					/>
+					<div className="relative w-full max-w-[320px]">
+						<div
+							onClick={() => {
+								if (info?.projects.length > 0) {
+									setOpenSelect(!openSelect);
+								}
+							}}
+							className="flex whitespace-pre overflow-hidden cursor-pointer min-h-[56px] h-auto items-center text-lg w-full bg-gray-100 pl-5 rounded-lg text-gray-700 font-medium hover:bg-slate-200"
+						>
+							{info?.projects.length > 0 ? (
+								info?.projects.map((option, idx) => (
+									<div key={option.id}>
+										<p>
+											{idx > 0 && ', '}
+											{option.name}
+										</p>
+										<img src={ArrowDownIcon} alt="arrow" className="absolute right-3 top-4" />
+									</div>
+								))
+							) : (
+								<p>Nenhum projeto cadastrado</p>
+							)}
+						</div>
+						{openSelect && (
+							<ul className="absolute max-h-40 overflow-auto text-start z-10 items-center text-lg w-full bg-gray-200 rounded-lg text-gray-700 font-medium">
+								{info?.projects.map((project) => (
+									<Link
+										key={project.id}
+										to={`/dashboard/projects?id=${project.id}`}
+										target="_blank"
+										className="relative w-full max-w-[320px]"
+									>
+										<li className="p-4 cursor-pointer hover:bg-slate-300">{project.name}</li>
+										<img src={NewTabIcon} alt="arrow" className="absolute right-3 top-4" />
+									</Link>
+								))}
+							</ul>
+						)}
+					</div>
 				</div>
 			)}
 			<div className="flex mt-5 justify-center items-center">
@@ -193,15 +170,7 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 					variant={name && name?.length > 0 ? 'primary' : 'disabled'}
 					onClickAction={handleCreate}
 				>
-					{(isLoading || isLoadingEdit) && (
-						<div
-							className="animate-spin mr-3 inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full"
-							role="status"
-							aria-label="loading"
-						>
-							<span className="sr-only">Loading...</span>
-						</div>
-					)}
+					{(isLoading || isLoadingEdit) && <Spinner />}
 					{id ? 'Editar' : 'Criar'}
 				</Button>
 			</div>

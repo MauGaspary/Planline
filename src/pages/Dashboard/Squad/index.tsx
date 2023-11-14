@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from '../../../components/Container';
 import Modal from '../../../components/Modal';
 import SquadForm from '../../../components/SquadForm';
 import { InputHeader } from '../../../components/InputHeader/Index';
 import { InputText } from '../../../components/InputText/Index';
 import GenericTable from '../../../components/GenericTable';
+import { SquadDTO } from '../../../types/SquadDTO';
+import { useGet } from '../../../hooks/useGet';
 
 function Squad() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState('');
-	const columns = ['Nome', 'Organização', 'Membros'];
+	const { data: info, request: getInfo } = useGet<SquadDTO[]>();
+	const columns = ['Nome', 'Membros', 'Organização'];
+
+	useEffect(() => {
+		getInfo(`/squad`);
+	}, []);
 
 	return (
 		<>
@@ -26,15 +33,14 @@ function Squad() {
 				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
-				<GenericTable columns={columns} />
-				<button
-					onClick={() => {
+				<GenericTable
+					listItems={info || []}
+					onEdit={(e) => {
 						setIsOpen(!isOpen);
-						setId('1');
+						setId(e);
 					}}
-				>
-					Abrir edit
-				</button>
+					columns={columns}
+				/>
 			</Container>
 		</>
 	);
