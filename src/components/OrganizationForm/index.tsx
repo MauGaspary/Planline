@@ -22,7 +22,12 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 	const { data: info, request: getInfo } = useGet<OrganizationDTO>();
 	const { data: projects, request: getProjects } = useGet<InfoBody[]>();
 	const { data: organization, request: createOrganization, error, isLoading } = usePost<T>();
-	const { dataEdit: newOrganization, request: editOrganization, errorEdit, isLoadingEdit } = usePut<T>();
+	const {
+		dataEdit: newOrganization,
+		request: editOrganization,
+		errorEdit,
+		isLoadingEdit,
+	} = usePut<T>();
 
 	useEffect(() => {
 		getInfo(`/organization/${id}`);
@@ -40,96 +45,166 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 
 	useEffect(() => {
 		if (organization) {
-			console.log(`Editou organization`);
+			console.log(`Criou organization`);
 			isOpen();
 		} else if (error) {
 			console.log(`Deu erro, `, error);
 		}
-	}, [organization]);
+	}, [organization, error]);
+
+	useEffect(() => {
+		if (newOrganization) {
+			console.log(`Editou organization`);
+			isOpen();
+		} else if (errorEdit) {
+			console.log(`Deu erro edit, `, error);
+		}
+	}, [newOrganization, errorEdit]);
 
 	const handleCreate = () => {
 		if (id) {
 			// chamada api para editar
-			editOrganization('/organization', { name, email });
-			return;
+			const connectedProjects = selectedProjects.map((p) => {
+				return {
+					id: p.id,
+				};
+			});
+
+			const disconnectedProjects = info?.projects
+				?.filter((p) => !selectedProjects.includes(p))
+				.map((p) => {
+					return {
+						id: p.id,
+					};
+				});
+
+			let newOrganization;
+
+			if (connectedProjects.length > 0 && disconnectedProjects && disconnectedProjects.length > 0) {
+				newOrganization = {
+					id,
+					name,
+					email,
+					projects: {
+						connect: connectedProjects,
+						disconnect: disconnectedProjects,
+					},
+				};
+			} else if (connectedProjects.length > 0) {
+				newOrganization = {
+					id,
+					name,
+					email,
+					projects: {
+						connect: connectedProjects,
+					},
+				};
+			} else if (disconnectedProjects && disconnectedProjects.length > 0) {
+				newOrganization = {
+					id,
+					name,
+					email,
+					projects: {
+						disconnect: disconnectedProjects,
+					},
+				};
+			} else {
+				newOrganization = {
+					id,
+					name,
+					email,
+				};
+			}
+
+			console.log(`newOrganization`, newOrganization);
+
+			editOrganization('/organization', newOrganization);
 		} else {
 			// chamada api para criar
-			console.log(`Criar organization`);
-			const editOrganization = {
+			const newOrganization = {
 				name,
 				email,
-				projects: {
-					connect: selectedProjects,
-					disconnect: info?.projects?.filter((p) => !selectedProjects.includes(p)) ?? [],
-				},
 			};
+			createOrganization('/organization', newOrganization);
 		}
-		createOrganization('/organization', editOrganization);
-	}
-};
+	};
 
-const handleMultiselect = (option: InfoBody) => {
-	if (selectedProjects.includes(option)) {
-		setSelectedProjects(selectedProjects.filter((s) => s.id !== option.id));
-	} else {
-		setSelectedProjects([...selectedProjects, option]);
-	}
-};
+	const handleMultiselect = (option: InfoBody) => {
+		if (selectedProjects.includes(option)) {
+			setSelectedProjects(selectedProjects.filter((s) => s.id !== option.id));
+		} else {
+			setSelectedProjects([...selectedProjects, option]);
+		}
+	};
 
-return (
-	<div className="flex flex-col gap-4 justify-center">
-		<div className="flex items-end gap-2">
-			<label
-				className="text-lg mb-4 text-triider-grayscale-gray1 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
-				htmlFor="name"
-			>
-				NOME
-			</label>
-			<input
-				type="text"
-				id="name"
-				value={name}
-				onChange={(e) => setName(e.target.value)}
-				placeholder="Digite o nome da organização"
-				className="block w-full p-4 min-w-[248px] text-sm border border-triider-grayscale-gray3 rounded-lg bg-triider-grayscale-gray4 focus:outline-none focus:ring-2 focus:ring-triider-primary-orange2"
-			/>
-		</div>
-		<div className="flex items-end gap-2">
-			<label
-				className="text-lg mb-4 text-triider-grayscale-gray1 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
-				htmlFor="email"
-			>
-				EMAIL
-			</label>
-			<input
-				type="text"
-				id="email"
-				value={email}
-				onChange={(e) => setEmail(e.target.value)}
-				placeholder="Digite o email da organização"
-				className="block w-full p-4 min-w-[248px] text-sm border border-triider-grayscale-gray3 rounded-lg bg-triider-grayscale-gray4 focus:outline-none focus:ring-2 focus:ring-triider-primary-orange2"
-			/>
-		</div>
-		{id && (
+	return (
+		<div className="flex flex-col gap-4 justify-center">
 			<div className="flex items-end gap-2">
 				<label
-					className="text-lg mb-4 text-triider-grayscale-gray1 w-32 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
+					className="text-lg mb-4 text-triider-grayscale-gray1 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
 					htmlFor="name"
 				>
-					PROJETOS
+					NOME
 				</label>
-				<Multiselect
-					handleMultiselect={handleMultiselect}
-					selected={selectedProjects}
-					options={project || []}
-					isOpen={openSelect === 'project'}
-					onToggle={() => setOpenSelect(openSelect === 'project' ? null : 'project')}
+				<input
+					type="text"
+					id="name"
+					value={name}
+					onChange={(e) => setName(e.target.value)}
+					placeholder="Digite o nome da organização"
+					className="block w-full p-4 min-w-[248px] text-sm border border-triider-grayscale-gray3 rounded-lg bg-triider-grayscale-gray4 focus:outline-none focus:ring-2 focus:ring-triider-primary-orange2"
 				/>
 			</div>
-		)}
-		<div className="flex mt-5 justify-center items-center">
-			<Button onClickAction={handleCreate}>{name ? 'Editar' : 'Criar'}</Button>
+			<div className="flex items-end gap-2">
+				<label
+					className="text-lg mb-4 text-triider-grayscale-gray1 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
+					htmlFor="email"
+				>
+					EMAIL
+				</label>
+				<input
+					type="text"
+					id="email"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+					placeholder="Digite o email da organização"
+					className="block w-full p-4 min-w-[248px] text-sm border border-triider-grayscale-gray3 rounded-lg bg-triider-grayscale-gray4 focus:outline-none focus:ring-2 focus:ring-triider-primary-orange2"
+				/>
+			</div>
+			{id && (
+				<div className="flex items-end gap-2">
+					<label
+						className="text-lg mb-4 text-triider-grayscale-gray1 w-32 mr-6 font-bold underline decoration-triider-grayscale-gray3 underline-offset-[18px]"
+						htmlFor="name"
+					>
+						PROJETOS
+					</label>
+					<Multiselect
+						handleMultiselect={handleMultiselect}
+						selected={selectedProjects}
+						options={project || []}
+						isOpen={openSelect === 'project'}
+						onToggle={() => setOpenSelect(openSelect === 'project' ? null : 'project')}
+					/>
+				</div>
+			)}
+			<div className="flex mt-5 justify-center items-center">
+				<Button
+					variant={name && name?.length > 0 ? 'primary' : 'disabled'}
+					onClickAction={handleCreate}
+				>
+					{(isLoading || isLoadingEdit) && (
+						<div
+							className="animate-spin mr-3 inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full"
+							role="status"
+							aria-label="loading"
+						>
+							<span className="sr-only">Loading...</span>
+						</div>
+					)}
+					{id ? 'Editar' : 'Criar'}
+				</Button>
+			</div>
 		</div>
-	</div>
-);
+	);
 }

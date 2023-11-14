@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from '../../../components/Container';
 import Modal from '../../../components/Modal';
 import GenericForm from '../../../components/OrganizationForm';
 import { InputHeader } from '../../../components/InputHeader/Index';
 import { InputText } from '../../../components/InputText/Index';
 import GenericTable from '../../../components/GenericTable';
+import { useGet } from '../../../hooks/useGet';
+import { OrganizationDTO } from '../../../types/OrganizationDTO';
 
 function Organization() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState('');
 	const columns = ['Nome', 'Email', 'Projetos'];
+	const { data: info, request: getInfo } = useGet<OrganizationDTO[]>();
+
+	useEffect(() => {
+		getInfo(`/organization`);
+	}, []);
 
 	return (
 		<>
@@ -23,18 +30,29 @@ function Organization() {
 				<GenericForm id={id} isOpen={() => setIsOpen(!isOpen)} />
 			</Modal>
 			<Container title="organizações">
-				<InputHeader onAddButtonClick={() => setIsOpen(!isOpen)}>
+				<InputHeader
+					onAddButtonClick={() => {
+						setIsOpen(!isOpen);
+						setId('');
+					}}
+				>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
 				<GenericTable columns={columns} />
-				<button
-					onClick={() => {
-						setIsOpen(!isOpen);
-						setId('a8d5f125-112b-490b-802f-7715a3cad338');
-					}}
-				>
-					Abrir edit
-				</button>
+				{info &&
+					info.map((item) => {
+						return (
+							<button
+								onClick={() => {
+									setIsOpen(!isOpen);
+									setId(item.id);
+								}}
+								key={item.id}
+							>
+								Abrir edit {item.name}
+							</button>
+						);
+					})}
 			</Container>
 		</>
 	);
