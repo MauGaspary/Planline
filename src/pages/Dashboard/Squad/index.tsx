@@ -19,7 +19,7 @@ function Squad() {
 
 	useEffect(() => {
 		getInfo(`/squad`);
-	}, []);
+	}, [update]);
 
 	return (
 		<>

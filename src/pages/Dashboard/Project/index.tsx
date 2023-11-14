@@ -27,7 +27,7 @@ function Project() {
 			setId(projectId);
 			setIsOpen(true);
 		}
-	}, []);
+	}, [update]);
 
 	return (
 		<>

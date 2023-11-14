@@ -19,7 +19,7 @@ function Organization() {
 
 	useEffect(() => {
 		getInfo(`/organization`);
-	}, []);
+	}, [update]);
 
 	return (
 		<>
