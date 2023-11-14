@@ -20,13 +20,11 @@ sonarqube-check:
     paths:
       - .sonar/cache
   script: 
+		- sleep 1h
     - sonar-scanner
   allow_failure: true
   only:
     - build/redo-envs
-    - merge_requests
-    - main
-    - develop
 
 # ------------- BUILD SCRIPT -------------
 
