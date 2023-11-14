@@ -7,10 +7,12 @@ import Spinner from '../Spinner';
 import { UserDTO } from '../../types/UserDTO';
 import { usePost } from '../../hooks/usePost';
 import { usePut } from '../../hooks/usePut';
+import { update } from 'firebase/database';
 
 interface UserFormProps {
 	id?: string;
 	isOpen: () => void;
+	update: () => void;
 }
 
 const level = [
@@ -28,7 +30,7 @@ const level = [
 	},
 ];
 
-export default function UserForm({ id, isOpen }: UserFormProps) {
+export default function UserForm({ id, isOpen, update }: UserFormProps) {
 	const [userName, setUserName] = useState('');
 	const [userEmail, setUserEmail] = useState('');
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
@@ -60,6 +62,7 @@ export default function UserForm({ id, isOpen }: UserFormProps) {
 		if (newUser) {
 			console.log(`Criou usuario`);
 			isOpen();
+			update();
 		} else if (error) {
 			console.log(`Deu erro, `, error);
 		}
@@ -69,6 +72,7 @@ export default function UserForm({ id, isOpen }: UserFormProps) {
 		if (editedUser) {
 			console.log(`Editou usuario`);
 			isOpen();
+			update();
 		} else if (errorEdit) {
 			console.log(`Deu erro edit, `, error);
 		}

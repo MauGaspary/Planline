@@ -12,6 +12,7 @@ import DeleteModal from '../../../components/DeleteModal';
 function Squad() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
+	const [update, setUpdate] = useState(false);
 	const [id, setId] = useState('');
 	const { data: info, request: getInfo } = useGet<SquadDTO[]>();
 	const columns = ['Nome', 'Membros', 'Organização'];
@@ -29,7 +30,7 @@ function Squad() {
 					setIsOpen(!isOpen);
 				}}
 			>
-				<SquadForm id={id} isOpen={() => setIsOpen(!isOpen)} />
+				<SquadForm id={id} isOpen={() => setIsOpen(!isOpen)} update={() => setUpdate(!update)} />
 			</Modal>
 			<DeleteModal
 				isOpen={isOpenDelete}
@@ -37,6 +38,7 @@ function Squad() {
 				onClose={() => {
 					setIsOpenDelete(!isOpenDelete);
 				}}
+				update={() => setUpdate(!update)}
 				type="squad"
 			/>
 			<Container title="SQUADS">

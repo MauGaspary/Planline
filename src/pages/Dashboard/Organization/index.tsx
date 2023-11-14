@@ -12,6 +12,7 @@ import DeleteModal from '../../../components/DeleteModal';
 function Organization() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
+	const [update, setUpdate] = useState(false);
 	const [id, setId] = useState('');
 	const columns = ['Nome', 'Email', 'Projetos'];
 	const { data: info, request: getInfo } = useGet<OrganizationDTO[]>();
@@ -29,7 +30,7 @@ function Organization() {
 					setIsOpen(!isOpen);
 				}}
 			>
-				<GenericForm id={id} isOpen={() => setIsOpen(!isOpen)} />
+				<GenericForm id={id} isOpen={() => setIsOpen(!isOpen)} update={() => setUpdate(!update)} />
 			</Modal>
 			<DeleteModal
 				isOpen={isOpenDelete}
@@ -37,6 +38,7 @@ function Organization() {
 				onClose={() => {
 					setIsOpenDelete(!isOpenDelete);
 				}}
+				update={() => setUpdate(!update)}
 				type="organization"
 			/>
 			<Container title="organizações">

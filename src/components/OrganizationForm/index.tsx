@@ -13,9 +13,10 @@ import Spinner from '../Spinner';
 interface FormProps {
 	id?: string;
 	isOpen: () => void;
+	update: () => void;
 }
 
-export default function OrganizationForm({ id, isOpen }: FormProps) {
+export default function OrganizationForm({ id, isOpen, update }: FormProps) {
 	const [name, setName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [openSelect, setOpenSelect] = useState<boolean | null>(false);
@@ -48,6 +49,7 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 		if (organization) {
 			console.log(`Criou organization`);
 			isOpen();
+			update();
 		} else if (error) {
 			console.log(`Deu erro, `, error);
 		}
@@ -57,6 +59,7 @@ export default function OrganizationForm({ id, isOpen }: FormProps) {
 		if (newOrganization) {
 			console.log(`Editou organization`);
 			isOpen();
+			update();
 		} else if (errorEdit) {
 			console.log(`Deu erro edit, `, error);
 		}

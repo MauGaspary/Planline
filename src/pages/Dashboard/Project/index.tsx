@@ -13,6 +13,7 @@ import DeleteModal from '../../../components/DeleteModal';
 function Project() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
+	const [update, setUpdate] = useState(false);
 	const [id, setId] = useState('');
 	const { data: info, request: getInfo } = useGet<ProjectDTO[]>();
 	const [searchParams] = useSearchParams();
@@ -37,7 +38,7 @@ function Project() {
 					setIsOpen(!isOpen);
 				}}
 			>
-				<ProjectForm id={id} isOpen={() => setIsOpen(!isOpen)} />
+				<ProjectForm id={id} isOpen={() => setIsOpen(!isOpen)} update={() => setUpdate(!update)} />
 			</Modal>
 			<DeleteModal
 				isOpen={isOpenDelete}
@@ -45,6 +46,7 @@ function Project() {
 				onClose={() => {
 					setIsOpenDelete(!isOpenDelete);
 				}}
+				update={() => setUpdate(!update)}
 				type="project"
 			/>
 			<Container title="projetos">

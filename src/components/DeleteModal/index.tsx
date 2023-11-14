@@ -11,9 +11,10 @@ type ModalProps = {
 	onClose: () => void;
 	id: string;
 	type: string;
+	update: () => void;
 };
 
-const DeleteModal = ({ isOpen, onClose, type, id }: ModalProps) => {
+const DeleteModal = ({ isOpen, onClose, type, id, update }: ModalProps) => {
 	const { data: deleteInfoData, isLoading, error, request: deleteInfo } = useDelete<T>();
 	const { data: info, request: getInfo } = useGet<T>();
 	const [title, setTitle] = useState('');
@@ -34,6 +35,7 @@ const DeleteModal = ({ isOpen, onClose, type, id }: ModalProps) => {
 		if (deleteInfoData) {
 			console.log(`Deletou usuario`);
 			onClose();
+			update();
 		} else if (error) {
 			console.log(`Deu erro, `, error);
 		}
@@ -46,7 +48,6 @@ const DeleteModal = ({ isOpen, onClose, type, id }: ModalProps) => {
 	const handleDelete = () => {
 		if (id) {
 			deleteInfo(`/${type}/${id}`);
-			onClose();
 		}
 	};
 

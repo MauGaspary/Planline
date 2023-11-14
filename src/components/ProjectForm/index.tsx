@@ -13,9 +13,10 @@ import { SquadDTO } from '../../types/SquadDTO';
 interface FormProps {
 	id?: string;
 	isOpen: () => void;
+	update: () => void;
 }
 
-export default function ProjectForm({ id, isOpen }: FormProps) {
+export default function ProjectForm({ id, isOpen, update }: FormProps) {
 	const [name, setName] = useState('');
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
 	const [org, setOrg] = useState<InfoBody>({ name: 'Escolha a organização', id: '' });
@@ -60,6 +61,7 @@ export default function ProjectForm({ id, isOpen }: FormProps) {
 		if (project) {
 			console.log(`Criou projeto`);
 			isOpen();
+			update();
 		} else if (error) {
 			console.log(`Deu erro, `, error);
 		}
@@ -69,6 +71,7 @@ export default function ProjectForm({ id, isOpen }: FormProps) {
 		if (newProject) {
 			console.log(`Editou projeto`);
 			isOpen();
+			update();
 		} else if (errorEdit) {
 			console.log(`Deu erro edit, `, error);
 		}

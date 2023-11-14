@@ -12,6 +12,7 @@ import DeleteModal from '../../../components/DeleteModal';
 
 function User() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [update, setUpdate] = useState(false);
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [id, setId] = useState('');
 	const { data: info, request: getInfo } = useGet<UserDTO[]>();
@@ -20,7 +21,7 @@ function User() {
 
 	useEffect(() => {
 		getInfo(`/user`);
-	}, []);
+	}, [update]);
 
 	return (
 		<>
@@ -31,7 +32,7 @@ function User() {
 					setIsOpen(!isOpen);
 				}}
 			>
-				<UserForm id={id} isOpen={() => setIsOpen(!isOpen)} />
+				<UserForm id={id} isOpen={() => setIsOpen(!isOpen)} update={() => setUpdate(!update)} />
 			</Modal>
 			<DeleteModal
 				isOpen={isOpenDelete}
@@ -39,6 +40,7 @@ function User() {
 				onClose={() => {
 					setIsOpenDelete(!isOpenDelete);
 				}}
+				update={() => setUpdate(!update)}
 				type="user"
 			/>
 			<Container title="usuários">

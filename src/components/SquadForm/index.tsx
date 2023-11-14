@@ -12,9 +12,10 @@ import { usePut } from '../../hooks/usePut';
 interface FormProps {
 	id?: string;
 	isOpen: () => void;
+	update: () => void;
 }
 
-export default function SquadForm({ id, isOpen }: FormProps) {
+export default function SquadForm({ id, isOpen, update }: FormProps) {
 	const [name, setName] = useState('');
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
 	const [selectedUsers, setSelectedUsers] = useState<InfoBody[]>([]);
@@ -51,6 +52,7 @@ export default function SquadForm({ id, isOpen }: FormProps) {
 		if (newSquad) {
 			console.log(`Criou squad`);
 			isOpen();
+			update();
 		} else if (error) {
 			console.log(`Deu erro, `, error);
 		}
@@ -60,6 +62,7 @@ export default function SquadForm({ id, isOpen }: FormProps) {
 		if (editedSquad) {
 			console.log(`Editou projeto`);
 			isOpen();
+			update();
 		} else if (errorEdit) {
 			console.log(`Deu erro edit, `, error);
 		}
