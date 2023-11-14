@@ -32,7 +32,7 @@ export default function Voting() {
 	};
 
 	const handleButtonClick = async () => {
-		await vote(state.sessionId ?? 0, game.current_story, game.current_task, user.id, +selectedCard);
+		await vote(state.sessionId ?? 0, game.current_task, user.id, +selectedCard);
 
 		navigation.replace('Wait', { waitingTask: game?.current_task || '' });
 	};
