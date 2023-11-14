@@ -10,7 +10,7 @@ services:
 before_script:
   - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
 
-	# ------------- SONARQUBE SCRIPT ---------------
+  # ------------- SONARQUBE SCRIPT ---------------
 
 sonarqube-check:
   stage: sonarqube-check
