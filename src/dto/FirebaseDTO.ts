@@ -5,6 +5,7 @@ export type FirebaseCollection<T> = {
 export type FirebaseSession = {
 	game: FirebaseGame;
 	users: FirebaseCollection<FirebaseUser>;
+	votes?: FirebaseCollection<FirebaseTaskVote>;
 };
 
 export type FirebaseGame = {
@@ -25,6 +26,9 @@ export type FirebaseStory = {
 
 export type FirebaseTask = {
 	description: string;
+};
+
+export type FirebaseTaskVote = {
 	final_vote: number;
 	votes: FirebaseCollection<number>;
 };

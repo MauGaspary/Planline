@@ -7,6 +7,7 @@ import {
 	FirebaseSession,
 	FirebaseStory,
 	FirebaseTask,
+	FirebaseTaskVote,
 	FirebaseUser,
 } from '../dto/FirebaseDTO.js';
 import storyRepository from '../repositories/storyRepository.js';
@@ -55,8 +56,6 @@ export default {
 			for (const task of story.tasks) {
 				firebaseTasks[task.task_id] = {
 					description: task.name,
-					final_vote: 0,
-					votes: {},
 				};
 			}
 
@@ -116,25 +115,32 @@ export default {
 	},
 
 	async finalize(sessionId: string) {
-		const sessionRef = child(sessionsRef, `${sessionId}/game`);
+		const sessionRef = child(sessionsRef, `${sessionId}`);
 
 		const snapshot = await get(sessionRef);
 
 		const promises = [];
 
 		if (snapshot.exists()) {
-			const session: FirebaseGame = snapshot.val();
+			const session: FirebaseSession = snapshot.val();
+			const game: FirebaseGame = session.game;
 
-			for (const storyId in session.stories) {
-				const story = session.stories[storyId];
+			const votes: FirebaseCollection<FirebaseTaskVote> = session.votes ?? {};
+
+			for (const storyId in game.stories) {
+				const story = game.stories[storyId];
 
 				const voteCount: { [key: number]: number } = {};
 
 				for (const taskId in story.tasks) {
-					const task = story.tasks[taskId];
+					const task: FirebaseTaskVote | null = votes[taskId];
 
-					for (const votes in task.votes) {
-						const vote = task.votes[votes];
+					if (!task) {
+						continue;
+					}
+
+					for (const userId in task.votes) {
+						const vote = task.votes[userId];
 
 						promises.push(
 							voteRepository.create({
@@ -146,7 +152,7 @@ export default {
 								},
 								User: {
 									connect: {
-										id: votes,
+										id: userId,
 									},
 								},
 							})
