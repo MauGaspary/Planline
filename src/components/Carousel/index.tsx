@@ -17,6 +17,7 @@ function Carousel({ taskList, currentTaskId, voteLater, finalVotes }: TaskProps)
 	const params = {
 		slidesToShow: 3,
 		dragging: false,
+		slideIndex: 0,
 	};
 
 	return (
