@@ -169,7 +169,7 @@ export default function Game() {
 		);
 	}
 
-	const isToShow = voteState === 'conjunta';
+	const isToShow = voteState === 'group';
 
 	function ShowPlayers() {
 		return (
@@ -355,7 +355,7 @@ export default function Game() {
 				<Qrcode link={session_id || ''} code={session_id || ''} />
 			</div>
 			<div className="flex-col absolute top-28 right-20">
-				{!(voteState === 'individual') && (
+				{voteState === 'group' && (
 					<div className="w-72 h-52 border-2 p-6 rounded-2xl bg-white font-medium border-transparent shadow-xl mb-20">
 						<div className="font-medium text-xl">Resumo</div>
 						<div className="flex flex-row justify-between mt-4">
@@ -395,7 +395,7 @@ export default function Game() {
 							<p className="text-lg text-white pb-2">Aguarde enquanto seus colegas votam</p>
 							<Button
 								onClickAction={() => {
-									setVoteState('conjunta');
+									setVoteState('group');
 								}}
 								size="small"
 							>
