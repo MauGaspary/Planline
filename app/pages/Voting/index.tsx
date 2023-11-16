@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import { useState } from 'react';
@@ -7,6 +7,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
 import { CurrentUser, Game, useAppContext } from '../../hooks/useSessionContexts';
 import { vote } from '../../services/votes';
+import CustomModal from '../../components/CustomModal/CustomModal';
 
 export default function Voting() {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -37,9 +38,18 @@ export default function Voting() {
 		navigation.replace('Wait', { waitingTask: game?.current_task || '' });
 	};
 
+	const [isModalVisible, setModalVisible] = useState(false);
+
+	const toggleModal = () => {
+		setModalVisible(!isModalVisible);
+	};
+
 	return (
-		<View className="items-center flex-1">
-			<View className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400">
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+			<TouchableOpacity
+				onPress={() => toggleModal()}
+				className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400"
+			>
 				<Text className="mt-8 text-2xl font-body">{game.sprint_name}</Text>
 				<Text
 					numberOfLines={2}
@@ -50,7 +60,7 @@ export default function Voting() {
 				<Text className="mt-4 mx-2 mb-6 text-lg text-triider-grayscale-gray1">
 					{currentTask?.description || 'Não há tarefas nessa história'}
 				</Text>
-			</View>
+			</TouchableOpacity>
 			<View className="flex-row mt-10 justify-between w-80">
 				<Card label="1" isSelected={selectedCard === '1'} onClick={handleCardClick} />
 				<Card label="2" isSelected={selectedCard === '2'} onClick={handleCardClick} />
@@ -69,6 +79,15 @@ export default function Voting() {
 				/>
 				<Card label="" isSelected={selectedCard === '-1'} onClick={handleCardClick} />
 			</View>
+
+			{/* Include the modal component */}
+			<CustomModal
+				sprintName={game.sprint_name}
+				story={currentStory?.name}
+				task={currentTask?.description}
+				isVisible={isModalVisible}
+				onClose={toggleModal}
+			/>
 		</View>
 	);
 }
