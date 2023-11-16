@@ -14,6 +14,7 @@ import storyRepository from '../repositories/storyRepository.js';
 import taskRepository from '../repositories/taskRepository.js';
 import voteRepository from '../repositories/voteRepository.js';
 import squadService from './squadService.js';
+import sprintRepository from 'src/repositories/sprintRepository.js';
 
 function generateFourDigitId(): string {
 	return Math.floor(1000 + Math.random() * 9000).toString();
@@ -65,10 +66,12 @@ export default {
 			};
 		}
 
+		const sprintId: string = await sprintRepository.create(sessionCreationDTO.sprint);
+
 		const [squad, sessionId] = await Promise.all([
 			squadService.getBySquadId(sessionCreationDTO.squad_id),
 			this.createRandomId(),
-			storyRepository.createMany(stories),
+			storyRepository.createMany(stories, sprintId),
 		]);
 
 		const users = squad?.users ?? [];
@@ -199,5 +202,9 @@ export default {
 			})
 			.slice(0, 6)
 			.map((entry) => entry[0]);
+	},
+
+	async download(sprintId: string): Promise<string[]> {
+		
 	},
 };

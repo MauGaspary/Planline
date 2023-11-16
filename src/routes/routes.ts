@@ -14,6 +14,7 @@ routes.use(loggerMiddleware);
 routes.post('/sessions', sessionsController.index);
 routes.delete('/sessions/finalize/:sessionId', sessionsController.finalize);
 routes.get('/sessions/available/:squad_id', sessionsController.available);
+routes.get('sessions/download/:sprintId', sessionsController.download);
 
 routes.post('/squad', squadController.create);
 routes.get('/squad', squadController.read);

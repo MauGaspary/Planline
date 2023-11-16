@@ -1446,6 +1446,11 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+dank-do-while@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/dank-do-while/-/dank-do-while-0.1.2.tgz#819b25937b9777657b56f5172ad856596fcd0c84"
+  integrity sha512-pyMrgXfugjvdernLCcXNixYqGijUZzYxrb+hAeED2EBpNbctCCxdA/O6NIQXn6vIjwzY1IMmV29d2Y6vaayrwQ==
+
 dargs@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/dargs/-/dargs-7.0.0.tgz#04015c41de0bcb69ec84050f3d9be0caf8d6d5cc"
@@ -1878,6 +1883,20 @@ finalhandler@1.2.0:
     parseurl "~1.3.3"
     statuses "2.0.1"
     unpipe "~1.0.0"
+
+find-alternate-file@^1.0.3:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/find-alternate-file/-/find-alternate-file-1.0.5.tgz#5e2543311ba8ad472ddb4b45b9bd4e5ecc0e95c8"
+  integrity sha512-9XljHp7ExQ8WJfDDwIOwiWLTZ9xOQoeug9omrQNbVqEBa87LFCqyedQ0L7xfRXH4KCRgqwxkgrG7/RW8n6UIog==
+  dependencies:
+    dank-do-while "^0.1.2"
+
+find-alternate-index@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/find-alternate-index/-/find-alternate-index-1.0.0.tgz#e537305d3530d7f896abb487631d5e93421495b1"
+  integrity sha512-0z7hWJQf1BA3JNTY+mE+gcxf+DkgJyABimYY2Au9/hZKUFg8uLkB1nWDEgyQ2h9omeTNlnSEx2bBFbSiHbdhTg==
+  dependencies:
+    dank-do-while "^0.1.2"
 
 find-up@^4.1.0:
   version "4.1.0"
@@ -3418,6 +3437,14 @@ synckit@^0.8.5:
   dependencies:
     "@pkgr/utils" "^2.3.1"
     tslib "^2.5.0"
+
+templater@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/templater/-/templater-1.1.0.tgz#c60e846d3397e78b811dd6a9f7b9768ce3ddc915"
+  integrity sha512-VR0jGkoJ8A7N/HfH8MwT5ca0O2aaOfmfVMzbjvZnhXUMQ7MaRwHdr1yvJVhDKPJvONw/RVr81KFBY7CXByBbZA==
+  dependencies:
+    find-alternate-file "^1.0.3"
+    find-alternate-index "^1.0.0"
 
 text-extensions@^1.0.0:
   version "1.9.0"
