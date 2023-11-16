@@ -8,6 +8,7 @@ import { SessionCreationDto, SessionCreationResponseDto } from '../../../types/C
 import { usePost } from '../../../hooks/usePost';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '..';
+import Spinner from '../../Spinner';
 
 interface ResumeProps {
 	setBreadcrumbDisplay: (display: string) => void;
@@ -158,15 +159,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 							</Button>
 
 							<Button variant="primary" onClickAction={() => createSession()}>
-								{isLoading && (
-									<div
-										className="animate-spin mr-3 inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full"
-										role="status"
-										aria-label="loading"
-									>
-										<span className="sr-only">Loading...</span>
-									</div>
-								)}
+								{isLoading && <Spinner />}
 								Iniciar sessão
 							</Button>
 						</div>
