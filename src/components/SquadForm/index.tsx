@@ -8,11 +8,26 @@ import { SquadDTO } from '../../types/SquadDTO';
 import Spinner from '../Spinner';
 import { usePost } from '../../hooks/usePost';
 import { usePut } from '../../hooks/usePut';
+import { DefaultResponse } from '../../types/DefaultResponse';
 
 interface FormProps {
 	id?: string;
 	isOpen: () => void;
 	update: () => void;
+}
+
+interface SquadBody {
+	id?: string;
+	name: string;
+	organization_id: string;
+	users?: {
+		connect: {
+			id: string;
+		}[];
+		disconnect: {
+			id: string;
+		}[];
+	};
 }
 
 export default function SquadForm({ id, isOpen, update }: FormProps) {
@@ -23,8 +38,18 @@ export default function SquadForm({ id, isOpen, update }: FormProps) {
 	const { data: info, request: getInfo } = useGet<SquadDTO>();
 	const { data: users, request: getUsers } = useGet<InfoBody[]>();
 	const { data: organizations, request: getOrganizations } = useGet<InfoBody[]>();
-	const { data: newSquad, request: createSquad, error, isLoading } = usePost<T>();
-	const { dataEdit: editedSquad, request: editSquad, errorEdit, isLoadingEdit } = usePut<T>();
+	const {
+		data: newSquad,
+		request: createSquad,
+		error,
+		isLoading,
+	} = usePost<DefaultResponse, SquadBody>();
+	const {
+		dataEdit: editedSquad,
+		request: editSquad,
+		errorEdit,
+		isLoadingEdit,
+	} = usePut<DefaultResponse, SquadBody>();
 
 	useEffect(() => {
 		getOrganizations('/organization');
@@ -76,15 +101,16 @@ export default function SquadForm({ id, isOpen, update }: FormProps) {
 					id: p.id,
 				};
 			});
-			const disconnectedUsers = users
-				?.filter(
-					(option) => !selectedUsers.some((selectedOption) => selectedOption.id === option.id)
-				)
-				.map((p) => {
-					return {
-						id: p.id,
-					};
-				});
+			const disconnectedUsers =
+				users
+					?.filter(
+						(option) => !selectedUsers.some((selectedOption) => selectedOption.id === option.id)
+					)
+					.map((p) => {
+						return {
+							id: p.id,
+						};
+					}) || [];
 			const editedSquad = {
 				id,
 				name,

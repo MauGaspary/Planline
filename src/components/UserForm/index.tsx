@@ -7,7 +7,7 @@ import Spinner from '../Spinner';
 import { UserDTO } from '../../types/UserDTO';
 import { usePost } from '../../hooks/usePost';
 import { usePut } from '../../hooks/usePut';
-import { update } from 'firebase/database';
+import { DefaultResponse } from '../../types/DefaultResponse';
 
 interface UserFormProps {
 	id?: string;
@@ -30,14 +30,30 @@ const level = [
 	},
 ];
 
+interface UserBody {
+	id?: string;
+	name: string;
+	email: string;
+}
+
 export default function UserForm({ id, isOpen, update }: UserFormProps) {
 	const [userName, setUserName] = useState('');
 	const [userEmail, setUserEmail] = useState('');
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
 	const [levelSelected, setLevel] = useState<InfoBody>({ name: 'Escolha o nível', id: '' });
 	const { data: userInfo, request: getUser } = useGet<UserDTO>();
-	const { data: newUser, request: createUser, error, isLoading } = usePost<T>();
-	const { dataEdit: editedUser, request: editUser, errorEdit, isLoadingEdit } = usePut<T>();
+	const {
+		data: newUser,
+		request: createUser,
+		error,
+		isLoading,
+	} = usePost<DefaultResponse, UserBody>();
+	const {
+		dataEdit: editedUser,
+		request: editUser,
+		errorEdit,
+		isLoadingEdit,
+	} = usePut<DefaultResponse, UserBody>();
 
 	const handleSelect = (_placeholder: string, option: InfoBody) => {
 		setLevel(option);

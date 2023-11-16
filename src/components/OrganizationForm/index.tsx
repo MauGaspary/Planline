@@ -9,11 +9,19 @@ import ArrowDownIcon from '../../assets/icons/arrowDownIcon.svg';
 import NewTabIcon from '../../assets/icons/newTabIcon.svg';
 import { Link } from 'react-router-dom';
 import Spinner from '../Spinner';
+import { DefaultResponse } from '../../types/DefaultResponse';
 
 interface FormProps {
 	id?: string;
 	isOpen: () => void;
 	update: () => void;
+}
+
+interface OrganizationBody {
+	id?: string;
+	name: string;
+	email: string;
+	projects?: InfoBody[];
 }
 
 export default function OrganizationForm({ id, isOpen, update }: FormProps) {
@@ -23,13 +31,18 @@ export default function OrganizationForm({ id, isOpen, update }: FormProps) {
 
 	const { data: info, request: getInfo } = useGet<OrganizationDTO>();
 	const { data: projects, request: getProjects } = useGet<InfoBody[]>();
-	const { data: organization, request: createOrganization, error, isLoading } = usePost<T>();
+	const {
+		data: organization,
+		request: createOrganization,
+		error,
+		isLoading,
+	} = usePost<DefaultResponse, OrganizationBody>();
 	const {
 		dataEdit: newOrganization,
 		request: editOrganization,
 		errorEdit,
 		isLoadingEdit,
-	} = usePut<T>();
+	} = usePut<DefaultResponse, OrganizationBody>();
 
 	useEffect(() => {
 		if (id) {

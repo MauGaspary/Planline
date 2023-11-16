@@ -9,11 +9,26 @@ import { usePost } from '../../hooks/usePost';
 import Spinner from '../Spinner';
 import { usePut } from '../../hooks/usePut';
 import { SquadDTO } from '../../types/SquadDTO';
+import { DefaultResponse } from '../../types/DefaultResponse';
 
 interface FormProps {
 	id?: string;
 	isOpen: () => void;
 	update: () => void;
+}
+
+interface ProjectBody {
+	id?: string;
+	name: string;
+	organization_id: string;
+	squads?: {
+		connect: {
+			id: string;
+		}[];
+		disconnect: {
+			id: string;
+		}[];
+	};
 }
 
 export default function ProjectForm({ id, isOpen, update }: FormProps) {
@@ -25,8 +40,18 @@ export default function ProjectForm({ id, isOpen, update }: FormProps) {
 	const { data: info, request: getInfo } = useGet<ProjectDTO>();
 	const { data: organizations, request: getOrganizations } = useGet<InfoBody[]>();
 	const { data: squads, request: getSquads } = useGet<SquadDTO[]>();
-	const { data: project, request: createProject, error, isLoading } = usePost<T>();
-	const { dataEdit: newProject, request: editProject, errorEdit, isLoadingEdit } = usePut<T>();
+	const {
+		data: project,
+		request: createProject,
+		error,
+		isLoading,
+	} = usePost<DefaultResponse, ProjectBody>();
+	const {
+		dataEdit: newProject,
+		request: editProject,
+		errorEdit,
+		isLoadingEdit,
+	} = usePut<DefaultResponse, ProjectBody>();
 
 	useEffect(() => {
 		getOrganizations('/organization');
