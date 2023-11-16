@@ -1,6 +1,5 @@
 import { Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import coffeeWhite from '../../assets/images/coffee-white.png';
 import coffee from '../../assets/images/coffee.png';
 
 interface CardProps {
@@ -12,7 +11,6 @@ interface CardProps {
 export default function Card({ label, isSelected, onClick }: CardProps) {
 	let style = '';
 	let textStyle = '';
-	let imgStyle;
 	let styleBtn = '';
 
 	const handlePress = () => {
@@ -31,7 +29,6 @@ export default function Card({ label, isSelected, onClick }: CardProps) {
 		: commonStyles;
 
 	textStyle = 'text-lg text-triider-primary-orange1 font-bold';
-	imgStyle = coffee;
 
 	styleBtn = isSelected
 		? `${commonStyles} h-14 w-72 mb-6 border-4 border-triider-primary-orange1`
@@ -48,7 +45,7 @@ export default function Card({ label, isSelected, onClick }: CardProps) {
 	} else {
 		return (
 			<TouchableOpacity className={styleBtn} onPress={handlePress}>
-				<Image source={imgStyle}></Image>
+				<Image source={coffee}></Image>
 			</TouchableOpacity>
 		);
 	}
