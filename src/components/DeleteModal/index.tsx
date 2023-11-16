@@ -5,6 +5,7 @@ import Button from '../Button';
 import { useDelete } from '../../hooks/useDelete';
 import Spinner from '../Spinner';
 import { useGet } from '../../hooks/useGet';
+import { DefaultResponse } from '../../types/DefaultResponse';
 
 type ModalProps = {
 	isOpen: boolean;
@@ -14,9 +15,16 @@ type ModalProps = {
 	update: () => void;
 };
 
+type Info = { name: string };
+
 const DeleteModal = ({ isOpen, onClose, type, id, update }: ModalProps) => {
-	const { data: deleteInfoData, isLoading, error, request: deleteInfo } = useDelete<T>();
-	const { data: info, request: getInfo } = useGet<T>();
+	const {
+		data: deleteInfoData,
+		isLoading,
+		error,
+		request: deleteInfo,
+	} = useDelete<DefaultResponse>();
+	const { data: info, request: getInfo } = useGet<Info>();
 	const [title, setTitle] = useState('');
 
 	useEffect(() => {
