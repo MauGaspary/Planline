@@ -169,7 +169,7 @@ export default function Game() {
 		return (
 			<>
 				<div>
-					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-36 z-10">
+					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-44 z-10">
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -181,7 +181,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
-							position="top"
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute -bottom-40 left-32 z-10">
