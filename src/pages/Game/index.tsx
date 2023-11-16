@@ -169,7 +169,7 @@ export default function Game() {
 		return (
 			<>
 				<div>
-					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-36 z-10">
+					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-44 z-10">
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -181,6 +181,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute -bottom-40 left-32 z-10">
@@ -195,6 +196,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute -bottom-28 -left-10 z-10">
@@ -209,6 +211,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute top-1/2 pb-10 -left-36 transform -translate-y-1/2 z-10">
@@ -223,6 +226,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-36 -left-10 z-10">
@@ -237,6 +241,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-48 left-32 z-10">
@@ -251,6 +256,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-48 left-1/2 transform -translate-x-1/2 z-10">
@@ -265,6 +271,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-48 right-32 z-10">
@@ -279,6 +286,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-36 -right-10 z-10">
@@ -293,6 +301,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute top-1/2 pb-10 -right-36 transform -translate-y-1/2 z-10">
@@ -307,6 +316,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -bottom-28 -right-10 z-10">
@@ -321,6 +331,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute -bottom-40 right-32 z-10">
@@ -335,6 +346,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 				</div>
