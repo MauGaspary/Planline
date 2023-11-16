@@ -41,8 +41,8 @@ export default {
 	async delete(req: Request, res: Response) {
 		try {
 			const projectId: string = req.params.projectId;
-			await projectService.delete(projectId);
-			res.status(204).json();
+			const respId: string = await projectService.delete(projectId);
+			res.status(201).json({ respId });
 		} catch (e) {
 			loggerService.error(e);
 			res.status(500).json({ message: 'Erro ao deletar projeto.' });

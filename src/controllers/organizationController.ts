@@ -40,8 +40,8 @@ export default {
 	async delete(req: Request, res: Response) {
 		try {
 			const organizationId: string = req.params.organizationId;
-			await organizationService.delete(organizationId);
-			res.status(204).send();
+			const respId: string = await organizationService.delete(organizationId);
+			res.status(201).json({ respId });
 		} catch (e) {
 			loggerService.error(e);
 			res.status(500).json({ message: 'Erro ao deletar organização.' });

@@ -16,8 +16,9 @@ export default {
 			await organizationRepository.getByOrganizationId(organizationId);
 		return organization;
 	},
-	async delete(orgId: string): Promise<void> {
-		await organizationRepository.delete(orgId);
+	async delete(org: string): Promise<string> {
+		const orgId: string = await organizationRepository.delete(org);
+		return orgId;
 	},
 	async put(organization: Organization): Promise<string> {
 		this.validateEmail(organization.email);

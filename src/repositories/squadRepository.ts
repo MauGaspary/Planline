@@ -34,12 +34,13 @@ export default {
 		return squads;
 	},
 
-	async delete(squadId: string): Promise<void> {
-		await prisma.squad.delete({
+	async delete(squadId: string): Promise<string> {
+		const squad = await prisma.squad.delete({
 			where: {
 				id: squadId,
 			},
 		});
+		return squad.id;
 	},
 
 	async put(data: Squad): Promise<string> {

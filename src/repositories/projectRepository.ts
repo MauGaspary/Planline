@@ -35,12 +35,13 @@ export default {
 		});
 		return projects;
 	},
-	async delete(projectId: string): Promise<void> {
-		await prisma.project.delete({
+	async delete(projectId: string): Promise<string> {
+		const project = await prisma.project.delete({
 			where: {
 				id: projectId,
 			},
 		});
+		return project.id;
 	},
 
 	async put(data: Project): Promise<string> {

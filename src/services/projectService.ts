@@ -14,8 +14,9 @@ export default {
 		const project: Project | null = await projectRepository.getByProjectId(projectId);
 		return project;
 	},
-	async delete(projectId: string): Promise<void> {
-		await projectRepository.delete(projectId);
+	async delete(project: string): Promise<string> {
+		const projectId: string = await projectRepository.delete(project);
+		return projectId;
 	},
 	async put(project: Project): Promise<string> {
 		const projectId: string = await projectRepository.put(project);
