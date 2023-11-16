@@ -3,9 +3,15 @@
 import PencilIcon from '../../assets/icons/pencilIcon.svg';
 import TrashIcon from '../../assets/icons/trashIcon.svg';
 
+interface ListItem {
+	name: string;
+	id?: string;
+	created_at?: string;
+}
+
 interface GenericTableProps {
 	columns: string[];
-	listItems?: unknown[];
+	listItems?: ListItem[];
 	search?: string;
 	level?: string;
 	onEdit?: (e: string) => void;
@@ -46,7 +52,10 @@ const GenericTable = ({
 											?.sort(function (a, b) {
 												// Turn your strings into dates, and then subtract them
 												// to get a value that is either negative, positive, or zero.
-												return new Date(b.created_at) - new Date(a.created_at);
+												return (
+													new Date(b.created_at || '').getTime() -
+													new Date(a.created_at || '').getTime()
+												);
 											})
 											.map((item, index) => {
 												const items = Object.entries(item);
@@ -71,18 +80,10 @@ const GenericTable = ({
 														})}
 														<td className="whitespace-nowrap px-2 py-4 font-medium">
 															<div className="flex flex-row gap-2">
-																<button
-																	onClick={() => {
-																		onEdit(item.id);
-																	}}
-																>
+																<button onClick={() => onEdit && onEdit(item.id || '')}>
 																	<img src={PencilIcon} />
 																</button>
-																<button
-																	onClick={() => {
-																		onDelete(item.id);
-																	}}
-																>
+																<button onClick={() => onDelete && onDelete(item.id || '')}>
 																	<img src={TrashIcon} />
 																</button>
 															</div>
@@ -94,7 +95,10 @@ const GenericTable = ({
 											?.sort(function (a, b) {
 												// Turn your strings into dates, and then subtract them
 												// to get a value that is either negative, positive, or zero.
-												return new Date(b.created_at) - new Date(a.created_at);
+												return (
+													new Date(b.created_at || '').getTime() -
+													new Date(a.created_at || '').getTime()
+												);
 											})
 											.map((item, index) => {
 												const items = Object.entries(item);
@@ -120,18 +124,10 @@ const GenericTable = ({
 														})}
 														<td className="whitespace-nowrap px-2 py-4 font-medium">
 															<div className="flex flex-row gap-2">
-																<button
-																	onClick={() => {
-																		onEdit(item.id);
-																	}}
-																>
+																<button onClick={() => onEdit && onEdit(item.id || '')}>
 																	<img src={PencilIcon} />
 																</button>
-																<button
-																	onClick={() => {
-																		onDelete(item.id);
-																	}}
-																>
+																<button onClick={() => onDelete && onDelete(item.id || '')}>
 																	<img src={TrashIcon} />
 																</button>
 															</div>
