@@ -1,427 +1,440 @@
 {
-	"swagger": "2.0",
-	"info": {
-		"version": "1.0.0",
-		"title": "REST API",
-		"description": ""
-	},
-	"host": "localhost:3000",
-	"basePath": "/",
-	"schemes": ["http"],
-	"paths": {
-		"/sessions": {
-			"post": {
-				"description": "",
-				"responses": {
-					"200": {
-						"description": "OK"
-					}
-				}
-			}
-		},
-		"/sessions/finalize/{sessionId}": {
-			"delete": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "sessionId",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"name": "save",
-						"in": "query",
-						"type": "string"
-					}
-				],
-				"responses": {
-					"204": {
-						"description": "No Content"
-					}
-				}
-			}
-		},
-		"/sessions/available/{squad_id}": {
-			"get": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "squad_id",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "OK"
-					}
-				}
-			}
-		},
-		"/squad": {
-			"post": {
-				"description": "",
-				"responses": {
-					"201": {
-						"description": "Created"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"get": {
-				"description": "",
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"put": {
-				"description": "",
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			}
-		},
-		"/squad/{squadId}": {
-			"delete": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "squadId",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"204": {
-						"description": "No Content"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"get": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "squadId",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			}
-		},
-		"/user": {
-			"post": {
-				"description": "",
-				"responses": {
-					"201": {
-						"description": "Created"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"get": {
-				"description": "",
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"put": {
-				"description": "",
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			}
-		},
-		"/user/{userId}": {
-			"delete": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "userId",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"204": {
-						"description": "No Content"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"get": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "userId",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			}
-		},
-		"/project": {
-			"post": {
-				"description": "",
-				"responses": {
-					"201": {
-						"description": "Created"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"get": {
-				"description": "",
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"put": {
-				"description": "",
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			}
-		},
-		"/project/{projectId}": {
-			"delete": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "projectId",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"204": {
-						"description": "No Content"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"get": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "projectId",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			}
-		},
-		"/organization": {
-			"post": {
-				"description": "",
-				"responses": {
-					"201": {
-						"description": "Created"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"get": {
-				"description": "",
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"put": {
-				"description": "",
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			}
-		},
-		"/organization/{organizationId}": {
-			"delete": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "organizationId",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"204": {
-						"description": "No Content"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			},
-			"get": {
-				"description": "",
-				"parameters": [
-					{
-						"name": "organizationId",
-						"in": "path",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				}
-			}
-		}
-	},
-	"definitions": {
-		"User": {
-			"type": "object",
-			"properties": {
-				"name": {
-					"type": "string",
-					"example": "Jhon Doe"
-				},
-				"age": {
-					"type": "number",
-					"example": 20
-				},
-				"email": {
-					"type": "string",
-					"example": "email@email.com"
-				},
-				"level": {
-					"type": "string",
-					"example": "JUNIOR"
-				},
-				"updated_at": {
-					"type": "string",
-					"example": "2023-09-20T23:50:21.817Z"
-				},
-				"created_at": {
-					"type": "string",
-					"example": "2023-09-20T23:50:21.817Z"
-				},
-				"Squad": {
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/Squad"
-					}
-				},
-				"Vote": {
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/Vote"
-					}
-				}
-			},
-			"required": ["name", "email"]
-		}
-	},
-	"swaggerDefinition": {
-		"info": {
-			"version": "1.0.0",
-			"title": "API",
-			"description": "Documentation automatically generated by the <b>swagger-autogen</b> module."
-		},
-		"basePath": "/",
-		"securityDefinitions": {
-			"api_key": {
-				"type": "apiKey",
-				"name": "api_key",
-				"in": "header"
-			}
-		}
-	},
-	"apis": ["./controllers/**.js"]
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/sessions": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/sessions/finalize/{sessionId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "save",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/sessions/available/{squad_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "squad_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/squad": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/squad/{squadId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "squadId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "squadId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/project": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/project/{projectId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/organization": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/organization/{organizationId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jhon Doe"
+        },
+        "age": {
+          "type": "number",
+          "example": 20
+        },
+        "email": {
+          "type": "string",
+          "example": "email@email.com"
+        },
+        "level": {
+          "type": "string",
+          "example": "JUNIOR"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2023-09-20T23:50:21.817Z"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2023-09-20T23:50:21.817Z"
+        },
+        "Squad": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Squad"
+          }
+        },
+        "Vote": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Vote"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "email"
+      ]
+    }
+  },
+  "swaggerDefinition": {
+    "info": {
+      "version": "1.0.0",
+      "title": "API",
+      "description": "Documentation automatically generated by the <b>swagger-autogen</b> module."
+    },
+    "basePath": "/",
+    "securityDefinitions": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  },
+  "apis": [
+    "./controllers/**.js"
+  ]
 }
