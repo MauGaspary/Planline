@@ -16,6 +16,8 @@ function Carousel({ taskList, currentTaskId, voteLater, finalVotes }: TaskProps)
 
 	const params = {
 		slidesToShow: 3,
+		dragging: false,
+		slideIndex: 0,
 	};
 
 	return (
@@ -23,7 +25,6 @@ function Carousel({ taskList, currentTaskId, voteLater, finalVotes }: TaskProps)
 			<NukaCarousel
 				{...params}
 				cellAlign="center"
-				wrapAround
 				renderBottomCenterControls={null}
 				renderCenterLeftControls={({ previousSlide }) => (
 					<button onClick={previousSlide}>

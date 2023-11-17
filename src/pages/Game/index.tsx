@@ -163,13 +163,13 @@ export default function Game() {
 		await set(child(refSession, `votes/${session.game.current_task}/final_vote`), +cardSelected);
 	}
 
-	const isToShow = voteState === 'conjunta';
+	const isToShow = voteState === 'group';
 
 	function ShowPlayers() {
 		return (
 			<>
 				<div>
-					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-36 z-10">
+					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-44 z-10">
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -181,6 +181,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute -bottom-40 left-32 z-10">
@@ -195,6 +196,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute -bottom-28 -left-10 z-10">
@@ -209,6 +211,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute top-1/2 pb-10 -left-36 transform -translate-y-1/2 z-10">
@@ -223,6 +226,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-36 -left-10 z-10">
@@ -237,6 +241,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-48 left-32 z-10">
@@ -251,6 +256,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-48 left-1/2 transform -translate-x-1/2 z-10">
@@ -265,6 +271,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-48 right-32 z-10">
@@ -279,6 +286,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -top-36 -right-10 z-10">
@@ -293,6 +301,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute top-1/2 pb-10 -right-36 transform -translate-y-1/2 z-10">
@@ -307,6 +316,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="top"
 						/>
 					</div>
 					<div className="absolute -bottom-28 -right-10 z-10">
@@ -321,6 +331,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 					<div className="absolute -bottom-40 right-32 z-10">
@@ -335,6 +346,7 @@ export default function Game() {
 										: ''
 									: ''
 							}
+							position="bottom"
 						/>
 					</div>
 				</div>
@@ -349,24 +361,26 @@ export default function Game() {
 				<Qrcode link={session_id || ''} code={session_id || ''} />
 			</div>
 			<div className="flex-col absolute top-28 right-20">
-				<div className="w-72 h-52 border-2 p-6 rounded-2xl bg-white font-medium border-transparent shadow-xl mb-20">
-					<div className="font-medium text-xl">Resumo</div>
-					<div className="flex flex-row justify-between mt-4">
-						<div className="font-medium">Mínima</div>
-						<div className="font-medium">{isToShow && min < Number.MAX_SAFE_INTEGER && min}</div>
+				{voteState === 'group' && (
+					<div className="w-72 h-52 border-2 p-6 rounded-2xl bg-white font-medium border-transparent shadow-xl mb-20">
+						<div className="font-medium text-xl">Resumo</div>
+						<div className="flex flex-row justify-between mt-4">
+							<div className="font-medium">Mínima</div>
+							<div className="font-medium">{isToShow && min < Number.MAX_SAFE_INTEGER && min}</div>
+						</div>
+						<div className="flex flex-row justify-between mt-4">
+							<div className="font-medium">Média</div>
+							<div className="font-medium">{isToShow && !isNaN(average) && average}</div>
+						</div>
+						<div className="flex flex-row justify-between mt-4">
+							<div className="font-medium">Máxima</div>
+							<div className="font-medium">{isToShow && max > -Infinity && max}</div>
+						</div>
 					</div>
-					<div className="flex flex-row justify-between mt-4">
-						<div className="font-medium">Média</div>
-						<div className="font-medium">{isToShow && !isNaN(average) && average}</div>
-					</div>
-					<div className="flex flex-row justify-between mt-4">
-						<div className="font-medium">Máxima</div>
-						<div className="font-medium">{isToShow && max > -Infinity && max}</div>
-					</div>
-				</div>
+				)}
 				<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
 					{session?.game.stories[session.game.current_story]?.name &&
-						session?.game.stories[session.game.current_story]?.name.length > 67 ? (
+					session?.game.stories[session.game.current_story]?.name.length > 67 ? (
 						<ToolTip tooltip={session?.game.stories[session.game.current_story]?.name}>
 							<div className="text-white text-xl line-clamp-3">
 								{session?.game.stories[session.game.current_story]?.name}
@@ -396,7 +410,7 @@ export default function Game() {
 							<p className="text-lg text-white pb-2">Aguarde enquanto seus colegas votam</p>
 							<Button
 								onClickAction={() => {
-									setVoteState('conjunta');
+									setVoteState('group');
 								}}
 								size="small"
 							>
