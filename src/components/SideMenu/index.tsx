@@ -12,9 +12,11 @@ import laptopWhite from '../../assets/sideMenuIcons/laptopWhite.svg';
 import laptopOrange from '../../assets/sideMenuIcons/laptopOrange.svg';
 import groupWhite from '../../assets/sideMenuIcons/groupWhite.svg';
 import groupOrange from '../../assets/sideMenuIcons/groupOrange.svg';
+// import historyOrange from '../../assets/sideMenuIcons/historyOrange.svg';
+// import historyWhite from '../../assets/sideMenuIcons/historyWhite.svg';
 
 function SideMenu() {
-	const [activeButton, setActiveButton] = useState<string | null>(null);
+	const [activeButton, setActiveButton] = useState<string | null>(window.location.pathname);
 	const router = useNavigate();
 
 	const handleActiveButton = (buttonName: string) => {
@@ -31,53 +33,66 @@ function SideMenu() {
 				<img className="inline-block h-14" src={logoWhite} />
 				<h1 className="inline-block text-2xl text-white font-medium align-middle">PlanLine</h1>
 			</div>
-			<ol className="">
+			<ol>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('votacao');
-						handleNav('/import');
+						handleActiveButton('/');
+						handleNav('/');
 					}}
-					isSelected={activeButton === 'votacao'}
+					isSelected={activeButton === '/'}
 					title={'Votação'}
 					imageWhite={talkWhite}
 					imageOrange={talkOrange}
 				/>
+				{
+					// TODO: implement backend and frontend history page to export
+				}
+				{/* <SideMenuItem
+					onClick={() => {
+						handleActiveButton('/history');
+						handleNav('/history');
+					}}
+					isSelected={activeButton === '/history'}
+					title="Histórico"
+					imageWhite={historyWhite}
+					imageOrange={historyOrange}
+				/> */}
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('organizacoes');
+						handleActiveButton('/dashboard/orgs');
 						handleNav('/dashboard/orgs');
 					}}
-					isSelected={activeButton === 'organizacoes'}
-					title={'Organizações'}
+					isSelected={activeButton === '/dashboard/orgs'}
+					title="Organizações"
 					imageWhite={apartmentWhite}
 					imageOrange={apartmentOrange}
 				/>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('projetos');
+						handleActiveButton('/dashboard/projects');
 						handleNav('/dashboard/projects');
 					}}
-					isSelected={activeButton === 'projetos'}
+					isSelected={activeButton === '/dashboard/projects'}
 					title="Projetos"
 					imageWhite={registerWhite}
 					imageOrange={registerOrange}
 				/>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('squads');
+						handleActiveButton('/dashboard/squads');
 						handleNav('/dashboard/squads');
 					}}
-					isSelected={activeButton === 'squads'}
+					isSelected={activeButton === '/dashboard/squads'}
 					title="Squads"
 					imageWhite={laptopWhite}
 					imageOrange={laptopOrange}
 				/>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('usuarios');
+						handleActiveButton('/dashboard/users');
 						handleNav('/dashboard/users');
 					}}
-					isSelected={activeButton === 'usuarios'}
+					isSelected={activeButton === '/dashboard/users'}
 					title="Usuários"
 					imageWhite={groupWhite}
 					imageOrange={groupOrange}

@@ -8,6 +8,8 @@ import { SessionCreationDto, SessionCreationResponseDto } from '../../../types/C
 import { usePost } from '../../../hooks/usePost';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '..';
+import Spinner from '../../Spinner';
+import Toast from '../../Toast';
 
 interface ResumeProps {
 	setBreadcrumbDisplay: (display: string) => void;
@@ -17,6 +19,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
 	const [file, setFile] = useState<UsInfo[] | null>(null);
+	const [showToast, setShowToast] = useState<boolean>(false);
 	const {
 		setFileContext,
 		organization,
@@ -29,23 +32,26 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 		squad_id,
 	} = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
-	const { data, request } = usePost<SessionCreationResponseDto, SessionCreationDto>();
+	const { data, request, error, isLoading } = usePost<
+		SessionCreationResponseDto,
+		SessionCreationDto
+	>();
 
 	useEffect(() => {
 		if (data) {
-			console.log(data);
 			router(`/game/${data.sessionId}`);
+		} else if (error) {
+			setShowToast(true);
 		}
-	}, [data]);
+	}, [data, error]);
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	function createSession() {
-		console.log(organization, project, squad, sprint, fileContext);
-
 		const dto = {
 			organization_id: organization_id ?? '',
 			project_id: project_id ?? '',
 			squad_id: squad_id ?? '',
+			squad_name: squad ?? '',
 			sprint: {
 				name: sprint ?? '',
 				start_date: new Date(),
@@ -61,9 +67,6 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 					})) ?? [],
 			},
 		};
-
-		console.log(dto);
-
 		request('/sessions', dto);
 	}
 
@@ -153,15 +156,28 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 						</div>
 
 						<div className="flex gap-32 justify-center mt-4">
-							<Button variant="secondary" onClickAction={() => setUpload(false)}>
+							<Button
+								variant="secondary"
+								onClickAction={() => {
+									setShowToast(false);
+									setUpload(false);
+								}}
+							>
 								Voltar
 							</Button>
 
-							<Button variant="primary" onClickAction={() => createSession()}>
+							<Button
+								variant="primary"
+								onClickAction={() => {
+									createSession();
+								}}
+							>
+								{isLoading && <Spinner />}
 								Iniciar sessão
 							</Button>
 						</div>
 					</Container>
+					{showToast && <Toast message="Erro ao criar sessão" isError={showToast} />}
 				</>
 			) : (
 				<Upload importer={importFile} setBreadcrumbDisplay={setBreadcrumbDisplay} />

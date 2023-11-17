@@ -13,7 +13,7 @@ function Container({ children, title, small }: CardProps) {
 
 	const smallClass = small
 		? 'relative bg-white w-[600px] h-[500px] drop-shadow-md rounded-lg flex flex-col p-12 gap-10 text-center'
-		: 'relative flex flex-col box-content w-1/2 border-2 p-8 bg-white rounded-3xl gap-2';
+		: 'relative flex flex-col box-content w-1/2 border-2 min-h-[384px] p-8 bg-white rounded-lg gap-2';
 	return (
 		<div className="flex flex-col justify-center items-center min-h-screen bg-triider-grayscale-gray4 py-20">
 			<div className={smallClass}>

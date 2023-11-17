@@ -25,11 +25,11 @@ export default function VoteCard({ label, selected, onClick }: VoteCardProps) {
 
 	cardState
 		? ((style =
-			'rounded-lg h-[100px] w-20 items-center justify-center bg-triider-primary-orange1 shadow shadow-gray-400 z-10'),
-			(textStyle = 'text-2xl text-white font-medium'))
+				'rounded-lg h-[100px] w-20 items-center justify-center bg-triider-primary-orange1 shadow shadow-gray-400 z-10'),
+		  (textStyle = 'text-2xl text-white font-medium'))
 		: ((style =
-			'rounded-lg h-[100px] w-20 items-center justify-center bg-white shadow shadow-gray-400 z-10 hover:bg-triider-grayscale-gray4'),
-			(textStyle = 'text-2xl text-triider-primary-orange1 font-medium'));
+				'rounded-lg h-[100px] w-20 items-center justify-center bg-white shadow shadow-gray-400 z-10 hover:bg-triider-grayscale-gray4'),
+		  (textStyle = 'text-2xl text-triider-primary-orange1 font-medium'));
 
 	return (
 		<button className={style} onClick={handlePress}>

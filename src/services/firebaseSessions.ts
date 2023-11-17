@@ -2,14 +2,23 @@ import { getRealtimeDatabase } from './firebase';
 import { set, ref } from 'firebase/database';
 
 export type Session = {
+	game: Game;
+	users: {
+		[key: string]: User;
+	};
+	votes?: { [key: string]: TaskVotes };
+};
+
+export type Game = {
 	current_story: string;
 	current_task: string;
 	finished: boolean;
+	opened_at: string;
+	sprint_name: string;
+	squad_id: string;
+	squad_name: string;
 	stories: {
 		[key: string]: Story;
-	};
-	users: {
-		[key: string]: User;
 	};
 };
 
@@ -20,12 +29,15 @@ export type Story = {
 	};
 };
 
-export type Task = {
-	description: string;
-	final_vote: number;
+export type TaskVotes = {
+	final_vote?: number;
 	votes: {
 		[key: string]: number;
 	};
+};
+
+export type Task = {
+	description: string;
 };
 
 export type User = {

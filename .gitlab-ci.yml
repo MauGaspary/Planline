@@ -1,18 +1,50 @@
 stages:
+  - sonarqube-check
+  - test
   - build
   - deploy
 
 services:
   - docker:dind
 
-before_script:
-  - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+  # ------------- SONARQUBE SCRIPT ---------------
+
+sonarqube-check:
+  stage: sonarqube-check
+  image: 
+    name: sonarsource/sonar-scanner-cli:5.0
+    entrypoint: [""]
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script: 
+    - sonar-scanner
+  allow_failure: true
+  only:
+    - develop
+
+# ------------- TEST SCRIPT --------------
+
+test-node:
+  image: node:18-alpine
+  stage: test
+  before_script: []
+  script:
+    - yarn add eslint prettier
+    - npx -c tsc
+    - yarn lint
 
 # ------------- BUILD SCRIPT -------------
 
 build-node:
+  before_script:
+    - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
   image: docker:dind
-  tags: 
+  tags:
     - ages-runner
   stage: build
   script:
