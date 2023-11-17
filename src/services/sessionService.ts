@@ -205,6 +205,7 @@ export default {
 	},
 
 	async download(sprintId: string): Promise<string[]> {
-		
+		console.log(sprintId);
+		return [];
 	},
 };
