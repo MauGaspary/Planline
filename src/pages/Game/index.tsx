@@ -368,7 +368,6 @@ export default function Game() {
 				<Header
 					onCancelPlanning={() => {
 						setIsOpenCancelModal(true);
-						// closeListener(false);
 					}}
 				/>
 				<div className="ml-16 mt-24">
