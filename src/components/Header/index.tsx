@@ -12,8 +12,6 @@ interface HeaderProps {
 export default function Header({ onCancelPlanning, squadName, sprintName }: HeaderProps) {
 	const { squad, sprint } = useContext(ResumeContext);
 
-	console.log(squadName, sprintName);
-
 	return (
 		<div>
 			<header className="w-full h-16 grid grid-cols-3 bg-triider-primary-orange2">
