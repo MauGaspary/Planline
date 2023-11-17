@@ -65,15 +65,20 @@ const GenericTable = ({
 															if (
 																item2[0] != 'id' &&
 																item2[0] != 'updated_at' &&
-																item2[0] != 'created_at'
+																item2[0] != 'created_at' &&
+																item2[0] != 'organization_id'
 															) {
 																return (
 																	<td key={idx} className="whitespace-nowrap px-8 py-4 font-medium">
-																		{Array.isArray(item2[1])
-																			? item2[1].map((item3) => item3.name).join(', ')
-																			: Object.is(item2[1], Object(item2[1]))
-																			? item2[1].name
-																			: item2[1]}
+																		{Array.isArray(item2[1]) ? (
+																			<p className="max-w-[40%] overflow-clip">
+																				{item2[1].map((item3) => item3.name).join(', ')}
+																			</p>
+																		) : Object.is(item2[1], Object(item2[1])) ? (
+																			item2[1].name
+																		) : (
+																			item2[1]
+																		)}
 																	</td>
 																);
 															}
@@ -109,16 +114,33 @@ const GenericTable = ({
 																item2[0] != 'id' &&
 																item2[0] != 'updated_at' &&
 																item2[0] != 'created_at' &&
-																!(columns.includes('Membros') && item2[0] == 'organization_id')
+																item2[0] != 'organization_id'
 															) {
 																return (
-																	<td key={idx} className="whitespace-nowrap px-8 py-4 font-medium">
-																		{Array.isArray(item2[1])
-																			? item2[1].map((item3) => item3.name).join(', ')
-																			: Object.is(item2[1], Object(item2[1]))
-																			? item2[1].name
-																			: item2[1]}
-																	</td>
+																	<>
+																		{Array.isArray(item2[1]) ? (
+																			<td
+																				key={idx}
+																				className="whitespace-nowrap px-8 py-4 font-medium max-w-xs overflow-clip"
+																			>
+																				{item2[1].map((item3) => item3.name).join(', ')}
+																			</td>
+																		) : Object.is(item2[1], Object(item2[1])) ? (
+																			<td
+																				key={idx}
+																				className="whitespace-nowrap px-8 py-4 font-medium"
+																			>
+																				{item2[1].name}
+																			</td>
+																		) : (
+																			<td
+																				key={idx}
+																				className="whitespace-nowrap px-8 py-4 font-medium"
+																			>
+																				{item2[1]}
+																			</td>
+																		)}
+																	</>
 																);
 															}
 														})}

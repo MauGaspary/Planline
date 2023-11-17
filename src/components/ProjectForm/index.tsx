@@ -64,10 +64,7 @@ export default function ProjectForm({ id, isOpen, update }: FormProps) {
 	useEffect(() => {
 		if (info) {
 			setName(info.name || '');
-			const org = organizations?.find((org) => org.id === info.organization_id);
-			if (org) {
-				setOrg({ name: org.name, id: org.id });
-			}
+			setOrg({ name: info.Organization.name, id: info.Organization.id });
 			if (info.squads) {
 				const squadSelected = info.squads.map((squad) => ({ name: squad.name, id: squad.id }));
 				setSelectedSquad(squadSelected);

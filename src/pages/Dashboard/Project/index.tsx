@@ -21,7 +21,7 @@ function Project() {
 	const [searchParams] = useSearchParams();
 	const projectId = searchParams.get('id');
 
-	const columns = ['Nome', 'Organização', 'Squads'];
+	const columns = ['Nome', 'Squads', 'Organização'];
 
 	const filteredName =
 		search.length > 0 ? info?.filter((item) => item.name.toLowerCase().includes(search)) : info;
