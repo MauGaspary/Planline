@@ -387,7 +387,6 @@ export default function Game() {
 		const csvData: any[] | Papa.UnparseObject<any> = [];
 
 		const votesList = Object.entries(session?.votes || {});
-		console.log(votesList, stories);
 		stories.forEach((item) => {
 			const row = {
 				Story: [item.storyName],

@@ -10,6 +10,7 @@ import { ProjectDTO } from '../../../types/ProjectDTO';
 import { useSearchParams } from 'react-router-dom';
 import DeleteModal from '../../../components/DeleteModal';
 import Spinner from '../../../components/Spinner';
+import Toast from '../../../components/Toast';
 
 function Project() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,8 @@ function Project() {
 	const { data: info, request: getInfo, isLoading } = useGet<ProjectDTO[]>();
 	const [searchParams] = useSearchParams();
 	const projectId = searchParams.get('id');
+	const [errorMessage, setErrorMessage] = useState<string>('');
+	const [isError, setIsError] = useState<boolean>(false);
 
 	const columns = ['Nome', 'Squads', 'Organização'];
 
@@ -43,8 +46,17 @@ function Project() {
 					setIsOpen(!isOpen);
 				}}
 			>
-				<ProjectForm id={id} isOpen={() => setIsOpen(!isOpen)} update={() => setUpdate(!update)} />
+				<ProjectForm
+					id={id}
+					isOpen={() => setIsOpen(!isOpen)}
+					update={() => setUpdate(!update)}
+					errorMessage={(message) => {
+						setErrorMessage(message);
+						setIsError(true);
+					}}
+				/>
 			</Modal>
+			<Toast message={errorMessage} isError={isError} />
 			<DeleteModal
 				isOpen={isOpenDelete}
 				id={id}

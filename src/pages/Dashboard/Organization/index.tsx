@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Container from '../../../components/Container';
 import Modal from '../../../components/Modal';
-import GenericForm from '../../../components/OrganizationForm';
+import OrganizationForm from '../../../components/OrganizationForm';
 import { InputHeader } from '../../../components/InputHeader/Index';
 import { InputText } from '../../../components/InputText/Index';
 import GenericTable from '../../../components/GenericTable';
@@ -9,6 +9,7 @@ import { useGet } from '../../../hooks/useGet';
 import { OrganizationDTO } from '../../../types/OrganizationDTO';
 import DeleteModal from '../../../components/DeleteModal';
 import Spinner from '../../../components/Spinner';
+import Toast from '../../../components/Toast';
 
 function Organization() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,8 @@ function Organization() {
 	const [search, setSearch] = useState('');
 	const columns = ['Nome', 'Email', 'Projetos'];
 	const { data: info, request: getInfo, isLoading } = useGet<OrganizationDTO[]>();
+	const [errorMessage, setErrorMessage] = useState<string>('');
+	const [isError, setIsError] = useState<boolean>(false);
 
 	const filteredName =
 		search.length > 0 ? info?.filter((item) => item.name.toLowerCase().includes(search)) : info;
@@ -35,8 +38,17 @@ function Organization() {
 					setIsOpen(!isOpen);
 				}}
 			>
-				<GenericForm id={id} isOpen={() => setIsOpen(!isOpen)} update={() => setUpdate(!update)} />
+				<OrganizationForm
+					id={id}
+					isOpen={() => setIsOpen(!isOpen)}
+					update={() => setUpdate(!update)}
+					errorMessage={(message) => {
+						setErrorMessage(message);
+						setIsError(true);
+					}}
+				/>
 			</Modal>
+			<Toast message={errorMessage} isError={isError} />
 			<DeleteModal
 				isOpen={isOpenDelete}
 				id={id}

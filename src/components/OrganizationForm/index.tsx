@@ -15,6 +15,7 @@ interface FormProps {
 	id?: string;
 	isOpen: () => void;
 	update: () => void;
+	errorMessage: (message: string) => void;
 }
 
 interface OrganizationBody {
@@ -24,7 +25,7 @@ interface OrganizationBody {
 	projects?: InfoBody[];
 }
 
-export default function OrganizationForm({ id, isOpen, update }: FormProps) {
+export default function OrganizationForm({ id, isOpen, update, errorMessage }: FormProps) {
 	const [name, setName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [openSelect, setOpenSelect] = useState<boolean | null>(false);
@@ -60,21 +61,21 @@ export default function OrganizationForm({ id, isOpen, update }: FormProps) {
 
 	useEffect(() => {
 		if (organization) {
-			console.log(`Criou organization`);
 			isOpen();
 			update();
 		} else if (error) {
-			console.log(`Deu erro, `, error);
+			errorMessage(error.response.data.message || 'Erro ao criar organização');
+			isOpen();
 		}
 	}, [organization, error]);
 
 	useEffect(() => {
 		if (newOrganization) {
-			console.log(`Editou organization`);
 			isOpen();
 			update();
 		} else if (errorEdit) {
-			console.log(`Deu erro edit, `, error);
+			errorMessage(errorEdit.response.data.message || 'Erro ao editar organização');
+			isOpen();
 		}
 	}, [newOrganization, errorEdit]);
 
