@@ -1,4 +1,5 @@
-import { Modal, View, Text, TouchableOpacity } from 'react-native';
+import { Modal, View, Text } from 'react-native';
+import Button from '../Button';
 
 interface CustomModalProps {
 	isVisible: boolean;
@@ -18,25 +19,21 @@ export default function CustomModal({
 	return (
 		<Modal
 			transparent={true}
-			animationType="slide"
+			animationType="fade"
 			visible={isVisible}
 			onRequestClose={() => onClose()}
 		>
 			<View
-				style={{
-					flex: 1,
-					justifyContent: 'center',
-					alignItems: 'center',
-					backgroundColor: 'rgba(0, 0, 0, 0.5)',
-				}}
+				className="flex-1 justify-center items-center"
+				style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
 			>
-				<View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
-					<Text className="mt-8 text-2xl font-body">{sprintName}</Text>
-					<Text className="mt-4 mx-7 text-lg text-triider-primary-orange1">{story}</Text>
-					<Text className="mt-4 mx-2 mb-6 text-lg text-triider-grayscale-gray1">{task}</Text>
-					<TouchableOpacity onPress={() => onClose()}>
-						<Text>Close Modal</Text>
-					</TouchableOpacity>
+				<View className="bg-white rounded-lg max-w-xs border-triider-primary-orange-dark border-2 flex items-center">
+					<Text className="text-center mx-4 mt-5 text-2xl font-body">{sprintName}</Text>
+					<Text className="mt-4 mx-4 text-lg text-triider-primary-orange1">{story}</Text>
+					<Text className="mt-4 mb-6 mx-4 text-lg text-triider-grayscale-gray1">{task}</Text>
+					<View className="mb-5 mx-4">
+						<Button label="Fechar" onClick={() => onClose()} />
+					</View>
 				</View>
 			</View>
 		</Modal>

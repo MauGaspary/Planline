@@ -45,19 +45,19 @@ export default function Voting() {
 	};
 
 	return (
-		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+		<View className="flex justify-center items-center">
 			<TouchableOpacity
 				onPress={() => toggleModal()}
 				className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400"
 			>
-				<Text className="mt-8 text-2xl font-body">{game.sprint_name}</Text>
+				<Text className="mt-10 text-md">Clique nesse card para ver mais informações!</Text>
 				<Text
 					numberOfLines={2}
-					className="mt-4 mx-7 line-clamp-3 text-lg text-triider-primary-orange1"
+					className="mt-3 mx-7 line-clamp-3 text-lg text-triider-primary-orange1"
 				>
 					{currentStory?.name || 'Não há histórias nessa sprint'}
 				</Text>
-				<Text className="mt-4 mx-2 mb-6 text-lg text-triider-grayscale-gray1">
+				<Text className="mt-3 mx-2 mb-5 text-lg text-triider-grayscale-gray1">
 					{currentTask?.description || 'Não há tarefas nessa história'}
 				</Text>
 			</TouchableOpacity>
@@ -80,7 +80,6 @@ export default function Voting() {
 				<Card label="" isSelected={selectedCard === '-1'} onClick={handleCardClick} />
 			</View>
 
-			{/* Include the modal component */}
 			<CustomModal
 				sprintName={game.sprint_name}
 				story={currentStory?.name}
