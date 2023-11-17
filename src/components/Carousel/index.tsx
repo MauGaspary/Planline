@@ -1,8 +1,10 @@
-import NukaCarousel from 'nuka-carousel';
 import Task from './Task';
-import leftArrow from '../../assets/images/ArrowLeft.png';
-import rightArrow from '../../assets/images/ArrowRight.png';
 import { Task as TaskDto, TaskVotes } from '../../services/firebaseSessions';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 interface TaskProps {
 	finalVotes: { [key: string]: TaskVotes };
@@ -14,41 +16,29 @@ interface TaskProps {
 function Carousel({ taskList, currentTaskId, voteLater, finalVotes }: TaskProps) {
 	const tasks = Object.entries(taskList);
 
-	const params = {
-		slidesToShow: 3,
-		dragging: false,
-		slideIndex: 0,
-	};
-
 	return (
 		<div className="flex-row h-fit space-x-7 w-2/3 mx-auto ">
-			<NukaCarousel
-				{...params}
-				cellAlign="center"
-				renderBottomCenterControls={null}
-				renderCenterLeftControls={({ previousSlide }) => (
-					<button onClick={previousSlide}>
-						<img src={leftArrow} />
-					</button>
-				)}
-				renderCenterRightControls={({ nextSlide }) => (
-					<button onClick={nextSlide}>
-						<img src={rightArrow} />
-					</button>
-				)}
+			<Swiper
+				slidesPerView={3}
+				spaceBetween={30}
+				modules={[Navigation]}
+				navigation={true}
+				centeredSlides={true}
+				className="mySwiper"
 			>
 				{tasks.map(([task_id, task]) => (
-					<Task
-						taskId={task_id}
-						title={task.description}
-						voted={(finalVotes[task_id]?.final_vote ?? 0) > 0}
-						next={currentTaskId !== task_id}
-						finalVote={finalVotes[task_id]?.final_vote ?? 0}
-						key={task_id}
-						voteLater={voteLater}
-					/>
+					<SwiperSlide className="bg-transparent" key={task_id}>
+						<Task
+							taskId={task_id}
+							title={task.description}
+							voted={(finalVotes[task_id]?.final_vote ?? 0) > 0}
+							next={currentTaskId !== task_id}
+							finalVote={finalVotes[task_id]?.final_vote ?? 0}
+							voteLater={voteLater}
+						/>
+					</SwiperSlide>
 				))}
-			</NukaCarousel>
+			</Swiper>
 		</div>
 	);
 }
