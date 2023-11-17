@@ -27,12 +27,12 @@ function Carousel({ taskList, currentTaskId, voteLater, finalVotes }: TaskProps)
 				cellAlign="center"
 				renderBottomCenterControls={null}
 				renderCenterLeftControls={({ previousSlide }) => (
-					<button onClick={previousSlide}>
+					<button className="pointer-events-none" onClick={previousSlide}>
 						<img src={leftArrow} />
 					</button>
 				)}
 				renderCenterRightControls={({ nextSlide }) => (
-					<button onClick={nextSlide}>
+					<button className="pointer-events-none" onClick={nextSlide}>
 						<img src={rightArrow} />
 					</button>
 				)}

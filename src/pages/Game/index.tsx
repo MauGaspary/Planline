@@ -362,6 +362,8 @@ export default function Game() {
 		);
 	}
 
+	console.log(session);
+
 	return (
 		<>
 			<div className="w-screen h-screen bg-triider-grayscale-game">
@@ -369,6 +371,8 @@ export default function Game() {
 					onCancelPlanning={() => {
 						setIsOpenCancelModal(true);
 					}}
+					sprintName={session?.game?.sprint_name}
+					squadName={session?.game?.squad_name}
 				/>
 				<div className="ml-16 mt-24">
 					<Qrcode link={session_id || ''} code={session_id || ''} />

@@ -13,6 +13,10 @@ export type Game = {
 	current_story: string;
 	current_task: string;
 	finished: boolean;
+	opened_at: string;
+	sprint_name: string;
+	squad_id: string;
+	squad_name: string;
 	stories: {
 		[key: string]: Story;
 	};
