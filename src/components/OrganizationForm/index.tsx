@@ -61,11 +61,9 @@ export default function OrganizationForm({ id, isOpen, update, errorMessage }: F
 
 	useEffect(() => {
 		if (organization) {
-			console.log(`Criou organization`);
 			isOpen();
 			update();
 		} else if (error) {
-			console.log(`Deu erro, `, error);
 			errorMessage(error.response.data.message || 'Erro ao criar organização');
 			isOpen();
 		}
@@ -73,11 +71,9 @@ export default function OrganizationForm({ id, isOpen, update, errorMessage }: F
 
 	useEffect(() => {
 		if (newOrganization) {
-			console.log(`Editou organization`);
 			isOpen();
 			update();
 		} else if (errorEdit) {
-			console.log(`Deu erro edit, `, errorEdit);
 			errorMessage(errorEdit.response.data.message || 'Erro ao editar organização');
 			isOpen();
 		}

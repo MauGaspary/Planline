@@ -82,11 +82,9 @@ export default function ProjectForm({ id, isOpen, update, errorMessage }: FormPr
 
 	useEffect(() => {
 		if (project) {
-			console.log(`Criou projeto`);
 			isOpen();
 			update();
 		} else if (error) {
-			console.log(`Deu erro, `, error);
 			errorMessage(error.response.data.message || 'Erro ao criar o projeto');
 			isOpen();
 		}
@@ -94,11 +92,9 @@ export default function ProjectForm({ id, isOpen, update, errorMessage }: FormPr
 
 	useEffect(() => {
 		if (newProject) {
-			console.log(`Editou projeto`);
 			isOpen();
 			update();
 		} else if (errorEdit) {
-			console.log(`Deu erro edit, `, error);
 			errorMessage(errorEdit.response.data.message || 'Erro ao editar o projeto');
 			isOpen();
 		}

@@ -41,11 +41,8 @@ const DeleteModal = ({ isOpen, onClose, type, id, update }: ModalProps) => {
 
 	useEffect(() => {
 		if (deleteInfoData) {
-			console.log(`Deletou usuario`);
 			onClose();
 			update();
-		} else if (error) {
-			console.log(`Deu erro, `, error);
 		}
 	}, [deleteInfoData, error]);
 

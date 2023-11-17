@@ -76,11 +76,9 @@ export default function SquadForm({ id, isOpen, update, errorMessage }: FormProp
 
 	useEffect(() => {
 		if (newSquad) {
-			console.log(`Criou squad`);
 			isOpen();
 			update();
 		} else if (error) {
-			console.log(`Deu erro, `, error);
 			errorMessage(error.response.data.message || 'Erro ao criar a squad');
 			isOpen();
 		}
@@ -88,11 +86,9 @@ export default function SquadForm({ id, isOpen, update, errorMessage }: FormProp
 
 	useEffect(() => {
 		if (editedSquad) {
-			console.log(`Editou projeto`);
 			isOpen();
 			update();
 		} else if (errorEdit) {
-			console.log(`Deu erro edit, `, error);
 			errorMessage(errorEdit.response.data.message || 'Erro ao editar a squad');
 			isOpen();
 		}

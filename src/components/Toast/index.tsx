@@ -46,18 +46,20 @@ const Toast = ({ sessions = [], isError = false, message = '' }: ToastProps) => 
 			{toasts.map((item, idx) => {
 				if (item.isError) {
 					return (
-						<div key={idx} className="relative bg-white mb-5 w-80 rounded-lg shadow-lg p-4 m-4">
-							<img
-								src={CloseIcon}
-								onClick={() => onCloseToast(idx)}
-								alt="close"
-								className="cursor-pointer w-6 h-6 absolute top-1 right-1"
-							/>
-							<div className="flex gap-5">
-								<img src={Warning} alt="warning" className="w-8 h-8" />
-								<p className="text-xl">{item.message}</p>
+						item.toastOpen == true && (
+							<div key={idx} className="relative bg-white mb-5 w-80 rounded-lg shadow-lg p-4 m-4">
+								<img
+									src={CloseIcon}
+									onClick={() => onCloseToast(idx)}
+									alt="close"
+									className="cursor-pointer w-6 h-6 absolute top-1 right-1"
+								/>
+								<div className="flex gap-5">
+									<img src={Warning} alt="warning" className="w-8 h-8" />
+									<p className="text-xl">{item.message}</p>
+								</div>
 							</div>
-						</div>
+						)
 					);
 				} else if (item.toastSession) {
 					return (
@@ -73,7 +75,7 @@ const Toast = ({ sessions = [], isError = false, message = '' }: ToastProps) => 
 									Você tem uma sessão em andamento. <br />
 								</p>
 								<p className="my-4">
-									código: <b>{item.toastSession}</b>
+									CÓDIGO: <b>{item.toastSession}</b>
 								</p>
 								<Button
 									variant="primary"

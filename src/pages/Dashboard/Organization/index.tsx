@@ -48,7 +48,6 @@ function Organization() {
 					}}
 				/>
 			</Modal>
-			{console.log(errorMessage)}
 			<Toast message={errorMessage} isError={isError} />
 			<DeleteModal
 				isOpen={isOpenDelete}

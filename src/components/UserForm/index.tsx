@@ -77,11 +77,9 @@ export default function UserForm({ id, isOpen, update, errorMessage }: UserFormP
 
 	useEffect(() => {
 		if (newUser) {
-			console.log(`Criou usuario`);
 			isOpen();
 			update();
 		} else if (error) {
-			console.log(`Deu erro, `, error);
 			errorMessage(error.response.data.message || 'Erro ao criar o user');
 			isOpen();
 		}
@@ -89,11 +87,9 @@ export default function UserForm({ id, isOpen, update, errorMessage }: UserFormP
 
 	useEffect(() => {
 		if (editedUser) {
-			console.log(`Editou usuario`);
 			isOpen();
 			update();
 		} else if (errorEdit) {
-			console.log(`Deu erro edit, `, error);
 			errorMessage(errorEdit.response.data.message || 'Erro ao editar a squad');
 			isOpen();
 		}

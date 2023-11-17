@@ -35,10 +35,8 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 
 	useEffect(() => {
 		if (data) {
-			console.log(data);
 			router(`/game/${data.sessionId}`);
 		} else if (error) {
-			console.log(error);
 			setShowToast(true);
 		}
 	}, [data, error]);
@@ -158,13 +156,17 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 								Voltar
 							</Button>
 
-							<Button variant="primary" onClickAction={() => createSession()}>
+							<Button
+								variant="primary"
+								onClickAction={() => {
+									createSession();
+								}}
+							>
 								Iniciar sessão
 							</Button>
 						</div>
 					</Container>
-					{console.log(showToast)}
-					{showToast && <Toast message="Erro ao criar sessão" isError={true} />}
+					{showToast && <Toast message="Erro ao criar sessão" isError={showToast} />}
 				</>
 			) : (
 				<Upload importer={importFile} setBreadcrumbDisplay={setBreadcrumbDisplay} />
