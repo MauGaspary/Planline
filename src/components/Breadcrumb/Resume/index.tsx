@@ -16,6 +16,7 @@ interface ResumeProps {
 function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 	const router = useNavigate();
 	const [upload, setUpload] = useState<boolean | null>(false);
+	const [isLoading, setIsLoading] = useState<boolean | null>(false);
 	const [file, setFile] = useState<UsInfo[] | null>(null);
 	const {
 		setFileContext,
@@ -40,12 +41,13 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	function createSession() {
-		console.log(organization, project, squad, sprint, fileContext);
+		setIsLoading(true);
 
 		const dto = {
 			organization_id: organization_id ?? '',
 			project_id: project_id ?? '',
 			squad_id: squad_id ?? '',
+			squad_name: squad ?? '',
 			sprint: {
 				name: sprint ?? '',
 				start_date: new Date(),
@@ -61,8 +63,6 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 					})) ?? [],
 			},
 		};
-
-		console.log(dto);
 
 		request('/sessions', dto);
 	}
@@ -158,6 +158,15 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 							</Button>
 
 							<Button variant="primary" onClickAction={() => createSession()}>
+								{isLoading && (
+									<div
+										className="animate-spin mr-3 inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full"
+										role="status"
+										aria-label="loading"
+									>
+										<span className="sr-only">Loading...</span>
+									</div>
+								)}
 								Iniciar sessão
 							</Button>
 						</div>

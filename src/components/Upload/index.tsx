@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
-import Container from '../Container';
-import { FileInput } from '../FileInput';
+import { ResumeContext } from '../../contexts/ResumeInfoContext';
+import { useGet } from '../../hooks/useGet';
 import { UsInfo } from '../../types/UsInfo';
 import Breadcrumb from '../Breadcrumb';
+import Container from '../Container';
+import { FileInput } from '../FileInput';
+import Toast from '../Toast';
 
 interface InputProps {
 	importer: (e: UsInfo[], fileName: string) => void;
@@ -12,9 +15,16 @@ interface InputProps {
 }
 
 function Upload({ importer, setBreadcrumbDisplay }: InputProps) {
+	const { squad_id } = useContext(ResumeContext);
 	const [buttonState, setButtonState] = useState<boolean>(true);
 	const [file, setFile] = useState<UsInfo[] | null>(null);
 	const [fileName, setFileName] = useState<string>('');
+	const { data: availableSession, request: getAvailableSession } = useGet<string[]>();
+
+	useEffect(() => {
+		// TODO:
+		getAvailableSession(`/sessions/available/${squad_id}`);
+	}, []);
 
 	const handleButton = (files: UsInfo[] | null, fileName: string) => {
 		setButtonState(!buttonState);
@@ -30,6 +40,9 @@ function Upload({ importer, setBreadcrumbDisplay }: InputProps) {
 
 	return (
 		<>
+			{(availableSession?.length ?? 0) > 0 && (
+				<Toast sessions={availableSession ? availableSession : []} />
+			)}
 			<Container title="Importe o arquivo" small>
 				<Breadcrumb display={'import'} />
 				<div className="flex justify-center">
