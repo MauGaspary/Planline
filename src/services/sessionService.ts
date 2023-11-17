@@ -1,6 +1,9 @@
 import { SessionCreationDTO } from '../dto/CreateSessionDTO.js';
+
 import firebaseService from './firebaseService.js';
+
 import { set, ref, get, child } from 'firebase/database';
+
 import {
 	FirebaseCollection,
 	FirebaseGame,
@@ -10,10 +13,15 @@ import {
 	FirebaseTaskVote,
 	FirebaseUser,
 } from '../dto/FirebaseDTO.js';
+
 import storyRepository from '../repositories/storyRepository.js';
+
 import taskRepository from '../repositories/taskRepository.js';
+
 import voteRepository from '../repositories/voteRepository.js';
+
 import squadService from './squadService.js';
+
 import sprintRepository from 'src/repositories/sprintRepository.js';
 
 function generateFourDigitId(): string {
@@ -21,11 +29,13 @@ function generateFourDigitId(): string {
 }
 
 const database = firebaseService.dbInstance;
+
 const sessionsRef = ref(database, '/sessions');
 
 export default {
 	async createRandomId(): Promise<string> {
 		let randomId = generateFourDigitId();
+
 		const sessions = await this.getAllCurrentSessions();
 
 		if (sessions) {
@@ -49,6 +59,7 @@ export default {
 
 	async create(sessionCreationDTO: SessionCreationDTO): Promise<{ sessionId: string }> {
 		const stories = sessionCreationDTO.sprint.stories;
+
 		const firebaseStories: FirebaseCollection<FirebaseStory> = {};
 
 		for (const story of stories) {
@@ -62,6 +73,7 @@ export default {
 
 			firebaseStories[story.story_id] = {
 				name: story.name,
+
 				tasks: firebaseTasks,
 			};
 		}
@@ -70,7 +82,9 @@ export default {
 
 		const [squad, sessionId] = await Promise.all([
 			squadService.getBySquadId(sessionCreationDTO.squad_id),
+
 			this.createRandomId(),
+
 			storyRepository.createMany(stories, sprintId),
 		]);
 
@@ -81,27 +95,40 @@ export default {
 		for (const user of users) {
 			firebaseUsers[user.id] = {
 				name: user.name,
+
 				level: user.level,
+
 				firebase_auth_id: null,
 			};
 		}
 
 		const firstStory = stories[0];
+
 		const firstTask = firstStory.tasks[0];
 
 		const firebaseGame: FirebaseGame = {
 			finished: false,
+
 			stories: firebaseStories,
+
 			current_task: firstTask.task_id,
+
 			current_story: firstStory.story_id,
+
 			squad_id: sessionCreationDTO.squad_id,
+
 			opened_at: new Date().toISOString(),
+
 			sprint_name: sessionCreationDTO.sprint.name,
+
 			squad_name: sessionCreationDTO.squad_name,
 		};
 
 		const session: FirebaseSession = {
+			finished: false,
+
 			game: firebaseGame,
+
 			users: firebaseUsers,
 		};
 
@@ -114,6 +141,7 @@ export default {
 
 	async finalizeWithoutSaving(sessionId: string) {
 		const finishedSession = child(sessionsRef, sessionId + '/finished');
+
 		await set(finishedSession, true);
 	},
 
@@ -126,6 +154,7 @@ export default {
 
 		if (snapshot.exists()) {
 			const session: FirebaseSession = snapshot.val();
+
 			const game: FirebaseGame = session.game;
 
 			const votes: FirebaseCollection<FirebaseTaskVote> = session.votes ?? {};
@@ -148,11 +177,13 @@ export default {
 						promises.push(
 							voteRepository.create({
 								score: vote,
+
 								Task: {
 									connect: {
 										task_id: taskId,
 									},
 								},
+
 								User: {
 									connect: {
 										id: userId,
@@ -180,6 +211,7 @@ export default {
 		}
 
 		promises.push(this.finalizeWithoutSaving(sessionId));
+
 		await Promise.all(promises);
 	},
 
@@ -193,19 +225,25 @@ export default {
 		const sessions: FirebaseCollection<FirebaseSession> = snapshot.val();
 
 		return Object.entries(sessions)
-			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].game.finished)
+
+			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].finished)
+
 			.sort((a, b) => {
 				const aDate = new Date(a[1].game.opened_at);
+
 				const bDate = new Date(b[1].game.opened_at);
 
 				return aDate.getTime() - bDate.getTime();
 			})
+
 			.slice(0, 6)
+
 			.map((entry) => entry[0]);
 	},
 
 	async download(sprintId: string): Promise<string[]> {
 		console.log(sprintId);
+
 		return [];
 	},
 };
