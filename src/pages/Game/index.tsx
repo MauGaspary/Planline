@@ -1,3 +1,5 @@
+import { saveAs } from 'file-saver';
+import Papa from 'papaparse';
 import { child, off, onValue, ref, set } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -32,6 +34,7 @@ export default function Game() {
 	const refSession = ref(database, 'sessions/' + session_id);
 
 	const [isOpenCancelModal, setIsOpenCancelModal] = useState(false);
+	const [isOpenNoPlayersModal, setIsOpenNoPlayersModal] = useState(false);
 
 	function sessionListener() {
 		onValue(refSession, (snapshot) => {
@@ -182,7 +185,7 @@ export default function Game() {
 		return (
 			<>
 				<div>
-					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-44 z-10">
+					<div className="absolute top-[345px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
 						<VotingTriider
 							isToShow={isToShow}
 							type="card"
@@ -367,6 +370,48 @@ export default function Game() {
 		);
 	}
 
+	const handleParseCSV = () => {
+		const storiesList = Object.entries(session?.game.stories || {});
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const stories = storiesList.map((story: any) => {
+			const tasksList = Object.entries(story[1].tasks || {});
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const descriptions = tasksList.map((task: any) => task);
+			return {
+				storyName: story[1].name,
+				tasks: descriptions,
+			};
+		});
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const csvData: any[] | Papa.UnparseObject<any> = [];
+
+		const votesList = Object.entries(session?.votes || {});
+		console.log(votesList, stories);
+		stories.forEach((item) => {
+			const row = {
+				Story: [item.storyName],
+				SumOfTasksVotes: item.tasks.reduce((sum, task) => {
+					const taskVotes = votesList.find((item) => item[0] === task[0]);
+					return sum + (taskVotes ? Number(taskVotes[1].final_vote) : 0);
+				}, 0),
+				Tasks: item.tasks.map((task) => task[1].description).join(','),
+				TasksVotes: item.tasks
+					.map((task) => {
+						const taskVotes = votesList.find((item) => item[0] === task[0]);
+						return taskVotes ? taskVotes[1].final_vote : '0';
+					})
+					.join(','),
+			};
+
+			csvData.push(row);
+		});
+
+		const csv = Papa.unparse(csvData, { delimiter: ';' });
+
+		return csv;
+	};
+
 	const FinishedVotingModal = () => {
 		return (
 			<div className="fixed flex items-center justify-center flex-col w-screen h-screen top-0 left-0 gap-10 bg-slate-50 bg-opacity-80 z-50">
@@ -376,7 +421,9 @@ export default function Game() {
 					size="large"
 					variant="primary"
 					onClickAction={() => {
-						console.log('exportar');
+						const csv = handleParseCSV();
+						const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+						saveAs(blob, `Squad_-_${session?.game.squad_name}.csv`);
 						router('/');
 					}}
 				>
@@ -442,8 +489,8 @@ export default function Game() {
 					</div>
 				</div>
 				{voteState === 'individual' ? (
-					<div className="justify-center">
-						<div className="flex h-72 items-center justify-center w-fit m-auto relative">
+					<div>
+						<div className="flex h-72 items-center justify-center w-fit mx-auto -mt-20 relative">
 							{session && <ShowPlayers />}
 							<img src={pokerTable} alt="Poker table" className=" relative px-4" />
 
@@ -452,7 +499,15 @@ export default function Game() {
 								<p className="text-lg text-white pb-2">Aguarde enquanto seus colegas votam</p>
 								<Button
 									onClickAction={() => {
-										setVoteState('group');
+										const someoneIsOn: boolean = usersList?.some(
+											(user) => user[1]?.firebase_auth_id
+										);
+
+										if (someoneIsOn) {
+											setVoteState('group');
+										} else {
+											setIsOpenNoPlayersModal(true);
+										}
 									}}
 									size="small"
 								>
@@ -463,7 +518,7 @@ export default function Game() {
 					</div>
 				) : (
 					<div>
-						<div className="flex h-72 items-center justify-center w-fit m-auto relative">
+						<div className="flex h-72 items-center justify-center w-fit mx-auto -mt-20 relative">
 							{session && <ShowPlayers />}
 							<img src={pokerTable} alt="Poker table" className=" relative px-4" />
 
@@ -542,6 +597,20 @@ export default function Game() {
 								}}
 							>
 								Sim
+							</Button>
+						</div>
+					</div>
+				</div>
+			</Modal>
+			<Modal isOpen={isOpenNoPlayersModal} onClose={() => setIsOpenCancelModal(false)} title="">
+				<div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
+					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-3xl relative">
+						<h1 className="text-2xl font-bold decoration-triider-primary-orange2 my-8 underline-offset-8">
+							Não há jogadores na sessão
+						</h1>
+						<div className="flex gap-5 justify-center mt-4">
+							<Button variant="primary" onClickAction={() => setIsOpenNoPlayersModal(false)}>
+								Ok
 							</Button>
 						</div>
 					</div>
