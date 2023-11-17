@@ -12,6 +12,8 @@ import CustomModal from '../../components/CustomModal/CustomModal';
 export default function Voting() {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 	const { state } = useAppContext();
+	const [selectedCard, setSelectedCard] = useState('');
+	const [isModalVisible, setModalVisible] = useState(false);
 
 	if (!state.game || !state.user) {
 		return (
@@ -27,7 +29,6 @@ export default function Voting() {
 	const currentStory = game?.stories[game?.current_story];
 	const currentTask = currentStory?.tasks[game?.current_task];
 
-	const [selectedCard, setSelectedCard] = useState('');
 	const handleCardClick = (label: string) => {
 		setSelectedCard(label);
 	};
@@ -37,8 +38,6 @@ export default function Voting() {
 
 		navigation.replace('Wait', { waitingTask: game?.current_task || '' });
 	};
-
-	const [isModalVisible, setModalVisible] = useState(false);
 
 	const toggleModal = () => {
 		setModalVisible(!isModalVisible);
