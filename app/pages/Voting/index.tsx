@@ -72,12 +72,12 @@ export default function Voting() {
 				<Card label="13" isSelected={selectedCard === '13'} onClick={handleCardClick} />
 			</View>
 			<View className="mt-10 items-center">
+				<Card label="" isSelected={selectedCard === '-1'} onClick={handleCardClick} />
 				<Button
 					disabled={selectedCard === '' ? true : false}
 					label="Próximo"
 					onClick={handleButtonClick}
 				/>
-				<Card label="" isSelected={selectedCard === '-1'} onClick={handleCardClick} />
 			</View>
 
 			<CustomModal
