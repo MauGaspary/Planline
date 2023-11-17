@@ -23,9 +23,6 @@ export default function Header({ onCancelPlanning }: HeaderProps) {
 					</div>
 				)}
 				<div className="flex flex-row justify-end items-center gap-2 mr-6">
-					<Button size="small" variant="ghost">
-						Reiniciar Votação
-					</Button>
 					<Button size="small" variant="ghost" onClickAction={onCancelPlanning}>
 						Cancelar Votação
 					</Button>
