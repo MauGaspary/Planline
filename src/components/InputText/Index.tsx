@@ -5,9 +5,10 @@ export interface InputTextProps {
 	size: 'small' | 'medium' | 'large' | 'icon' | 'xsmall' | 'full';
 	isRequired?: boolean;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	value: string;
 }
 
-export function InputText({ placeholder, size, isRequired, onChange }: InputTextProps) {
+export function InputText({ placeholder, size, isRequired, onChange, value }: InputTextProps) {
 	const sizeClasses = {
 		small: 'w-44',
 		medium: 'w-56',
@@ -25,6 +26,7 @@ export function InputText({ placeholder, size, isRequired, onChange }: InputText
 			type="text"
 			className={defaultClasses}
 			placeholder={placeholder}
+			value={value}
 			required={isRequired}
 			onChange={onChange}
 		/>
