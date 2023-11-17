@@ -9,6 +9,7 @@ import { SquadDTO } from '../../../types/SquadDTO';
 import { useGet } from '../../../hooks/useGet';
 import DeleteModal from '../../../components/DeleteModal';
 import Spinner from '../../../components/Spinner';
+import Toast from '../../../components/Toast';
 
 function Squad() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,8 @@ function Squad() {
 	const [id, setId] = useState('');
 	const [search, setSearch] = useState('');
 	const { data: info, request: getInfo, isLoading } = useGet<SquadDTO[]>();
+	const [errorMessage, setErrorMessage] = useState<string>('');
+	const [isError, setIsError] = useState<boolean>(false);
 	const columns = ['Nome', 'Membros', 'Organização'];
 
 	const filteredName =
@@ -35,8 +38,17 @@ function Squad() {
 					setIsOpen(!isOpen);
 				}}
 			>
-				<SquadForm id={id} isOpen={() => setIsOpen(!isOpen)} update={() => setUpdate(!update)} />
+				<SquadForm
+					id={id}
+					isOpen={() => setIsOpen(!isOpen)}
+					update={() => setUpdate(!update)}
+					errorMessage={(message) => {
+						setErrorMessage(message);
+						setIsError(true);
+					}}
+				/>
 			</Modal>
+			<Toast message={errorMessage} isError={isError} />
 			<DeleteModal
 				isOpen={isOpenDelete}
 				id={id}

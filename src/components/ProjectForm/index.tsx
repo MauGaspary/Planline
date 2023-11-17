@@ -15,6 +15,7 @@ interface FormProps {
 	id?: string;
 	isOpen: () => void;
 	update: () => void;
+	errorMessage: (message: string) => void;
 }
 
 interface ProjectBody {
@@ -31,7 +32,7 @@ interface ProjectBody {
 	};
 }
 
-export default function ProjectForm({ id, isOpen, update }: FormProps) {
+export default function ProjectForm({ id, isOpen, update, errorMessage }: FormProps) {
 	const [name, setName] = useState('');
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
 	const [org, setOrg] = useState<InfoBody>({ name: 'Escolha a organização', id: '' });
@@ -86,6 +87,8 @@ export default function ProjectForm({ id, isOpen, update }: FormProps) {
 			update();
 		} else if (error) {
 			console.log(`Deu erro, `, error);
+			errorMessage(error.response.data.message || 'Erro ao criar o projeto');
+			isOpen();
 		}
 	}, [project, error]);
 
@@ -96,6 +99,8 @@ export default function ProjectForm({ id, isOpen, update }: FormProps) {
 			update();
 		} else if (errorEdit) {
 			console.log(`Deu erro edit, `, error);
+			errorMessage(errorEdit.response.data.message || 'Erro ao editar o projeto');
+			isOpen();
 		}
 	}, [newProject, errorEdit]);
 

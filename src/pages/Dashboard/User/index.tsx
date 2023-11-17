@@ -9,6 +9,7 @@ import { UserDTO } from '../../../types/UserDTO';
 import { useGet } from '../../../hooks/useGet';
 import DeleteModal from '../../../components/DeleteModal';
 import Spinner from '../../../components/Spinner';
+import Toast from '../../../components/Toast';
 
 function User() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,8 @@ function User() {
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [id, setId] = useState('');
 	const [search, setSearch] = useState('');
+	const [errorMessage, setErrorMessage] = useState<string>('');
+	const [isError, setIsError] = useState<boolean>(false);
 	const { data: info, request: getInfo, isLoading } = useGet<UserDTO[]>();
 
 	const columns = ['Nome', 'Email', 'Nível'];
@@ -36,8 +39,17 @@ function User() {
 					setIsOpen(!isOpen);
 				}}
 			>
-				<UserForm id={id} isOpen={() => setIsOpen(!isOpen)} update={() => setUpdate(!update)} />
+				<UserForm
+					id={id}
+					isOpen={() => setIsOpen(!isOpen)}
+					update={() => setUpdate(!update)}
+					errorMessage={(message) => {
+						setErrorMessage(message);
+						setIsError(true);
+					}}
+				/>
 			</Modal>
+			<Toast message={errorMessage} isError={isError} />
 			<DeleteModal
 				isOpen={isOpenDelete}
 				id={id}

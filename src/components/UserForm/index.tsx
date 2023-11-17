@@ -13,6 +13,7 @@ interface UserFormProps {
 	id?: string;
 	isOpen: () => void;
 	update: () => void;
+	errorMessage: (message: string) => void;
 }
 
 const level = [
@@ -36,7 +37,7 @@ interface UserBody {
 	email: string;
 }
 
-export default function UserForm({ id, isOpen, update }: UserFormProps) {
+export default function UserForm({ id, isOpen, update, errorMessage }: UserFormProps) {
 	const [userName, setUserName] = useState('');
 	const [userEmail, setUserEmail] = useState('');
 	const [openSelect, setOpenSelect] = useState<string | null>(null);
@@ -81,6 +82,8 @@ export default function UserForm({ id, isOpen, update }: UserFormProps) {
 			update();
 		} else if (error) {
 			console.log(`Deu erro, `, error);
+			errorMessage(error.response.data.message || 'Erro ao criar o user');
+			isOpen();
 		}
 	}, [newUser, error]);
 
@@ -91,6 +94,8 @@ export default function UserForm({ id, isOpen, update }: UserFormProps) {
 			update();
 		} else if (errorEdit) {
 			console.log(`Deu erro edit, `, error);
+			errorMessage(errorEdit.response.data.message || 'Erro ao editar a squad');
+			isOpen();
 		}
 	}, [editedUser, errorEdit]);
 
