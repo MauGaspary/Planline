@@ -8,6 +8,7 @@ import { SessionCreationDto, SessionCreationResponseDto } from '../../../types/C
 import { usePost } from '../../../hooks/usePost';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '..';
+import Spinner from '../../Spinner';
 import Toast from '../../Toast';
 
 interface ResumeProps {
@@ -31,7 +32,10 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 		squad_id,
 	} = useContext(ResumeContext);
 	const [fileName, setFileName] = useState<string>('');
-	const { data, request, error } = usePost<SessionCreationResponseDto, SessionCreationDto>();
+	const { data, request, error, isLoading } = usePost<
+		SessionCreationResponseDto,
+		SessionCreationDto
+	>();
 
 	useEffect(() => {
 		if (data) {
@@ -152,7 +156,13 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 						</div>
 
 						<div className="flex gap-32 justify-center mt-4">
-							<Button variant="secondary" onClickAction={() => setUpload(false)}>
+							<Button
+								variant="secondary"
+								onClickAction={() => {
+									setShowToast(false);
+									setUpload(false);
+								}}
+							>
 								Voltar
 							</Button>
 
@@ -162,6 +172,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 									createSession();
 								}}
 							>
+								{isLoading && <Spinner />}
 								Iniciar sessão
 							</Button>
 						</div>
