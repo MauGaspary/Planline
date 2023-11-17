@@ -13,12 +13,14 @@ import { useDelete } from '../../hooks/useDelete';
 import { getRealtimeDatabase } from '../../services/firebase';
 import { Session } from '../../services/firebaseSessions';
 import Modal from '../../components/Modal';
+import LogoOrange from '../../assets/triiderLogos/logoOrange.svg';
 
 export default function Game() {
 	const router = useNavigate();
 
 	const [voteState, setVoteState] = useState('individual');
 	const [cardSelected, setCardSelected] = useState('');
+	const [sessionEnded, setSessionEnded] = useState(false);
 
 	const { session_id } = useParams();
 	const [session, setSession] = useState<Session | null>(null);
@@ -34,7 +36,6 @@ export default function Game() {
 	function sessionListener() {
 		onValue(refSession, (snapshot) => {
 			const session = snapshot.val();
-			console.log(session);
 			if (!session || session?.finished) {
 				router('/');
 				return;
@@ -44,7 +45,11 @@ export default function Game() {
 	}
 
 	async function closeListener(save: boolean) {
-		router('/');
+		if (save) {
+			setSessionEnded(true);
+		} else {
+			router('/');
+		}
 		await request(`/sessions/finalize/${session_id}?save=${save}`);
 		off(refSession);
 	}
@@ -362,11 +367,29 @@ export default function Game() {
 		);
 	}
 
-	console.log(session);
+	const FinishedVotingModal = () => {
+		return (
+			<div className="fixed flex items-center justify-center flex-col w-screen h-screen top-0 left-0 gap-10 bg-slate-50 bg-opacity-80 z-50">
+				<img className="w-96" src={LogoOrange} alt="Triider logo" />
+				<h1 className="text-7xl">FIM DA VOTAÇÃO</h1>
+				<Button
+					size="large"
+					variant="primary"
+					onClickAction={() => {
+						console.log('exportar');
+						router('/');
+					}}
+				>
+					Exportar agora
+				</Button>
+			</div>
+		);
+	};
 
 	return (
 		<>
 			<div className="w-screen h-screen bg-triider-grayscale-game">
+				{sessionEnded && <FinishedVotingModal />}
 				<Header
 					onCancelPlanning={() => {
 						setIsOpenCancelModal(true);
