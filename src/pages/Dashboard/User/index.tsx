@@ -15,9 +15,13 @@ function User() {
 	const [update, setUpdate] = useState(false);
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [id, setId] = useState('');
+	const [search, setSearch] = useState('');
 	const { data: info, request: getInfo, isLoading } = useGet<UserDTO[]>();
 
 	const columns = ['Nome', 'Email', 'Nível'];
+
+	const filteredName =
+		search.length > 0 ? info?.filter((item) => item.name.toLowerCase().includes(search)) : info;
 
 	useEffect(() => {
 		getInfo(`/user`);
@@ -50,7 +54,13 @@ function User() {
 						setIsOpen(!isOpen);
 					}}
 				>
-					<InputText placeholder="Nome" size="medium" isRequired={true} />
+					<InputText
+						placeholder="Nome"
+						value={search}
+						size="medium"
+						isRequired={true}
+						onChange={(event) => setSearch(event.target.value)}
+					/>
 				</InputHeader>
 				{isLoading ? (
 					<div className="w-full flex items-center justify-center mt-8 h-60">
@@ -58,7 +68,7 @@ function User() {
 					</div>
 				) : (
 					<GenericTable
-						listItems={info || []}
+						listItems={filteredName || []}
 						onEdit={(e) => {
 							setIsOpen(!isOpen);
 							setId(e);

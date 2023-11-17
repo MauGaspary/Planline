@@ -15,8 +15,12 @@ function Organization() {
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [update, setUpdate] = useState(false);
 	const [id, setId] = useState('');
+	const [search, setSearch] = useState('');
 	const columns = ['Nome', 'Email', 'Projetos'];
 	const { data: info, request: getInfo, isLoading } = useGet<OrganizationDTO[]>();
+
+	const filteredName =
+		search.length > 0 ? info?.filter((item) => item.name.toLowerCase().includes(search)) : info;
 
 	useEffect(() => {
 		getInfo(`/organization`);
@@ -49,7 +53,13 @@ function Organization() {
 						setId('');
 					}}
 				>
-					<InputText placeholder="Nome" size="medium" isRequired={true} />
+					<InputText
+						value={search}
+						placeholder="Nome"
+						size="medium"
+						isRequired={true}
+						onChange={(event) => setSearch(event.target.value)}
+					/>
 				</InputHeader>
 				{isLoading ? (
 					<div className="w-full flex items-center justify-center mt-8 h-60">
@@ -57,7 +67,7 @@ function Organization() {
 					</div>
 				) : (
 					<GenericTable
-						listItems={info || []}
+						listItems={filteredName || []}
 						onEdit={(e) => {
 							setIsOpen(!isOpen);
 							setId(e);
