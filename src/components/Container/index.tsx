@@ -8,7 +8,7 @@ interface CardProps {
 
 function Container({ children, title, small }: CardProps) {
 	const titleClass = small
-		? 'text-4xl font-medium text-triider-grayscale-gray1 relative '
+		? 'text-4xl font-medium text-triider-grayscale-gray1 relative'
 		: 'text-4xl font-bold underline decoration-triider-primary-orange2 mb-6 underline-offset-8';
 
 	const smallClass = small

@@ -11,10 +11,12 @@ import Loader from '../../Loader';
 import { Select } from '../../Select';
 
 interface IdentifyProps {
-	setBreadcrumbDisplay: (display: string) => void;
+	setBreadcrumbDisplay?: (display: string) => void;
+	historyPage?: boolean;
+	changeHistoryPage?: () => void;
 }
 
-function Identify({ setBreadcrumbDisplay }: IdentifyProps) {
+function Identify({ setBreadcrumbDisplay, historyPage, changeHistoryPage }: IdentifyProps) {
 	const [org, setOrg] = useState<InfoBody>({ name: 'Organização', id: '' });
 	const [project, setProject] = useState<InfoBody>({ name: 'Projeto', id: '' });
 	const [squad, setSquad] = useState<InfoBody>({ name: 'Squad', id: '' });
@@ -89,8 +91,15 @@ function Identify({ setBreadcrumbDisplay }: IdentifyProps) {
 		<Loader />
 	) : (
 		<>
-			<Container title="Identifique-se para visualizar mais informações" small>
-				<Breadcrumb display={'home'} />
+			<Container
+				title={
+					historyPage
+						? 'Identifique-se para exportar o histórico'
+						: 'Identifique-se para visualizar mais informações'
+				}
+				small
+			>
+				{!historyPage && <Breadcrumb display={'home'} />}
 				<div className="flex flex-col px-20 gap-5 self-center">
 					<Select
 						placeholder={org.name}
@@ -118,7 +127,13 @@ function Identify({ setBreadcrumbDisplay }: IdentifyProps) {
 
 					<Button
 						size="large"
-						onClickAction={() => setBreadcrumbDisplay('import')}
+						onClickAction={() => {
+							if (historyPage) {
+								changeHistoryPage && changeHistoryPage();
+							} else {
+								setBreadcrumbDisplay && setBreadcrumbDisplay('import');
+							}
+						}}
 						variant={squad.name === 'Squad' ? 'disabled' : 'primary'}
 					>
 						Confirmar
