@@ -23,7 +23,6 @@ export default function SelectUser() {
 			payload: { userId: selectedUserId, firebase_auth_id: selectedUserId },
 		});
 	}
-	console.log(selectedUserId);
 	useEffect(() => {
 		if (state.user) {
 			navigation.replace('Voting');
@@ -70,7 +69,14 @@ export default function SelectUser() {
 					label="Iniciar"
 					onClick={handleButtonClick}
 				/>
-				<ButtonComponent label="Voltar" variant="ghost" onClick={() => navigation.goBack()} />
+				<ButtonComponent
+					label="Voltar"
+					variant="ghost"
+					onClick={() => {
+						dispatch({ type: 'CLEAR' });
+						navigation.replace('Home');
+					}}
+				/>
 			</View>
 			<StatusBar style="inverted" />
 		</View>

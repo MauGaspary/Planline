@@ -27,9 +27,8 @@ export default function Home() {
 	const { dispatch, state } = useAppContext();
 
 	useEffect(() => {
-		console.log(state);
 		if (state.users) {
-			navigation.push('SelectUser');
+			navigation.replace('SelectUser');
 		}
 	}, [state.users]);
 
