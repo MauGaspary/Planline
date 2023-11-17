@@ -23,7 +23,6 @@ export default function SelectUser() {
 			payload: { userId: selectedUserId, firebase_auth_id: selectedUserId },
 		});
 	}
-	console.log(selectedUserId);
 	useEffect(() => {
 		if (state.user) {
 			navigation.replace('Voting');
@@ -48,7 +47,7 @@ export default function SelectUser() {
 				<Text className="mt-8 text-lg text-triider-primary-orange1">Squad</Text>
 				<Text className="mt-4 text-lg text-black">Por favor, selecione o usuário</Text>
 			</View>
-			<View className="flex-col mt-12 items-center flex h-80 ">
+			<View className="flex-col mt-8 items-center flex h-[330px] ">
 				<ScrollView showsVerticalScrollIndicator={false}>
 					{users
 						.filter((user) => !user[1].firebase_auth_id)
@@ -70,7 +69,14 @@ export default function SelectUser() {
 					label="Iniciar"
 					onClick={handleButtonClick}
 				/>
-				<ButtonComponent label="Voltar" variant="ghost" onClick={() => navigation.goBack()} />
+				<ButtonComponent
+					label="Voltar"
+					variant="ghost"
+					onClick={() => {
+						dispatch({ type: 'CLEAR' });
+						navigation.replace('Home');
+					}}
+				/>
 			</View>
 			<StatusBar style="inverted" />
 		</View>

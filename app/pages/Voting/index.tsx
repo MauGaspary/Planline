@@ -49,7 +49,7 @@ export default function Voting() {
 				onPress={() => toggleModal()}
 				className="rounded-b-3xl items-center flex w-full bg-white shadow shadow-gray-400"
 			>
-				<Text className="mt-10 text-md">Clique nesse card para ver mais informações!</Text>
+				<Text className="mt-14 text-md">Clique nesse card para ver mais informações!</Text>
 				<Text
 					numberOfLines={2}
 					className="mt-3 mx-7 line-clamp-3 text-lg text-triider-primary-orange1"

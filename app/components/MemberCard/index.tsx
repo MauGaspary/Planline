@@ -1,5 +1,4 @@
-import { Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 interface MemberCard {
 	name: string;

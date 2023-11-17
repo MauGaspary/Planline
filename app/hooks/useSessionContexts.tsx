@@ -106,7 +106,6 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
 		onValue(child(sessionsRef, `${state.sessionId}/users`), (snapshot) => {
 			const users: { [key: string]: User } = snapshot.val();
-			console.log(users);
 
 			if (!users) return;
 

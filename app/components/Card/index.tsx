@@ -1,5 +1,4 @@
-import { Text, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, Image, TouchableOpacity } from 'react-native';
 import coffee from '../../assets/images/coffee.png';
 
 interface CardProps {
