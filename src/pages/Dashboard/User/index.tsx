@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Container from '../../../components/Container';
-import { Select } from '../../../components/Select';
 import { InputHeader } from '../../../components/InputHeader/Index';
 import { InputText } from '../../../components/InputText/Index';
 import GenericTable from '../../../components/GenericTable';
@@ -9,13 +8,14 @@ import UserForm from '../../../components/UserForm';
 import { UserDTO } from '../../../types/UserDTO';
 import { useGet } from '../../../hooks/useGet';
 import DeleteModal from '../../../components/DeleteModal';
+import Spinner from '../../../components/Spinner';
 
 function User() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [update, setUpdate] = useState(false);
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [id, setId] = useState('');
-	const { data: info, request: getInfo } = useGet<UserDTO[]>();
+	const { data: info, request: getInfo, isLoading } = useGet<UserDTO[]>();
 
 	const columns = ['Nome', 'Email', 'Nível'];
 
@@ -51,35 +51,25 @@ function User() {
 					}}
 				>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
-
-					<Select
-						placeholder="Nível"
-						options={[
-							{ id: '1', name: 'Junior' },
-							{ id: '2', name: 'Pleno' },
-							{ id: '3', name: 'Senior' },
-						]}
-						handleSelect={() => {}}
-						disabled={false}
-						isOpen={isOpen}
-						onToggle={() => {
-							setIsOpen(!isOpen);
-						}}
-						width="32"
-					/>
 				</InputHeader>
-				<GenericTable
-					listItems={info || []}
-					onEdit={(e) => {
-						setIsOpen(!isOpen);
-						setId(e);
-					}}
-					onDelete={(e) => {
-						setIsOpenDelete(!isOpenDelete);
-						setId(e);
-					}}
-					columns={columns}
-				/>
+				{isLoading ? (
+					<div className="w-full flex items-center justify-center mt-8 h-60">
+						<Spinner color="triider-primary-orange-dark" size="16" />
+					</div>
+				) : (
+					<GenericTable
+						listItems={info || []}
+						onEdit={(e) => {
+							setIsOpen(!isOpen);
+							setId(e);
+						}}
+						onDelete={(e) => {
+							setIsOpenDelete(!isOpenDelete);
+							setId(e);
+						}}
+						columns={columns}
+					/>
+				)}
 			</Container>
 		</>
 	);

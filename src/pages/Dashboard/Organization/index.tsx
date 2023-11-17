@@ -8,6 +8,7 @@ import GenericTable from '../../../components/GenericTable';
 import { useGet } from '../../../hooks/useGet';
 import { OrganizationDTO } from '../../../types/OrganizationDTO';
 import DeleteModal from '../../../components/DeleteModal';
+import Spinner from '../../../components/Spinner';
 
 function Organization() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,7 @@ function Organization() {
 	const [update, setUpdate] = useState(false);
 	const [id, setId] = useState('');
 	const columns = ['Nome', 'Email', 'Projetos'];
-	const { data: info, request: getInfo } = useGet<OrganizationDTO[]>();
+	const { data: info, request: getInfo, isLoading } = useGet<OrganizationDTO[]>();
 
 	useEffect(() => {
 		getInfo(`/organization`);
@@ -50,18 +51,24 @@ function Organization() {
 				>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
-				<GenericTable
-					listItems={info || []}
-					onEdit={(e) => {
-						setIsOpen(!isOpen);
-						setId(e);
-					}}
-					onDelete={(e) => {
-						setIsOpenDelete(!isOpenDelete);
-						setId(e);
-					}}
-					columns={columns}
-				/>
+				{isLoading ? (
+					<div className="w-full flex items-center justify-center mt-8 h-60">
+						<Spinner color="triider-primary-orange-dark" size="16" />
+					</div>
+				) : (
+					<GenericTable
+						listItems={info || []}
+						onEdit={(e) => {
+							setIsOpen(!isOpen);
+							setId(e);
+						}}
+						onDelete={(e) => {
+							setIsOpenDelete(!isOpenDelete);
+							setId(e);
+						}}
+						columns={columns}
+					/>
+				)}
 			</Container>
 		</>
 	);

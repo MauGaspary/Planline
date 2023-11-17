@@ -8,13 +8,14 @@ import GenericTable from '../../../components/GenericTable';
 import { SquadDTO } from '../../../types/SquadDTO';
 import { useGet } from '../../../hooks/useGet';
 import DeleteModal from '../../../components/DeleteModal';
+import Spinner from '../../../components/Spinner';
 
 function Squad() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [update, setUpdate] = useState(false);
 	const [id, setId] = useState('');
-	const { data: info, request: getInfo } = useGet<SquadDTO[]>();
+	const { data: info, request: getInfo, isLoading } = useGet<SquadDTO[]>();
 	const columns = ['Nome', 'Membros', 'Organização'];
 
 	useEffect(() => {
@@ -50,18 +51,24 @@ function Squad() {
 				>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
-				<GenericTable
-					listItems={info || []}
-					onEdit={(e) => {
-						setIsOpen(!isOpen);
-						setId(e);
-					}}
-					onDelete={(e) => {
-						setIsOpenDelete(!isOpenDelete);
-						setId(e);
-					}}
-					columns={columns}
-				/>
+				{isLoading ? (
+					<div className="w-full flex items-center justify-center mt-8 h-60">
+						<Spinner color="triider-primary-orange-dark" size="16" />
+					</div>
+				) : (
+					<GenericTable
+						listItems={info || []}
+						onEdit={(e) => {
+							setIsOpen(!isOpen);
+							setId(e);
+						}}
+						onDelete={(e) => {
+							setIsOpenDelete(!isOpenDelete);
+							setId(e);
+						}}
+						columns={columns}
+					/>
+				)}
 			</Container>
 		</>
 	);

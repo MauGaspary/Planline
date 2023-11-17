@@ -9,13 +9,14 @@ import { useGet } from '../../../hooks/useGet';
 import { ProjectDTO } from '../../../types/ProjectDTO';
 import { useSearchParams } from 'react-router-dom';
 import DeleteModal from '../../../components/DeleteModal';
+import Spinner from '../../../components/Spinner';
 
 function Project() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenDelete, setIsOpenDelete] = useState(false);
 	const [update, setUpdate] = useState(false);
 	const [id, setId] = useState('');
-	const { data: info, request: getInfo } = useGet<ProjectDTO[]>();
+	const { data: info, request: getInfo, isLoading } = useGet<ProjectDTO[]>();
 	const [searchParams] = useSearchParams();
 	const projectId = searchParams.get('id');
 
@@ -58,18 +59,24 @@ function Project() {
 				>
 					<InputText placeholder="Nome" size="medium" isRequired={true} />
 				</InputHeader>
-				<GenericTable
-					listItems={info || []}
-					onEdit={(e) => {
-						setIsOpen(!isOpen);
-						setId(e);
-					}}
-					onDelete={(e) => {
-						setIsOpenDelete(!isOpenDelete);
-						setId(e);
-					}}
-					columns={columns}
-				/>
+				{isLoading ? (
+					<div className="w-full flex items-center justify-center mt-8 h-60">
+						<Spinner color="triider-primary-orange-dark" size="16" />
+					</div>
+				) : (
+					<GenericTable
+						listItems={info || []}
+						onEdit={(e) => {
+							setIsOpen(!isOpen);
+							setId(e);
+						}}
+						onDelete={(e) => {
+							setIsOpenDelete(!isOpenDelete);
+							setId(e);
+						}}
+						columns={columns}
+					/>
+				)}
 			</Container>
 		</>
 	);
