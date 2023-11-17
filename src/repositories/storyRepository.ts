@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Story } from '../dto/CreateSessionDto';
+import { Story } from '../dto/CreateSessionDTO.js';
 
 const prisma = new PrismaClient();
 
@@ -13,7 +13,7 @@ export default {
 					points: 0,
 				}));
 
-				const storyDto = {
+				const storyDTO = {
 					name: story.name,
 					story_id: story.story_id,
 					final_points: 0,
@@ -23,7 +23,7 @@ export default {
 				};
 
 				return prisma.story.create({
-					data: storyDto,
+					data: storyDTO,
 				});
 			})
 		);

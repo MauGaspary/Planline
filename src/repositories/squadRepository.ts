@@ -1,46 +1,55 @@
-import { Squad, PrismaClient, User } from '@prisma/client';
-import { InfoDTO } from '../dto/InfoBody';
+import { PrismaClient, Squad } from '@prisma/client';
+import { SquadDTO } from '../dto/SquadDTO.js';
 
 const prisma = new PrismaClient();
 
 export default {
-	async infoByProjectId(project_id: string): Promise<InfoDTO[]> {
-		const projectSquadBridge = await prisma.projectSquadBridge.findMany({
-			where: {
-				project_id: project_id,
-			},
-			select: {
-				Squad: {
-					select: {
-						id: true,
-						name: true,
-					},
-				},
-			},
-		});
-		const infoSquads: InfoDTO[] = projectSquadBridge.map((item) => item.Squad);
-		return infoSquads;
-	},
-
-	async creates(data: Squad): Promise<Squad> {
-		const project = await prisma.squad.create({
+	async create(data: Squad): Promise<string> {
+		const squad = await prisma.squad.create({
 			data: { ...data },
 		});
-		return project;
+		return squad.id;
 	},
 
-	async getAllUsers(squadId: string): Promise<User[]> {
-		return (
-			(
-				await prisma.userSquadBridge.findMany({
-					where: {
-						squad_id: squadId,
-					},
-					select: {
-						User: true,
-					},
-				})
-			)?.map((bridge) => bridge.User) ?? ([] as User[])
-		);
+	async getBySquadId(squadId: string): Promise<SquadDTO | null> {
+		const squad: SquadDTO | null = await prisma.squad.findFirst({
+			where: {
+				id: squadId,
+			},
+			include: {
+				organization: true,
+				users: true,
+			},
+		});
+		return squad;
+	},
+
+	async read(): Promise<Squad[]> {
+		const squads: Squad[] = await prisma.squad.findMany({
+			include: {
+				users: true,
+				organization: true,
+			},
+		});
+		return squads;
+	},
+
+	async delete(squadId: string): Promise<string> {
+		const squad = await prisma.squad.delete({
+			where: {
+				id: squadId,
+			},
+		});
+		return squad.id;
+	},
+
+	async put(data: Squad): Promise<string> {
+		const squad = await prisma.squad.update({
+			data: { ...data },
+			where: {
+				id: data.id,
+			},
+		});
+		return squad.id;
 	},
 };

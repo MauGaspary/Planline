@@ -1,21 +1,62 @@
 import { Request, Response } from 'express';
 import projectService from '../services/projectService.js';
-import { InfoDTO } from '../dto/InfoBody.js';
-import { Prisma } from '@prisma/client';
+import { Project } from '@prisma/client';
+import loggerService from '../services/loggerService.js';
 
 export default {
-	async infoByOrganizationId(req: Request, res: Response) {
+	async create(req: Request, res: Response) {
 		try {
-			const organization_id: string = req.params.organization_id;
-			const projects: InfoDTO[] = await projectService.infoByOrganizationId(organization_id);
+			const project: Project = req.body;
+			const projectId: string = await projectService.create(project);
+			loggerService.info('RESPONSE', projectId);
+			res.status(201).json({ projectId: projectId });
+		} catch (e) {
+			loggerService.error(e);
+			res.status(500).json({ message: 'Erro ao criar projeto.' });
+		}
+	},
+
+	async getByProjectId(req: Request, res: Response) {
+		try {
+			const projectId: string = req.params.projectId;
+			const project: Project | null = await projectService.getByProjectId(projectId);
+			loggerService.info('RESPONSE', JSON.stringify(project));
+			res.json(project);
+		} catch (e) {
+			loggerService.error(e);
+			res.status(500).json({ message: 'Erro ao buscar projeto.' });
+		}
+	},
+
+	async read(req: Request, res: Response) {
+		try {
+			const projects: Project[] = await projectService.read();
+			loggerService.info('RESPONSE', JSON.stringify(projects));
 			res.json(projects);
 		} catch (e) {
-			if (e instanceof Prisma.PrismaClientKnownRequestError) {
-				res.status(500).json({
-					error: e.message,
-					...e.meta,
-				});
-			}
+			loggerService.error(e);
+			res.status(500).json({ message: 'Erro ao buscar projetos.' });
+		}
+	},
+	async delete(req: Request, res: Response) {
+		try {
+			const projectId: string = req.params.projectId;
+			const respId: string = await projectService.delete(projectId);
+			res.status(201).json({ respId });
+		} catch (e) {
+			loggerService.error(e);
+			res.status(500).json({ message: 'Erro ao deletar projeto.' });
+		}
+	},
+	async put(req: Request, res: Response) {
+		try {
+			const project: Project = req.body;
+			const projectId: string = await projectService.put(project);
+			loggerService.info('RESPONSE', JSON.stringify(projectId));
+			res.status(200).json({ projectId: projectId });
+		} catch (e) {
+			loggerService.error(e);
+			res.status(500).json({ message: 'Erro ao atualizar projeto.' });
 		}
 	},
 };

@@ -25,40 +25,38 @@ model User {
   created_at      DateTime          @default(now())
   Squad           Squad[]
   Vote            Vote[]
-  UserSquadBridge UserSquadBridge[]
 }
 
 model Squad {
   id                 String               @id @default(uuid())
   name               String               @db.VarChar(100)
-  leader             User                 @relation(fields: [leaderId], references: [id])
-  leaderId           String
   organization       Organization         @relation(fields: [organization_id], references: [id])
   organization_id    String
+	users              User[]
+	projects           Project[]
   updated_at         DateTime             @updatedAt
   created_at         DateTime             @default(now())
-  ProjectSquadBridge ProjectSquadBridge[]
-  UserSquadBridge    UserSquadBridge[]
+	
 }
 
 model Organization {
   id         String    @id @default(uuid())
   name       String    @db.VarChar(100)
   email      String    @db.VarChar(50)
+	projects    Project[]
+  squads      Squad[]
   updated_at DateTime  @updatedAt
   created_at DateTime  @default(now())
-  Project    Project[]
-  Squad      Squad[]
 }
 
 model Project {
   id                 String               @id @default(uuid())
   name               String               @db.VarChar(100)
   Organization       Organization         @relation(fields: [organization_id], references: [id])
+	squads             Squad[]
   organization_id    String
   updated_at         DateTime             @updatedAt
   created_at         DateTime             @default(now())
-  ProjectSquadBridge ProjectSquadBridge[]
 }
 
 model Sprint {
@@ -75,9 +73,9 @@ model Story {
   story_id     String   @db.VarChar(15) @unique
   name         String   @db.VarChar(100)
   final_points Int      @db.Integer
+	tasks        Task[]
   updated_at   DateTime @updatedAt
   created_at   DateTime @default(now())
-  tasks        Task[]
 }
 
 model Task {
@@ -99,27 +97,4 @@ model Vote {
   User    User   @relation(fields: [user_id], references: [id])
   user_id String
   score   Int    @db.Integer
-}
-
-model ProjectSquadBridge {
-  id         String   @id @default(uuid())
-  Squad      Squad    @relation(fields: [squad_id], references: [id])
-  squad_id   String
-  Project    Project  @relation(fields: [project_id], references: [id])
-  project_id String
-  updated_at DateTime @updatedAt
-  created_at DateTime @default(now())
-  @@unique([squad_id, project_id], name: "squad_project")
-}
-
-model UserSquadBridge {
-  id         String   @id @default(uuid())
-  Squad      Squad    @relation(fields: [squad_id], references: [id])
-  squad_id   String
-  User       User     @relation(fields: [user_id], references: [id])
-  user_id    String
-  updated_at DateTime @updatedAt
-  created_at DateTime @default(now())
-  @@unique([squad_id, user_id], name: "squad_user")
-  
 }

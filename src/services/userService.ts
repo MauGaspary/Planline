@@ -1,40 +1,35 @@
-import { User, Prisma } from '@prisma/client';
-import { Request, Response } from 'express';
+import { User } from '@prisma/client';
 import userRepository from '../repositories/userRepository.js';
 
 export default {
-	async index(body: Request, res: Response) {
-		try {
-			const users: Array<User> = await userRepository.index();
-			if (users.length == 0) {
-				res.status(404).json({
-					message: 'There are no entities registered',
-				});
-			}
-			res.json({ ...users });
-		} catch (e) {
-			if (e instanceof Prisma.PrismaClientKnownRequestError) {
-				res.status(500).json({
-					error: e.message,
-					...e.meta,
-				});
-			}
-		}
+	async getByUserId(userId: string): Promise<User | null> {
+		const user: User | null = await userRepository.getByUserId(userId);
+		return user;
+	},
+	async create(user: User): Promise<string> {
+		this.validateEmail(user.email);
+		const userId: string = await userRepository.create(user);
+		return userId;
+	},
+	async read(): Promise<User[]> {
+		const users: User[] = await userRepository.read();
+		return users;
+	},
+	async delete(user: string): Promise<string> {
+		const userId: string = await userRepository.delete(user);
+		return userId;
 	},
 
-	async create(data: Request, res: Response) {
-		try {
-			const user = await userRepository.creates({ ...data.body });
-			res.json(user);
-		} catch (e) {
-			if (e instanceof Prisma.PrismaClientKnownRequestError) {
-				if (e.code === 'P2002') {
-					res.status(500).json({
-						error: 'There is a unique constraint violation',
-						...e.meta,
-					});
-				}
-			}
+	async put(user: User): Promise<string> {
+		this.validateEmail(user.email);
+		const userId: string = await userRepository.put(user);
+		return userId;
+	},
+
+	validateEmail(email: string): void {
+		const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+		if (!expression.test(email)) {
+			throw new Error('email is invalid');
 		}
 	},
 };
