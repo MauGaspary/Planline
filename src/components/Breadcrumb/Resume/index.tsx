@@ -164,7 +164,7 @@ function Resume({ setBreadcrumbDisplay }: ResumeProps) {
 						</div>
 					</Container>
 					{console.log(showToast)}
-					{showToast && <Toast errorMessage="Erro ao criar sessão" isError={true} />}
+					{showToast && <Toast message="Erro ao criar sessão" isError={true} />}
 				</>
 			) : (
 				<Upload importer={importFile} setBreadcrumbDisplay={setBreadcrumbDisplay} />

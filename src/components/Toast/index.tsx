@@ -2,28 +2,29 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '../../assets/icons/closeIcon.svg';
 import Button from '../Button';
+import Warning from '../../assets/icons/warning.svg';
 
 interface ToastProps {
 	sessions?: string[];
 	isError?: boolean;
-	errorMessage?: string;
+	message?: string;
 }
 
 interface ToastState {
 	toastSession?: string;
 	toastOpen: boolean;
 	isError: boolean;
-	errorMessage: string;
+	message: string;
 }
 
-const Toast = ({ sessions = [], isError = false, errorMessage = '' }: ToastProps) => {
+const Toast = ({ sessions = [], isError = false, message = '' }: ToastProps) => {
 	if (sessions.length === 0 && !isError) {
 		return null;
 	}
 	const initialToasts =
 		sessions.length > 0
-			? sessions.map((item) => ({ toastSession: item, toastOpen: true, isError, errorMessage }))
-			: [{ toastSession: '', toastOpen: true, isError, errorMessage }];
+			? sessions.map((item) => ({ toastSession: item, toastOpen: true, isError, message }))
+			: [{ toastSession: '', toastOpen: true, isError, message }];
 
 	const [toasts, setToasts] = useState<ToastState[]>(initialToasts);
 
@@ -52,7 +53,10 @@ const Toast = ({ sessions = [], isError = false, errorMessage = '' }: ToastProps
 								alt="close"
 								className="cursor-pointer w-6 h-6 absolute top-1 right-1"
 							/>
-							<p>{item.errorMessage}</p>
+							<div className="flex gap-5">
+								<img src={Warning} alt="warning" className="w-8 h-8" />
+								<p className="text-xl">{item.message}</p>
+							</div>
 						</div>
 					);
 				} else if (item.toastSession) {
@@ -80,6 +84,21 @@ const Toast = ({ sessions = [], isError = false, errorMessage = '' }: ToastProps
 								</Button>
 							</div>
 						)
+					);
+				} else if (!item.toastSession && !item.isError) {
+					return (
+						<div key={idx} className="relative bg-white mb-5 w-80 rounded-lg shadow-lg p-4 m-4">
+							<img
+								src={CloseIcon}
+								onClick={() => onCloseToast(idx)}
+								alt="close"
+								className="cursor-pointer w-6 h-6 absolute top-1 right-1"
+							/>
+							<div className="flex gap-5">
+								<img src={Warning} alt="warning" className="w-8 h-8" />
+								<p className="text-xl">{item.message}</p>
+							</div>
+						</div>
 					);
 				}
 			})}
