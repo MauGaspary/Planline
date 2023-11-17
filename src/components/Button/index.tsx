@@ -3,7 +3,7 @@ import React from 'react';
 interface ButtonProps {
 	size?: 'small' | 'medium' | 'large' | 'icon' | 'xsmall';
 	children: React.ReactNode;
-	variant?: 'primary' | 'secondary' | 'secondaryOutline' | 'disabled' | 'ghost' | 'info';
+	variant?: 'primary' | 'secondary' | 'secondaryOutline' | 'disabled' | 'ghost' | 'info' | 'alert';
 	onClickAction?: () => void;
 }
 
@@ -23,6 +23,7 @@ const Button = ({ size = 'medium', children, variant = 'primary', onClickAction 
 		secondaryOutline:
 			'text-stone-800 border-2 border-triider-primary-orange-dark bg-white hover:animate-pulse hover:shadow-md',
 		primary: 'text-white bg-triider-primary-orange-dark hover:animate-pulse hover:shadow-md',
+		alert: 'text-white bg-triider-alert-red hover:animate-pulse hover:shadow-md',
 		ghost:
 			'text-white bg-triider-primary-orange2 hover:animate-pulse hover:shadow-md border-2 border-white ',
 	};
