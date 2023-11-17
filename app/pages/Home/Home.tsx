@@ -29,7 +29,7 @@ export default function Home() {
 	useEffect(() => {
 		console.log(state);
 		if (state.users) {
-			navigation.replace('SelectUser');
+			navigation.push('SelectUser');
 		}
 	}, [state.users]);
 

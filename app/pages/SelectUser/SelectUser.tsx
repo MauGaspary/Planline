@@ -48,7 +48,7 @@ export default function SelectUser() {
 				<Text className="mt-8 text-lg text-triider-primary-orange1">Squad</Text>
 				<Text className="mt-4 text-lg text-black">Por favor, selecione o usuário</Text>
 			</View>
-			<View className="flex-col mt-12 items-center flex h-80 ">
+			<View className="flex-col mt-8 items-center flex h-[330px] ">
 				<ScrollView showsVerticalScrollIndicator={false}>
 					{users
 						.filter((user) => !user[1].firebase_auth_id)

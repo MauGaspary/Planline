@@ -39,7 +39,7 @@ export default function Voting() {
 	};
 
 	const [isModalVisible, setModalVisible] = useState(false);
-
+	console.log(isModalVisible);
 	const toggleModal = () => {
 		setModalVisible(!isModalVisible);
 	};

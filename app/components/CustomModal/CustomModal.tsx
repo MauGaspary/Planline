@@ -32,7 +32,12 @@ export default function CustomModal({
 					<Text className="mt-4 mx-4 text-lg text-triider-primary-orange1">{story}</Text>
 					<Text className="mt-4 mb-6 mx-4 text-lg text-triider-grayscale-gray1">{task}</Text>
 					<View className="mb-5 mx-4">
-						<Button label="Fechar" onClick={() => onClose()} />
+						<Button
+							label="Fechar"
+							onClick={() => {
+								onClose();
+							}}
+						/>
 					</View>
 				</View>
 			</View>
