@@ -74,13 +74,16 @@ const DeleteModal = ({ isOpen, onClose, type, id, update }: ModalProps) => {
 					<img className="w-28" src={trashIcon} alt="Lixeira" />
 					<h1 className="text-2xl font-bold decoration-triider-primary-orange2 my-8 underline-offset-8">
 						Tem certeza que deseja excluir
-						{type === 'project'
+						{
+							// prettier-ignore
+							type === 'project'
 							? ` o projeto ${title}?`
 							: type === 'organization'
 							? ` a organização ${title}?`
 							: type === 'squad'
 							? ` a squad ${title}?`
-							: ` o usuário ${title}?`}
+							: ` o usuário ${title}?`
+						}
 					</h1>
 					<div className="flex gap-5 justify-center mt-4">
 						<Button variant="secondary" onClickAction={onClose}>

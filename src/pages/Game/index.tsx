@@ -12,6 +12,7 @@ import VotingTriider from '../../components/VotingTriider';
 import { useDelete } from '../../hooks/useDelete';
 import { getRealtimeDatabase } from '../../services/firebase';
 import { Session } from '../../services/firebaseSessions';
+import Modal from '../../components/Modal';
 
 export default function Game() {
 	const router = useNavigate();
@@ -28,17 +29,24 @@ export default function Game() {
 
 	const refSession = ref(database, 'sessions/' + session_id);
 
+	const [isOpenCancelModal, setIsOpenCancelModal] = useState(false);
+
 	function sessionListener() {
 		onValue(refSession, (snapshot) => {
 			const session = snapshot.val();
+			console.log(session);
+			if (!session || session?.finished) {
+				router('/');
+				return;
+			}
 			setSession(session);
 		});
 	}
 
 	async function closeListener(save: boolean) {
+		router('/');
 		await request(`/sessions/finalize/${session_id}?save=${save}`);
 		off(refSession);
-		router('/');
 	}
 
 	let usersList = Object.entries(session?.users || {});
@@ -354,134 +362,168 @@ export default function Game() {
 		);
 	}
 
+	console.log(session);
+
 	return (
-		<div className="w-screen h-screen bg-triider-grayscale-game">
-			<Header onCancelPlanning={() => closeListener(false)} />
-			<div className="ml-16 mt-24">
-				<Qrcode link={session_id || ''} code={session_id || ''} />
-			</div>
-			<div className="flex-col absolute top-28 right-20">
-				{voteState === 'group' && (
-					<div className="w-72 h-52 border-2 p-6 rounded-2xl bg-white font-medium border-transparent shadow-xl mb-20">
-						<div className="font-medium text-xl">Resumo</div>
-						<div className="flex flex-row justify-between mt-4">
-							<div className="font-medium">Mínima</div>
-							<div className="font-medium">{isToShow && min < Number.MAX_SAFE_INTEGER && min}</div>
+		<>
+			<div className="w-screen h-screen bg-triider-grayscale-game">
+				<Header
+					onCancelPlanning={() => {
+						setIsOpenCancelModal(true);
+					}}
+					sprintName={session?.game?.sprint_name}
+					squadName={session?.game?.squad_name}
+				/>
+				<div className="ml-16 mt-24">
+					<Qrcode link={session_id || ''} code={session_id || ''} />
+				</div>
+				<div className="flex-col absolute top-28 right-20">
+					{voteState === 'group' && (
+						<div className="w-72 h-52 border-2 p-6 rounded-2xl bg-white font-medium border-transparent shadow-xl mb-20">
+							<div className="font-medium text-xl">Resumo</div>
+							<div className="flex flex-row justify-between mt-4">
+								<div className="font-medium">Mínima</div>
+								<div className="font-medium">
+									{isToShow && min < Number.MAX_SAFE_INTEGER && min}
+								</div>
+							</div>
+							<div className="flex flex-row justify-between mt-4">
+								<div className="font-medium">Média</div>
+								<div className="font-medium">{isToShow && !isNaN(average) && average}</div>
+							</div>
+							<div className="flex flex-row justify-between mt-4">
+								<div className="font-medium">Máxima</div>
+								<div className="font-medium">{isToShow && max > -Infinity && max}</div>
+							</div>
 						</div>
-						<div className="flex flex-row justify-between mt-4">
-							<div className="font-medium">Média</div>
-							<div className="font-medium">{isToShow && !isNaN(average) && average}</div>
-						</div>
-						<div className="flex flex-row justify-between mt-4">
-							<div className="font-medium">Máxima</div>
-							<div className="font-medium">{isToShow && max > -Infinity && max}</div>
-						</div>
-					</div>
-				)}
-				<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
-					{session?.game.stories[session.game.current_story]?.name &&
-					session?.game.stories[session.game.current_story]?.name.length > 67 ? (
-						<ToolTip tooltip={session?.game.stories[session.game.current_story]?.name}>
+					)}
+					<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
+						{session?.game.stories[session.game.current_story]?.name &&
+						session?.game.stories[session.game.current_story]?.name.length > 67 ? (
+							<ToolTip tooltip={session?.game.stories[session.game.current_story]?.name}>
+								<div className="text-white text-xl line-clamp-3">
+									{session?.game.stories[session.game.current_story]?.name}
+								</div>
+							</ToolTip>
+						) : (
 							<div className="text-white text-xl line-clamp-3">
 								{session?.game.stories[session.game.current_story]?.name}
 							</div>
-						</ToolTip>
-					) : (
-						<div className="text-white text-xl line-clamp-3">
-							{session?.game.stories[session.game.current_story]?.name}
-						</div>
-					)}
-					<div className="flex flex-row justify-end items-center gap-2">
-						<div className="text-white">Pontuação atual</div>
-						<div className="item-center justify-center w-fit p-4 border-2 rounded-2xl bg-triider-helper-green2 font-medium border-transparent shadow-xl">
-							<div className="font-bold">{storieDificulty}</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			{voteState === 'individual' ? (
-				<div className="justify-center">
-					<div className="flex h-72 items-center justify-center w-fit m-auto relative">
-						{session && <ShowPlayers />}
-						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
-
-						<div className="flex flex-col absolute items-center gap-2">
-							<h2 className="text-center text-2xl font-medium text-white">Votando</h2>
-							<p className="text-lg text-white pb-2">Aguarde enquanto seus colegas votam</p>
-							<Button
-								onClickAction={() => {
-									setVoteState('group');
-								}}
-								size="small"
-							>
-								Mostrar Votos
-							</Button>
-						</div>
-					</div>
-				</div>
-			) : (
-				<div>
-					<div className="flex h-72 items-center justify-center w-fit m-auto relative">
-						{session && <ShowPlayers />}
-						<img src={pokerTable} alt="Poker table" className=" relative px-4" />
-
-						<div className="flex flex-col absolute items-center gap-2">
-							<h2 className="text-center text-2xl font-medium text-white">Votação conjunta</h2>
-							<p className="text-lg text-white pb-2">Escolha a pontuação final da tarefa</p>
-							<div className="flex justify-around items-center gap-3">
-								<VoteCard
-									label="1"
-									selected={cardSelected === '1'}
-									onClick={(e) => setCardSelected(e)}
-								/>
-								<VoteCard
-									label="2"
-									selected={cardSelected === '2'}
-									onClick={(e) => {
-										setCardSelected(e);
-									}}
-								/>
-								<VoteCard
-									label="3"
-									selected={cardSelected === '3'}
-									onClick={(e) => setCardSelected(e)}
-								/>
-								<VoteCard
-									label="5"
-									selected={cardSelected === '5'}
-									onClick={(e) => setCardSelected(e)}
-								/>
-								<VoteCard
-									label="8"
-									selected={cardSelected === '8'}
-									onClick={(e) => setCardSelected(e)}
-								/>
-								<VoteCard
-									label="13"
-									selected={cardSelected === '13'}
-									onClick={(e) => setCardSelected(e)}
-								/>
+						)}
+						<div className="flex flex-row justify-end items-center gap-2">
+							<div className="text-white">Pontuação atual</div>
+							<div className="item-center justify-center w-fit p-4 border-2 rounded-2xl bg-triider-helper-green2 font-medium border-transparent shadow-xl">
+								<div className="font-bold">{storieDificulty}</div>
 							</div>
+						</div>
+					</div>
+				</div>
+				{voteState === 'individual' ? (
+					<div className="justify-center">
+						<div className="flex h-72 items-center justify-center w-fit m-auto relative">
+							{session && <ShowPlayers />}
+							<img src={pokerTable} alt="Poker table" className=" relative px-4" />
+
+							<div className="flex flex-col absolute items-center gap-2">
+								<h2 className="text-center text-2xl font-medium text-white">Votando</h2>
+								<p className="text-lg text-white pb-2">Aguarde enquanto seus colegas votam</p>
+								<Button
+									onClickAction={() => {
+										setVoteState('group');
+									}}
+									size="small"
+								>
+									Mostrar Votos
+								</Button>
+							</div>
+						</div>
+					</div>
+				) : (
+					<div>
+						<div className="flex h-72 items-center justify-center w-fit m-auto relative">
+							{session && <ShowPlayers />}
+							<img src={pokerTable} alt="Poker table" className=" relative px-4" />
+
+							<div className="flex flex-col absolute items-center gap-2">
+								<h2 className="text-center text-2xl font-medium text-white">Votação conjunta</h2>
+								<p className="text-lg text-white pb-2">Escolha a pontuação final da tarefa</p>
+								<div className="flex justify-around items-center gap-3">
+									<VoteCard
+										label="1"
+										selected={cardSelected === '1'}
+										onClick={(e) => setCardSelected(e)}
+									/>
+									<VoteCard
+										label="2"
+										selected={cardSelected === '2'}
+										onClick={(e) => {
+											setCardSelected(e);
+										}}
+									/>
+									<VoteCard
+										label="3"
+										selected={cardSelected === '3'}
+										onClick={(e) => setCardSelected(e)}
+									/>
+									<VoteCard
+										label="5"
+										selected={cardSelected === '5'}
+										onClick={(e) => setCardSelected(e)}
+									/>
+									<VoteCard
+										label="8"
+										selected={cardSelected === '8'}
+										onClick={(e) => setCardSelected(e)}
+									/>
+									<VoteCard
+										label="13"
+										selected={cardSelected === '13'}
+										onClick={(e) => setCardSelected(e)}
+									/>
+								</div>
+								<Button
+									size="small"
+									onClickAction={() => {
+										handleVote();
+									}}
+								>
+									Atribuir pontuação
+								</Button>
+							</div>
+						</div>
+					</div>
+				)}
+				<div className="w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
+					<Carousel
+						finalVotes={votes}
+						taskList={session?.game.stories[session.game.current_story].tasks || {}}
+						currentTaskId={session?.game.current_task ?? null}
+						voteLater={voteLater}
+					/>
+				</div>
+			</div>
+			<Modal isOpen={isOpenCancelModal} onClose={() => setIsOpenCancelModal(false)} title="">
+				<div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
+					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-3xl relative">
+						<h1 className="text-2xl font-bold decoration-triider-primary-orange2 my-8 underline-offset-8">
+							Cancelar a votação?
+						</h1>
+						<div className="flex gap-5 justify-center mt-4">
+							<Button variant="secondary" onClickAction={() => setIsOpenCancelModal(false)}>
+								Não
+							</Button>
 							<Button
-								size="small"
+								variant="primary"
 								onClickAction={() => {
-									handleVote();
+									closeListener(false);
 								}}
 							>
-								Atribuir pontuação
+								Sim
 							</Button>
 						</div>
 					</div>
 				</div>
-			)}
-			<div className="w-screen fixed left-1/2 transform -translate-x-1/2 bottom-0">
-				<Carousel
-					finalVotes={votes}
-					taskList={session?.game.stories[session.game.current_story].tasks || {}}
-					currentTaskId={session?.game.current_task ?? null}
-					voteLater={voteLater}
-				/>
-			</div>
-		</div>
+			</Modal>
+		</>
 	);
 }
