@@ -30,7 +30,7 @@ function VotingTriider({ number, name, isToShow, position }: VotingTriiderProps)
 			<div className="w-40 h-36 flex mt-10 flex-col">
 				{position == 'top' && <p className="text-black font-bold text-xl self-center">{name}</p>}
 				<img src={image} className="w-32 h-24 self-center" />
-				{<p className={voteClass}>{number}</p>}
+				<p className={voteClass}>{(number ?? 0) > 0 && isToShow ? number : ''}</p>
 				{position == 'bottom' && <p className="text-black font-bold text-xl self-center">{name}</p>}
 			</div>
 		);
