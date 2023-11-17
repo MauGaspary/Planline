@@ -98,6 +98,7 @@ export default {
 		};
 
 		const session: FirebaseSession = {
+			finished: false,
 			game: firebaseGame,
 			users: firebaseUsers,
 		};
@@ -190,7 +191,7 @@ export default {
 		const sessions: FirebaseCollection<FirebaseSession> = snapshot.val();
 
 		return Object.entries(sessions)
-			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].game.finished)
+			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].finished)
 			.sort((a, b) => {
 				const aDate = new Date(a[1].game.opened_at);
 				const bDate = new Date(b[1].game.opened_at);
