@@ -34,6 +34,7 @@ model Squad {
   organization_id String
   users           User[]
   projects        Project[]
+  sprints         Sprint[]
   updated_at      DateTime     @updatedAt
   created_at      DateTime     @default(now())
 }
@@ -63,6 +64,8 @@ model Sprint {
   name       String   @db.VarChar(100)
   startDate  DateTime @db.Date
   endDate    DateTime @db.Date
+	Squad      Squad?   @relation(fields: [squadId], references: [id])
+  squadId    String?
   stories    Story[]
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
