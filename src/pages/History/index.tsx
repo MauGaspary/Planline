@@ -6,7 +6,7 @@ function History() {
 	return (
 		<Container title="histórico">
 			<InputHeader>
-				<InputText placeholder="Nome" size="medium" isRequired={true} />
+				<InputText value="" placeholder="Nome" size="medium" isRequired={true} />
 			</InputHeader>
 		</Container>
 	);

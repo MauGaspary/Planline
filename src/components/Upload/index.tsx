@@ -40,9 +40,9 @@ function Upload({ importer, setBreadcrumbDisplay }: InputProps) {
 
 	return (
 		<>
-			{(availableSession?.length ?? 0) > 0 && (
+			{(availableSession?.length ?? 0) > 0 ? (
 				<Toast sessions={availableSession ? availableSession : []} />
-			)}
+			) : null}
 			<Container title="Importe o arquivo" small>
 				<Breadcrumb display={'import'} />
 				<div className="flex justify-center">
