@@ -11,6 +11,7 @@ export default {
 			},
 			select: {
 				id: true,
+				sprintId: true,
 			},
 		});
 	},

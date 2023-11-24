@@ -126,23 +126,34 @@ export default {
 
 		const promises = [];
 
-		for (const storyId in session.stories) {
-			const id = (await storyRepository.getIdByStoryId(storyId))?.id;
+		let sprintId = '';
 
-			if (!id) {
+		for (const storyId in session.stories) {
+			const story = await storyRepository.getIdByStoryId(storyId);
+
+			if (!story) {
 				continue;
 			}
 
-			await taskRepository.deleteManyByStoryId(id);
-			promises.push(storyRepository.delete(id));
+			if (sprintId === '') {
+				sprintId = story.sprintId ?? '';
+			}
+
+			if (!story.id) {
+				continue;
+			}
+
+			await taskRepository.deleteManyByStoryId(story.id);
+			promises.push(storyRepository.delete(story.id));
 		}
 
 		const finishedSession = child(sessionsRef, sessionId + '/game/finished');
 		promises.push(set(finishedSession, true));
 
+		console.log(sprintId);
+
 		await Promise.all(promises);
-		const story = await storyRepository.getSprintIdByStoryId(Object.keys(session.stories)[0]);
-		await sprintRepository.delete(story?.sprintId ?? '');
+		await sprintRepository.delete(sprintId);
 	},
 
 	async finalize(sessionId: string) {

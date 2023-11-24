@@ -34,7 +34,7 @@ export default {
 		return sprints;
 	},
 	async delete(sprintId: string) {
-		prisma.sprint.delete({
+		return prisma.sprint.delete({
 			where: {
 				id: sprintId,
 			},
