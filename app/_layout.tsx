@@ -25,7 +25,7 @@ export default function RootLayout() {
 			>
 				<Stack.Screen name="index" />
 			</Stack>
-			<StatusBar style="inverted" />
+			<StatusBar />
 		</SessionProvider>
 	);
 }
