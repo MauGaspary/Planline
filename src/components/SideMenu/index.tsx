@@ -59,23 +59,13 @@ function SideMenu() {
 				/> */}
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('/dashboard/orgs');
-						handleNav('/dashboard/orgs');
+						handleActiveButton('/dashboard/users');
+						handleNav('/dashboard/users');
 					}}
-					isSelected={activeButton === '/dashboard/orgs'}
-					title="Organizações"
-					imageWhite={apartmentWhite}
-					imageOrange={apartmentOrange}
-				/>
-				<SideMenuItem
-					onClick={() => {
-						handleActiveButton('/dashboard/projects');
-						handleNav('/dashboard/projects');
-					}}
-					isSelected={activeButton === '/dashboard/projects'}
-					title="Projetos"
-					imageWhite={registerWhite}
-					imageOrange={registerOrange}
+					isSelected={activeButton === '/dashboard/users'}
+					title="Usuários"
+					imageWhite={groupWhite}
+					imageOrange={groupOrange}
 				/>
 				<SideMenuItem
 					onClick={() => {
@@ -89,13 +79,23 @@ function SideMenu() {
 				/>
 				<SideMenuItem
 					onClick={() => {
-						handleActiveButton('/dashboard/users');
-						handleNav('/dashboard/users');
+						handleActiveButton('/dashboard/projects');
+						handleNav('/dashboard/projects');
 					}}
-					isSelected={activeButton === '/dashboard/users'}
-					title="Usuários"
-					imageWhite={groupWhite}
-					imageOrange={groupOrange}
+					isSelected={activeButton === '/dashboard/projects'}
+					title="Projetos"
+					imageWhite={registerWhite}
+					imageOrange={registerOrange}
+				/>
+				<SideMenuItem
+					onClick={() => {
+						handleActiveButton('/dashboard/orgs');
+						handleNav('/dashboard/orgs');
+					}}
+					isSelected={activeButton === '/dashboard/orgs'}
+					title="Organizações"
+					imageWhite={apartmentWhite}
+					imageOrange={apartmentOrange}
 				/>
 			</ol>
 		</nav>

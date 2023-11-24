@@ -85,7 +85,7 @@ export default function ProjectForm({ id, isOpen, update, errorMessage }: FormPr
 			isOpen();
 			update();
 		} else if (error) {
-			errorMessage(error.response.data.message || 'Erro ao criar o projeto');
+			errorMessage(error.response.data.message || 'Não foi possível criar um projeto');
 			isOpen();
 		}
 	}, [project, error]);
@@ -95,7 +95,7 @@ export default function ProjectForm({ id, isOpen, update, errorMessage }: FormPr
 			isOpen();
 			update();
 		} else if (errorEdit) {
-			errorMessage(errorEdit.response.data.message || 'Erro ao editar o projeto');
+			errorMessage(errorEdit.response.data.message || 'Não foi possível editar o projeto');
 			isOpen();
 		}
 	}, [newProject, errorEdit]);

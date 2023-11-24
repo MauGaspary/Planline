@@ -64,7 +64,7 @@ export default function OrganizationForm({ id, isOpen, update, errorMessage }: F
 			isOpen();
 			update();
 		} else if (error) {
-			errorMessage(error.response.data.message || 'Erro ao criar organização');
+			errorMessage(error.response.data.message || 'Não foi possível criar uma organização');
 			isOpen();
 		}
 	}, [organization, error]);
@@ -74,7 +74,7 @@ export default function OrganizationForm({ id, isOpen, update, errorMessage }: F
 			isOpen();
 			update();
 		} else if (errorEdit) {
-			errorMessage(errorEdit.response.data.message || 'Erro ao editar organização');
+			errorMessage(errorEdit.response.data.message || 'Não foi possível editar a organização');
 			isOpen();
 		}
 	}, [newOrganization, errorEdit]);

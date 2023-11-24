@@ -79,7 +79,7 @@ export default function SquadForm({ id, isOpen, update, errorMessage }: FormProp
 			isOpen();
 			update();
 		} else if (error) {
-			errorMessage(error.response.data.message || 'Erro ao criar a squad');
+			errorMessage(error.response.data.message || 'Não foi possível criar uma squad');
 			isOpen();
 		}
 	}, [newSquad, error]);
@@ -89,7 +89,7 @@ export default function SquadForm({ id, isOpen, update, errorMessage }: FormProp
 			isOpen();
 			update();
 		} else if (errorEdit) {
-			errorMessage(errorEdit.response.data.message || 'Erro ao editar a squad');
+			errorMessage(errorEdit.response.data.message || 'Não foi possivel editar a squad');
 			isOpen();
 		}
 	}, [editedSquad, errorEdit]);

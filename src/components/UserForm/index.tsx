@@ -80,7 +80,7 @@ export default function UserForm({ id, isOpen, update, errorMessage }: UserFormP
 			isOpen();
 			update();
 		} else if (error) {
-			errorMessage(error.response.data.message || 'Erro ao criar o user');
+			errorMessage(error.response.data.message || 'Não foi possível criar o usuário');
 			isOpen();
 		}
 	}, [newUser, error]);
@@ -90,7 +90,7 @@ export default function UserForm({ id, isOpen, update, errorMessage }: UserFormP
 			isOpen();
 			update();
 		} else if (errorEdit) {
-			errorMessage(errorEdit.response.data.message || 'Erro ao editar a squad');
+			errorMessage(errorEdit.response.data.message || 'Não foi possível editar o usuário');
 			isOpen();
 		}
 	}, [editedUser, errorEdit]);
