@@ -66,7 +66,10 @@ export default {
 			};
 		}
 
-		const sprintId: string = await sprintRepository.create(sessionCreationDTO.sprint);
+		const sprintId: string = await sprintRepository.create(
+			sessionCreationDTO.sprint,
+			sessionCreationDTO.squad_id
+		);
 
 		const [squad, sessionId] = await Promise.all([
 			squadService.getBySquadId(sessionCreationDTO.squad_id),
@@ -138,6 +141,8 @@ export default {
 		promises.push(set(finishedSession, true));
 
 		await Promise.all(promises);
+		const story = await storyRepository.getSprintIdByStoryId(Object.keys(session.stories)[0]);
+		await sprintRepository.delete(story?.sprintId ?? '');
 	},
 
 	async finalize(sessionId: string) {

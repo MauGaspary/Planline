@@ -14,6 +14,16 @@ export default {
 			},
 		});
 	},
+	async getSprintIdByStoryId(storyId: string) {
+		return prisma.story.findUnique({
+			where: {
+				story_id: storyId,
+			},
+			select: {
+				sprintId: true,
+			},
+		});
+	},
 	async createMany(stories: Story[], sprintId: string) {
 		await Promise.all(
 			stories.map((story) => {

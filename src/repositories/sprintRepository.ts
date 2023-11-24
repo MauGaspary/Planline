@@ -5,13 +5,12 @@ import { Sprint as SprintDTO } from '../dto/CreateSessionDTO';
 const prisma = new PrismaClient();
 
 export default {
-	async create(sprint: SprintDTO) {
+	async create(sprint: SprintDTO, squadId: string) {
 		const sprintDTO = {
 			name: sprint.name,
-
 			startDate: sprint.start_date,
-
 			endDate: sprint.end_date,
+			squadId: squadId,
 		};
 
 		const sprintObj: SprintPrisma = await prisma.sprint.create({
@@ -33,5 +32,12 @@ export default {
 		});
 
 		return sprints;
+	},
+	async delete(sprintId: string) {
+		prisma.sprint.delete({
+			where: {
+				id: sprintId,
+			},
+		});
 	},
 };
