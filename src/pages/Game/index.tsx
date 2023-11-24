@@ -1,6 +1,6 @@
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
-import { child, onValue, ref, set } from 'firebase/database';
+import { child, off, onValue, ref, set } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import pokerTable from '../../assets/images/poker_table.svg';
@@ -48,6 +48,7 @@ export default function Game() {
 	}
 
 	async function closeListener(save: boolean) {
+		off(refSession);
 		if (save) {
 			setSessionEnded(true);
 		} else {
@@ -408,7 +409,6 @@ export default function Game() {
 		const csv = Papa.unparse(csvData, { delimiter: ';' });
 
 		handleDeleteSession(true);
-
 		return csv;
 	};
 
