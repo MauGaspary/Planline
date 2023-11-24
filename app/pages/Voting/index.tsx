@@ -20,7 +20,7 @@ export default function Voting() {
 			navigation.replace('Finish');
 			return;
 		}
-	}, [state.game]);
+	}, [state]);
 
 	if (!state.game || !state.user) {
 		return (
