@@ -44,7 +44,7 @@ export default function SelectUser() {
 				source={Logo}
 			/>
 			<View className="rounded-b-3xl items-center h-40 w-full bg-white shadow shadow-gray-400 pt-10 ">
-				<Text className="mt-8 text-lg text-triider-primary-orange1">Squad</Text>
+				<Text className="mt-8 text-lg text-triider-primary-orange1">Esta é a sua Squad!</Text>
 				<Text className="mt-4 text-lg text-black">Por favor, selecione o usuário</Text>
 			</View>
 			<View className="flex-col mt-8 items-center flex h-[330px] ">
