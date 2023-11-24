@@ -64,7 +64,7 @@ const DeleteModal = ({ isOpen, onClose, type, id, update }: ModalProps) => {
 				onClick={onClose}
 			></div>
 			<div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-				<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-3xl relative">
+				<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-lg relative">
 					<button className="absolute top-4 right-4" onClick={onClose}>
 						<img className="w-8 h-8" src={closeIcon} />
 					</button>

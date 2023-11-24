@@ -188,7 +188,7 @@ export default function OrganizationForm({ id, isOpen, update, errorMessage }: F
 					onClickAction={handleCreate}
 				>
 					{(isLoading || isLoadingEdit) && <Spinner />}
-					{id ? 'Editar' : 'Criar'}
+					{id ? 'Salvar' : 'Criar'}
 				</Button>
 			</div>
 		</div>

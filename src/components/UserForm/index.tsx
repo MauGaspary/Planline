@@ -169,7 +169,7 @@ export default function UserForm({ id, isOpen, update, errorMessage }: UserFormP
 			<div className="flex mt-5 justify-center items-center">
 				<Button onClickAction={handleCreate}>
 					{(isLoading || isLoadingEdit) && <Spinner />}
-					{id ? 'Editar' : 'Criar'}
+					{id ? 'Salvar' : 'Criar'}
 				</Button>
 			</div>
 		</div>

@@ -39,7 +39,7 @@ export default function Game() {
 	function sessionListener() {
 		onValue(refSession, (snapshot) => {
 			const session = snapshot.val();
-			if (!session || session?.finished) {
+			if (!session || session?.game.finished) {
 				router('/');
 				return;
 			}
@@ -48,13 +48,13 @@ export default function Game() {
 	}
 
 	async function closeListener(save: boolean) {
+		off(refSession);
 		if (save) {
 			setSessionEnded(true);
 		} else {
+			handleDeleteSession(false);
 			router('/');
 		}
-		await request(`/sessions/finalize/${session_id}?save=${save}`);
-		off(refSession);
 	}
 
 	let usersList = Object.entries(session?.users || {});
@@ -408,7 +408,13 @@ export default function Game() {
 
 		const csv = Papa.unparse(csvData, { delimiter: ';' });
 
+		handleDeleteSession(true);
+		router('/');
 		return csv;
+	};
+
+	const handleDeleteSession = async (save: boolean) => {
+		await request(`/sessions/finalize/${session_id}?save=${save}}`);
 	};
 
 	const FinishedVotingModal = () => {
@@ -423,7 +429,6 @@ export default function Game() {
 						const csv = handleParseCSV();
 						const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
 						saveAs(blob, `Squad_-_${session?.game.squad_name}.csv`);
-						router('/');
 					}}
 				>
 					Exportar agora
@@ -581,7 +586,7 @@ export default function Game() {
 			</div>
 			<Modal isOpen={isOpenCancelModal} onClose={() => setIsOpenCancelModal(false)} title="">
 				<div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-3xl relative">
+					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-lg relative">
 						<h1 className="text-2xl font-bold decoration-triider-primary-orange2 my-8 underline-offset-8">
 							Cancelar a votação?
 						</h1>
@@ -603,7 +608,7 @@ export default function Game() {
 			</Modal>
 			<Modal isOpen={isOpenNoPlayersModal} onClose={() => setIsOpenCancelModal(false)} title="">
 				<div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-3xl relative">
+					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-lg relative">
 						<h1 className="text-2xl font-bold decoration-triider-primary-orange2 my-8 underline-offset-8">
 							Não há jogadores na sessão
 						</h1>

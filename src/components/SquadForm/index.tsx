@@ -199,7 +199,7 @@ export default function SquadForm({ id, isOpen, update, errorMessage }: FormProp
 			<div className="flex mt-5 justify-center items-center">
 				<Button onClickAction={handleCreate}>
 					{(isLoading || isLoadingEdit) && <Spinner />}
-					{id ? 'Editar' : 'Criar'}
+					{id ? 'Salvar' : 'Criar'}
 				</Button>
 			</div>
 		</div>
