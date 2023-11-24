@@ -581,7 +581,7 @@ export default function Game() {
 			</div>
 			<Modal isOpen={isOpenCancelModal} onClose={() => setIsOpenCancelModal(false)} title="">
 				<div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-3xl relative">
+					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-lg relative">
 						<h1 className="text-2xl font-bold decoration-triider-primary-orange2 my-8 underline-offset-8">
 							Cancelar a votação?
 						</h1>
@@ -603,7 +603,7 @@ export default function Game() {
 			</Modal>
 			<Modal isOpen={isOpenNoPlayersModal} onClose={() => setIsOpenCancelModal(false)} title="">
 				<div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-3xl relative">
+					<div className="flex flex-col items-center min-w-fit w-fit border-2 p-16 bg-white rounded-lg relative">
 						<h1 className="text-2xl font-bold decoration-triider-primary-orange2 my-8 underline-offset-8">
 							Não há jogadores na sessão
 						</h1>
