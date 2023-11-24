@@ -1,0 +1,64 @@
+const history = [
+	{
+		id: '7495a9ee-7f37-4e0e-bfa2-335b25bc5468',
+		name: 'Sprint 1',
+		startDate: '1970-01-01T00:00:00.000Z',
+		endDate: '1970-01-01T00:00:00.000Z',
+		squadId: null,
+		updated_at: '2023-11-24T03:43:44.721Z',
+		created_at: '2023-11-24T03:43:55.849Z',
+		stories: [
+			{
+				id: 'f6fa5aac-0afd-4215-b38a-505bd824a712',
+				story_id: '123',
+				name: 'Historia1',
+				final_points: 12,
+				sprintId: '7495a9ee-7f37-4e0e-bfa2-335b25bc5468',
+				updated_at: '2023-11-24T03:44:05.984Z',
+				created_at: '2023-11-24T03:44:31.567Z',
+				tasks: [
+					{
+						id: 'c3d70818-6db7-42e0-a928-962c554f923f',
+						task_id: '123',
+						name: 'Task1DaHistoria1',
+						points: 12,
+						updated_at: '2023-11-24T03:44:37.561Z',
+						created_at: '2023-11-24T03:44:57.692Z',
+						story_id: 'f6fa5aac-0afd-4215-b38a-505bd824a712',
+					},
+					{
+						id: 'c3d70818-6db7-42e0-a928-962c554f923f',
+						task_id: '123',
+						name: 'Task2DaHistoria1',
+						points: 12,
+						updated_at: '2023-11-24T03:44:37.561Z',
+						created_at: '2023-11-24T03:44:57.692Z',
+						story_id: 'f6fa5aac-0afd-4215-b38a-505bd824a712',
+					},
+				],
+			},
+			{
+				id: 'f6fa5aac-0afd-4215-b38a-505bd824a712',
+				story_id: '123',
+				name: 'Historia2',
+				final_points: 14,
+				sprintId: '7495a9ee-7f37-4e0e-bfa2-335b25bc5468',
+				updated_at: '2023-11-24T03:44:05.984Z',
+				created_at: '2023-11-24T03:44:31.567Z',
+				tasks: [
+					{
+						id: 'c3d70818-6db7-42e0-a928-962c554f923f',
+						task_id: '123',
+						name: 'TaskDaHistoria2',
+						points: 12,
+						updated_at: '2023-11-24T03:44:37.561Z',
+						created_at: '2023-11-24T03:44:57.692Z',
+						story_id: 'f6fa5aac-0afd-4215-b38a-505bd824a712',
+					},
+				],
+			},
+		],
+	},
+];
+
+export default history;
