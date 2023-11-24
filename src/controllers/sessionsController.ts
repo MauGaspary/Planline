@@ -45,5 +45,5 @@ export default {
 			loggerService.error(e);
 			res.status(500).json({ message: 'Erro ao pegar sessões ativas.' });
 		}
-	}
+	},
 };

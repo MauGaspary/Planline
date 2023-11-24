@@ -14,7 +14,7 @@ import storyRepository from '../repositories/storyRepository.js';
 import taskRepository from '../repositories/taskRepository.js';
 import voteRepository from '../repositories/voteRepository.js';
 import squadService from './squadService.js';
-import sprintRepository from 'src/repositories/sprintRepository.js';
+import sprintRepository from '../repositories/sprintRepository.js';
 
 function generateFourDigitId(): string {
 	return Math.floor(1000 + Math.random() * 9000).toString();
@@ -103,7 +103,7 @@ export default {
 		const session: FirebaseSession = {
 			game: firebaseGame,
 			users: firebaseUsers,
-			finished: false
+			finished: false,
 		};
 
 		const sessionRef = child(sessionsRef, sessionId);
@@ -203,5 +203,5 @@ export default {
 			})
 			.slice(0, 6)
 			.map((entry) => entry[0]);
-	}
+	},
 };

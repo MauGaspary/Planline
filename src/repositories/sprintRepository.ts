@@ -15,4 +15,16 @@ export default {
 		});
 		return sprintObj.id;
 	},
+	async index(): Promise<SprintPrisma[]> {
+		const sprints: SprintPrisma[] = await prisma.sprint.findMany({
+			include: {
+				stories: {
+					include: {
+						tasks: true,
+					},
+				},
+			},
+		});
+		return sprints;
+	},
 };
