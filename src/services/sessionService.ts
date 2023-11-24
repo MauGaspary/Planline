@@ -113,8 +113,31 @@ export default {
 	},
 
 	async finalizeWithoutSaving(sessionId: string) {
-		const finishedSession = child(sessionsRef, sessionId + '/finished');
-		await set(finishedSession, true);
+		const snapshot = await get(child(sessionsRef, `${sessionId}/game`));
+
+		if (!snapshot.exists()) {
+			return;
+		}
+
+		const session: FirebaseGame = snapshot.val();
+
+		const promises = [];
+
+		for (const storyId in session.stories) {
+			const id = (await storyRepository.getIdByStoryId(storyId))?.id;
+
+			if (!id) {
+				continue;
+			}
+
+			await taskRepository.deleteManyByStoryId(id);
+			promises.push(storyRepository.delete(id));
+		}
+
+		const finishedSession = child(sessionsRef, sessionId + '/game/finished');
+		promises.push(set(finishedSession, true));
+
+		await Promise.all(promises);
 	},
 
 	async finalize(sessionId: string) {
@@ -179,7 +202,9 @@ export default {
 			}
 		}
 
-		promises.push(this.finalizeWithoutSaving(sessionId));
+		const finishedSession = child(sessionsRef, sessionId + '/game/finished');
+		promises.push(set(finishedSession, true));
+
 		await Promise.all(promises);
 	},
 

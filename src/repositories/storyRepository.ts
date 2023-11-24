@@ -4,6 +4,16 @@ import { Story } from '../dto/CreateSessionDTO.js';
 const prisma = new PrismaClient();
 
 export default {
+	async getIdByStoryId(storyId: string) {
+		return prisma.story.findUnique({
+			where: {
+				story_id: storyId,
+			},
+			select: {
+				id: true,
+			},
+		});
+	},
 	async createMany(stories: Story[], sprintId: string) {
 		await Promise.all(
 			stories.map((story) => {
@@ -35,6 +45,14 @@ export default {
 			where: { story_id: id },
 			data: {
 				final_points: finalPoints,
+			},
+		});
+	},
+
+	async delete(storyId: string) {
+		return prisma.story.delete({
+			where: {
+				id: storyId,
 			},
 		});
 	},
