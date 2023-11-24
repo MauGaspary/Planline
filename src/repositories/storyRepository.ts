@@ -11,10 +11,21 @@ export default {
 			},
 			select: {
 				id: true,
+				sprintId: true,
 			},
 		});
 	},
-	async createMany(stories: Story[]) {
+	async getSprintIdByStoryId(storyId: string) {
+		return prisma.story.findUnique({
+			where: {
+				story_id: storyId,
+			},
+			select: {
+				sprintId: true,
+			},
+		});
+	},
+	async createMany(stories: Story[], sprintId: string) {
 		await Promise.all(
 			stories.map((story) => {
 				const tasks = story.tasks.map((task) => ({
@@ -26,6 +37,7 @@ export default {
 				const storyDTO = {
 					name: story.name,
 					story_id: story.story_id,
+					sprintId: sprintId,
 					final_points: 0,
 					tasks: {
 						create: tasks,

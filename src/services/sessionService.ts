@@ -14,6 +14,7 @@ import storyRepository from '../repositories/storyRepository.js';
 import taskRepository from '../repositories/taskRepository.js';
 import voteRepository from '../repositories/voteRepository.js';
 import squadService from './squadService.js';
+import sprintRepository from '../repositories/sprintRepository.js';
 
 function generateFourDigitId(): string {
 	return Math.floor(1000 + Math.random() * 9000).toString();
@@ -65,10 +66,15 @@ export default {
 			};
 		}
 
+		const sprintId: string = await sprintRepository.create(
+			sessionCreationDTO.sprint,
+			sessionCreationDTO.squad_id
+		);
+
 		const [squad, sessionId] = await Promise.all([
 			squadService.getBySquadId(sessionCreationDTO.squad_id),
 			this.createRandomId(),
-			storyRepository.createMany(stories),
+			storyRepository.createMany(stories, sprintId),
 		]);
 
 		const users = squad?.users ?? [];
@@ -120,21 +126,34 @@ export default {
 
 		const promises = [];
 
-		for (const storyId in session.stories) {
-			const id = (await storyRepository.getIdByStoryId(storyId))?.id;
+		let sprintId = '';
 
-			if (!id) {
+		for (const storyId in session.stories) {
+			const story = await storyRepository.getIdByStoryId(storyId);
+
+			if (!story) {
 				continue;
 			}
 
-			await taskRepository.deleteManyByStoryId(id);
-			promises.push(storyRepository.delete(id));
+			if (sprintId === '') {
+				sprintId = story.sprintId ?? '';
+			}
+
+			if (!story.id) {
+				continue;
+			}
+
+			await taskRepository.deleteManyByStoryId(story.id);
+			promises.push(storyRepository.delete(story.id));
 		}
 
 		const finishedSession = child(sessionsRef, sessionId + '/game/finished');
 		promises.push(set(finishedSession, true));
 
+		console.log(sprintId);
+
 		await Promise.all(promises);
+		await sprintRepository.delete(sprintId);
 	},
 
 	async finalize(sessionId: string) {
@@ -162,8 +181,8 @@ export default {
 						continue;
 					}
 
-					for (const userId in votes[taskId].votes) {
-						const vote = votes[taskId].votes[userId];
+					for (const userId in task.votes) {
+						const vote = task.votes[userId];
 
 						promises.push(
 							voteRepository.create({
@@ -182,9 +201,9 @@ export default {
 						);
 					}
 
-					voteCount[votes[taskId].final_vote] = voteCount[votes[taskId].final_vote] + 1 || 1;
+					voteCount[task.final_vote] = voteCount[task.final_vote] + 1 || 1;
 
-					promises.push(taskRepository.update(taskId, votes[taskId].final_vote));
+					promises.push(taskRepository.update(taskId, task.final_vote));
 				}
 
 				let average = 0;
@@ -222,7 +241,7 @@ export default {
 
 				return aDate.getTime() - bDate.getTime();
 			})
-			.slice(0, 3)
+			.slice(0, 6)
 			.map((entry) => entry[0]);
 	},
 };
