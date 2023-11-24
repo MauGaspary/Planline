@@ -4,7 +4,7 @@ import { Story } from '../dto/CreateSessionDTO.js';
 const prisma = new PrismaClient();
 
 export default {
-	async createMany(stories: Story[], sprintId: string) {
+	async createMany(stories: Story[]) {
 		await Promise.all(
 			stories.map((story) => {
 				const tasks = story.tasks.map((task) => ({
@@ -16,7 +16,6 @@ export default {
 				const storyDTO = {
 					name: story.name,
 					story_id: story.story_id,
-					sprintId: sprintId,
 					final_points: 0,
 					tasks: {
 						create: tasks,
