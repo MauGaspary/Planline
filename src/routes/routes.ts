@@ -5,6 +5,7 @@ import squadController from '../controllers/squadController.js';
 import sessionsController from '../controllers/sessionsController.js';
 import userController from '../controllers/userController.js';
 import { loggerMiddleware } from '../services/loggerService.js';
+import sprintController from '../controllers/sprintController.js';
 
 const express = Express;
 
@@ -38,5 +39,7 @@ routes.get('/organization', organizationController.read);
 routes.delete('/organization/:organizationId', organizationController.delete);
 routes.get('/organization/:organizationId', organizationController.getByOrganizationId);
 routes.put('/organization', organizationController.put);
+
+routes.get('/sprint', sprintController.index);
 
 export default routes;

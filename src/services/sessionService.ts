@@ -14,6 +14,7 @@ import storyRepository from '../repositories/storyRepository.js';
 import taskRepository from '../repositories/taskRepository.js';
 import voteRepository from '../repositories/voteRepository.js';
 import squadService from './squadService.js';
+import sprintRepository from '../repositories/sprintRepository.js';
 
 function generateFourDigitId(): string {
 	return Math.floor(1000 + Math.random() * 9000).toString();
@@ -65,10 +66,15 @@ export default {
 			};
 		}
 
+		const sprintId: string = await sprintRepository.create(
+			sessionCreationDTO.sprint,
+			sessionCreationDTO.squad_id
+		);
+
 		const [squad, sessionId] = await Promise.all([
 			squadService.getBySquadId(sessionCreationDTO.squad_id),
 			this.createRandomId(),
-			storyRepository.createMany(stories),
+			storyRepository.createMany(stories, sprintId),
 		]);
 
 		const users = squad?.users ?? [];
@@ -98,7 +104,6 @@ export default {
 		};
 
 		const session: FirebaseSession = {
-			finished: false,
 			game: firebaseGame,
 			users: firebaseUsers,
 		};
@@ -111,8 +116,44 @@ export default {
 	},
 
 	async finalizeWithoutSaving(sessionId: string) {
-		const finishedSession = child(sessionsRef, sessionId + '/finished');
-		await set(finishedSession, true);
+		const snapshot = await get(child(sessionsRef, `${sessionId}/game`));
+
+		if (!snapshot.exists()) {
+			return;
+		}
+
+		const session: FirebaseGame = snapshot.val();
+
+		const promises = [];
+
+		let sprintId = '';
+
+		for (const storyId in session.stories) {
+			const story = await storyRepository.getIdByStoryId(storyId);
+
+			if (!story) {
+				continue;
+			}
+
+			if (sprintId === '') {
+				sprintId = story.sprintId ?? '';
+			}
+
+			if (!story.id) {
+				continue;
+			}
+
+			await taskRepository.deleteManyByStoryId(story.id);
+			promises.push(storyRepository.delete(story.id));
+		}
+
+		const finishedSession = child(sessionsRef, sessionId + '/game/finished');
+		promises.push(set(finishedSession, true));
+
+		console.log(sprintId);
+
+		await Promise.all(promises);
+		await sprintRepository.delete(sprintId);
 	},
 
 	async finalize(sessionId: string) {
@@ -131,7 +172,7 @@ export default {
 			for (const storyId in game.stories) {
 				const story = game.stories[storyId];
 
-				const voteCount: { [key: number]: number } = {};
+				let sum = 0;
 
 				for (const taskId in story.tasks) {
 					const task: FirebaseTaskVote | null = votes[taskId];
@@ -160,24 +201,18 @@ export default {
 						);
 					}
 
-					voteCount[task.final_vote] = voteCount[task.final_vote] + 1 || 1;
+					sum += task.final_vote;
 
 					promises.push(taskRepository.update(taskId, task.final_vote));
 				}
 
-				let average = 0;
-
-				for (const vote in voteCount) {
-					if (voteCount[vote] > average) {
-						average = parseInt(vote);
-					}
-				}
-
-				promises.push(storyRepository.update(storyId, average));
+				promises.push(storyRepository.update(storyId, sum));
 			}
 		}
 
-		promises.push(this.finalizeWithoutSaving(sessionId));
+		const finishedSession = child(sessionsRef, sessionId + '/game/finished');
+		promises.push(set(finishedSession, true));
+
 		await Promise.all(promises);
 	},
 
@@ -191,7 +226,7 @@ export default {
 		const sessions: FirebaseCollection<FirebaseSession> = snapshot.val();
 
 		return Object.entries(sessions)
-			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].finished)
+			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].game.finished)
 			.sort((a, b) => {
 				const aDate = new Date(a[1].game.opened_at);
 				const bDate = new Date(b[1].game.opened_at);
