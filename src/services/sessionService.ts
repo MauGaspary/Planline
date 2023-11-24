@@ -172,7 +172,7 @@ export default {
 			for (const storyId in game.stories) {
 				const story = game.stories[storyId];
 
-				const voteCount: { [key: number]: number } = {};
+				let sum = 0;
 
 				for (const taskId in story.tasks) {
 					const task: FirebaseTaskVote | null = votes[taskId];
@@ -201,20 +201,12 @@ export default {
 						);
 					}
 
-					voteCount[task.final_vote] = voteCount[task.final_vote] + 1 || 1;
+					sum += task.final_vote;
 
 					promises.push(taskRepository.update(taskId, task.final_vote));
 				}
 
-				let average = 0;
-
-				for (const vote in voteCount) {
-					if (voteCount[vote] > average) {
-						average = parseInt(vote);
-					}
-				}
-
-				promises.push(storyRepository.update(storyId, average));
+				promises.push(storyRepository.update(storyId, sum));
 			}
 		}
 
