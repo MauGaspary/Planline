@@ -22,6 +22,13 @@ export default {
 
 	async index(): Promise<SprintPrisma[]> {
 		const sprints: SprintPrisma[] = await prisma.sprint.findMany({
+			where: {
+				stories: {
+					none: {
+						final_points: 0,
+					},
+				},
+			},
 			include: {
 				stories: {
 					include: {
