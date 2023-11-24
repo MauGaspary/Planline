@@ -15,11 +15,11 @@ export default function Wait() {
 	const { waitingTask } = router.params as { waitingTask: string };
 
 	useEffect(() => {
+		if (game?.finished) {
+			navigation.replace('Finish');
+			return;
+		}
 		if (game?.current_task !== waitingTask) {
-			if (!game?.current_task) {
-				navigation.replace('Finish');
-				return;
-			}
 			navigation.replace('Voting');
 			return;
 		}
