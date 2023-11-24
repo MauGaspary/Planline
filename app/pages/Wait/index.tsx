@@ -23,7 +23,7 @@ export default function Wait() {
 			navigation.replace('Voting');
 			return;
 		}
-	}, [game?.current_task]);
+	}, [game]);
 
 	return (
 		<View className="items-center flex-1">
