@@ -207,7 +207,7 @@ export default function ProjectForm({ id, isOpen, update, errorMessage }: FormPr
 			<div className="flex mt-5 justify-center items-center">
 				<Button onClickAction={handleCreate}>
 					{(isLoading || isLoadingEdit) && <Spinner />}
-					{id ? 'Editar' : 'Criar'}
+					{id ? 'Salvar' : 'Criar'}
 				</Button>
 			</div>
 		</div>
