@@ -15,6 +15,13 @@ export default function Voting() {
 	const [selectedCard, setSelectedCard] = useState('');
 	const [isModalVisible, setModalVisible] = useState(false);
 
+	useEffect(() => {
+		if (game?.finished) {
+			navigation.replace('Finish');
+			return;
+		}
+	}, [state.game]);
+
 	if (!state.game || !state.user) {
 		return (
 			<>
@@ -28,13 +35,6 @@ export default function Voting() {
 
 	const currentStory = game?.stories[game?.current_story];
 	const currentTask = currentStory?.tasks[game?.current_task];
-
-	useEffect(() => {
-		if (game?.finished) {
-			navigation.replace('Finish');
-			return;
-		}
-	}, [game]);
 
 	const handleCardClick = (label: string) => {
 		setSelectedCard(label);
