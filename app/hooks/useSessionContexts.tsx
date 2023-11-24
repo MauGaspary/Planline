@@ -1,6 +1,5 @@
 import { ReactNode, createContext, useContext, useEffect, useReducer } from 'react';
-
-import { realtimeDatabase } from '../services/firebase';
+import database from '@react-native-firebase/database';
 
 export type Session = {
 	users: {
@@ -82,7 +81,7 @@ type ContextState = {
 	close: boolean;
 };
 
-const sessionsRef = realtimeDatabase().ref('sessions');
+const sessionsRef = database().ref('sessions');
 
 type SessionContextType = {
 	state: ContextState;
