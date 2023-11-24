@@ -14,7 +14,7 @@ function History() {
 	const { data: info, request: getInfo, isLoading } = useGet<CsvDownloadFilesDTO[]>();
 
 	useEffect(() => {
-		getInfo(`/`);
+		getInfo(`/sprint`);
 	}, []);
 
 	const CsvContainer = useCallback((item: any) => {
@@ -43,10 +43,7 @@ function History() {
 		};
 
 		return (
-			<div
-				className="max-w-sm mx-auto flex p-3 rounded-lg shadow-xl cursor-pointer"
-				onClick={downloadFile}
-			>
+			<div className="max-w-sm flex p-3 rounded-lg shadow-xl cursor-pointer" onClick={downloadFile}>
 				<div className="flex flex-shrink-0 items-center justify-center">
 					<img src={CsvImage} alt="csv" className="h-12 w-12" />
 				</div>
@@ -71,7 +68,7 @@ function History() {
 					<Spinner color="triider-primary-orange-dark" size="16" />
 				</div>
 			) : (
-				<div className="w-full flex items-start justify-center mt-8 h-60">
+				<div className="w-full overflow-auto gap-14 grid grid-cols-3 items-start justify-start mt-8 h-60">
 					{info?.map((item) => CsvContainer(item))}
 				</div>
 			)}
