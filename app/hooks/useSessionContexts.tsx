@@ -1,4 +1,3 @@
-import { child, off, onValue, ref, set } from 'firebase/database';
 import { ReactNode, createContext, useContext, useEffect, useReducer } from 'react';
 
 import { realtimeDatabase } from '../services/firebase';
@@ -83,7 +82,7 @@ type ContextState = {
 	close: boolean;
 };
 
-const sessionsRef = ref(realtimeDatabase(), 'sessions');
+const sessionsRef = realtimeDatabase().ref('sessions');
 
 type SessionContextType = {
 	state: ContextState;
@@ -104,7 +103,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		if (!state.sessionId) return;
 
-		onValue(child(sessionsRef, `${state.sessionId}/users`), (snapshot) => {
+		sessionsRef.child(`${state.sessionId}/users`).on('value', (snapshot) => {
 			const users: { [key: string]: User } = snapshot.val();
 
 			if (!users) return;
@@ -116,9 +115,8 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		if (!state.user) return;
 
-		off(child(sessionsRef, `${state.sessionId}/users`));
-
-		onValue(child(sessionsRef, `${state.sessionId}/game`), (snapshot) => {
+		sessionsRef.child(`${state.sessionId}/users/${state.user.id}`).off();
+		sessionsRef.child(`${state.sessionId}/game`).on('value', (snapshot) => {
 			const game: Game = snapshot.val();
 
 			if (!game) return;
@@ -130,7 +128,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		if (state.close) {
 			if (!state.sessionId) return;
-			off(child(sessionsRef, `${state.sessionId}/game`));
+			sessionsRef.child(`${state.sessionId}/game`).off();
 			dispatch({ type: 'CLEAR' });
 		}
 	}, [state.close]);
@@ -152,10 +150,9 @@ function sessionReducer(state: ContextState, action: SessionAction): ContextStat
 			if (!state?.users) return { ...state };
 			user = state.users[action.payload.userId];
 
-			set(
-				child(sessionsRef, `${state.sessionId}/users/${action.payload.userId}/firebase_auth_id`),
-				action.payload.firebase_auth_id
-			);
+			sessionsRef
+				.child(`${state.sessionId}/users/${action.payload.userId}/firebase_auth_id`)
+				.set(action.payload.firebase_auth_id);
 
 			return { ...state, user: { id: action.payload.userId, user } };
 		case 'CLOSE_SESSION':
