@@ -11,4 +11,12 @@ export default {
 			},
 		});
 	},
+
+	async deleteManyByStoryId(storyId: string) {
+		return prisma.task.deleteMany({
+			where: {
+				story_id: storyId,
+			},
+		});
+	},
 };

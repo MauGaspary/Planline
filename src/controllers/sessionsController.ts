@@ -17,8 +17,7 @@ export default {
 	},
 
 	async finalize(req: Request, res: Response) {
-		const isToSave = req.query.save;
-
+		const isToSave = req.query.save === 'true';
 		const sessionIdDTO = req.params.sessionId;
 
 		try {
