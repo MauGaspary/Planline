@@ -39,7 +39,7 @@ export default function Game() {
 	function sessionListener() {
 		onValue(refSession, (snapshot) => {
 			const session = snapshot.val();
-			if (!session || session?.finished) {
+			if (!session || session?.game.finished) {
 				router('/');
 				return;
 			}
@@ -48,13 +48,13 @@ export default function Game() {
 	}
 
 	async function closeListener(save: boolean) {
+		off(refSession);
 		if (save) {
 			setSessionEnded(true);
 		} else {
+			handleDeleteSession(false);
 			router('/');
 		}
-		await request(`/sessions/finalize/${session_id}?save=${save}`);
-		off(refSession);
 	}
 
 	let usersList = Object.entries(session?.users || {});
@@ -408,7 +408,13 @@ export default function Game() {
 
 		const csv = Papa.unparse(csvData, { delimiter: ';' });
 
+		handleDeleteSession(true);
+		router('/');
 		return csv;
+	};
+
+	const handleDeleteSession = async (save: boolean) => {
+		await request(`/sessions/finalize/${session_id}?save=${save}}`);
 	};
 
 	const FinishedVotingModal = () => {
@@ -423,7 +429,6 @@ export default function Game() {
 						const csv = handleParseCSV();
 						const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
 						saveAs(blob, `Squad_-_${session?.game.squad_name}.csv`);
-						router('/');
 					}}
 				>
 					Exportar agora
