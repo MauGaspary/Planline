@@ -17,46 +17,46 @@ enum level {
 }
 
 model User {
-  id              String            @id @default(uuid())
-  name            String            @db.VarChar(100)
-  email           String            @db.VarChar(50)
-  level           level             @default(JUNIOR)
-  updated_at      DateTime          @updatedAt
-  created_at      DateTime          @default(now())
-  Squad           Squad[]
-  Vote            Vote[]
+  id         String   @id @default(uuid())
+  name       String   @db.VarChar(100)
+  email      String   @db.VarChar(50)
+  level      level    @default(JUNIOR)
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+  Squad      Squad[]
+  Vote       Vote[]
 }
 
 model Squad {
-  id                 String               @id @default(uuid())
-  name               String               @db.VarChar(100)
-  organization       Organization         @relation(fields: [organization_id], references: [id])
-  organization_id    String
-	users              User[]
-	projects           Project[]
-  updated_at         DateTime             @updatedAt
-  created_at         DateTime             @default(now())
-	
+  id              String       @id @default(uuid())
+  name            String       @db.VarChar(100)
+  organization    Organization @relation(fields: [organization_id], references: [id])
+  organization_id String
+  users           User[]
+  projects        Project[]
+  sprints         Sprint[]
+  updated_at      DateTime     @updatedAt
+  created_at      DateTime     @default(now())
 }
 
 model Organization {
   id         String    @id @default(uuid())
   name       String    @db.VarChar(100)
   email      String    @db.VarChar(50)
-	projects    Project[]
-  squads      Squad[]
+  projects   Project[]
+  squads     Squad[]
   updated_at DateTime  @updatedAt
   created_at DateTime  @default(now())
 }
 
 model Project {
-  id                 String               @id @default(uuid())
-  name               String               @db.VarChar(100)
-  Organization       Organization         @relation(fields: [organization_id], references: [id])
-	squads             Squad[]
-  organization_id    String
-  updated_at         DateTime             @updatedAt
-  created_at         DateTime             @default(now())
+  id              String       @id @default(uuid())
+  name            String       @db.VarChar(100)
+  Organization    Organization @relation(fields: [organization_id], references: [id])
+  squads          Squad[]
+  organization_id String
+  updated_at      DateTime     @updatedAt
+  created_at      DateTime     @default(now())
 }
 
 model Sprint {
@@ -64,29 +64,34 @@ model Sprint {
   name       String   @db.VarChar(100)
   startDate  DateTime @db.Date
   endDate    DateTime @db.Date
+	Squad      Squad?   @relation(fields: [squadId], references: [id])
+  squadId    String?
+  stories    Story[]
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
 }
 
 model Story {
   id           String   @id @default(uuid())
-  story_id     String   @db.VarChar(15) @unique
+  story_id     String   @unique @db.VarChar(15)
   name         String   @db.VarChar(100)
   final_points Int      @db.Integer
-	tasks        Task[]
+  Sprint       Sprint?  @relation(fields: [sprintId], references: [id])
+  sprintId     String?
+  tasks        Task[]
   updated_at   DateTime @updatedAt
   created_at   DateTime @default(now())
 }
 
 model Task {
   id         String   @id @default(uuid())
-  task_id    String   @db.VarChar(15) @unique
+  task_id    String   @unique @db.VarChar(15)
   name       String   @db.VarChar(100)
   points     Int      @db.Integer
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
   Vote       Vote[]
-  story      Story   @relation(fields: [story_id], references: [id])
+  story      Story    @relation(fields: [story_id], references: [id])
   story_id   String
 }
 
