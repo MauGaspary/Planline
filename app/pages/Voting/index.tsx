@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
@@ -28,6 +28,13 @@ export default function Voting() {
 
 	const currentStory = game?.stories[game?.current_story];
 	const currentTask = currentStory?.tasks[game?.current_task];
+
+	useEffect(() => {
+		if (game?.finished) {
+			navigation.replace('Finish');
+			return;
+		}
+	}, [game]);
 
 	const handleCardClick = (label: string) => {
 		setSelectedCard(label);
