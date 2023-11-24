@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../..';
@@ -14,6 +14,13 @@ export default function Voting() {
 	const { state } = useAppContext();
 	const [selectedCard, setSelectedCard] = useState('');
 	const [isModalVisible, setModalVisible] = useState(false);
+
+	useEffect(() => {
+		if (game?.finished) {
+			navigation.replace('Finish');
+			return;
+		}
+	}, [state]);
 
 	if (!state.game || !state.user) {
 		return (
