@@ -1,6 +1,6 @@
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
-import { child, off, onValue, ref, set } from 'firebase/database';
+import { child, onValue, ref, set } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import pokerTable from '../../assets/images/poker_table.svg';
@@ -51,10 +51,9 @@ export default function Game() {
 		if (save) {
 			setSessionEnded(true);
 		} else {
+			handleDeleteSession(false);
 			router('/');
 		}
-		await request(`/sessions/finalize/${session_id}?save=${save}`);
-		off(refSession);
 	}
 
 	let usersList = Object.entries(session?.users || {});
@@ -408,7 +407,13 @@ export default function Game() {
 
 		const csv = Papa.unparse(csvData, { delimiter: ';' });
 
+		handleDeleteSession(true);
+
 		return csv;
+	};
+
+	const handleDeleteSession = async (save: boolean) => {
+		await request(`/sessions/finalize/${session_id}?save=${save}}`);
 	};
 
 	const FinishedVotingModal = () => {
@@ -423,7 +428,6 @@ export default function Game() {
 						const csv = handleParseCSV();
 						const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
 						saveAs(blob, `Squad_-_${session?.game.squad_name}.csv`);
-						router('/');
 					}}
 				>
 					Exportar agora
