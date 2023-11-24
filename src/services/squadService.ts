@@ -1,5 +1,5 @@
-import { SquadDTO } from '../dto/SquadDTO.js';
 import squadRepository from '../repositories/squadRepository.js';
+import { SquadDTO } from '../dto/SquadDTO.js';
 import { Squad } from '@prisma/client';
 
 export default {

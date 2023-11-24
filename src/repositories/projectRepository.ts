@@ -23,6 +23,7 @@ export default {
 			},
 			include: {
 				squads: true,
+				Organization: true,
 			},
 		});
 		return project;
@@ -31,6 +32,7 @@ export default {
 		const projects: Project[] = await prisma.project.findMany({
 			include: {
 				squads: true,
+				Organization: true,
 			},
 		});
 		return projects;

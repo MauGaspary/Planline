@@ -1,8 +1,8 @@
 import loggerService from '../services/loggerService.js';
 import { Squad } from '@prisma/client';
 import { Request, Response } from 'express';
-import { SquadDTO } from '../dto/SquadDTO.js';
 import squadService from '../services/squadService.js';
+import { SquadDTO } from '../dto/SquadDTO.js';
 
 export default {
 	async create(req: Request, res: Response) {

@@ -45,17 +45,5 @@ export default {
 			loggerService.error(e);
 			res.status(500).json({ message: 'Erro ao pegar sessões ativas.' });
 		}
-	},
-
-	async download(req: Request, res: Response) {
-		const sprintId = req.params.sprintId;
-		try {
-			const result = await sessionService.download(sprintId);
-			loggerService.info('RESPONSE', JSON.stringify(result));
-			res.json(result);
-		} catch (e) {
-			loggerService.error(e);
-			res.status(500).json({ message: 'Erro ao gerar download da sprint.' });
-		}
-	},
+	}
 };

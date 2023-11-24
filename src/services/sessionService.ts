@@ -103,6 +103,7 @@ export default {
 		const session: FirebaseSession = {
 			game: firebaseGame,
 			users: firebaseUsers,
+			finished: false
 		};
 
 		const sessionRef = child(sessionsRef, sessionId);
@@ -202,9 +203,5 @@ export default {
 			})
 			.slice(0, 6)
 			.map((entry) => entry[0]);
-	},
-
-	async download(sprintId: string): Promise<string[]> {
-		
-	},
+	}
 };

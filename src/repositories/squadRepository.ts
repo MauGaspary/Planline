@@ -1,5 +1,5 @@
 import { PrismaClient, Squad } from '@prisma/client';
-import { SquadDTO } from '../dto/SquadDTO';
+import { SquadDTO } from '../dto/SquadDTO.js';
 
 const prisma = new PrismaClient();
 
@@ -17,8 +17,8 @@ export default {
 				id: squadId,
 			},
 			include: {
-				users: true,
 				organization: true,
+				users: true,
 			},
 		});
 		return squad;
