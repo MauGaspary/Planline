@@ -473,7 +473,7 @@ export default function Game() {
 					)}
 					<div className="flex flex-col justify-between w-72 h-52 border-2 p-6 rounded-2xl bg-triider-helper-green1 font-medium border-transparent shadow-xl mt-2">
 						{session?.game.stories[session.game.current_story]?.name &&
-							session?.game.stories[session.game.current_story]?.name.length > 67 ? (
+						session?.game.stories[session.game.current_story]?.name.length > 67 ? (
 							<ToolTip tooltip={session?.game.stories[session.game.current_story]?.name}>
 								<div className="text-white text-xl line-clamp-3">
 									{session?.game.stories[session.game.current_story]?.name}
