@@ -12,8 +12,8 @@ import laptopWhite from '../../assets/sideMenuIcons/laptopWhite.svg';
 import laptopOrange from '../../assets/sideMenuIcons/laptopOrange.svg';
 import groupWhite from '../../assets/sideMenuIcons/groupWhite.svg';
 import groupOrange from '../../assets/sideMenuIcons/groupOrange.svg';
-// import historyOrange from '../../assets/sideMenuIcons/historyOrange.svg';
-// import historyWhite from '../../assets/sideMenuIcons/historyWhite.svg';
+import historyOrange from '../../assets/sideMenuIcons/historyOrange.svg';
+import historyWhite from '../../assets/sideMenuIcons/historyWhite.svg';
 
 function SideMenu() {
 	const [activeButton, setActiveButton] = useState<string | null>(window.location.pathname);
@@ -44,10 +44,7 @@ function SideMenu() {
 					imageWhite={talkWhite}
 					imageOrange={talkOrange}
 				/>
-				{
-					// TODO: implement backend and frontend history page to export
-				}
-				{/* <SideMenuItem
+				<SideMenuItem
 					onClick={() => {
 						handleActiveButton('/history');
 						handleNav('/history');
@@ -56,7 +53,7 @@ function SideMenu() {
 					title="Histórico"
 					imageWhite={historyWhite}
 					imageOrange={historyOrange}
-				/> */}
+				/>
 				<SideMenuItem
 					onClick={() => {
 						handleActiveButton('/dashboard/orgs');

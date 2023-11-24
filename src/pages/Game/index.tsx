@@ -414,7 +414,7 @@ export default function Game() {
 	};
 
 	const handleDeleteSession = async (save: boolean) => {
-		await request(`/sessions/finalize/${session_id}?save=${save}}`);
+		await request(`/sessions/finalize/${session_id}?save=${save}`);
 	};
 
 	const FinishedVotingModal = () => {
