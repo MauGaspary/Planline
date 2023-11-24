@@ -1,5 +1,6 @@
 import { PrismaClient, Squad } from '@prisma/client';
-import { SquadDTO } from '../dto/SquadDTO.js';
+
+import { SquadDTO } from '../dto/SquadDTO';
 
 const prisma = new PrismaClient();
 
@@ -8,6 +9,7 @@ export default {
 		const squad = await prisma.squad.create({
 			data: { ...data },
 		});
+
 		return squad.id;
 	},
 
@@ -16,11 +18,14 @@ export default {
 			where: {
 				id: squadId,
 			},
+
 			include: {
-				organization: true,
 				users: true,
+
+				organization: true,
 			},
 		});
+
 		return squad;
 	},
 
@@ -28,9 +33,11 @@ export default {
 		const squads: Squad[] = await prisma.squad.findMany({
 			include: {
 				users: true,
+
 				organization: true,
 			},
 		});
+
 		return squads;
 	},
 
@@ -40,16 +47,19 @@ export default {
 				id: squadId,
 			},
 		});
+
 		return squad.id;
 	},
 
 	async put(data: Squad): Promise<string> {
 		const squad = await prisma.squad.update({
 			data: { ...data },
+
 			where: {
 				id: data.id,
 			},
 		});
+
 		return squad.id;
 	},
 };
