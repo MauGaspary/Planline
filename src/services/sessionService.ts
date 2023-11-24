@@ -98,7 +98,6 @@ export default {
 		};
 
 		const session: FirebaseSession = {
-			finished: false,
 			game: firebaseGame,
 			users: firebaseUsers,
 		};
@@ -111,7 +110,7 @@ export default {
 	},
 
 	async finalizeWithoutSaving(sessionId: string) {
-		const finishedSession = child(sessionsRef, sessionId + '/finished');
+		const finishedSession = child(sessionsRef, sessionId + '/game/finished');
 		await set(finishedSession, true);
 	},
 
@@ -140,8 +139,8 @@ export default {
 						continue;
 					}
 
-					for (const userId in task.votes) {
-						const vote = task.votes[userId];
+					for (const userId in votes[taskId].votes) {
+						const vote = votes[taskId].votes[userId];
 
 						promises.push(
 							voteRepository.create({
@@ -160,9 +159,9 @@ export default {
 						);
 					}
 
-					voteCount[task.final_vote] = voteCount[task.final_vote] + 1 || 1;
+					voteCount[votes[taskId].final_vote] = voteCount[votes[taskId].final_vote] + 1 || 1;
 
-					promises.push(taskRepository.update(taskId, task.final_vote));
+					promises.push(taskRepository.update(taskId, votes[taskId].final_vote));
 				}
 
 				let average = 0;
@@ -191,14 +190,14 @@ export default {
 		const sessions: FirebaseCollection<FirebaseSession> = snapshot.val();
 
 		return Object.entries(sessions)
-			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].finished)
+			.filter((entry) => entry[1].game.squad_id === squadId && !entry[1].game.finished)
 			.sort((a, b) => {
 				const aDate = new Date(a[1].game.opened_at);
 				const bDate = new Date(b[1].game.opened_at);
 
 				return aDate.getTime() - bDate.getTime();
 			})
-			.slice(0, 6)
+			.slice(0, 3)
 			.map((entry) => entry[0]);
 	},
 };

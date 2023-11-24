@@ -3,7 +3,6 @@ export type FirebaseCollection<T> = {
 };
 
 export type FirebaseSession = {
-	finished: boolean;
 	game: FirebaseGame;
 	users: FirebaseCollection<FirebaseUser>;
 	votes?: FirebaseCollection<FirebaseTaskVote>;
