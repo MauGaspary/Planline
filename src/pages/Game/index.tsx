@@ -39,7 +39,7 @@ export default function Game() {
 	function sessionListener() {
 		onValue(refSession, (snapshot) => {
 			const session = snapshot.val();
-			if (!session || session?.finished) {
+			if (!session || session?.game.finished) {
 				router('/');
 				return;
 			}
