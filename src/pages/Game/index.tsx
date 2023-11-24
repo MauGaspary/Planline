@@ -409,6 +409,7 @@ export default function Game() {
 		const csv = Papa.unparse(csvData, { delimiter: ';' });
 
 		handleDeleteSession(true);
+		router('/');
 		return csv;
 	};
 
