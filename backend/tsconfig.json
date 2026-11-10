@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"useDefineForClassFields": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"outDir": "dist",
+		"baseUrl": "./",
+		"paths": {
+			"@services/*": ["src/services/*"]
+		}
+	},
+	"include": ["src/**/*"],
+	"exclude": ["dist/**/*"]
+}
