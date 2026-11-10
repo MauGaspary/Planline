@@ -1,0 +1,72 @@
+{
+	"name": "planline-front-web",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"preinstall": "npx only-allow yarn",
+		"typecheck": "bash -c tsc",
+		"lint": "eslint . --max-warnings=0 --ext .ts,.tsx",
+		"format": "prettier --write .",
+		"prepare": "husky install"
+	},
+	"dependencies": {
+		"@types/react": "^18.2.15",
+		"@types/react-dom": "^18.2.7",
+		"@vitejs/plugin-react": "^4.0.3",
+		"@types/file-saver": "^2.0.7",
+		"@types/papaparse": "^5.3.11",
+		"autoprefixer": "^10.4.15",
+		"axios": "^1.5.0",
+		"file-saver": "^2.0.5",
+		"firebase": "^10.3.1",
+		"nuka-carousel": "^6.0.3",
+		"papaparse": "^5.4.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-dropzone": "^14.2.3",
+		"react-qr-code": "^2.0.12",
+		"react-router-dom": "^6.15.0",
+		"tailwindcss": "^3.3.3",
+		"typescript": "^5.0.2",
+		"vite": "^4.4.5"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"src/**/*.{ts,tsx}": [
+			"yarn typecheck",
+			"prettier --write ./src",
+			"yarn lint"
+		],
+		"yarn.lock": [
+			"yarn-deduplicate"
+		]
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^17.7.1",
+		"@commitlint/config-conventional": "^17.7.0",
+		"@typescript-eslint/eslint-plugin": "^6.0.0",
+		"@typescript-eslint/parser": "^6.0.0",
+		"concurrently": "^8.0.1",
+		"eslint": "^8.45.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-config-standard-with-typescript": "^38.0.0",
+		"eslint-plugin-import": "^2.28.1",
+		"eslint-plugin-prettier": "^5.0.0",
+		"eslint-plugin-react": "^7.33.2",
+		"husky": "^8.0.3",
+		"lint-staged": "^14.0.1",
+		"postcss": "^8.4.28",
+		"prettier": "3.0.2",
+		"yarn-deduplicate": "^6.0.1"
+	},
+	"author": "AGES PUCRS",
+	"license": "MIT"
+}
